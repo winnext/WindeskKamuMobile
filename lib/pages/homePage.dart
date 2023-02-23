@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
@@ -8,9 +9,13 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+ 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                   flex: 3,
                   child: Image.asset(
-                    'lib/assets/login.jpg',
+                    'lib/assets/home.jpg',
                     height: MediaQuery.of(context).size.width / 1,
                     width: MediaQuery.of(context).size.width / 1,
                     fit: BoxFit.cover,

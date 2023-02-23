@@ -14,7 +14,7 @@ extension APPImagesExtension on APPImages {
   String get images {
     switch (this) {
       case APPImages.splashScreen:
-        return "lib/assets/images/ardgrup_logo.png";
+        return "lib/assets//windesk.jpg";
       case APPImages.defaultImage:
         return "lib/assets/images/example_image.png";
       case APPImages.turkishIcon:
@@ -27,7 +27,7 @@ extension APPImagesExtension on APPImages {
   }
 }
 
-enum APPColors { Main, Secondary, Accent, Graident }
+enum APPColors {Login, Main, Secondary, Accent, Graident }
 
 extension APPColorsExtension on APPColors {
   Color get orange {
@@ -45,6 +45,8 @@ extension APPColorsExtension on APPColors {
 
   Color get blue {
     switch (this) {
+       case APPColors.Login:
+        return Color.fromARGB(1000,33,173,228); //0xff1c5794
       case APPColors.Main:
         return Color.fromARGB(255, 48, 105, 211); //0xff1c5794
       case APPColors.Secondary:
