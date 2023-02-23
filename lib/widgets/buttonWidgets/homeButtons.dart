@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/themes.dart';
+import '../../utils/themes.dart';
 
 class HomeButton extends StatelessWidget {
   final String? text;

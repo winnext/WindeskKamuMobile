@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
 import 'package:win_kamu/utils/themes.dart';
-import 'buttonWidgets/customButtonWithGradient.dart';
+import 'widgets/buttonWidgets/customButtonWithGradient.dart';
 
 void main() {
   runApp(const MyApp());

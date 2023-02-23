@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:win_kamu/buttonWidgets/homeButtons.dart';
+import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
 import 'openRequests/openRequests.dart';
@@ -18,15 +18,15 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Image.asset(
             'lib/assets/windesk.jpg',
-            width: MediaQuery.of(context).size.width / 1.5,
-            height: MediaQuery.of(context).size.width / 1.5,
+            width: MediaQuery.of(context).size.width / 1.2,
+            height: MediaQuery.of(context).size.width / 1.2,
             fit: BoxFit.cover,
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.power_settings_new,
-                size: 30,
+                size: 35,
                 color: APPColors.Main.black,
               ),
               tooltip: 'Exit',
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: IconButton(
                   icon: Icon(
                     Icons.notifications,
-                    size: 30,
+                    size: 35,
                     color: APPColors.Main.black,
                   ),
                   onPressed: () {},
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                   flex: 3,
                   child: Image.asset(
-                    'lib/assets/login.jpg',
+                    'lib/assets/home.jpg',
                     height: MediaQuery.of(context).size.width / 1,
                     width: MediaQuery.of(context).size.width / 1,
                     fit: BoxFit.cover,
