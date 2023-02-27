@@ -1,0 +1,59 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
+import 'package:flutter/material.dart';
+
+SimpleShowDialog(
+  BuildContext context,
+  VoidCallback? onConfirm,
+  String title,
+  String text,
+  bool success,
+  String confirmButtonText,
+) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+          title: Column(
+            children: [
+              success
+                  ? SuccessIcon(
+                      size: MediaQuery.of(context).size.height / 9,
+                    )
+                  : WarningIcon(size: MediaQuery.of(context).size.height / 9),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(89, 89, 89, 1), fontSize: 20),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(89, 89, 89, 1), fontSize: 15),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: onConfirm,
+              child: Text(
+                confirmButtonText,
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}

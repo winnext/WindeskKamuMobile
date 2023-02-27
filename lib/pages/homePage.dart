@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
+import 'openRequests/RouteRequests.dart';
 import 'openRequests/openRequests.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Image.asset(
-            'lib/assets/windesk.jpg',
+            'lib/assets/images/windesk.jpg',
             width: MediaQuery.of(context).size.width / 1.2,
             height: MediaQuery.of(context).size.width / 1.2,
             fit: BoxFit.cover,
@@ -60,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                   flex: 3,
                   child: Image.asset(
-                    'lib/assets/home.jpg',
+                    'lib/assets/images/home.jpg',
                     height: MediaQuery.of(context).size.width / 1,
                     width: MediaQuery.of(context).size.width / 1,
                     fit: BoxFit.cover,
