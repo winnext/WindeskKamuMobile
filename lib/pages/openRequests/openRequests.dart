@@ -43,7 +43,8 @@ class _ListScreenState extends State<ListScreen> {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
-
+    print('exlist ' + listViewProvider.exampleListView.length.toString());
+    // print(listViewProvider.exampleListView[0].toString());
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -82,20 +83,41 @@ class _ListScreenState extends State<ListScreen> {
                                 String formattedDate = "";
                                 ListViewModel listElements =
                                     listViewProvider.exampleListView[i];
-                                if (listElements.notificationDate
-                                    .toString()
-                                    .contains(".")) {
+
+                                final timeZone = listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(0, 4) +
+                                    '-' +
+                                    listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(4, 6) +
+                                    '-' +
+                                    listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(6, 8) +
+                                    'T' +
+                                    listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(8, 10) +
+                                    ':' +
+                                    listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(10, 12) +
+                                    ':' +
+                                    listElements.TARGET_FDATE
+                                        .toString()
+                                        .substring(12, 14);
+
+                                if (timeZone.toString().contains(".")) {
                                   DateTime dateTime =
                                       DateFormat("yyyy-MM-ddTHH:mm:ss.SSS")
-                                          .parse(listElements.notificationDate
-                                              .toString());
+                                          .parse(timeZone.toString());
                                   formattedDate =
                                       DateFormat("dd/MM/yyyy").format(dateTime);
                                 } else {
                                   DateTime dateTime =
-                                      DateFormat("yyyy-MM-ddTHH:mm").parse(
-                                          listElements.notificationDate
-                                              .toString());
+                                      DateFormat("yyyy-MM-ddTHH:mm")
+                                          .parse(timeZone.toString());
                                   formattedDate =
                                       DateFormat("dd/MM/yyyy").format(dateTime);
                                 }
@@ -106,23 +128,20 @@ class _ListScreenState extends State<ListScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: TaskListWidget(
                                         iconOnPressed: () {
-                                          crudProvider.fillForm(
-                                              context,
-                                              listElements,
-                                              listViewProvider.pageController!);
+                                          // crudProvider.fillForm(
+                                          //     context,
+                                          //     listElements,
+                                          //     listViewProvider.pageController!);
                                         },
                                         importanceLevelColor: generateColor(l),
                                         trailing: formattedDate,
                                         taskNo: i.toString(),
-                                        title: listElements.description == ""
-                                            ? "Açıklama ${i + 1}"
-                                            : listElements.description,
-                                        subTitle: listElements.isRead == false
-                                            ? "Okundu"
-                                            : "Okunmadı",
+                                        title: listElements.CODE.toString(),
+                                        subTitle:
+                                            listElements.DESCRIPTION.toString(),
                                         isIcon: true,
                                         extraTitle:
-                                            "Lorem ipsum dolor sit amet",
+                                            listElements.STATUSCODE.toString(),
                                       ),
                                     ),
                                   ],

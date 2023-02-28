@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/components/crud_view/crud_view.dart';
@@ -86,23 +88,32 @@ class ListViewProvider extends ChangeNotifier {
   void loadData(index) async {
     _isDataLoading = true;
     Map<String, dynamic> queryParameters = {
-      "Page": index,
-      "PropertyName": 'id',
-      "ItemPerPage": 10,
-      "Asc": false,
-      "version": 1
+      "start": 0,
+      "end": 10,
+      "status": "",
+      "build": "",
+      "floor": "",
+      "wing": "",
+      "assignee": "",
     };
 
-    httpSonucModel result = await apirepository.getListForPaging(
+    final result = await apirepository.getListForPaging(
         controller: getNotificationsWithPagingFilter,
         queryParameters: queryParameters);
-    if (result.success!) {
-      tempexampleListView = (result.data.data['data'] as List)
+
+    final data = result.records['records'];
+    print('data2' + result.records['records'].toString());
+    print('data3' + result.records['totalcount'].toString());
+
+    //print(result.records.records['result']);
+
+    if (true) {
+      tempexampleListView = (result.records['records'] as List)
           .map((e) => ListViewModel.fromJson(e))
           .toList();
       Future.delayed(const Duration(milliseconds: 1200), () {
         exampleListView.addAll(tempexampleListView);
-        _toplamKayitSayisi = result.data.data['totalItemCount'];
+        _toplamKayitSayisi = int.parse(result.records['totalcount']);
         int noOfTasks = tempexampleListView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;

@@ -1,34 +1,58 @@
 class ListViewModel {
-  int? id;
-  int? customerId;
-  String? serialNumber;
-  String? referenceId;
-  int? notificationType;
-  String? notificationDate;
-  bool? isRead;
-  bool? isDelete;
-  String? description;
+  String? ID;
+  String? CODE;
+  String? RELATEDCODE;
+  String? TARGET_FDATE;
+  String? TARGET_RDATE;
+  String? SUMDESC1;
+  String? CAT1;
+  String? STATUSNAME;
+  String? STATUSCODE;
+  String? IDATE;
+  String? RESPONDED_IDATE;
+  String? LOCATION;
+  String? DESCRIPTION;
+  String? FIXED_IDATE;
+  String? PLANNEDDATE;
+  String? response_timer;
+  String? fixed_timer;
 
   ListViewModel(
-      {this.customerId,
-      this.id = 0,
-      this.isDelete,
-      this.description,
-      this.isRead,
-      this.notificationDate,
-      this.notificationType,
-      this.referenceId,
-      this.serialNumber});
+      {this.ID = '0',
+      this.CODE,
+      this.RELATEDCODE,
+      this.TARGET_FDATE,
+      this.TARGET_RDATE,
+      this.SUMDESC1,
+      this.CAT1,
+      this.STATUSNAME,
+      this.STATUSCODE,
+      this.IDATE,
+      this.FIXED_IDATE,
+      this.PLANNEDDATE,
+      this.RESPONDED_IDATE,
+      this.fixed_timer,
+      this.response_timer,
+      this.LOCATION,
+      this.DESCRIPTION});
   ListViewModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    customerId = json['customerId'];
-    serialNumber = json['serialNumber'];
-    referenceId = json['referenceId'];
-    notificationType = json['notificationType'];
-    notificationDate = json['notificationDate'];
-    description = json['description'];
+    ID = json['ID'];
+    CODE = json['CODE'];
+    RELATEDCODE = json['RELATEDCODE'];
+    TARGET_FDATE = json['TARGET_FDATE'];
+    TARGET_RDATE = json['TARGET_RDATE'];
+    SUMDESC1 = json['SUMDESC1'];
+    CAT1 = json['CAT1'];
 
-    isRead = json['isRead'];
-    isDelete = json['isDelete'];
+    STATUSNAME = json['STATUSNAME'];
+    STATUSCODE = json['STATUSCODE'];
+    IDATE = json['IDATE'];
+    FIXED_IDATE = json['FIXED_IDATE'];
+    PLANNEDDATE = json['PLANNEDDATE'];
+    RESPONDED_IDATE = json['RESPONDED_IDATE'];
+    fixed_timer = json['fixed_timer'];
+    response_timer = json['response_timer'];
+    LOCATION = json['LOCATION'];
+    DESCRIPTION = json['DESCRIPTION'];
   }
 }

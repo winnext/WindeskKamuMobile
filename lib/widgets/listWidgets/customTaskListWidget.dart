@@ -8,6 +8,7 @@ import '../../utils/utils.dart';
 class TaskListWidget extends StatelessWidget {
   final String? title, extraTitle, taskNo, subTitle, trailing;
   final Color? importanceLevelColor;
+
   final VoidCallback? press;
   final bool isIcon;
   final VoidCallback? iconOnPressed;
@@ -43,90 +44,113 @@ class TaskListWidget extends StatelessWidget {
           color: Color(0xfff6f6f6),
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 20, left: 20, right: 0, bottom: 0),
+          padding: const EdgeInsets.only(top: 0, left: 0, right: 12, bottom: 0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 child: Column(
                   children: [
                     Container(
                       color: importanceLevelColor!,
-                      width: MediaQuery.of(context).size.width / 60,
-                      height: size.height / 10,
+                      width: MediaQuery.of(context).size.width / 50,
+                      height: MediaQuery.of(context).size.height / 12,
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: SizedBox(
-                        width: size.width / 2.0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: SizedBox(
+                      width: size.width / 2.0,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          title.toString(),
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color(0xff025273),
+                            fontSize: 14,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  subTitle.toString() != "" ? SizedBox(height: 3) : Container(),
+                  subTitle.toString() != ""
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
                           child: Text(
-                            title.toString(),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
+                            subTitle.toString(),
                             style: TextStyle(
+                              fontWeight: FontWeight.normal,
                               color: Color(0xff025273),
-                              fontSize: 14,
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
                             ),
                           ),
+                        )
+                      : Container(),
+                  SizedBox(height: 6),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        extraTitle.toString(),
+                        style: TextStyle(
+                          color: Color(0xff025273),
+                          fontSize: 13,
                         ),
                       ),
                     ),
-                    subTitle.toString() != ""
-                        ? SizedBox(height: 3)
-                        : Container(),
-                    subTitle.toString() != ""
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              subTitle.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                color: Color(0xff025273),
-                                fontSize: 13,
-                              ),
-                            ),
-                          )
-                        : Container(),
-                    SizedBox(height: 6),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          extraTitle.toString(),
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 13,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        taskNo.toString(),
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Color(0xff025273),
+                          fontSize: 13,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        trailing.toString(),
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: Color(0xff025273),
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                  isIcon
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width / 18,
+                          child: IconButton(
+                            onPressed: isIcon ? iconOnPressed : () {},
+                            icon: Icon(Icons.info),
+                            color: APPColors.Main.blue,
                           ),
+                        )
+                      : SizedBox(
+                          width: MediaQuery.of(context).size.width / 18,
                         ),
-                      ),
-                    ),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          extraTitle.toString(),
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
             ],
           ),

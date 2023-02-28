@@ -31,7 +31,7 @@ class _CrudViewState extends State<CrudView> {
   void initState() {
     final crudP = Provider.of<CrudViewProvider>(context, listen: false);
 
-    if (widget.listElements.id != 0) {
+    if (widget.listElements.ID != 0) {
       crudP.initForm(widget.listElements);
     } else {
       crudP.initForm();
@@ -221,7 +221,7 @@ class _CrudViewState extends State<CrudView> {
                             ? APPColors.Secondary.white
                             : APPColors.Main.white,
                       ),
-                      onTap: () => crudProvider.addOrUpdateForm(context),
+                      // onTap: () => crudProvider.addOrUpdateForm(context),
                     ),
                   ],
                 )

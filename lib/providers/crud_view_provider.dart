@@ -95,16 +95,16 @@ class CrudViewProvider extends ChangeNotifier {
     }
   }
 
-  addOrUpdateForm(BuildContext context) {
-    if (!isUpdateActivated) {
-      addForm(context);
-    } else {
-      _iskurumTuruEmpty = false;
-      setIsKurumTuruEmpty = false;
-      updateForm(context);
-      notifyListeners();
-    }
-  }
+  // addOrUpdateForm(BuildContext context) {
+  //   if (!isUpdateActivated) {
+  //     addForm(context);
+  //   } else {
+  //     _iskurumTuruEmpty = false;
+  //     setIsKurumTuruEmpty = false;
+  //     updateForm(context);
+  //     notifyListeners();
+  //   }
+  // }
 
   initForm([ListViewModel? listViewModel]) {
     if (listViewModel != null) {
@@ -115,130 +115,129 @@ class CrudViewProvider extends ChangeNotifier {
 
   void fillForm(BuildContext context, ListViewModel listElements,
       PageController pageController) {
-    _formId = listElements.id;
     _isUpdateActivated = true;
     _pageController = pageController;
     _pageController!.jumpToPage(2);
-    _descriptionController.text = listElements.description!;
-    DateTime dateTime = DateTime.parse(listElements.notificationDate!);
+    _descriptionController.text = listElements.DESCRIPTION!;
+    DateTime dateTime = DateTime.parse(listElements.TARGET_RDATE!);
     String formattedDate = DateFormat("dd/MM/yyyy").format(dateTime);
     _descriptionDateController.text = formattedDate;
-    _descriptionReadedController.text = listElements.isRead == true
+    _descriptionReadedController.text = listElements.response_timer == true
         ? LocaleKeys.evet.tr()
         : LocaleKeys.hayir.tr();
   }
 
-  void addForm(BuildContext context) async {
-    if (_crudFormKey.currentState!.validate() && !iskurumTuruEmpty) {
-      DateTime date = DateFormat("dd/MM/yyyy - HH:mm")
-          .parse(_descriptionDateController.text);
-      var utc = date.toIso8601String();
+  // void addForm(BuildContext context) async {
+  //   if (_crudFormKey.currentState!.validate() && !iskurumTuruEmpty) {
+  //     DateTime date = DateFormat("dd/MM/yyyy - HH:mm")
+  //         .parse(_descriptionDateController.text);
+  //     var utc = date.toIso8601String();
 
-      Map<String, dynamic> queryParameters = {
-        "id": 0,
-        "customerId": 1,
-        "description": _descriptionController.text,
-        "notificationType": 1,
-        "referenceId": "23123",
-        "notificationDate": utc,
-        "isRead": _descriptionReadedController.text == LocaleKeys.evet.tr()
-            ? true
-            : false,
-        "isDelete": false
-      };
+  //     Map<String, dynamic> queryParameters = {
+  //       "id": 0,
+  //       "customerId": 1,
+  //       "description": _descriptionController.text,
+  //       "notificationType": 1,
+  //       "referenceId": "23123",
+  //       "notificationDate": utc,
+  //       "isRead": _descriptionReadedController.text == LocaleKeys.evet.tr()
+  //           ? true
+  //           : false,
+  //       "isDelete": false
+  //     };
 
-      httpSonucModel apiResponse = await apirepository.post(
-          controller: addNotification, data: queryParameters);
-      if (apiResponse.success == true) {
-        clearForm();
-        CustomAlertDialogOnlyConfirm(
-          context,
-          () {
-            Navigator.pop(context);
-          },
-          LocaleKeys.basarili.tr(),
-          LocaleKeys.kayitBasariIleEklendi.tr(),
-          ArtSweetAlertType.success,
-          LocaleKeys.tamam.tr(),
-        );
-      } else {
-        CustomAlertDialogOnlyConfirm(context, () {
-          Navigator.pop(context);
-        },
-            LocaleKeys.uyari.tr(),
-            LocaleKeys.kayitSirasindaHataOlustu.tr() +
-                " " +
-                LocaleKeys.hataMesaji.tr() +
-                "${apiResponse.message}.",
-            ArtSweetAlertType.warning,
-            LocaleKeys.tamam.tr());
-      }
-    } else {
-      if (_descriptionReadedController.text.isEmpty) {
-        _iskurumTuruEmpty = true;
-      }
+  //     httpSonucModel apiResponse = await apirepository.post(
+  //         controller: addNotification, data: queryParameters);
+  //     if (apiResponse.success == true) {
+  //       clearForm();
+  //       CustomAlertDialogOnlyConfirm(
+  //         context,
+  //         () {
+  //           Navigator.pop(context);
+  //         },
+  //         LocaleKeys.basarili.tr(),
+  //         LocaleKeys.kayitBasariIleEklendi.tr(),
+  //         ArtSweetAlertType.success,
+  //         LocaleKeys.tamam.tr(),
+  //       );
+  //     } else {
+  //       CustomAlertDialogOnlyConfirm(context, () {
+  //         Navigator.pop(context);
+  //       },
+  //           LocaleKeys.uyari.tr(),
+  //           LocaleKeys.kayitSirasindaHataOlustu.tr() +
+  //               " " +
+  //               LocaleKeys.hataMesaji.tr() +
+  //               "${apiResponse.message}.",
+  //           ArtSweetAlertType.warning,
+  //           LocaleKeys.tamam.tr());
+  //     }
+  //   } else {
+  //     if (_descriptionReadedController.text.isEmpty) {
+  //       _iskurumTuruEmpty = true;
+  //     }
 
-      notifyListeners();
-    }
-  }
+  //     notifyListeners();
+  //   }
+  // }
 
-  void updateForm(BuildContext context) async {
-    if (_crudFormKey.currentState!.validate() && !iskurumTuruEmpty) {
-      DateTime date;
-      if (_descriptionDateController.text.contains('-')) {
-        date = DateFormat("dd/MM/yyyy - HH:mm")
-            .parse(_descriptionDateController.text);
-      } else {
-        date = DateFormat("dd/MM/yyyy").parse(_descriptionDateController.text);
-      }
+  // void updateForm(BuildContext context) async {
+  //   if (_crudFormKey.currentState!.validate() && !iskurumTuruEmpty) {
+  //     DateTime date;
+  //     if (_descriptionDateController.text.contains('-')) {
+  //       date = DateFormat("dd/MM/yyyy - HH:mm")
+  //           .parse(_descriptionDateController.text);
+  //     } else {
+  //       date = DateFormat("dd/MM/yyyy").parse(_descriptionDateController.text);
+  //     }
 
-      var utc = date.toIso8601String();
+  //     var utc = date.toIso8601String();
 
-      Map<String, dynamic> queryParameters = {
-        "id": _formId,
-        "customerId": 1,
-        "description": _descriptionController.text,
-        "notificationType": 1,
-        "referenceId": "23123",
-        "notificationDate": utc,
-        "isRead": _descriptionReadedController.text == LocaleKeys.evet.tr()
-            ? true
-            : false,
-        "isDelete": false
-      };
-      print(queryParameters);
+  //     Map<String, dynamic> queryParameters = {
+  //       "id": _formId,
+  //       "customerId": 1,
+  //       "description": _descriptionController.text,
+  //       "notificationType": 1,
+  //       "referenceId": "23123",
+  //       "notificationDate": utc,
+  //       "isRead": _descriptionReadedController.text == LocaleKeys.evet.tr()
+  //           ? true
+  //           : false,
+  //       "isDelete": false
+  //     };
+  //     print(queryParameters);
 
-      httpSonucModel apiResponse = await apirepository.post(
-          controller: updateNotication, data: queryParameters);
-      if (apiResponse.success == true) {
-        clearForm();
-        CustomAlertDialogOnlyConfirm(
-          context,
-          () {
-            Navigator.pop(context);
-          },
-          LocaleKeys.basarili.tr(),
-          LocaleKeys.kayitBasariIleEklendi.tr(),
-          ArtSweetAlertType.success,
-          LocaleKeys.tamam.tr(),
-        );
-      } else {
-        CustomAlertDialogOnlyConfirm(context, () {
-          Navigator.pop(context);
-        },
-            LocaleKeys.uyari.tr(),
-            LocaleKeys.kayitSirasindaHataOlustu.tr() +
-                LocaleKeys.hataMesaji.tr() +
-                apiResponse.message.toString(),
-            ArtSweetAlertType.warning,
-            LocaleKeys.tamam.tr());
-      }
-    } else {
-      if (_descriptionReadedController.text.isEmpty) {
-        _iskurumTuruEmpty = true;
-      }
+  //     httpSonucModel apiResponse = await apirepository.post(
+  //         controller: updateNotication, data: queryParameters);
+  //     if (apiResponse.success == true) {
+  //       clearForm();
+  //       CustomAlertDialogOnlyConfirm(
+  //         context,
+  //         () {
+  //           Navigator.pop(context);
+  //         },
+  //         LocaleKeys.basarili.tr(),
+  //         LocaleKeys.kayitBasariIleEklendi.tr(),
+  //         ArtSweetAlertType.success,
+  //         LocaleKeys.tamam.tr(),
+  //       );
+  //     } else {
+  //       CustomAlertDialogOnlyConfirm(context, () {
+  //         Navigator.pop(context);
+  //       },
+  //           LocaleKeys.uyari.tr(),
+  //           LocaleKeys.kayitSirasindaHataOlustu.tr() +
+  //               LocaleKeys.hataMesaji.tr() +
+  //               apiResponse.message.toString(),
+  //           ArtSweetAlertType.warning,
+  //           LocaleKeys.tamam.tr());
+  //     }
+  //   } else {
+  //     if (_descriptionReadedController.text.isEmpty) {
+  //       _iskurumTuruEmpty = true;
+  //     }
 
-      notifyListeners();
-    }
-  }
+  //     notifyListeners();
+  //   }
+  // }
 }

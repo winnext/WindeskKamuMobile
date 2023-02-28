@@ -129,28 +129,31 @@ class APIRepository {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(
           'http://windeskmobiletest.etliksh.com/list/XL00225/issue',
+          queryParameters: queryParameters,
           options: Options(
             headers: {"xusercode": "sgnm1040", "xtoken": "aehtest!"},
           ));
 
-      print('response ' + response.toString());
+      final data = jsonDecode(response.toString());
+
+      print(data['records'] as List);
 
       if (response != null) {
         return httpSonucModel(
-          result: response,
+          records: data,
           success: true,
           message: 'Başarılı',
         );
       }
       return httpSonucModel(
-        data: response,
+        records: data,
         success: false,
         message: 'Hata',
       );
     } on DioError catch (e) {
       if (DioErrorType.other == e.type) {
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: "Bağlantı Hatası",
         );
@@ -160,39 +163,39 @@ class APIRepository {
           return httpSonucModel(
             success: false,
             message: "Yetkisiz Erişim",
-            data: {},
+            records: {},
           );
         }
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: "İstek hatası",
         );
       }
       if (DioErrorType.connectTimeout == e.type) {
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: "Sistem zaman aşımına uğradı",
         );
       }
       if (DioErrorType.sendTimeout == e.type) {
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: "Sistem zaman aşımına uğradı",
         );
       }
       if (e.response != null) {
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: 'Hata',
         );
       } else {
         //Hata dönüşü
         return httpSonucModel(
-          data: {},
+          records: {},
           success: false,
           message: e.message,
         );
@@ -200,65 +203,65 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> post(
-      {@required String? controller,
-      @required dynamic data,
-      bool redirectLogin = false}) async {
-    try {
-      ReloadApiBase(StaticVariables.token);
-      final response = await dio.post(controller!, data: data);
-      httpSonucModel result = httpSonucModel.fromJsonData(response.data);
+  // Future<httpSonucModel> post(
+  //     {@required String? controller,
+  //     @required dynamic data,
+  //     bool redirectLogin = false}) async {
+  //   try {
+  //     ReloadApiBase(StaticVariables.token);
+  //     final response = await dio.post(controller!, data: data);
+  //     httpSonucModel result = httpSonucModel.fromJsonData(response.data);
 
-      return result;
-    } on DioError catch (e) {
-      if (DioErrorType.other == e.type) {
-        return httpSonucModel(
-          success: false,
-          message: "Bağlantı Hatası",
-        );
-      }
-      if (DioErrorType.response == e.type) {
-        if (e.response!.statusCode == 401) {
-          return httpSonucModel(
-            success: false,
-            message: "Yetkisiz Erişim",
-          );
-        }
-        return httpSonucModel(
-          success: false,
-          message: "İstek hatası",
-        );
-      }
-      if (DioErrorType.connectTimeout == e.type) {
-        return httpSonucModel(
-          success: false,
-          message: "Sistem zaman aşımına uğradı",
-        );
-      }
-      if (DioErrorType.sendTimeout == e.type) {
-        return httpSonucModel(
-          success: false,
-          message: "Sistem zaman aşımına uğradı",
-        );
-      }
-      if (e.response != null) {
-        print('Dio error!');
-        print('STATUS: ${e.response?.statusCode}');
-        print('DATA: ${e.response?.data}');
-        print('HEADERS: ${e.response?.headers}');
-      } else {
-        // Error due to setting up or sending the request
-        print('Error sending request!');
-        print(e.message);
-        return httpSonucModel(
-          success: false,
-          message: e.message,
-        );
-      }
-      return httpSonucModel(
-        success: false,
-        message: e.message,
-      );
-    }
-  }
+  //     return result;
+  //   } on DioError catch (e) {
+  //     if (DioErrorType.other == e.type) {
+  //       return httpSonucModel(
+  //         success: false,
+  //         message: "Bağlantı Hatası",
+  //       );
+  //     }
+  //     if (DioErrorType.response == e.type) {
+  //       if (e.response!.statusCode == 401) {
+  //         return httpSonucModel(
+  //           success: false,
+  //           message: "Yetkisiz Erişim",
+  //         );
+  //       }
+  //       return httpSonucModel(
+  //         success: false,
+  //         message: "İstek hatası",
+  //       );
+  //     }
+  //     if (DioErrorType.connectTimeout == e.type) {
+  //       return httpSonucModel(
+  //         success: false,
+  //         message: "Sistem zaman aşımına uğradı",
+  //       );
+  //     }
+  //     if (DioErrorType.sendTimeout == e.type) {
+  //       return httpSonucModel(
+  //         success: false,
+  //         message: "Sistem zaman aşımına uğradı",
+  //       );
+  //     }
+  //     if (e.response != null) {
+  //       print('Dio error!');
+  //       print('STATUS: ${e.response?.statusCode}');
+  //       print('DATA: ${e.response?.data}');
+  //       print('HEADERS: ${e.response?.headers}');
+  //     } else {
+  //       // Error due to setting up or sending the request
+  //       print('Error sending request!');
+  //       print(e.message);
+  //       return httpSonucModel(
+  //         success: false,
+  //         message: e.message,
+  //       );
+  //     }
+  //     return httpSonucModel(
+  //       success: false,
+  //       message: e.message,
+  //     );
+  //   }
+  // }
 }
