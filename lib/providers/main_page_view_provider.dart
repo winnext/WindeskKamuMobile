@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class MainPageViewProvider extends ChangeNotifier {
+
+        bool _password_visible = true;
+        bool  get password_visible => _password_visible;
+
+
+     set setVisible(bool password_visible ){
+        _password_visible = password_visible;
+        notifyListeners();
+      }  
+
+
   PageController? _pageController;
   int _currentIndex = 0;
 

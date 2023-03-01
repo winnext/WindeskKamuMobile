@@ -1,10 +1,12 @@
 import 'package:animated_widgets/widgets/opacity_animated.dart';
 import 'package:animated_widgets/widgets/scale_animated.dart';
 import 'package:animated_widgets/widgets/translation_animated.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/login/login.dart';
+import 'package:win_kamu/pages/mainPage.dart';
 
 import '../../utils/themes.dart';
 
@@ -21,14 +23,26 @@ class _SplashState extends State<Splash> {
     Future.delayed(const Duration(seconds: 3), () async {
       //Uygulama açıldığı zaman, cihaz üzerinde local olarak kayıtlı olan tokenın kontrol edilmesi sağlanmaktadır.
       //Eğer ki herhangi bir token bulunmuyor ise kullanıcıyı login sayfasına yönlendirir.
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getString("prefsUserName") != null) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const MyHomePage())));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: ((context) => const Login())));
-      }
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        final deviceInfoPlugin = DeviceInfoPlugin();
+
+        final result = await deviceInfoPlugin.deviceInfo;
+        
+        prefs.setString('deviceId', result.data['identifierForVendor']);
+        prefs.setString('deviceType', result.data['systemName']);
+        
+
+
+       if( prefs.getString("prefsUserName") != null ){
+          Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: ((context) => const MainPage() )));
+       }else{
+
+          Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: ((context) => const Login() )));
+       }
+
+    
     });
     super.initState();
   }

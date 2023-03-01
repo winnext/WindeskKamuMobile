@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
 import 'openRequests/RouteRequests.dart';
-import 'openRequests/openRequests.dart';
 
 class MyHomePage extends StatefulWidget {
+      static String homePage = '/homePage';
+
   const MyHomePage({super.key});
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

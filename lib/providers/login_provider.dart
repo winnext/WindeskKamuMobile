@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/pages/homePage.dart';
+import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -42,7 +43,7 @@ class LoginProvider extends ChangeNotifier {
           String apiresult = await apirepository.login(_kadi.text,_password.text);
           if (apiresult == 'success') {
           Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => const MyHomePage()))); 
+            context, MaterialPageRoute(builder: ((context) => const MainPage()))); 
             
            } else {
                     baglantiHatasi(context, apiresult.toString());

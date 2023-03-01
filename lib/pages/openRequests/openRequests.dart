@@ -16,6 +16,7 @@ import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customTaskListWidget.dart';
 
 class ListScreen extends StatefulWidget {
+
   static String pageName = 'listPage';
 
   const ListScreen({Key? key, required this.pageController}) : super(key: key);
@@ -45,13 +46,16 @@ class _ListScreenState extends State<ListScreen> {
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     print('exlist ' + listViewProvider.exampleListView.length.toString());
     // print(listViewProvider.exampleListView[0].toString());
+
+
+
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: APPColors.Main.blue,
+            backgroundColor: APPColors.Accent.blue,
             title: Text(LocaleKeys.listeleme.tr()),
             centerTitle: true,
             leading: IconButton(
@@ -73,6 +77,8 @@ class _ListScreenState extends State<ListScreen> {
                           onNotification:
                               listViewProvider.notificationController,
                           child: ListView.builder(
+                           
+                            
                               itemCount:
                                   listViewProvider.exampleListView.length,
                               itemBuilder: (BuildContext context, int i) {
@@ -128,10 +134,10 @@ class _ListScreenState extends State<ListScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: TaskListWidget(
                                         iconOnPressed: () {
-                                          // crudProvider.fillForm(
-                                          //     context,
-                                          //     listElements,
-                                          //     listViewProvider.pageController!);
+                                          crudProvider.fillForm(
+                                              context,
+                                              listElements,
+                                              listViewProvider.pageController!);
                                         },
                                         importanceLevelColor: generateColor(l),
                                         trailing: formattedDate,

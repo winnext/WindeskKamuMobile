@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:dio/adapter.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/static_variables.dart';
 import 'package:win_kamu/utils/api_urls.dart';
@@ -13,29 +11,24 @@ import '../models/http_response.model.dart';
 class APIRepository {
   // Platform messages may fail, so we use a try/catch PlatformException.
 
-  var deviceId = PlatformDeviceId.getDeviceId;
-  final String _baseUrl = BASE_URL;
+     Dio dio = new Dio();
 
-  var dio = Dio();
-  Duration durations = Duration(
-    milliseconds: 3000,
-  );
 
-  ReloadApiBase(String tokenValue) async {
-    dio = Dio(BaseOptions(baseUrl: _baseUrl, headers: {
-      "Accept": "application/json",
-      "content-type": "application/json; charset=utf-8",
-      "X-Requested-With": "XMLHttpRequest",
-    }));
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient dioClient) {
-      dioClient.badCertificateCallback =
-          ((X509Certificate cert, String host, int port) => true);
+  // ReloadApiBase(String tokenValue) async {
+  //   dio = Dio(BaseOptions(baseUrl: _baseUrl, headers: {
+  //     "Accept": "application/json",
+  //     "content-type": "application/json; charset=utf-8",
+  //     "X-Requested-With": "XMLHttpRequest",
+  //   }));
+  //   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+  //       (HttpClient dioClient) {
+  //     dioClient.badCertificateCallback =
+  //         ((X509Certificate cert, String host, int port) => true);
 
-      return dioClient;
-    };
-    initializeInterceptors(tokenValue);
-  }
+  //     return dioClient;
+  //   };
+  //   initializeInterceptors(tokenValue);
+  // }
 
   initializeInterceptors(String tokenValue) {
     dio.interceptors.add(InterceptorsWrapper(
@@ -73,24 +66,27 @@ class APIRepository {
     ));
   }
 
+    
+    
+
   Future login(String kadi, String password) async {
+      
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('Device_id : ');
-    print(deviceId.toString());
-    String loginUrl = base_url_v1 +
-        'wdaehtest!_' +
-        deviceId.toString() +
-        '&action=loginCheck&username=' +
+    String deviceToken = prefs.getString('deviceId').toString();
+    String deviceType = prefs.getString('deviceType').toString();
+
+    String loginUrl  = base_url_v1+'wdaehtest!_'+deviceToken+''+ '&action=loginCheck&username=' +
         kadi +
         '&password=' +
         password +
         '&platform=' +
-        'ios' +
+        deviceType +
         '&version=' +
         '3' +
         '&mobileV2=true';
+        print(loginUrl);
     var result = '';
-    print(loginUrl);
 
     Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
 
