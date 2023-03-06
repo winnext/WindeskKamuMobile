@@ -4,6 +4,8 @@ import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/utils/utils.dart';
 import '../l10n/locale_keys.g.dart';
@@ -41,6 +43,45 @@ void baglantiHatasi(BuildContext context, String? message) async {
     Navigator.pop(context);
   }, LocaleKeys.birHataMeydanaGeldi.tr(), message!, ArtSweetAlertType.danger,
       LocaleKeys.tamam.tr());
+}
+
+void snackBar(BuildContext context, String message, String type) async {
+  if (type == 'info') {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.info(
+        message: message,
+      ),
+    );
+  } else if (type == 'success') {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.success(
+        message: message,
+      ),
+    );
+  } else if (type == 'error') {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.error(
+        message: message,
+      ),
+    );
+  } else if (type == 'connect') {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.connect(
+        message: message,
+      ),
+    );
+  } else if (type == 'notconnect') {
+    showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.notconnect(
+          message: message,
+        ),
+        displayDuration: Duration(hours: 2));
+  }
 }
 
 Widget loadingBar(

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';
 
 class HomeButton extends StatelessWidget {
   final String? text;
   final IconData? iconName;
-  final String? navigator;
+  final  navigator;
 
   const HomeButton({this.iconName, this.navigator, this.text, super.key});
 
   @override
   Widget build(BuildContext context) {
+        final mainViewProvide = Provider.of<MainPageViewProvider>(context);
     return Column(
       children: [
         Container(
@@ -19,7 +22,16 @@ class HomeButton extends StatelessWidget {
           height: MediaQuery.of(context).size.width / 4.5,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, navigator!);
+             if(navigator.runtimeType == String){
+                         Navigator.pushNamed(context, navigator!);
+
+             }else{
+                         mainViewProvide.pageController!.jumpToPage(navigator!);
+
+             }
+                
+
+
             },
             child: Icon(
               iconName,

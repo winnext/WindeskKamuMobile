@@ -3,6 +3,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/homePage.dart';
+import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
+import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customTaskListWidget.dart';
 import '../homePage.dart';
@@ -40,27 +43,39 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
+    int index = listViewProvider.currentPage;
     print('exlist ' + listViewProvider.exampleListView.length.toString());
     // print(listViewProvider.exampleListView[0].toString());
+
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: APPColors.Main.blue,
+            backgroundColor: APPColors.Accent.blue,
             title: Text(LocaleKeys.listeleme.tr()),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const MyHomePage())));
+                  print('index');
+                  print(index);
+                  try {
+                    listViewProvider.pageController!.jumpTo(0);
+                  } catch (e) {
+                    dispose();
+                    Navigator.of(context).pushReplacementNamed('/mainPage');
+                  }
                 },
                 icon: const Icon(Icons.home)),
             actions: [sayfaYenile()],
@@ -112,10 +127,10 @@ class _ListScreenState extends State<ListScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: TaskListWidget(
                                         iconOnPressed: () {
-                                          // crudProvider.fillForm(
-                                          //     context,
-                                          //     listElements,
-                                          //     listViewProvider.pageController!);
+                                          crudProvider.fillForm(
+                                              context,
+                                              listElements,
+                                              listViewProvider.pageController!);
                                         },
                                         importanceLevelColor: generateColor(l),
                                         code: listElements.CODE.toString(),
@@ -189,47 +204,5 @@ class _ListScreenState extends State<ListScreen> {
         ),
       );
     });
-  }
-}
-
-timeRecover(timeInfo) {
-  String finalTime;
-  print('asdf' + timeInfo);
-  final timeZone = timeInfo.toString().substring(0, 4) +
-      '-' +
-      timeInfo.toString().substring(4, 6) +
-      '-' +
-      timeInfo.toString().substring(6, 8) +
-      'T' +
-      timeInfo.toString().substring(8, 10) +
-      ':' +
-      timeInfo.toString().substring(10, 12) +
-      ':' +
-      timeInfo.toString().substring(12, 14);
-  print('asdff' + timeZone);
-
-  if (timeZone.toString().contains(".")) {
-    DateTime dateTime =
-        DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(timeZone.toString());
-    finalTime = DateFormat("yyyy-MM-dd").format(dateTime);
-  } else {
-    DateTime dateTime =
-        DateFormat("yyyy-MM-ddTHH:mm").parse(timeZone.toString());
-    finalTime = DateFormat("dd/MM/yyyy").format(dateTime);
-  }
-  print('finalTime ' + finalTime);
-  return finalTime;
-}
-
-moreLess(numberOne, numberTwo) {
-  int numberOnetoInt = int.parse(numberOne);
-  int numberTwotoInt = int.parse(numberTwo);
-  print('numbers' + numberTwotoInt.toString());
-  print('numberss' + numberTwotoInt.toString());
-
-  if (numberOnetoInt - numberTwotoInt < 0) {
-    return -10;
-  } else {
-    return 10;
   }
 }
