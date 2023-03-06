@@ -27,7 +27,9 @@ extension APPImagesExtension on APPImages {
   }
 }
 
-enum APPColors { Login, Main, Secondary, Accent, Graident }
+enum APPColors { Login, Main, Secondary, Accent, Graident, NewNotifi}
+
+
 
 extension APPColorsExtension on APPColors {
   Color get orange {
@@ -53,6 +55,8 @@ extension APPColorsExtension on APPColors {
         return const Color(0xffA5E5FF);
       case APPColors.Accent:
         return const Color(0xff184888);
+      case APPColors.NewNotifi:
+        return const Color.fromARGB(1000, 165, 229, 255);
       default:
         return const Color(0xff4a6572);
     }
@@ -95,6 +99,9 @@ extension APPColorsExtension on APPColors {
     switch (this) {
       case APPColors.Main:
         return Colors.redAccent;
+      case APPColors.NewNotifi:
+        return Color.fromARGB(1000, 237,181,181);
+
       default:
         return Colors.red;
     }

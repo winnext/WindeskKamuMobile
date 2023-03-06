@@ -3,6 +3,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/homePage.dart';
+import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
@@ -40,10 +42,18 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    
+  }
+
+  @override
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
+    int index = listViewProvider.currentPage;
     print('exlist ' + listViewProvider.exampleListView.length.toString());
     // print(listViewProvider.exampleListView[0].toString());
 
@@ -60,7 +70,15 @@ class _ListScreenState extends State<ListScreen> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  listViewProvider.pageController!.jumpTo(0);
+                  print('index');
+                  print(index);
+                  try {
+                  listViewProvider.pageController!.jumpTo(0); 
+                  } catch (e) {
+                    dispose();
+                   Navigator.of(context).pushReplacementNamed('/mainPage');
+
+                  }
                 },
                 icon: const Icon(Icons.home)),
             actions: [sayfaYenile()],

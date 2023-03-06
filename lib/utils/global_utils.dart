@@ -96,7 +96,7 @@ void snackBar(BuildContext context, String message, String type) async {
       message:
           message,
     ),
-        displayDuration: Duration(seconds: 60)
+        displayDuration: Duration(hours: 2)
 
 );
 

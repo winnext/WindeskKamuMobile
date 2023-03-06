@@ -9,6 +9,7 @@ import 'package:win_kamu/pages/homePage.dart';
 
 import 'package:provider/provider.dart';
 import 'package:win_kamu/pages/login/login.dart';
+import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
 
 import '../providers/main_page_view_provider.dart';
@@ -18,6 +19,8 @@ import 'internet_connection/internet_connection.dart';
 import 'openRequests/RouteRequests.dart';
 
 class MainPage extends StatefulWidget {
+        static String mainPage= '/mainPage';
+
   const MainPage({super.key});
 
   @override
@@ -78,7 +81,8 @@ class _MainPageState extends State<MainPage> {
             
             MyHomePage(),
             ListScreen(pageController: mainViewProvide.pageController!),
-            Login()
+            Login(),
+            NewNotif()
           ],
         ),
       ),
@@ -99,13 +103,18 @@ class _MainPageState extends State<MainPage> {
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Sayfa1',
-              icon: Icon(Icons.home),
+              title: 'Açık Taleplerim',
+              icon: Icon(Icons.content_paste_search),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Sayfa2',
-              icon: Icon(Icons.apps),
+              title: 'Onay Bekleyenler',
+              icon: Icon(Icons.content_paste_off),
+              activeColor: APPColors.Main.white,
+              inactiveColor: APPColors.Main.grey),
+               CustomBottomNavigationBarItem(
+              title: 'Yeni Bildirim',
+              icon: Icon(Icons.attachment),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
         ],

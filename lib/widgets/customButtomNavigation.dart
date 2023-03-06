@@ -110,7 +110,7 @@ class _ItemWidget extends StatelessWidget {
       container: true,
       selected: isSelected,
       child: AnimatedContainer(
-        width: isSelected ? 130 : 50,
+        width: isSelected ? 180 : 50,
         height: double.maxFinite,
         duration: animationDuration,
         curve: curve,
@@ -122,7 +122,7 @@ class _ItemWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: NeverScrollableScrollPhysics(),
           child: Container(
-            width: isSelected ? 130 : 50,
+            width: isSelected ? 180 : 50,
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Center(
               child: Row(

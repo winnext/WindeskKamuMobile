@@ -34,6 +34,7 @@ class _SplashState extends State<Splash> {
 
 
        if( prefs.getString("prefsUserName") != null ){
+         
           Navigator.pushReplacement(
           context, MaterialPageRoute(builder: ((context) => const MainPage() )));
        }else{

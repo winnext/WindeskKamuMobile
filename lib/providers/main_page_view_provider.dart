@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPageViewProvider extends ChangeNotifier {
 
+
+
         bool _password_visible = true;
         bool  get password_visible => _password_visible;
+
+        String _kadi = '';
+        String get kadi => _kadi;
+
+        
+
+       
+
+
+
+        
 
 
      set setVisible(bool password_visible ){
@@ -28,7 +42,12 @@ class MainPageViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void initForm() {
+  void initForm() async{
     _pageController = PageController();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _kadi = prefs.getString('prefsUserName') ?? '';
+
+    
+    
   }
 }

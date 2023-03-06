@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/login/login.dart';
+import 'package:win_kamu/pages/mainPage.dart';
+import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/routeRequests.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
@@ -49,8 +51,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Splash(),
+        MyHomePage.homePage: (context) => MyHomePage(),
+        MainPage.mainPage: (context) => MainPage(),
+
         OpenRequests.openRequest: (context) => OpenRequests(),
         Login.login: (context) => Login(),
+        NewNotif.newNotif:(context) => NewNotif(),
       },
     );
   }

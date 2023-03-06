@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
+import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
@@ -83,13 +84,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Açık Taleplerim',
                                 iconName: Icons.content_paste_search,
-                                navigator: OpenRequests.openRequest),
+                                navigator: 1),
                           ),
                           Expanded(
                             child: HomeButton(
                                 text: 'Kapatma Onayı Bekleyenler',
                                 iconName: Icons.content_paste_off,
-                                navigator: OpenRequests.openRequest),
+                                navigator: 2),
                           )
                         ],
                       ),
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Yeni Bildirim',
                                 iconName: Icons.attachment,
-                                navigator: OpenRequests.openRequest),
+                                navigator: 3),
                           )
                         ],
                       ),
