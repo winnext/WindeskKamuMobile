@@ -16,6 +16,7 @@ class ListViewModel {
   String? PLANNEDDATE;
   String? response_timer;
   String? fixed_timer;
+  String? SPACE;
 
   ListViewModel(
       {this.ID = '0',
@@ -34,7 +35,8 @@ class ListViewModel {
       this.fixed_timer,
       this.response_timer,
       this.LOCATION,
-      this.DESCRIPTION});
+      this.DESCRIPTION,
+      this.SPACE});
   ListViewModel.fromJson(Map<String, dynamic> json) {
     ID = json['ID'];
     CODE = json['CODE'];
@@ -54,5 +56,6 @@ class ListViewModel {
     response_timer = json['response_timer'];
     LOCATION = json['LOCATION'];
     DESCRIPTION = json['DESCRIPTION'];
+    SPACE = json['SPACE'];
   }
 }

@@ -87,9 +87,12 @@ class ListViewProvider extends ChangeNotifier {
 
   void loadData(index) async {
     _isDataLoading = true;
+    int _startIssues = index == 1 ? 0 : (index - 1) * 10;
+    int _endIsses = index * 10;
+
     Map<String, dynamic> queryParameters = {
-      "start": 0,
-      "end": 10,
+      "start": _startIssues,
+      "end": _endIsses,
       "status": "",
       "build": "",
       "floor": "",

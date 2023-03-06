@@ -1,36 +1,90 @@
 // ignore_for_file:file_names, prefer_const_constructors_in_immutables,prefer_const_constructors,prefer_const_literals_to_create_immutables,use_key_in_widget_constructors
 
+import 'dart:async';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
+import '../../utils/time_utils.dart';
 import '../../utils/utils.dart';
 
-class TaskListWidget extends StatelessWidget {
-  final String? title, extraTitle, taskNo, subTitle, trailing;
+class TaskListWidget extends StatefulWidget {
+  final String? code,
+      targetFDate,
+      targetRDate,
+      taskNo,
+      description,
+      sumdesc1,
+      statusName,
+      space,
+      location,
+      idate,
+      statusCode,
+      planedDate,
+      respondedIDate,
+      responseTimer,
+      fixedTimer,
+      fixedIDate,
+      timeInfoNow;
+
   final Color? importanceLevelColor;
 
   final VoidCallback? press;
   final bool isIcon;
   final VoidCallback? iconOnPressed;
-  const TaskListWidget(
-      {Key? key,
-      this.title,
-      this.extraTitle,
-      this.taskNo,
-      this.subTitle,
-      this.trailing,
-      this.press,
-      this.importanceLevelColor,
-      this.isIcon = false,
-      this.iconOnPressed})
-      : super(key: key);
+  const TaskListWidget({
+    Key? key,
+    this.code,
+    this.targetFDate,
+    this.targetRDate,
+    this.space,
+    this.taskNo,
+    this.description,
+    this.sumdesc1,
+    this.press,
+    this.importanceLevelColor,
+    this.statusName,
+    this.isIcon = false,
+    this.location,
+    this.idate,
+    this.statusCode,
+    this.planedDate,
+    this.iconOnPressed,
+    this.respondedIDate,
+    this.fixedTimer,
+    this.responseTimer,
+    this.fixedIDate,
+    this.timeInfoNow,
+  }) : super(key: key);
+
+  @override
+  State<TaskListWidget> createState() => _TaskListWidgetState();
+}
+
+class _TaskListWidgetState extends State<TaskListWidget> {
+  String dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
+
+  changeTime() {
+    setState(() {
+      dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
+    });
+  }
+
+  @override
+  void initState() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      changeTime();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: press,
+      onTap: widget.press,
       child: Container(
         width: size.width,
         decoration: BoxDecoration(
@@ -53,7 +107,7 @@ class TaskListWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      color: importanceLevelColor!,
+                      color: widget.importanceLevelColor!,
                       width: MediaQuery.of(context).size.width / 50,
                       height: MediaQuery.of(context).size.height / 12,
                     ),
@@ -70,7 +124,7 @@ class TaskListWidget extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          title.toString(),
+                          widget.code.toString(),
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -83,12 +137,54 @@ class TaskListWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  subTitle.toString() != "" ? SizedBox(height: 3) : Container(),
-                  subTitle.toString() != ""
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        widget.statusName.toString(),
+                        style: TextStyle(
+                          color: Color(0xff025273),
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                  widget.location.toString() != ""
+                      ? Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              widget.location.toString(),
+                              style: TextStyle(
+                                color: Color(0xff025273),
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  widget.space.toString() != ""
+                      ? Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              widget.space.toString(),
+                              style: TextStyle(
+                                color: Color(0xff025273),
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  widget.description.toString() != ""
+                      ? SizedBox(height: 3)
+                      : Container(),
+                  widget.description.toString() != ""
                       ? SizedBox(
                           width: MediaQuery.of(context).size.width / 2,
                           child: Text(
-                            subTitle.toString(),
+                            widget.description.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: Color(0xff025273),
@@ -102,7 +198,7 @@ class TaskListWidget extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text(
-                        extraTitle.toString(),
+                        'Açılma Tarihi:  ${widget.idate.toString()}',
                         style: TextStyle(
                           color: Color(0xff025273),
                           fontSize: 13,
@@ -110,6 +206,206 @@ class TaskListWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  widget.statusCode.toString() == "OPlanned"
+                      ? Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              'Randevulu Vaka ${widget.planedDate}',
+                              style: TextStyle(
+                                color: Color(0xff025273),
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        )
+                      : widget.responseTimer == "0" && widget.fixedTimer == "0"
+                          ? Column(
+                              children: [
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Gerçekleşen Yanıtlama ${widget.respondedIDate}',
+                                      style: TextStyle(
+                                        backgroundColor: int.parse(widget
+                                                        .respondedIDate
+                                                        .toString()) -
+                                                    int.parse(widget.targetRDate
+                                                        .toString()) <
+                                                0
+                                            ? Color(0xff32CD32)
+                                            : Colors.red,
+                                        color: Color(0xff025273),
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Gerçekleşen Düzeltme ${widget.fixedIDate}',
+                                      style: TextStyle(
+                                        backgroundColor: int.parse(
+                                                        (widget.fixedIDate)
+                                                            .toString()) -
+                                                    int.parse(
+                                                        (widget.targetFDate)
+                                                            .toString()) <
+                                                0
+                                            ? Color(0xff32CD32)
+                                            : Colors.red,
+                                        color: Color(0xff025273),
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : widget.responseTimer == "0" &&
+                                  widget.fixedTimer == "1"
+                              ? Flexible(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
+                                          style: TextStyle(
+                                            backgroundColor: int.parse(widget
+                                                            .respondedIDate
+                                                            .toString()) -
+                                                        int.parse(widget
+                                                            .targetRDate
+                                                            .toString()) <
+                                                    0
+                                                ? Color(0xff32CD32)
+                                                : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetFDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetFDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Flexible(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetRDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetRDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetFDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
+                                          style: TextStyle(
+                                            color:
+                                                int.parse(dateNow.toString()) -
+                                                            int.parse(widget
+                                                                .targetFDate
+                                                                .toString()) <
+                                                        0
+                                                    ? Color(0xff32CD32)
+                                                    : Colors.red,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                 ],
               ),
               Row(
@@ -120,7 +416,7 @@ class TaskListWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        taskNo.toString(),
+                        widget.taskNo.toString(),
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Color(0xff025273),
@@ -129,7 +425,7 @@ class TaskListWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 6),
                       Text(
-                        trailing.toString(),
+                        widget.sumdesc1.toString(),
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Color(0xff025273),
@@ -138,11 +434,12 @@ class TaskListWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  isIcon
+                  widget.isIcon
                       ? SizedBox(
                           width: MediaQuery.of(context).size.width / 18,
                           child: IconButton(
-                            onPressed: isIcon ? iconOnPressed : () {},
+                            onPressed:
+                                widget.isIcon ? widget.iconOnPressed : () {},
                             icon: Icon(Icons.info),
                             color: APPColors.Main.blue,
                           ),
@@ -159,3 +456,4 @@ class TaskListWidget extends StatelessWidget {
     );
   }
 }
+

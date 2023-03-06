@@ -14,6 +14,7 @@ import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customTaskListWidget.dart';
+import '../homePage.dart';
 
 class ListScreen extends StatefulWidget {
   static String pageName = 'listPage';
@@ -56,7 +57,10 @@ class _ListScreenState extends State<ListScreen> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  listViewProvider.pageController!.jumpTo(0);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const MyHomePage())));
                 },
                 icon: const Icon(Icons.home)),
             actions: [sayfaYenile()],
@@ -84,42 +88,22 @@ class _ListScreenState extends State<ListScreen> {
                                 ListViewModel listElements =
                                     listViewProvider.exampleListView[i];
 
-                                final timeZone = listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(0, 4) +
-                                    '-' +
-                                    listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(4, 6) +
-                                    '-' +
-                                    listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(6, 8) +
-                                    'T' +
-                                    listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(8, 10) +
-                                    ':' +
-                                    listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(10, 12) +
-                                    ':' +
-                                    listElements.TARGET_FDATE
-                                        .toString()
-                                        .substring(12, 14);
+                                final TARGET_FDATE =
+                                    timeRecover(listElements.TARGET_FDATE);
+                                final TARGET_RDATE =
+                                    timeRecover(listElements.TARGET_RDATE);
+                                final time = DateTime.now();
+                                final String timeNow = DateFormat('yMMddhhmmss')
+                                    .format(time)
+                                    .toString();
+                                if (listElements.RESPONDED_IDATE != null &&
+                                    listElements.TARGET_FDATE != null) {
+                                  print('responsedI');
 
-                                if (timeZone.toString().contains(".")) {
-                                  DateTime dateTime =
-                                      DateFormat("yyyy-MM-ddTHH:mm:ss.SSS")
-                                          .parse(timeZone.toString());
-                                  formattedDate =
-                                      DateFormat("dd/MM/yyyy").format(dateTime);
-                                } else {
-                                  DateTime dateTime =
-                                      DateFormat("yyyy-MM-ddTHH:mm")
-                                          .parse(timeZone.toString());
-                                  formattedDate =
-                                      DateFormat("dd/MM/yyyy").format(dateTime);
+                                  print(int.parse(listElements.RESPONDED_IDATE
+                                          .toString()) -
+                                      int.parse(listElements.TARGET_RDATE
+                                          .toString()));
                                 }
 
                                 return Column(
@@ -134,14 +118,38 @@ class _ListScreenState extends State<ListScreen> {
                                           //     listViewProvider.pageController!);
                                         },
                                         importanceLevelColor: generateColor(l),
-                                        trailing: formattedDate,
+                                        code: listElements.CODE.toString(),
+                                        targetFDate: listElements.TARGET_FDATE,
+                                        targetRDate: listElements.TARGET_RDATE,
                                         taskNo: i.toString(),
-                                        title: listElements.CODE.toString(),
-                                        subTitle:
+                                        description:
                                             listElements.DESCRIPTION.toString(),
-                                        isIcon: true,
-                                        extraTitle:
+                                        sumdesc1:
+                                            listElements.SUMDESC1.toString(),
+                                        statusName:
+                                            listElements.STATUSNAME.toString(),
+                                        space: listElements.SPACE.toString(),
+                                        location:
+                                            listElements.LOCATION.toString(),
+                                        idate: listElements.IDATE.toString(),
+                                        statusCode:
                                             listElements.STATUSCODE.toString(),
+                                        planedDate:
+                                            listElements.PLANNEDDATE.toString(),
+                                        respondedIDate: listElements
+                                            .RESPONDED_IDATE
+                                            .toString(),
+                                        responseTimer: listElements
+                                            .response_timer
+                                            .toString(),
+                                        fixedTimer:
+                                            listElements.fixed_timer.toString(),
+                                        fixedIDate:
+                                            listElements.FIXED_IDATE.toString(),
+                                        timeInfoNow: timeNow,
+                                        isIcon: true,
+                                        // extraTitle:
+                                        //     listElements.STATUSCODE.toString(),
                                       ),
                                     ),
                                   ],
@@ -181,5 +189,47 @@ class _ListScreenState extends State<ListScreen> {
         ),
       );
     });
+  }
+}
+
+timeRecover(timeInfo) {
+  String finalTime;
+  print('asdf' + timeInfo);
+  final timeZone = timeInfo.toString().substring(0, 4) +
+      '-' +
+      timeInfo.toString().substring(4, 6) +
+      '-' +
+      timeInfo.toString().substring(6, 8) +
+      'T' +
+      timeInfo.toString().substring(8, 10) +
+      ':' +
+      timeInfo.toString().substring(10, 12) +
+      ':' +
+      timeInfo.toString().substring(12, 14);
+  print('asdff' + timeZone);
+
+  if (timeZone.toString().contains(".")) {
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(timeZone.toString());
+    finalTime = DateFormat("yyyy-MM-dd").format(dateTime);
+  } else {
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm").parse(timeZone.toString());
+    finalTime = DateFormat("dd/MM/yyyy").format(dateTime);
+  }
+  print('finalTime ' + finalTime);
+  return finalTime;
+}
+
+moreLess(numberOne, numberTwo) {
+  int numberOnetoInt = int.parse(numberOne);
+  int numberTwotoInt = int.parse(numberTwo);
+  print('numbers' + numberTwotoInt.toString());
+  print('numberss' + numberTwotoInt.toString());
+
+  if (numberOnetoInt - numberTwotoInt < 0) {
+    return -10;
+  } else {
+    return 10;
   }
 }
