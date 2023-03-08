@@ -105,8 +105,8 @@ class ListViewProvider extends ChangeNotifier {
         queryParameters: queryParameters);
 
     final data = result.records['records'];
-    print('data2' + result.records['records'].toString());
-    print('data3' + result.records['totalcount'].toString());
+    // print('data2' + result.records['records'].toString());
+    // print('data3' + result.records['totalcount'].toString());
 
     //print(result.records.records['result']);
 

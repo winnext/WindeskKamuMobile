@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/static_variables.dart';
 import 'package:win_kamu/utils/api_urls.dart';
+import '../models/detail_response.model.dart';
 import '../models/http_response.model.dart';
 
 class APIRepository {
   // Platform messages may fail, so we use a try/catch PlatformException.
 
-     Dio dio = new Dio();
-
+  Dio dio = new Dio();
 
   // ReloadApiBase(String tokenValue) async {
   //   dio = Dio(BaseOptions(baseUrl: _baseUrl, headers: {
@@ -66,17 +66,16 @@ class APIRepository {
     ));
   }
 
-    
-    
-
   Future login(String kadi, String password) async {
-      
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
     String deviceType = prefs.getString('deviceType').toString();
 
-    String loginUrl  = base_url_v1+'wdaehtest!_'+deviceToken+''+ '&action=loginCheck&username=' +
+    String loginUrl = base_url_v1 +
+        'wdaehtest!_' +
+        deviceToken +
+        '' +
+        '&action=loginCheck&username=' +
         kadi +
         '&password=' +
         password +
@@ -85,7 +84,7 @@ class APIRepository {
         '&version=' +
         '3' +
         '&mobileV2=true';
-        print(loginUrl);
+    print(loginUrl);
     var result = '';
 
     Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
@@ -123,11 +122,10 @@ class APIRepository {
 
     try {
       //ReloadApiBase(StaticVariables.token);
-      final response = await dio.get(
-          'http://windeskmobiletest.etliksh.com/list/XL00225/issue',
+      final response = await dio.get(controller,
           queryParameters: queryParameters,
           options: Options(
-            headers: {"xusercode": "sgnm1040", "xtoken": "aehtest!"},
+            headers: {"xusercode": "k203736", "xtoken": "aehtest!"},
           ));
 
       final data = jsonDecode(response.toString());
@@ -192,6 +190,89 @@ class APIRepository {
         //Hata dönüşü
         return httpSonucModel(
           records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
+  Future<detailSonucModel> getRequestDetail(
+      {@required String? controller,
+      @required String? issueCode,
+      @required String? xuserCode,
+      bool redirectLogin = false}) async {
+    print('url ' + controller! );
+
+    try {
+      //ReloadApiBase(StaticVariables.token);
+      final response = await dio.get(controller,
+          options: Options(
+            headers: {"xusercode": xuserCode, "xtoken": "aehtest!"},
+          ));
+
+      final data = jsonDecode(response.toString());
+
+      print(data['detail']);
+
+      if (response != null) {
+        return detailSonucModel(
+          detail: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return detailSonucModel(
+        detail: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return detailSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            detail: {},
+          );
+        }
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return detailSonucModel(
+          detail: {},
           success: false,
           message: e.message,
         );

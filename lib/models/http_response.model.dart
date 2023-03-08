@@ -17,6 +17,8 @@ class httpSonucModel {
       : records = records['records'],
         success = records['success'];
 
+  get detail => null;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> records = <String, dynamic>{};
     records['records'] = records;

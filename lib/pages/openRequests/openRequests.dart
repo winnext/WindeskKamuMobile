@@ -6,6 +6,7 @@ import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
+import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
@@ -16,8 +17,9 @@ import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customTaskListWidget.dart';
+import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
+import 'openRequestsDetail.dart';
 
 class ListScreen extends StatefulWidget {
   static String pageName = 'listPage';
@@ -31,6 +33,7 @@ class ListScreen extends StatefulWidget {
 final apirepository = APIRepository();
 
 ListViewProvider? listViewProvider;
+DetailViewProvider? detailViewProvider;
 
 class _ListScreenState extends State<ListScreen> {
   @override
@@ -52,10 +55,9 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
-    print('exlist ' + listViewProvider.exampleListView.length.toString());
-    // print(listViewProvider.exampleListView[0].toString());
 
     return WillPopScope(
       onWillPop: () async {
@@ -84,8 +86,6 @@ class _ListScreenState extends State<ListScreen> {
             children: [
               Column(
                 children: [
-                  pageCard(
-                      context, LocaleKeys.listOrnekleri.tr(), logoHeader()),
                   !listViewProvider.isDataExist
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
@@ -126,46 +126,50 @@ class _ListScreenState extends State<ListScreen> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TaskListWidget(
-                                        iconOnPressed: () {
-                                          crudProvider.fillForm(
-                                              context,
-                                              listElements,
-                                              listViewProvider.pageController!);
-                                        },
-                                        importanceLevelColor: generateColor(l),
-                                        code: listElements.CODE.toString(),
-                                        targetFDate: listElements.TARGET_FDATE,
-                                        targetRDate: listElements.TARGET_RDATE,
-                                        taskNo: i.toString(),
-                                        description:
-                                            listElements.DESCRIPTION.toString(),
-                                        sumdesc1:
-                                            listElements.SUMDESC1.toString(),
-                                        statusName:
-                                            listElements.STATUSNAME.toString(),
-                                        space: listElements.SPACE.toString(),
-                                        location:
-                                            listElements.LOCATION.toString(),
-                                        idate: listElements.IDATE.toString(),
-                                        statusCode:
-                                            listElements.STATUSCODE.toString(),
-                                        planedDate:
-                                            listElements.PLANNEDDATE.toString(),
-                                        respondedIDate: listElements
-                                            .RESPONDED_IDATE
-                                            .toString(),
-                                        responseTimer: listElements
-                                            .response_timer
-                                            .toString(),
-                                        fixedTimer:
-                                            listElements.fixed_timer.toString(),
-                                        fixedIDate:
-                                            listElements.FIXED_IDATE.toString(),
-                                        timeInfoNow: timeNow,
-                                        isIcon: true,
-                                        // extraTitle:
-                                        //     listElements.STATUSCODE.toString(),
-                                      ),
+                                          importanceLevelColor:
+                                              generateColor(l),
+                                          code: listElements.CODE.toString(),
+                                          targetFDate:
+                                              listElements.TARGET_FDATE,
+                                          targetRDate:
+                                              listElements.TARGET_RDATE,
+                                          taskNo: i.toString(),
+                                          description: listElements.DESCRIPTION
+                                              .toString(),
+                                          sumdesc1:
+                                              listElements.SUMDESC1.toString(),
+                                          statusName: listElements.STATUSNAME
+                                              .toString(),
+                                          space: listElements.SPACE.toString(),
+                                          location:
+                                              listElements.LOCATION.toString(),
+                                          idate: listElements.IDATE.toString(),
+                                          statusCode: listElements.STATUSCODE
+                                              .toString(),
+                                          planedDate: listElements.PLANNEDDATE
+                                              .toString(),
+                                          respondedIDate: listElements
+                                              .RESPONDED_IDATE
+                                              .toString(),
+                                          responseTimer: listElements
+                                              .response_timer
+                                              .toString(),
+                                          fixedTimer: listElements.fixed_timer
+                                              .toString(),
+                                          fixedIDate: listElements.FIXED_IDATE
+                                              .toString(),
+                                          timeInfoNow: timeNow,
+                                          isIcon: true,
+                                          onPressed: (code) {
+                                            detailViewProvider.setIssueCode =
+                                                code;
+                                            Navigator.pushNamed(context,
+                                                OpenRequestDetail.pageName);
+                                            print('tiklandi' + code);
+                                          }
+                                          // extraTitle:
+                                          //     listElements.STATUSCODE.toString(),
+                                          ),
                                     ),
                                   ],
                                 );

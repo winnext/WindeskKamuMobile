@@ -29,34 +29,34 @@ class TaskListWidget extends StatefulWidget {
       timeInfoNow;
 
   final Color? importanceLevelColor;
-
   final VoidCallback? press;
   final bool isIcon;
-  final VoidCallback? iconOnPressed;
-  const TaskListWidget({
-    Key? key,
-    this.code,
-    this.targetFDate,
-    this.targetRDate,
-    this.space,
-    this.taskNo,
-    this.description,
-    this.sumdesc1,
-    this.press,
-    this.importanceLevelColor,
-    this.statusName,
-    this.isIcon = false,
-    this.location,
-    this.idate,
-    this.statusCode,
-    this.planedDate,
-    this.iconOnPressed,
-    this.respondedIDate,
-    this.fixedTimer,
-    this.responseTimer,
-    this.fixedIDate,
-    this.timeInfoNow,
-  }) : super(key: key);
+  final Function onPressed;
+
+  const TaskListWidget(
+      {Key? key,
+      this.code,
+      this.targetFDate,
+      this.targetRDate,
+      this.space,
+      this.taskNo,
+      this.description,
+      this.sumdesc1,
+      this.press,
+      this.importanceLevelColor,
+      this.statusName,
+      this.isIcon = false,
+      this.location,
+      this.idate,
+      this.statusCode,
+      this.planedDate,
+      required this.onPressed,
+      this.respondedIDate,
+      this.fixedTimer,
+      this.responseTimer,
+      this.fixedIDate,
+      this.timeInfoNow})
+      : super(key: key);
 
   @override
   State<TaskListWidget> createState() => _TaskListWidgetState();
@@ -84,7 +84,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: widget.press,
+      onTap: () {
+        widget.onPressed(widget.code.toString());
+      },
       child: Container(
         width: size.width,
         decoration: BoxDecoration(
@@ -138,26 +140,32 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                     ),
                   ),
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        widget.statusName.toString(),
-                        style: TextStyle(
-                          color: Color(0xff025273),
-                          fontSize: 13,
+                    child: SizedBox(
+                      width: size.width / 1.5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          widget.statusName.toString(),
+                          style: TextStyle(
+                            color: Color(0xff025273),
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   widget.location.toString() != ""
                       ? Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Text(
-                              widget.location.toString(),
-                              style: TextStyle(
-                                color: Color(0xff025273),
-                                fontSize: 13,
+                          child: SizedBox(
+                            width: size.width / 1.5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                widget.location.toString(),
+                                style: TextStyle(
+                                  color: Color(0xff025273),
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
                           ),
@@ -165,30 +173,34 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                       : Container(),
                   widget.space.toString() != ""
                       ? Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Text(
-                              widget.space.toString(),
-                              style: TextStyle(
-                                color: Color(0xff025273),
-                                fontSize: 13,
+                          child: SizedBox(
+                            width: size.width / 1.5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                widget.space.toString(),
+                                style: TextStyle(
+                                  color: Color(0xff025273),
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
                           ),
                         )
                       : Container(),
                   widget.description.toString() != ""
-                      ? SizedBox(height: 3)
-                      : Container(),
-                  widget.description.toString() != ""
-                      ? SizedBox(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Text(
-                            widget.description.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Color(0xff025273),
-                              fontSize: 13,
+                      ? Flexible(
+                          child: SizedBox(
+                            width: size.width / 1.5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                widget.description.toString(),
+                                style: TextStyle(
+                                  color: Color(0xff025273),
+                                  fontSize: 13,
+                                ),
+                              ),
                             ),
                           ),
                         )
@@ -221,12 +233,16 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                         )
                       : widget.responseTimer == "0" && widget.fixedTimer == "0"
                           ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: Text(
                                       'Gerçekleşen Yanıtlama ${widget.respondedIDate}',
+                                      softWrap: true,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         backgroundColor: int.parse(widget
                                                         .respondedIDate
@@ -269,6 +285,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   widget.fixedTimer == "1"
                               ? Flexible(
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding:
@@ -304,6 +323,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                                     ? Color(0xff32CD32)
                                                     : Colors.red,
                                             fontSize: 13,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ),
@@ -330,22 +350,28 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                 )
                               : Flexible(
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetRDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetRDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -438,8 +464,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                       ? SizedBox(
                           width: MediaQuery.of(context).size.width / 18,
                           child: IconButton(
-                            onPressed:
-                                widget.isIcon ? widget.iconOnPressed : () {},
+                            onPressed: widget.isIcon ? widget.press : () {},
                             icon: Icon(Icons.info),
                             color: APPColors.Main.blue,
                           ),
@@ -456,4 +481,3 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     );
   }
 }
-
