@@ -18,6 +18,7 @@ class DetailViewProvider extends ChangeNotifier {
 
   List<DetailViewModel> _exampleListView = [];
   List<DetailViewModel> tempexampleListView = [];
+  List<DetailViewModel> queryParameters = [];
 
   String? _issueCode;
   bool _isDataLoading = true;
@@ -61,32 +62,23 @@ class DetailViewProvider extends ChangeNotifier {
   loadData(String issuecode, String xusercode) async {
     _isDataLoading = true;
 
-    final data = await apirepository.getRequestDetail(
-        controller: getIssueDetail, issueCode: issuecode, xuserCode: xusercode);
+    final responseUrl = getIssueDetail + '/${issueCode}';
 
-    //Map<String, dynamic> issueDetails = {'ID': data.ID, 'CODE': data.CODE};
-    print('issueDetail' + data.detail['detail'].toString());
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+
+    print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
 
     if (true) {
-      //print('listToString' + List.toString());
-
       Future.delayed(const Duration(milliseconds: 1200), () {
-        //exampleListView.addAll(Listt.toString());
+        var responseData = DetailViewModel.fromJson(data.detail['detail']);
 
-        //print('exex : ' + exampleListView.toString());
-        int noOfTasks = tempexampleListView.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
-        return data.detail['detail'].toString();
+        exampleListView.add(responseData);
+
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
       });
     } else {
       // baglantiHatasi(context, result.message);

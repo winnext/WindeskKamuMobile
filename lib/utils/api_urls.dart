@@ -6,7 +6,7 @@ const addNotification = "v1/Notification/AddNotification";
 const getNotificationsWithPagingFilter =
     "http://windeskmobiletest.etliksh.com/list/OpenIssuesIsCustomer/issue";
 const getIssueDetail =
-    "http://windeskmobiletest.etliksh.com/issue/AEHTEST00337155";
+    "http://windeskmobiletest.etliksh.com/issue";
 
 const loginUrl = "v1/Auth/Login";
 

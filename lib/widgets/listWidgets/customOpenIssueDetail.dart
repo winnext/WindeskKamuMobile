@@ -26,7 +26,28 @@ class DetailListWidget extends StatefulWidget {
       responseTimer,
       fixedTimer,
       fixedIDate,
-      timeInfoNow;
+      timeInfoNow,
+      ani,
+      id,
+      plannedDate,
+      contactName,
+      locName,
+      locTree,
+      locTree2,
+      title,
+      cmdb,
+      hys,
+      hds,
+      assignmentGroup,
+      assignmentGroupName,
+      assigneName,
+      relatedCode,
+      cat1,
+      contactCode,
+      plannedDesc,
+      slaCode,
+      parentStatus,
+      wrondDirect;
 
   final Color? importanceLevelColor;
   final VoidCallback? press;
@@ -55,7 +76,28 @@ class DetailListWidget extends StatefulWidget {
       this.fixedTimer,
       this.responseTimer,
       this.fixedIDate,
-      this.timeInfoNow})
+      this.timeInfoNow,
+      this.ani,
+      this.assigneName,
+      this.assignmentGroup,
+      this.assignmentGroupName,
+      this.cat1,
+      this.cmdb,
+      this.contactCode,
+      this.contactName,
+      this.hds,
+      this.hys,
+      this.id,
+      this.locName,
+      this.locTree,
+      this.locTree2,
+      this.parentStatus,
+      this.plannedDate,
+      this.plannedDesc,
+      this.relatedCode,
+      this.slaCode,
+      this.title,
+      this.wrondDirect})
       : super(key: key);
 
   @override
@@ -89,90 +131,349 @@ class _DetailListWidgetState extends State<DetailListWidget> {
       },
       child: Container(
         width: size.width,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x19025273),
-              blurRadius: 12,
-              offset: Offset(6, 8),
-            ),
-          ],
-          color: Color(0xfff6f6f6),
-        ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 0, left: 0, right: 12, bottom: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          padding: const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Column(
-                  children: [
-                    Container(
-                      color: widget.importanceLevelColor!,
-                      width: MediaQuery.of(context).size.width / 50,
-                      height: MediaQuery.of(context).size.height / 12,
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Flexible(
-                    child: SizedBox(
-                      width: size.width / 2.0,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          widget.code.toString(),
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 14,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  Expanded(
+                    child: Text(
+                      widget.code.toString(),
+                      style: TextStyle(
+                        color: APPColors.Secondary.black,
+                        fontSize: 15,
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: SizedBox(
-                      width: size.width / 1.5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          widget.statusName.toString(),
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 13,
-                          ),
-                        ),
+                  Expanded(
+                    child: Text(
+                      widget.idate.toString(),
+                      style: TextStyle(
+                        color: APPColors.Secondary.black,
+                        fontSize: 14,
                       ),
                     ),
                   ),
-                  widget.description.toString() != ""
-                      ? Flexible(
-                          child: SizedBox(
-                            width: size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                widget.description.toString(),
-                                style: TextStyle(
-                                  color: Color(0xff025273),
-                                  fontSize: 13,
-                                ),
-                              ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.statusName.toString(),
+                      style: TextStyle(
+                        color: APPColors.Secondary.black,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 15,
+              ),
+              widget.description.toString() != ""
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Vaka Sahibi',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
                           ),
-                        )
-                      : Container(),
-                  SizedBox(height: 6),
-                ],
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.contactName.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.locName.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Mahal',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.locName.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.locName.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Mahal Yeri',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.locTree.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.title.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Arama Nedeni',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.title.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.cmdb.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Varlık Bilgisi',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.title.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.idate.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Açılma Tarihi',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.idate.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.ani.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Arayan Numara',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.ani.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.targetRDate.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Hedef Yanıtlama',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.targetRDate.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.targetFDate.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Hedef Düzeltme',
+                            style: TextStyle(
+                              color: APPColors.Secondary.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.targetFDate.toString(),
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
+              ),
+              widget.hys.toString() != ""
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'HYS-48 saat ${widget.hys.toString()}',
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'HDS-48 saat ${widget.hds.toString()}',
+                            style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Divider(
+                height: 15,
               ),
             ],
           ),

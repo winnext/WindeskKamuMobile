@@ -207,26 +207,32 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                       : Container(),
                   SizedBox(height: 6),
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        'Açılma Tarihi:  ${widget.idate.toString()}',
-                        style: TextStyle(
-                          color: Color(0xff025273),
-                          fontSize: 13,
+                    child: SizedBox(
+                      width: size.width / 1.5,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          'Açılma Tarihi:  ${widget.idate.toString()}',
+                          style: TextStyle(
+                            color: Color(0xff025273),
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   widget.statusCode.toString() == "OPlanned"
                       ? Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Text(
-                              'Randevulu Vaka ${widget.planedDate}',
-                              style: TextStyle(
-                                color: Color(0xff025273),
-                                fontSize: 13,
+                          child: SizedBox(
+                            width: size.width / 1.5,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                'Randevulu Vaka ${widget.planedDate}',
+                                style: TextStyle(
+                                  color: Color(0xff025273),
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
                           ),
@@ -237,44 +243,53 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Text(
-                                      'Gerçekleşen Yanıtlama ${widget.respondedIDate}',
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        backgroundColor: int.parse(widget
-                                                        .respondedIDate
-                                                        .toString()) -
-                                                    int.parse(widget.targetRDate
-                                                        .toString()) <
-                                                0
-                                            ? Color(0xff32CD32)
-                                            : Colors.red,
-                                        color: Color(0xff025273),
-                                        fontSize: 13,
+                                  child: SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Text(
+                                        'Gerçekleşen Yanıtlama ${widget.respondedIDate}',
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          backgroundColor: int.parse(widget
+                                                          .respondedIDate
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetRDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          color: Color(0xff025273),
+                                          fontSize: 13,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Text(
-                                      'Gerçekleşen Düzeltme ${widget.fixedIDate}',
-                                      style: TextStyle(
-                                        backgroundColor: int.parse(
-                                                        (widget.fixedIDate)
-                                                            .toString()) -
-                                                    int.parse(
-                                                        (widget.targetFDate)
-                                                            .toString()) <
-                                                0
-                                            ? Color(0xff32CD32)
-                                            : Colors.red,
-                                        color: Color(0xff025273),
-                                        fontSize: 13,
+                                  child: SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Text(
+                                        'Gerçekleşen Düzeltme ${widget.fixedIDate}',
+                                        style: TextStyle(
+                                          backgroundColor: int.parse(
+                                                          (widget.fixedIDate)
+                                                              .toString()) -
+                                                      int.parse(
+                                                          (widget.targetFDate)
+                                                              .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          color: Color(0xff025273),
+                                          fontSize: 13,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -289,59 +304,68 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
-                                          style: TextStyle(
-                                            backgroundColor: int.parse(widget
-                                                            .respondedIDate
-                                                            .toString()) -
-                                                        int.parse(widget
-                                                            .targetRDate
-                                                            .toString()) <
-                                                    0
-                                                ? Color(0xff32CD32)
-                                                : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
+                                            style: TextStyle(
+                                              backgroundColor: int.parse(widget
+                                                              .respondedIDate
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetRDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetFDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
-                                            overflow: TextOverflow.ellipsis,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetFDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetFDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetFDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -375,57 +399,66 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetRDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetRDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetFDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetFDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Text(
-                                          'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
-                                          style: TextStyle(
-                                            color:
-                                                int.parse(dateNow.toString()) -
-                                                            int.parse(widget
-                                                                .targetFDate
-                                                                .toString()) <
-                                                        0
-                                                    ? Color(0xff32CD32)
-                                                    : Colors.red,
-                                            fontSize: 13,
+                                      SizedBox(
+                                        width: size.width / 1.5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                            'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
+                                            style: TextStyle(
+                                              color: int.parse(dateNow
+                                                              .toString()) -
+                                                          int.parse(widget
+                                                              .targetFDate
+                                                              .toString()) <
+                                                      0
+                                                  ? Color(0xff32CD32)
+                                                  : Colors.red,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),

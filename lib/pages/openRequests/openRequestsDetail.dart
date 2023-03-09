@@ -44,9 +44,8 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
     detailViewProvider.exampleListView.clear();
-    var issueList = detailViewProvider.loadData(
+    detailViewProvider.loadData(
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
-    print('exampleListView : ' + issueList.toString());
   }
 
   @override
@@ -58,8 +57,9 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
   @override
   Widget build(BuildContext context) {
     int l = -1;
-    final listViewProvider = Provider.of<DetailViewProvider>(context);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context);
 
+    print('exlist ' + detailViewProvider.exampleListView[0].CODE.toString());
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -75,7 +75,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
             children: [
               Column(
                 children: [
-                  !listViewProvider.isDataExist
+                  !detailViewProvider.isDataExist
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                           child: ListView.builder(
@@ -90,21 +90,37 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                                 DetailViewModel? detailElements =
                                     detailViewProvider?.exampleListView[0];
 
-                                // final TARGET_FDATE =
-                                //     timeRecover(detailElements?.TARGET_FDATE);
-                                // final TARGET_RDATE =
-                                //     timeRecover(detailElements?.TARGET_RDATE);
+                                final TARGET_FDATE =
+                                     timeRecover(detailElements?.TARGET_FDATE);
+                                 final TARGET_RDATE =
+                                     timeRecover(detailElements?.TARGET_RDATE);
 
                                 return Column(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: DetailListWidget(
-                                          importanceLevelColor:
-                                              generateColor(l),
-                                          taskNo: i.toString(),
+                                          ani: detailElements?.ANI,
                                           description:
                                               detailElements?.DESCRIPTION,
+                                          targetFDate: TARGET_FDATE,
+                                          targetRDate: TARGET_RDATE,
+                                          statusName: detailElements?.STATUSNAME,
+                                          assigneName: detailElements?.ASSIGNEENAME,
+                                          assignmentGroup: detailElements?.ASSIGNMENTGROUP,
+                                          assignmentGroupName: detailElements?.ASSIGNMENTGROUPNAME,
+                                          cat1: detailElements?.CAT1,
+                                          cmdb: detailElements?.CMDB,
+                                          code: detailElements?.CODE,
+                                          contactCode: detailElements?.CONTACTCODE,
+                                          contactName: detailElements?.CONTACTNAME,
+                                          idate: detailElements?.IDATE,
+                                          locName: detailElements?.LOCNAME,
+                                          locTree: detailElements?.LOCTREE,
+                                          locTree2: detailElements?.LOCTREE2,
+                                          sumdesc1: detailElements?.SUMDESC1,
+                                          taskNo: detailElements?.CODE.toString(),
+                                          title: detailElements?.TITLE,                                    
                                           onPressed: (code) {
                                             print('tiklandi' + code);
                                           }
@@ -123,7 +139,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                         ),
                 ],
               ),
-              if (listViewProvider.isDataLoading == true) ...[
+              if (detailViewProvider.isDataLoading == true) ...[
                 loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
               ],
             ],
