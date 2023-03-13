@@ -41,13 +41,15 @@ class _ListScreenState extends State<ListScreen> {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
-    exampleList.loadData(1);
+    exampleList.loadData(1, 'OpenIssuesIsCustomer');
     exampleList.initData(widget.pageController);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    detailViewProvider?.dispose();
+    listViewProvider?.dispose();
     super.dispose();
   }
 
@@ -65,22 +67,17 @@ class _ListScreenState extends State<ListScreen> {
       },
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: APPColors.Accent.blue,
-            title: Text(LocaleKeys.listeleme.tr()),
+            backgroundColor: APPColors.Main.white,
+            title: Text(
+              'Açık Taleplerim',
+              style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
+            ),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  print('index');
-                  print(index);
-                  try {
-                    listViewProvider.pageController!.jumpTo(0);
-                  } catch (e) {
-                    dispose();
-                    Navigator.of(context).pushReplacementNamed('/mainPage');
-                  }
+                  Navigator.of(context).pushReplacementNamed('/mainPage');
                 },
-                icon: const Icon(Icons.home)),
-            actions: [sayfaYenile()],
+                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),
           body: Stack(
             children: [
@@ -102,7 +99,6 @@ class _ListScreenState extends State<ListScreen> {
                                 String formattedDate = "";
                                 ListViewModel listElements =
                                     listViewProvider.exampleListView[i];
-
                                 final TARGET_FDATE =
                                     timeRecover(listElements.TARGET_FDATE);
                                 final TARGET_RDATE =
@@ -166,6 +162,9 @@ class _ListScreenState extends State<ListScreen> {
                                             Navigator.pushNamed(context,
                                                 OpenRequestDetail.pageName);
                                             print('tiklandi' + code);
+                                          },
+                                          onPressedLong: () {
+                                            print('pressed');
                                           }
                                           // extraTitle:
                                           //     listElements.STATUSCODE.toString(),
@@ -199,7 +198,8 @@ class _ListScreenState extends State<ListScreen> {
             listViewProvider.setisDataLoading = true;
             listViewProvider.exampleListView.clear();
             listViewProvider.setcurrentPage = 1;
-            listViewProvider.loadData(listViewProvider.currentPage);
+            listViewProvider.loadData(
+                listViewProvider.currentPage, 'OpenIssuesIsCustomer');
           });
         },
         child: const Padding(

@@ -116,6 +116,10 @@ class _DetailListWidgetState extends State<DetailListWidget> {
   @override
   void initState() {
     Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       changeTime();
     });
     super.initState();

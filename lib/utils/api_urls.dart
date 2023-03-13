@@ -3,8 +3,10 @@ const BASE_URL = "https://digipay-test.ardsistem.com.tr/api/";
 //----
 const updateNotication = "v1/Notification/UpdateNotification";
 const addNotification = "v1/Notification/AddNotification";
-const getNotificationsWithPagingFilter =
-    "http://windeskmobiletest.etliksh.com/list/OpenIssuesIsCustomer/issue";
+
+const getIssueList =
+    "http://windeskmobiletest.etliksh.com/list/";
+    
 const getIssueDetail =
     "http://windeskmobiletest.etliksh.com/issue";
 

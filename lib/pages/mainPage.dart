@@ -14,6 +14,7 @@ import 'package:win_kamu/pages/openRequests/openRequests.dart';
 import '../providers/main_page_view_provider.dart';
 import '../utils/themes.dart';
 import '../widgets/customButtomNavigation.dart';
+import 'closeRequestsWaitApprove/closeRequests.dart';
 import 'internet_connection/internet_connection.dart';
 import 'openRequests/RouteRequests.dart';
 
@@ -41,9 +42,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void dispose() {
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
-    mainViewProvider.pageController!.dispose();
+
     super.dispose();
   }
 
@@ -75,7 +74,7 @@ class _MainPageState extends State<MainPage> {
           children: <Widget>[
             MyHomePage(),
             ListScreen(pageController: mainViewProvide.pageController!),
-            Login(),
+            CloseRequestListScreen(pageController: mainViewProvide.pageController!),
             NewNotif()
           ],
         ),
@@ -102,7 +101,7 @@ class _MainPageState extends State<MainPage> {
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Onay Bekleyenler',
+              title: 'Kapatma Onayı Bekleyenler',
               icon: Icon(Icons.content_paste_off),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),

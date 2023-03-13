@@ -67,14 +67,13 @@ class DetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getRequestDetail(
         controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
-    print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
+    //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
 
         exampleListView.add(responseData);
-
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;

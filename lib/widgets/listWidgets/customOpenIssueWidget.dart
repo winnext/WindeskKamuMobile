@@ -32,6 +32,7 @@ class TaskListWidget extends StatefulWidget {
   final VoidCallback? press;
   final bool isIcon;
   final Function onPressed;
+  final Function onPressedLong;
 
   const TaskListWidget(
       {Key? key,
@@ -55,7 +56,8 @@ class TaskListWidget extends StatefulWidget {
       this.fixedTimer,
       this.responseTimer,
       this.fixedIDate,
-      this.timeInfoNow})
+      this.timeInfoNow,
+      required this.onPressedLong})
       : super(key: key);
 
   @override
@@ -73,10 +75,21 @@ class _TaskListWidgetState extends State<TaskListWidget> {
 
   @override
   void initState() {
+    super.initState();
     Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       changeTime();
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    changeTime().dispose();
+    super.dispose();
   }
 
   @override
@@ -87,35 +100,29 @@ class _TaskListWidgetState extends State<TaskListWidget> {
       onTap: () {
         widget.onPressed(widget.code.toString());
       },
+      onLongPress: () {
+        widget.onPressedLong();
+        print('object');
+      },
       child: Container(
-        width: size.width,
+        width: size.width / 1.1,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: Color(0x19025273),
-              blurRadius: 12,
+              blurRadius: 50,
               offset: Offset(6, 8),
             ),
           ],
-          color: Color(0xfff6f6f6),
+          color: APPColors.Main.white,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 0, left: 0, right: 12, bottom: 0),
+          padding: const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(
-                child: Column(
-                  children: [
-                    Container(
-                      color: widget.importanceLevelColor!,
-                      width: MediaQuery.of(context).size.width / 50,
-                      height: MediaQuery.of(context).size.height / 12,
-                    ),
-                  ],
-                ),
-              ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,13 +255,12 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 8.0),
-                                      child: Text(
-                                        'Gerçekleşen Yanıtlama ${widget.respondedIDate}',
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          backgroundColor: int.parse(widget
-                                                          .respondedIDate
+                                      child: Container(
+                                        width: size.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: int.parse(widget.respondedIDate
                                                           .toString()) -
                                                       int.parse(widget
                                                           .targetRDate
@@ -262,8 +268,18 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                                   0
                                               ? Color(0xff32CD32)
                                               : Colors.red,
-                                          color: Color(0xff025273),
-                                          fontSize: 13,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate).toString()}',
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: APPColors.Main.black,
+                                              fontSize: 13,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -274,21 +290,30 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     width: size.width / 1.5,
                                     child: Padding(
                                       padding:
-                                          const EdgeInsets.only(bottom: 8.0),
-                                      child: Text(
-                                        'Gerçekleşen Düzeltme ${widget.fixedIDate}',
-                                        style: TextStyle(
-                                          backgroundColor: int.parse(
-                                                          (widget.fixedIDate)
-                                                              .toString()) -
+                                          const EdgeInsets.only(bottom: 0.0),
+                                      child: Container(
+                                        width: size.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: int.parse((widget.fixedIDate)
+                                                          .toString()) -
                                                       int.parse(
                                                           (widget.targetFDate)
                                                               .toString()) <
                                                   0
                                               ? Color(0xff32CD32)
                                               : Colors.red,
-                                          color: Color(0xff025273),
-                                          fontSize: 13,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            'Gerçekleşen Düzeltme ${timeRecover(widget.fixedIDate).toString()}',
+                                            style: TextStyle(
+                                              color: APPColors.Main.black,
+                                              fontSize: 13,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
-import 'package:win_kamu/pages/openRequests/routeRequests.dart';
+import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
@@ -23,12 +23,12 @@ import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
 
-class OpenRequestDetail extends StatefulWidget {
-  static String pageName = 'OpenRequestDetail';
+class CloseRequestDetail extends StatefulWidget {
+  static String closeRequestDetail = 'CloseRequestDetail';
 
-  const OpenRequestDetail({Key? key}) : super(key: key);
+  const CloseRequestDetail({Key? key}) : super(key: key);
   @override
-  State<OpenRequestDetail> createState() => _OpenRequestDetailState();
+  State<CloseRequestDetail> createState() => _CloseRequestDetailState();
 }
 
 final apirepository = APIRepository();
@@ -36,7 +36,7 @@ final apirepository = APIRepository();
 DetailViewProvider? detailViewProvider;
 MainPageViewProvider? mainPageViewProvider;
 
-class _OpenRequestDetailState extends State<OpenRequestDetail> {
+class _CloseRequestDetailState extends State<CloseRequestDetail> {
   @override
   void initState() {
     super.initState();
@@ -69,7 +69,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-                    'Açık Taleplerim Detay',
+                    'Kapanma Onayı Bekleyenler Detay',
                     style:
                         TextStyle(fontSize: 20, color: APPColors.Secondary.black),
                   ),
@@ -77,7 +77,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
             leading: IconButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(OpenRequests.openRequest);
+                      .pushReplacementNamed(CloseRequestAwaitApproval.closeRequest);
                 },
                 icon:  Icon(Icons.arrow_back, color: APPColors.Main.black)),
                 

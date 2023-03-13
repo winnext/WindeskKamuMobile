@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:win_kamu/pages/closeRequestsWaitApprove/closeRequestsDetail.dart';
+import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
@@ -61,6 +63,8 @@ class MyApp extends StatelessWidget {
         Login.login: (context) => Login(),
         NewNotif.newNotif: (context) => NewNotif(),
         OpenRequestDetail.pageName: (context) => OpenRequestDetail(),
+        CloseRequestAwaitApproval.closeRequest: (context) => CloseRequestAwaitApproval(),
+        CloseRequestDetail.closeRequestDetail:(context) => CloseRequestDetail(),
       },
     );
   }

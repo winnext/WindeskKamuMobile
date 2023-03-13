@@ -13,6 +13,7 @@ import 'main_page_view_provider.dart';
 
 class ListViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
+  String? issueListType;
   List<ListViewModel> _exampleListView = [];
   List<ListViewModel> tempexampleListView = [];
   PageController? _pageController;
@@ -78,14 +79,14 @@ class ListViewProvider extends ChangeNotifier {
         return false;
       }
       _currentPage = 1 + _currentPage;
-      loadData(_currentPage);
+      loadData(_currentPage, issueListType);
       _isDataLoading = true;
       notifyListeners();
     } else {}
     return false;
   }
 
-  void loadData(index) async {
+  void loadData(index, issueType) async {
     _isDataLoading = true;
     int _startIssues = index == 1 ? 0 : (index - 1) * 10;
     int _endIsses = index * 10;
@@ -100,9 +101,15 @@ class ListViewProvider extends ChangeNotifier {
       "assignee": "",
     };
 
+    issueListType = issueType;
+
+    final urlIssueTypes =
+        '${getIssueList + issueListType!}/issue';
+
+    print('linn' + urlIssueTypes.toString());
+
     final result = await apirepository.getListForPaging(
-        controller: getNotificationsWithPagingFilter,
-        queryParameters: queryParameters);
+        controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
     // print('data2' + result.records['records'].toString());

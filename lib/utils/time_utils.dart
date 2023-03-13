@@ -13,6 +13,7 @@ timeRecover(timeInfo) {
         DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
     finalTime = DateFormat("dd/MM/yyyy hh:mm:ss").format(dateTime);
   }
+  print('finalTİme : ' + finalTime.toString());
   return finalTime;
 }
 
