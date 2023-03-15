@@ -202,7 +202,7 @@ class APIRepository {
       @required String? issueCode,
       @required String? xuserCode,
       bool redirectLogin = false}) async {
-    print('url ' + controller! );
+    print('url ' + controller!);
 
     try {
       //ReloadApiBase(StaticVariables.token);
@@ -280,19 +280,41 @@ class APIRepository {
     }
   }
 
-  // Future<httpSonucModel> post(
-  //     {@required String? controller,
-  //     @required dynamic data,
+  //   Future<httpSonucModel> getActivitiesDetail(
+  //     {@required String? issueCode,
   //     bool redirectLogin = false}) async {
-  //   try {
-  //     ReloadApiBase(StaticVariables.token);
-  //     final response = await dio.post(controller!, data: data);
-  //     httpSonucModel result = httpSonucModel.fromJsonData(response.data);
 
-  //     return result;
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String deviceToken = prefs.getString('deviceId').toString();
+
+  //   String urlActivities = '${base_url_v1}wdaehtest!_$deviceToken&action=getAvailableActivities&issueCode=${issueCode!}&module=issue';
+
+  //   print('urlActivities ' + urlActivities! );
+
+  //   try {
+  //     //ReloadApiBase(StaticVariables.token);
+  //     final response = await dio.get(urlActivities);
+
+  //     final data = jsonDecode(response.toString());
+
+  //     print('dataActivities' + data['records'].toString());
+
+  //     if (response != null) {
+  //       return httpSonucModel(
+  //         records: data,
+  //         success: true,
+  //         message: 'Başarılı',
+  //       );
+  //     }
+  //     return httpSonucModel(
+  //       records: data,
+  //       success: false,
+  //       message: 'Hata',
+  //     );
   //   } on DioError catch (e) {
   //     if (DioErrorType.other == e.type) {
   //       return httpSonucModel(
+  //         records: {},
   //         success: false,
   //         message: "Bağlantı Hatası",
   //       );
@@ -302,43 +324,62 @@ class APIRepository {
   //         return httpSonucModel(
   //           success: false,
   //           message: "Yetkisiz Erişim",
+  //           records: {},
   //         );
   //       }
   //       return httpSonucModel(
+  //         records: {},
   //         success: false,
   //         message: "İstek hatası",
   //       );
   //     }
   //     if (DioErrorType.connectTimeout == e.type) {
   //       return httpSonucModel(
+  //         records: {},
   //         success: false,
   //         message: "Sistem zaman aşımına uğradı",
   //       );
   //     }
   //     if (DioErrorType.sendTimeout == e.type) {
   //       return httpSonucModel(
+  //         records: {},
   //         success: false,
   //         message: "Sistem zaman aşımına uğradı",
   //       );
   //     }
   //     if (e.response != null) {
-  //       print('Dio error!');
-  //       print('STATUS: ${e.response?.statusCode}');
-  //       print('DATA: ${e.response?.data}');
-  //       print('HEADERS: ${e.response?.headers}');
-  //     } else {
-  //       // Error due to setting up or sending the request
-  //       print('Error sending request!');
-  //       print(e.message);
   //       return httpSonucModel(
+  //         records: {},
+  //         success: false,
+  //         message: 'Hata',
+  //       );
+  //     } else {
+  //       //Hata dönüşü
+  //       return httpSonucModel(
+  //         records: {},
   //         success: false,
   //         message: e.message,
   //       );
   //     }
-  //     return httpSonucModel(
-  //       success: false,
-  //       message: e.message,
-  //     );
   //   }
   // }
+
+  Future<dynamic> addIssueActivity(
+      {@required String? issueCode,
+      @required String? userName,
+      @required String? activityCode,
+      @required String? description}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String url =
+        '${base_url_v1}wdaehtest!_${deviceToken}&action=addActivity&issueCode=${issueCode}&username=${userName}&activityCode=${activityCode}&locationCode=&asgGroupCode=&asgUserCode=&additionalTime=&module=issue&from_mobile=1&cardNo=&patientNo=&sampleNo=&description=${description}';
+
+    final response = await dio.post(url);
+
+    print('activity url : ' + url.toString());
+    print('activity response : ' + response.toString());
+
+    return response;
+  }
 }

@@ -2,12 +2,15 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
+import 'package:win_kamu/providers/login_provider.dart';
+import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
 import 'package:win_kamu/widgets/commons.dart';
@@ -37,9 +40,8 @@ ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
 class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
-  bool isDone = false;
+  bool _isDone = false;
   bool _isNotDone = false;
-  bool _flag = true;
 
   Color primaryColor = APPColors.Modal.blue;
   @override
@@ -64,10 +66,10 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
 
-    print('isnotdone' + _isNotDone.toString());
+    Size size = MediaQuery.of(context).size;
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -182,44 +184,8 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
-                                                  return Container(
-                                                    height: 200,
-                                                    color: APPColors.Modal.blue,
-                                                    child: Center(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          ElevatedButton(
-                                                            child: const Text(
-                                                                'Talep Yerine Getirildi'),
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    context),
-                                                          ),
-                                                          ElevatedButton(
-                                                              style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: _isNotDone
-                                                                      ? Colors
-                                                                          .amber
-                                                                      : Colors
-                                                                          .black),
-                                                              child: const Text(
-                                                                  'Talep Yerine Getirilmedi'),
-                                                              onPressed: () =>
-                                                                  setState(() =>
-                                                                      _isNotDone =
-                                                                          !_isNotDone)
-
-                                                              // Navigator.pop(
-                                                              //     context),
-                                                              ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                  return StatefulBottomSheet(
+                                                    code: listElements.CODE,
                                                   );
                                                 },
                                               );
@@ -267,5 +233,275 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
         ),
       );
     });
+  }
+}
+
+class StatefulBottomSheet extends StatefulWidget {
+  String? code;
+  StatefulBottomSheet({super.key, this.code});
+  @override
+  // ignore: library_private_types_in_public_api
+  _StatefulBottomSheetState createState() => _StatefulBottomSheetState();
+}
+
+DetailViewProvider? detailActivities;
+
+class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
+  final textInput = TextEditingController();
+  bool _isDone = false;
+  bool _isNotDone = false;
+  String? _activityCode;
+  String? _description;
+
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   print('activities initialState');
+    //   final detailActivities =
+    //       Provider.of<DetailViewProvider>(context, listen: false);
+    //   //detailActivities.listViewActivities.clear();
+    //   detailActivities.listViewActivities.clear();
+    //   await detailActivities.loadIssueActivities(widget.code.toString());
+    // });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    detailActivities?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final detailActivities =
+        Provider.of<DetailViewProvider>(context, listen: true);
+
+    final loginProvider =
+        Provider.of<MainPageViewProvider>(context, listen: true);
+
+    Size size = MediaQuery.of(context).size;
+    print('activitiesCOde' +
+        widget.code.toString() +
+        ' ' +
+        loginProvider.kadi.toString() +
+        ' ' +
+        this._activityCode.toString() +
+        ' ' +
+        textInput.text.toString());
+
+    return Container(
+      height: size.height / 3,
+      color: APPColors.Modal.blue,
+      child: Column(
+        children: [
+          Text(
+            widget.code.toString(),
+            style: TextStyle(color: Colors.white),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          side: BorderSide(color: APPColors.Main.grey),
+                          shadowColor: APPColors.Main.black,
+                          elevation: 10,
+                          backgroundColor: _isDone
+                              ? APPColors.Main.white
+                              : APPColors.Modal.blue),
+                      child: Text(
+                        'Talep Yerine Getirildi',
+                        style: TextStyle(
+                            color: _isDone
+                                ? APPColors.Main.black
+                                : APPColors.Modal.white),
+                      ),
+                      onPressed: () => setState(() => {
+                            _isNotDone = false,
+                            _isDone = !_isDone,
+                            _activityCode = 'AR00000001187'
+                          })
+                      // Navigator.pop(
+                      //     context),
+                      ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          side: BorderSide(color: APPColors.Main.grey),
+                          shadowColor: APPColors.Main.black,
+                          elevation: 10,
+                          backgroundColor: _isNotDone
+                              ? APPColors.Main.white
+                              : APPColors.Modal.blue),
+                      child: Text(
+                        'Talep Yerine Getirilmedi',
+                        style: TextStyle(
+                            color: _isNotDone
+                                ? APPColors.Main.black
+                                : APPColors.Main.white),
+                      ),
+                      onPressed: () => setState(() => {
+                            _isDone = false,
+                            _isNotDone = !_isNotDone,
+                            _activityCode = 'AR00000001336'
+                          })
+
+                      // Navigator.pop(
+                      //     context),
+                      ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextFormField(
+              controller: textInput,
+              style: TextStyle(fontSize: 15, color: APPColors.Main.white),
+              decoration: InputDecoration(
+                filled: true,
+                hintText: 'Açıklama giriniz.',
+                hintStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: APPColors.Main.grey),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: APPColors.Main.white),
+                ),
+              ),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                print('value' + value.toString());
+                setState(() {
+                  _description = value;
+                });
+                return null;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            side: BorderSide(color: APPColors.Main.grey),
+                            shadowColor: APPColors.Main.black,
+                            elevation: 10,
+                            backgroundColor: APPColors.Modal.blue),
+                        child: Text(
+                          'Tamam',
+                          style: TextStyle(color: APPColors.Modal.white),
+                        ),
+                        onPressed: () async {
+                          final response = await detailActivities.sendIssueActivity(
+                              widget.code.toString(),
+                              loginProvider.kadi.toString(),
+                              this._activityCode.toString(),
+                              textInput.text.toString());
+                          print(
+                              'activity print ------: ' + response.toString());
+                          Navigator.pop(context);
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return DialogExample();
+                            },
+                          );
+                        }
+
+                        // final response =
+                        //     await detailActivities.sendIssueActivity(
+                        //         widget.code.toString(),
+                        //         loginProvider.kadi.toString(),
+                        //         this._activityCode.toString(),
+                        //         textInput.text.toString());
+                        // print('activity print : ' + response.toString());
+                        // // ignore: use_build_context_synchronously
+
+                        ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            side: BorderSide(color: APPColors.Main.grey),
+                            shadowColor: APPColors.Main.black,
+                            elevation: 10,
+                            backgroundColor: APPColors.Modal.blue),
+                        child: Text(
+                          'Vazgeç',
+                          style: TextStyle(color: APPColors.Main.white),
+                        ),
+                        onPressed: () => setState(
+                            () => {_isDone = false, _isNotDone = !_isNotDone})
+
+                        // Navigator.pop(
+                        //     context),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DialogExample extends StatefulWidget {
+  const DialogExample({super.key});
+
+  @override
+  State<DialogExample> createState() => _DialogExampleState();
+}
+
+class _DialogExampleState extends State<DialogExample> {
+  @override
+  void initState() {
+    final detailActivities =
+        Provider.of<DetailViewProvider>(context, listen: false);
+    //detailActivities.listViewActivities.clear();
+    // final reponse = detailActivities.sendIssueActivity(
+    //     'issueCode', 'userName', 'activityCode', 'description');
+
+    print('activity response initial' + detailActivities.responses.toString());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('AlertDialog Title'),
+      content: const Text('AlertDialog description'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('OK'),
+        ),
+      ],
+    );
   }
 }

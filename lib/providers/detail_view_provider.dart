@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/components/crud_view/crud_view.dart';
+import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/detail_response.model.dart';
 import 'package:win_kamu/models/detail_view.model.dart';
 import 'package:win_kamu/utils/api_urls.dart';
@@ -20,14 +21,32 @@ class DetailViewProvider extends ChangeNotifier {
   List<DetailViewModel> tempexampleListView = [];
   List<DetailViewModel> queryParameters = [];
 
+  List<DetailActivitiesModal> _listViewActivities = [];
+  List<DetailActivitiesModal> tempListViewActivities = [];
+
+  List<dynamic> _responses = [];
+
   String? _issueCode;
   bool _isDataLoading = true;
   bool _loading = false;
   bool _isDataExist = false;
+  int _toplamKayitSayisi = 0;
 
   List<DetailViewModel> get exampleListView => _exampleListView;
   set setiexampleListView(List<DetailViewModel> exampleListView) {
     _exampleListView = exampleListView;
+    notifyListeners();
+  }
+
+  List<dynamic> get responses => _responses;
+  set setiresponses(List<DetailViewModel> responses) {
+    _responses = responses;
+    notifyListeners();
+  }
+
+  List<DetailActivitiesModal> get listViewActivities => _listViewActivities;
+  set setilistViewActivities(List<DetailActivitiesModal> listViewActivities) {
+    _listViewActivities = listViewActivities;
     notifyListeners();
   }
 
@@ -49,6 +68,13 @@ class DetailViewProvider extends ChangeNotifier {
 
   set setIssueCode(String issueCode) {
     _issueCode = issueCode;
+    notifyListeners();
+  }
+
+  int get toplamKayitSayisi => _toplamKayitSayisi;
+
+  set settoplamKayitSayisi(int toplamKayitSayisi) {
+    _toplamKayitSayisi = toplamKayitSayisi;
     notifyListeners();
   }
 
@@ -83,4 +109,52 @@ class DetailViewProvider extends ChangeNotifier {
       // baglantiHatasi(context, result.message);
     }
   }
+
+  sendIssueActivity(String issueCode, String userName, String activityCode,
+      String description) async {
+    final apiresult = await apirepository.addIssueActivity(
+        userName: userName,
+        issueCode: issueCode,
+        activityCode: activityCode,
+        description: description);
+
+    print('activity inside' + apiresult.toString());
+
+    _responses = apiresult.toString() as List;
+    notifyListeners();
+
+    // if (apiresult.success) {
+    //   return 'Aktivite girişi başarılı.';
+    // } else {
+    //   return 'Aktivite girişi başarısız';
+    // }
+  }
+
+  // loadIssueActivities(String issuecode) async {
+  //   _isDataLoading = true;
+
+  //   final result =
+  //       await apirepository.getActivitiesDetail(issueCode: issuecode);
+
+  //   final data = result.records['records'];
+
+  //   print('activities 1: ' + data.toString());
+
+  //   if (true) {
+  //     tempListViewActivities = (result.records['records'] as List)
+  //         .map((e) => DetailActivitiesModal.fromJson(e))
+  //         .toList();
+  //     Future.delayed(const Duration(milliseconds: 100), () {
+  //       listViewActivities.addAll(tempListViewActivities);
+  //       print('activities2 : ' + listViewActivities.toString());
+  //       _toplamKayitSayisi = int.parse(result.records['totalcount']);
+  //       _isDataLoading = false;
+  //       _loading = false;
+  //       _isDataExist = false;
+  //       notifyListeners();
+  //     });
+  //   } else {
+  //     // baglantiHatasi(context, result.message);
+  //   }
+  // }
 }

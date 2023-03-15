@@ -37,7 +37,5 @@ class MainPageViewProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _kadi = prefs.getString('prefsUserName') ?? '';
 
-    
-    
   }
 }
