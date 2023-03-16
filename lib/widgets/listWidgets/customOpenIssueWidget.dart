@@ -161,6 +161,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                       ),
                     ),
                   ),
+                  Divider(
+                    height: 5,
+                  ),
                   widget.location.toString() != ""
                       ? Flexible(
                           child: SizedBox(
@@ -178,6 +181,9 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                           ),
                         )
                       : Container(),
+                  Divider(
+                    height: 5,
+                  ),
                   widget.space.toString() != ""
                       ? Flexible(
                           child: SizedBox(

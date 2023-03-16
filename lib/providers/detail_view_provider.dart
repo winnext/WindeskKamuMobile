@@ -24,7 +24,7 @@ class DetailViewProvider extends ChangeNotifier {
   List<DetailActivitiesModal> _listViewActivities = [];
   List<DetailActivitiesModal> tempListViewActivities = [];
 
-  List<dynamic> _responses = [];
+  String? _responses;
 
   String? _issueCode;
   bool _isDataLoading = true;
@@ -35,12 +35,6 @@ class DetailViewProvider extends ChangeNotifier {
   List<DetailViewModel> get exampleListView => _exampleListView;
   set setiexampleListView(List<DetailViewModel> exampleListView) {
     _exampleListView = exampleListView;
-    notifyListeners();
-  }
-
-  List<dynamic> get responses => _responses;
-  set setiresponses(List<DetailViewModel> responses) {
-    _responses = responses;
     notifyListeners();
   }
 
@@ -67,6 +61,13 @@ class DetailViewProvider extends ChangeNotifier {
   get issueCode => _issueCode;
 
   set setIssueCode(String issueCode) {
+    _issueCode = issueCode;
+    notifyListeners();
+  }
+
+  get responses => _responses;
+
+  set setresponses(String responses) {
     _issueCode = issueCode;
     notifyListeners();
   }
@@ -112,7 +113,13 @@ class DetailViewProvider extends ChangeNotifier {
 
   sendIssueActivity(String issueCode, String userName, String activityCode,
       String description) async {
-    final apiresult = await apirepository.addIssueActivity(
+   if (description.toString().length < 20 &&
+          activityCode.toString() == 'AR00000001336') {
+            return 'Lütfen yeterli uzunlukta açıklama giriniz';
+
+          }
+    else {
+        final apiresult = await apirepository.addIssueActivity(
         userName: userName,
         issueCode: issueCode,
         activityCode: activityCode,
@@ -120,14 +127,24 @@ class DetailViewProvider extends ChangeNotifier {
 
     print('activity inside' + apiresult.toString());
 
-    _responses = apiresult.toString() as List;
-    notifyListeners();
+    final results = jsonDecode(apiresult.toString());
 
-    // if (apiresult.success) {
-    //   return 'Aktivite girişi başarılı.';
-    // } else {
-    //   return 'Aktivite girişi başarısız';
-    // }
+    print('activity inside 2 ' + results['resultcode'].toString());
+
+    if (results['success'].toString() == 'false') {
+      //_responses = results['resultcode'];
+      print('activityresponse' + results['success'].toString());
+      //notifyListeners();
+      return 'Aktivite girişi başarısız';
+    } else {
+      
+        return 'Aktivite girişi başarılı.';
+    }
+
+    }
+
+    
+    }
   }
 
   // loadIssueActivities(String issuecode) async {
@@ -157,4 +174,4 @@ class DetailViewProvider extends ChangeNotifier {
   //     // baglantiHatasi(context, result.message);
   //   }
   // }
-}
+

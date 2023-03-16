@@ -78,7 +78,7 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-              'Kapatma Onayı Bekleyenler',
+              'Kapatma Onayı',
               style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
             ),
             centerTitle: true,
@@ -408,33 +408,27 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                           'Tamam',
                           style: TextStyle(color: APPColors.Modal.white),
                         ),
-                        onPressed: () async {
-                          final response = await detailActivities.sendIssueActivity(
-                              widget.code.toString(),
-                              loginProvider.kadi.toString(),
-                              this._activityCode.toString(),
-                              textInput.text.toString());
-                          print(
-                              'activity print ------: ' + response.toString());
+                        onPressed: () {
+                          // final response = detailActivities.sendIssueActivity(
+                          //     widget.code.toString(),
+                          //     loginProvider.kadi.toString(),
+                          //     this._activityCode.toString(),
+                          //     textInput.text.toString());
+                          // print(
+                          //     'activity print ------: ' + response.toString());
                           Navigator.pop(context);
                           showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
-                              return DialogExample();
+                              return DialogExample(
+                                code: widget.code.toString(),
+                                kadi: loginProvider.kadi.toString(),
+                                activityCode: this._activityCode.toString(),
+                                input: textInput.text.toString(),
+                              );
                             },
                           );
-                        }
-
-                        // final response =
-                        //     await detailActivities.sendIssueActivity(
-                        //         widget.code.toString(),
-                        //         loginProvider.kadi.toString(),
-                        //         this._activityCode.toString(),
-                        //         textInput.text.toString());
-                        // print('activity print : ' + response.toString());
-                        // // ignore: use_build_context_synchronously
-
-                        ),
+                        }),
                   ),
                 ),
                 Expanded(
@@ -468,40 +462,70 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
 }
 
 class DialogExample extends StatefulWidget {
-  const DialogExample({super.key});
+  String? code;
+  String? kadi;
+  String? activityCode;
+  String? input;
+
+  DialogExample(
+      {super.key, this.activityCode, this.code, this.input, this.kadi});
 
   @override
   State<DialogExample> createState() => _DialogExampleState();
 }
 
 class _DialogExampleState extends State<DialogExample> {
+  String test = 'Aktivite girişi başarılı';
   @override
   void initState() {
-    final detailActivities =
-        Provider.of<DetailViewProvider>(context, listen: false);
-    //detailActivities.listViewActivities.clear();
-    // final reponse = detailActivities.sendIssueActivity(
-    //     'issueCode', 'userName', 'activityCode', 'description');
-
-    print('activity response initial' + detailActivities.responses.toString());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final detailActivities =
+          Provider.of<DetailViewProvider>(context, listen: false);
+      final answer = await detailActivities.sendIssueActivity(
+          widget.code.toString(),
+          widget.kadi.toString(),
+          widget.activityCode.toString(),
+          widget.input.toString());
+      setState(() {
+        test = answer.toString();
+      });
+      print('activityProvider' + test.toString());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('activityProviderrrr' + test.toString());
+
     return AlertDialog(
-      title: const Text('AlertDialog Title'),
-      content: const Text('AlertDialog description'),
+      title: Text(test.toString()),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text('Çıkış'),
         ),
         TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('OK'),
+          onPressed: () => {
+            sayfaYenile(),
+            Navigator.pop(context),
+          },
+          child: Text('Tamam'),
         ),
       ],
     );
+  }
+
+  sayfaYenile() {
+    final listViewProvider =
+        Provider.of<ListViewProvider>(context, listen: false);
+
+    setState(() {
+      listViewProvider.setisDataLoading = true;
+      listViewProvider.exampleListView.clear();
+      listViewProvider.setcurrentPage = 1;
+      listViewProvider.loadData(
+          listViewProvider.currentPage, 'PendingIssuesIsCustomer');
+    });
   }
 }

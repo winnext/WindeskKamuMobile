@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Expanded(
                             child: HomeButton(
-                                text: 'Kapatma Onayı Bekleyenler',
+                                text: 'Kapatma Onayı',
                                 iconName: Icons.content_paste_off,
                                 navigator: 2),
                           )

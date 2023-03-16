@@ -101,7 +101,7 @@ class _MainPageState extends State<MainPage> {
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Kapatma Onayı Bekleyenler',
+              title: 'Kapatma Onayı',
               icon: Icon(Icons.content_paste_off),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
