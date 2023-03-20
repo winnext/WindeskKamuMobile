@@ -7,31 +7,28 @@ import '../../utils/themes.dart';
 class HomeButton extends StatelessWidget {
   final String? text;
   final IconData? iconName;
-  final  navigator;
+  final navigator;
 
   const HomeButton({this.iconName, this.navigator, this.text, super.key});
 
   @override
   Widget build(BuildContext context) {
-        final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    final size = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Container(
           margin: EdgeInsets.all(5),
-          width: MediaQuery.of(context).size.width / 4.5,
-          height: MediaQuery.of(context).size.width / 4.5,
+          width: size / 9,
+          height: size / 9,
           child: ElevatedButton(
             onPressed: () {
-             if(navigator.runtimeType == String){
-                         Navigator.pushNamed(context, navigator!);
-
-             }else{
-                         mainViewProvide.pageController!.jumpToPage(navigator!);
-
-             }
-                
-
-
+              if (navigator.runtimeType == String) {
+                Navigator.pushNamed(context, navigator!);
+              } else {
+                mainViewProvide.pageController!.jumpToPage(navigator!);
+              }
             },
             child: Icon(
               iconName,
@@ -54,9 +51,15 @@ class HomeButton extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          text!,
-          style: TextStyle(fontSize: 15, color: APPColors.Accent.blue),
+        Center(
+          child: Text(
+            text!,
+            style: TextStyle(
+              fontSize: 15,
+              color: APPColors.Accent.blue,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     );

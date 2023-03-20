@@ -11,6 +11,10 @@ import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/openRequestsDetail.dart';
 import 'package:win_kamu/pages/openRequests/routeRequests.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
+import 'package:win_kamu/pages/plannedRequests/plannedRequestsDetail.dart';
+import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
+import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
+import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
@@ -59,12 +63,20 @@ class MyApp extends StatelessWidget {
         '/': (context) => Splash(),
         MyHomePage.homePage: (context) => MyHomePage(),
         MainPage.mainPage: (context) => MainPage(),
-        OpenRequests.openRequest: (context) => OpenRequests(),
         Login.login: (context) => Login(),
         NewNotif.newNotif: (context) => NewNotif(),
+        OpenRequests.openRequest: (context) => OpenRequests(),
         OpenRequestDetail.pageName: (context) => OpenRequestDetail(),
-        CloseRequestAwaitApproval.closeRequest: (context) => CloseRequestAwaitApproval(),
-        CloseRequestDetail.closeRequestDetail:(context) => CloseRequestDetail(),
+        CloseRequestAwaitApproval.closeRequest: (context) =>
+            CloseRequestAwaitApproval(),
+        CloseRequestDetail.closeRequestDetail: (context) =>
+            CloseRequestDetail(),
+        PlannedRequest.plannedRequest: (context) => PlannedRequest(),
+        PlannedRequestDetail.plannedRequestDetail: (context) =>
+            PlannedRequestDetail(),
+        ComplaintRequests.complaintRequests: (context) => ComplaintRequests(),
+        ComplaintdRequestDetail.complaintdRequestDetail: (context) =>
+            ComplaintdRequestDetail(),
       },
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
+import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
@@ -62,19 +64,52 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              // Expanded(
+              //     flex: 3,
+              //     child: Image.asset(
+              //       'lib/assets/images/home.jpg',
+              //       height: MediaQuery.of(context).size.width / 1,
+              //       width: MediaQuery.of(context).size.width / 1,
+              //       fit: BoxFit.cover,
+              //       //color: Colors.amber,
+              //     )),
+              Expanded(child: Divider()),
               Expanded(
-                  flex: 3,
-                  child: Image.asset(
-                    'lib/assets/images/home.jpg',
-                    height: MediaQuery.of(context).size.width / 1,
-                    width: MediaQuery.of(context).size.width / 1,
-                    fit: BoxFit.cover,
-                    //color: Colors.amber,
-                  )),
+                  child: Column(
+                children: [
+                  Text(
+                    'Ankara Etlik Şehir Hastanesi',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'Yardım Masası Uygulaması',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
+
               Expanded(
                 flex: 4,
                 child: Column(
                   children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: HomeButton(
+                                text: 'Randevulu Taleplerim',
+                                iconName: Icons.calendar_month,
+                                navigator: PlannedRequest.plannedRequest),
+                          ),
+                          Expanded(
+                            child: HomeButton(
+                                text: 'Yeni Bildirim',
+                                iconName: Icons.attachment,
+                                navigator: 3),
+                          )
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: Row(
                         children: [
@@ -86,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Expanded(
                             child: HomeButton(
-                                text: 'Kapatma Onayı',
+                                text: 'Kapatma Onayını Bekleyenler',
                                 iconName: Icons.content_paste_off,
                                 navigator: 2),
                           )
@@ -98,9 +133,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Expanded(
                             child: HomeButton(
-                                text: 'Bu Ayın Planı',
+                                text: 'Şikayet Ettiğim Taleplerim',
                                 iconName: Icons.calendar_month,
-                                navigator: OpenRequests.openRequest),
+                                navigator: ComplaintRequests.complaintRequests),
                           ),
                           Expanded(
                             child: HomeButton(
