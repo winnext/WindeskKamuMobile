@@ -69,7 +69,8 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
     int index = listViewProvider.currentPage;
 
     Size size = MediaQuery.of(context).size;
-
+    print(
+        'listViewLength' + listViewProvider.exampleListView.length.toString());
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -92,7 +93,7 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
             children: [
               Column(
                 children: [
-                  !listViewProvider.isDataExist
+                  listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                             onNotification:
@@ -131,69 +132,72 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
                                   return Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TaskListWidget(
-                                            importanceLevelColor:
-                                                generateColor(l),
-                                            code: listElements.CODE.toString(),
-                                            targetFDate:
-                                                listElements.TARGET_FDATE,
-                                            targetRDate:
-                                                listElements.TARGET_RDATE,
-                                            taskNo: i.toString(),
-                                            description: listElements
-                                                .DESCRIPTION
-                                                .toString(),
-                                            sumdesc1: listElements.SUMDESC1
-                                                .toString(),
-                                            statusName: listElements.STATUSNAME
-                                                .toString(),
-                                            space:
-                                                listElements.SPACE.toString(),
-                                            location: listElements.LOCATION
-                                                .toString(),
-                                            idate:
-                                                listElements.IDATE.toString(),
-                                            statusCode: listElements.STATUSCODE
-                                                .toString(),
-                                            planedDate: listElements.PLANNEDDATE
-                                                .toString(),
-                                            respondedIDate: listElements
-                                                .RESPONDED_IDATE
-                                                .toString(),
-                                            responseTimer: listElements
-                                                .response_timer
-                                                .toString(),
-                                            fixedTimer: listElements.fixed_timer
-                                                .toString(),
-                                            fixedIDate: listElements.FIXED_IDATE
-                                                .toString(),
-                                            timeInfoNow: timeNow,
-                                            isIcon: true,
-                                            onPressed: (code) {
-                                              detailViewProvider.setIssueCode =
-                                                  code;
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  CloseRequestDetail
-                                                      .closeRequestDetail);
-                                              print('tiklandi' + code);
-                                            },
-                                            onPressedLong: () {
-                                              return showModalBottomSheet<void>(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return StatefulBottomSheet(
-                                                    code: listElements.CODE,
-                                                  );
-                                                },
-                                              );
-                                            }
-                                            // extraTitle:
-                                            //     listElements.STATUSCODE.toString(),
-                                            ),
-                                      ),
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TaskListWidget(
+                                              importanceLevelColor:
+                                                  generateColor(l),
+                                              code:
+                                                  listElements.CODE.toString(),
+                                              targetFDate:
+                                                  listElements.TARGET_FDATE,
+                                              targetRDate:
+                                                  listElements.TARGET_RDATE,
+                                              taskNo: i.toString(),
+                                              description: listElements
+                                                  .DESCRIPTION
+                                                  .toString(),
+                                              sumdesc1: listElements.SUMDESC1
+                                                  .toString(),
+                                              statusName: listElements.STATUSNAME
+                                                  .toString(),
+                                              space:
+                                                  listElements.SPACE.toString(),
+                                              location: listElements.LOCATION
+                                                  .toString(),
+                                              idate:
+                                                  listElements.IDATE.toString(),
+                                              statusCode: listElements.STATUSCODE
+                                                  .toString(),
+                                              planedDate: listElements.PLANNEDDATE
+                                                  .toString(),
+                                              respondedIDate: listElements
+                                                  .RESPONDED_IDATE
+                                                  .toString(),
+                                              responseTimer: listElements
+                                                  .response_timer
+                                                  .toString(),
+                                              fixedTimer: listElements
+                                                  .fixed_timer
+                                                  .toString(),
+                                              fixedIDate: listElements
+                                                  .FIXED_IDATE
+                                                  .toString(),
+                                              timeInfoNow: timeNow,
+                                              isIcon: true,
+                                              onPressed: (code) {
+                                                detailViewProvider
+                                                    .setIssueCode = code;
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    CloseRequestDetail
+                                                        .closeRequestDetail);
+                                                print('tiklandi' + code);
+                                              },
+                                              onPressedLong: () {
+                                                return showModalBottomSheet<
+                                                    void>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return StatefulBottomSheet(
+                                                      code: listElements.CODE,
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                              // extraTitle:
+                                              //     listElements.STATUSCODE.toString(),
+                                              )),
                                     ],
                                   );
                                 }),
@@ -201,7 +205,7 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
                         )
                       : Padding(
                           padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 2.5),
+                              top: MediaQuery.of(context).size.height / 3),
                           child: const Center(child: AramaSonucBos()),
                         ),
                 ],

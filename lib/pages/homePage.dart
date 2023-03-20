@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
@@ -139,9 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Expanded(
                             child: HomeButton(
-                                text: 'Yeni Bildirim',
+                                text: 'Kapatılmış Taleplerim',
                                 iconName: Icons.attachment,
-                                navigator: 3),
+                                navigator: ClosedRequest.closedRequest),
                           )
                         ],
                       ),

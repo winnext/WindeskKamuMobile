@@ -18,16 +18,19 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../complaintRequests/complaintRequestsDetail.dart';
 import '../homePage.dart';
-import 'plannedRequestsDetail.dart';
+import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 
-class ListScreen extends StatefulWidget {
-  static String pageName = 'listPageComplaintRequests';
+class ClosedRequestListScreen extends StatefulWidget {
+  static String closedRequest = 'listPageClosedRequests';
 
-  const ListScreen({Key? key, required this.pageController}) : super(key: key);
+  const ClosedRequestListScreen({Key? key, required this.pageController})
+      : super(key: key);
   final PageController pageController;
   @override
-  State<ListScreen> createState() => _ListScreenState();
+  State<ClosedRequestListScreen> createState() =>
+      _ClosedRequestListScreenState();
 }
 
 final apirepository = APIRepository();
@@ -35,13 +38,13 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _ListScreenState extends State<ListScreen> {
+class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
   @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
-    exampleList.loadData(1, 'OPlannedIssuesIsCustomer');
+    exampleList.loadData(1, 'MyClosedIssuesIsCustomer');
     exampleList.initData(widget.pageController);
   }
 
@@ -69,7 +72,7 @@ class _ListScreenState extends State<ListScreen> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-              'Randevulu Taleplerim',
+              'Kapatılmış Taleplerim',
               style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
             ),
             centerTitle: true,
@@ -162,8 +165,8 @@ class _ListScreenState extends State<ListScreen> {
                                                 code;
                                             Navigator.pushNamed(
                                                 context,
-                                                PlannedRequestDetail
-                                                    .plannedRequestDetail);
+                                                ComplaintdRequestDetail
+                                                    .complaintdRequestDetail);
                                             print('tiklandi' + code);
                                           },
                                           onPressedLong: () {
@@ -202,7 +205,7 @@ class _ListScreenState extends State<ListScreen> {
             listViewProvider.exampleListView.clear();
             listViewProvider.setcurrentPage = 1;
             listViewProvider.loadData(
-                listViewProvider.currentPage, 'OPlannedIssuesIsCustomer');
+                listViewProvider.currentPage, 'MyClosedIssuesIsCustomer');
           });
         },
         child: const Padding(

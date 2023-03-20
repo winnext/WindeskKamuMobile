@@ -83,7 +83,7 @@ class _ListScreenState extends State<ListScreen> {
             children: [
               Column(
                 children: [
-                  !listViewProvider.isDataExist
+                  listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                           onNotification:

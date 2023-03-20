@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 
 import '../../providers/main_page_view_provider.dart';
-import 'complaintRequests.dart';
+import 'closedRequests.dart';
 
-class ComplaintRequests extends StatefulWidget {
-  static String complaintRequests = '/complaintRequests';
-  const ComplaintRequests({super.key});
+class ClosedRequest extends StatefulWidget {
+  static String closedRequest = '/closeRequests';
+  const ClosedRequest({super.key});
 
   @override
-  State<ComplaintRequests> createState() => _ComplaintRequestsState();
+  State<ClosedRequest> createState() => _ClosedRequestState();
 }
 
-class _ComplaintRequestsState extends State<ComplaintRequests> {
+class _ClosedRequestState extends State<ClosedRequest> {
   int _currentIndex = 0;
   PageController? _pageController;
 
@@ -40,6 +39,6 @@ class _ComplaintRequestsState extends State<ComplaintRequests> {
   Widget build(BuildContext context) {
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
 
-    return ComplaintRequestsListScreen(pageController: mainViewProvide.pageController!);
+    return ClosedRequestListScreen(pageController: mainViewProvide.pageController!);
   }
 }

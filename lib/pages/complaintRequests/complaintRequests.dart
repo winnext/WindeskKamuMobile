@@ -21,13 +21,13 @@ import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
 import 'complaintRequestsDetail.dart';
 
-class ComplaintReuestsListScreen extends StatefulWidget {
+class ComplaintRequestsListScreen extends StatefulWidget {
   static String pageName = 'listPageComplaintRequests';
 
-  const ComplaintReuestsListScreen({Key? key, required this.pageController}) : super(key: key);
+  const ComplaintRequestsListScreen({Key? key, required this.pageController}) : super(key: key);
   final PageController pageController;
   @override
-  State<ComplaintReuestsListScreen> createState() => _ComplaintReuestsListScreenState();
+  State<ComplaintRequestsListScreen> createState() => _ComplaintRequestsListScreenState();
 }
 
 final apirepository = APIRepository();
@@ -35,7 +35,7 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _ComplaintReuestsListScreenState extends State<ComplaintReuestsListScreen> {
+class _ComplaintRequestsListScreenState extends State<ComplaintRequestsListScreen> {
   @override
   void initState() {
     super.initState();
@@ -83,7 +83,7 @@ class _ComplaintReuestsListScreenState extends State<ComplaintReuestsListScreen>
             children: [
               Column(
                 children: [
-                  !listViewProvider.isDataExist
+                  listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                           onNotification:
