@@ -48,6 +48,7 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
+    listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
     super.dispose();
@@ -75,7 +76,8 @@ class _ListScreenState extends State<ListScreen> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/mainPage');
+                  listViewProvider.pageController!.jumpTo(0);
+                  //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),

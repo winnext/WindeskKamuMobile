@@ -32,6 +32,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -47,5 +49,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Görevler için fotoğraf çekmek üzere kameranıza erişmek istiyor</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Görevler için fotoğraf çekmek üzere mikrofona erişmek istiyor</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Resim yüklemek için fotoğraf kitaplığınıza erişmek istiyor</string>
 </dict>
 </plist>

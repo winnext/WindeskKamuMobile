@@ -70,6 +70,8 @@ extension APPColorsExtension on APPColors {
         return Color(0xFF776E6E);
       case APPColors.Accent:
         return Color.fromARGB(140, 255, 255, 255);
+      case APPColors.NewNotifi:
+        return const Color.fromARGB(1000, 243, 244, 255);
       default:
         return const Color(0xffABABAB);
     }

@@ -1,0 +1,125 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
+class ButtonDropDown extends StatefulWidget {
+  final String? metin;
+   ButtonDropDown({super.key,this.metin});
+
+
+  
+
+  @override
+  State<ButtonDropDown> createState() => _ButtonDropDownState();
+}
+
+class _ButtonDropDownState extends State<ButtonDropDown> {
+
+    final List<String> items = [
+  'A_Item1',
+  'A_Item2',
+  'A_Item3',
+  'A_Item4',
+  'B_Item1',
+  'B_Item2',
+  'B_Item3',
+  'B_Item4',
+];
+
+String? selectedValue;
+final TextEditingController textEditingController = TextEditingController();
+
+@override
+void dispose() {
+  textEditingController.dispose();
+  super.dispose();
+}
+  @override
+  Widget build(BuildContext context) {
+    return  Sizer(      builder: (context, orientation, deviceType) {
+
+      return DropdownButtonHideUnderline(
+        child: DropdownButton2<String>(
+          isExpanded: true,
+          hint: Text(
+            widget.metin.toString(),
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          items: items
+                  .map((item) => DropdownMenuItem(
+            value: item,
+            child: Text(
+              item,
+              style: const TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonStyleData: const ButtonStyleData(
+            height: 50,
+          ),
+          dropdownStyleData: const DropdownStyleData(
+            maxHeight: 200,
+          ),
+          menuItemStyleData: const MenuItemStyleData(
+            height: 40,
+          ),
+          dropdownSearchData: DropdownSearchData(
+            searchController: textEditingController,
+            searchInnerWidgetHeight: 50,
+            searchInnerWidget: Container(
+              height: 40,
+              padding: const EdgeInsets.only(
+                top: 8,
+                bottom: 4,
+                right: 8,
+                left: 8,
+              ),
+              child: TextFormField(
+                expands: true,
+                maxLines: null,
+                controller: textEditingController,
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
+                  hintText: 'Ara...',
+                  hintStyle: const TextStyle(fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ),
+            searchMatchFn: (item, searchValue) {
+              return (item.value.toString().contains(searchValue));
+            },
+          ),
+          //This to clear the search value when you close the menu
+          onMenuStateChange: (isOpen) {
+            if (!isOpen) {
+              textEditingController.clear();
+            }
+          },
+        ),
+      );
+
+      }
+    );
+  }
+}
+
+
+
+

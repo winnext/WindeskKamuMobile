@@ -14,7 +14,8 @@ import 'package:win_kamu/utils/global_utils.dart';
       
       AddressCheckOptions(
         address: InternetAddress(
-          '10.86.4.46', // CloudFlare
+          '10.86.4.46',              //10.86.4.46 aeh
+                                  // 1.1.1.1 cihaz interneti
           type: InternetAddressType.IPv4,
           
         ),
@@ -32,7 +33,6 @@ import 'package:win_kamu/utils/global_utils.dart';
       case InternetConnectionStatus.connected:
         print('Data connection is available.');
         if(durum != 1){
-          
                 snackBar(context, 'İnternet bağlantısı sağlandı. ','connect');
                 
 

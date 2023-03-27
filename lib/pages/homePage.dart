@@ -3,8 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
+import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
+import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
@@ -100,13 +102,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Randevulu Taleplerim',
                                 iconName: Icons.calendar_month,
-                                navigator: PlannedRequest.plannedRequest),
+                                navigator: PlannedRequest()),
                           ),
                           Expanded(
                             child: HomeButton(
                                 text: 'Yeni Bildirim',
                                 iconName: Icons.attachment,
-                                navigator: 3),
+                                navigator: NewNotif()),
                           )
                         ],
                       ),
@@ -118,13 +120,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Açık Taleplerim',
                                 iconName: Icons.content_paste_search,
-                                navigator: 1),
+                                navigator: OpenRequests()),
                           ),
                           Expanded(
                             child: HomeButton(
                                 text: 'Kapatma Onayını Bekleyenler',
                                 iconName: Icons.content_paste_off,
-                                navigator: 2),
+                                navigator: ClosedRequest()),
                           )
                         ],
                       ),
@@ -136,13 +138,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Şikayet Ettiğim Taleplerim',
                                 iconName: Icons.calendar_month,
-                                navigator: ComplaintRequests.complaintRequests),
+                                navigator: OpenRequests() ),
                           ),
                           Expanded(
                             child: HomeButton(
                                 text: 'Kapatılmış Taleplerim',
                                 iconName: Icons.attachment,
-                                navigator: ClosedRequest.closedRequest),
+                                navigator: ClosedRequest()),
                           )
                         ],
                       ),

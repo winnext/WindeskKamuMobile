@@ -52,6 +52,8 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
   @override
   void dispose() {
     // TODO: implement dispose
+    
+    detailViewProvider?.dispose();
     super.dispose();
   }
 
@@ -77,7 +79,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
             leading: IconButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(OpenRequests.openRequest);
+                      .pop();
                 },
                 icon:  Icon(Icons.arrow_back, color: APPColors.Main.black)),
                 

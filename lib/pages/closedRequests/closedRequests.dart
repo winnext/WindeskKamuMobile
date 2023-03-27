@@ -41,6 +41,7 @@ DetailViewProvider? detailViewProvider;
 class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
   @override
   void initState() {
+    
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
@@ -63,6 +64,7 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
+    
 
     return WillPopScope(
       onWillPop: () async {
@@ -77,8 +79,9 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
             ),
             centerTitle: true,
             leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/mainPage');
+                  onPressed: () {
+                    dispose();
+               Navigator.of(context).popUntil(ModalRoute.withName("/"));
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),

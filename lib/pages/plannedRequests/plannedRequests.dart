@@ -75,7 +75,8 @@ class _ListScreenState extends State<ListScreen> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/mainPage');
+                                Navigator.popUntil(context, (route) => route.isFirst);
+
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),

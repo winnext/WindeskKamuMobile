@@ -8,7 +8,9 @@ import 'package:resize/resize.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
+import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
+import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/utils/utils.dart';
 
 import '../../l10n/locale_keys.g.dart';
@@ -33,9 +35,21 @@ class NewNotif extends StatefulWidget {
 
 class _NewNotifState extends State<NewNotif> {
 
+    @override
+  void initState() {
+    super.initState();
+    final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
+   
+  }
+
+
+
+
     String time = "";
     
     String date = '';
+
+    
 
  
   
@@ -113,63 +127,63 @@ class _NewNotifState extends State<NewNotif> {
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 1,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Numune taşıma personel talebi',),
                           ),CustomCardWithImageSmall(
                             title: 'Kan gazı için numune taşıma personel talebi',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 2,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Kan gazı için numune taşıma personel talebi',),
                           ),CustomCardWithImageSmall(
-                            title: 'Hasta taşım talebi',
+                            title: 'Hasta taşıma talebi',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 3,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Hasta taşıma talebi',),
                           ),CustomCardWithImageSmall(
                             title: 'İlaç taşıma',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 4,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'İlaç taşıma',),
                           ),CustomCardWithImageSmall(
                             title: 'Vefat eden taşıma',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 5,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Vefat eden taşıma',),
                           ),CustomCardWithImageSmall(
                             title: 'Oda destek personeli',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 6,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Oda destek personeli',),
                           ),CustomCardWithImageSmall(
                             title: 'Malzeme taşıma personel talebi',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 7,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Malzeme taşıma personel talebi',),
                           ),CustomCardWithImageSmall(
                             title: 'Temizlik talebi',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 8,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Temizlik talebi',),
                           ),CustomCardWithImageSmall(
                             title: 'Diğer',
                             iconData: Icons.text_fields,
                             cardPadding: 0,
                             cardInlinePadding: 10,
                             numara: 9,
-                            navigation: Login(),
+                            navigation: NewNotifBase(sayfa: 'Diğer',),
                           ),
                         ]),
                   ],
