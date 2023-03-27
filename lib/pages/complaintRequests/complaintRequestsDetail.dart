@@ -24,7 +24,7 @@ import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
 
 class ComplaintdRequestDetail extends StatefulWidget {
-  static String complaintdRequestDetail = 'ComplaintdRequestDetail';
+  static String complaintdRequestDetail= 'ComplaintdRequestDetail';
 
   const ComplaintdRequestDetail({Key? key}) : super(key: key);
   @override

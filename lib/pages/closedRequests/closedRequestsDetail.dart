@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
-import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
+import 'package:win_kamu/pages/openRequests/routeRequests.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
@@ -69,18 +69,16 @@ class _ClosedRequestDetailState extends State<ClosedRequestDetail> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-                    'Kapatılmış Taleplerim Detay',
-                    style:
-                        TextStyle(fontSize: 20, color: APPColors.Secondary.black),
-                  ),
+              'Şikayet Ettiğim Vaka  Detay',
+              style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
+            ),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(CloseRequestAwaitApproval.closeRequest);
+                      .pushReplacementNamed(OpenRequests.openRequest);
                 },
-                icon:  Icon(Icons.arrow_back, color: APPColors.Main.black)),
-                
+                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),
           body: Stack(
             children: [
@@ -113,7 +111,8 @@ class _ClosedRequestDetailState extends State<ClosedRequestDetail> {
                                       child: Text(mainPageViewProvider.kadi),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,0.0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20.0, 20.0, 20.0, 0.0),
                                       child: DetailListWidget(
                                           ani: detailElements?.ANI,
                                           description:

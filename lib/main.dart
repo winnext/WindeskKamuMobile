@@ -80,8 +80,9 @@ class MyApp extends StatelessWidget {
         ComplaintRequests.complaintRequests: (context) => ComplaintRequests(),
         ComplaintdRequestDetail.complaintdRequestDetail: (context) =>
             ComplaintdRequestDetail(),
-        ClosedRequest.closedRequest:(context) => ClosedRequest(),
-        ClosedRequestDetail.closedRequestDetail: (context) => ClosedRequestDetail(),
+        ClosedRequests.closedRequests: (context) => ClosedRequests(),
+        ClosedRequestDetail.closedRequestDetail: (context) =>
+            ClosedRequestDetail(),
       },
     );
   }

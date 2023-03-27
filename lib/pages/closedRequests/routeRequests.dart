@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 
 import '../../providers/main_page_view_provider.dart';
 import 'closedRequests.dart';
 
-class ClosedRequest extends StatefulWidget {
-  static String closedRequest = '/closeRequests';
-  const ClosedRequest({super.key});
+class ClosedRequests extends StatefulWidget {
+  static String closedRequests = '/ClosedRequests';
+  const ClosedRequests({super.key});
 
   @override
-  State<ClosedRequest> createState() => _ClosedRequestState();
+  State<ClosedRequests> createState() => _ClosedRequestsState();
 }
 
-class _ClosedRequestState extends State<ClosedRequest> {
+class _ClosedRequestsState extends State<ClosedRequests> {
   int _currentIndex = 0;
   PageController? _pageController;
 

@@ -78,6 +78,12 @@ class _ListScreenState extends State<ListScreen> {
                   Navigator.of(context).pushReplacementNamed('/mainPage');
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.arrow_back, color: APPColors.Main.black),
+                onPressed: () {},
+              ),
+            ],
           ),
           body: Stack(
             children: [

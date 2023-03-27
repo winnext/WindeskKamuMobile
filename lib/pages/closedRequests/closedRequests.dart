@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
@@ -18,12 +19,10 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
-import '../complaintRequests/complaintRequestsDetail.dart';
 import '../homePage.dart';
-import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 
 class ClosedRequestListScreen extends StatefulWidget {
-  static String closedRequest = 'listPageClosedRequests';
+  static String pageName = 'listPageComplaintRequests';
 
   const ClosedRequestListScreen({Key? key, required this.pageController})
       : super(key: key);
@@ -165,8 +164,8 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
                                                 code;
                                             Navigator.pushNamed(
                                                 context,
-                                                ComplaintdRequestDetail
-                                                    .complaintdRequestDetail);
+                                                ClosedRequestDetail
+                                                    .closedRequestDetail);
                                             print('tiklandi' + code);
                                           },
                                           onPressedLong: () {
@@ -205,7 +204,7 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
             listViewProvider.exampleListView.clear();
             listViewProvider.setcurrentPage = 1;
             listViewProvider.loadData(
-                listViewProvider.currentPage, 'MyClosedIssuesIsCustomer');
+                listViewProvider.currentPage, 'OPlannedIssuesIsCustomer');
           });
         },
         child: const Padding(

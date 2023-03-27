@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
@@ -18,8 +19,8 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../closedRequests/closedRequestsDetail.dart';
 import '../homePage.dart';
-import 'complaintRequestsDetail.dart';
 
 class ComplaintRequestsListScreen extends StatefulWidget {
   static String pageName = 'listPageComplaintRequests';

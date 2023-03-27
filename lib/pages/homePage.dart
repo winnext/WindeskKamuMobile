@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: HomeButton(
                                 text: 'Kapatılmış Taleplerim',
                                 iconName: Icons.attachment,
-                                navigator: ClosedRequest.closedRequest),
+                                navigator: ClosedRequests.closedRequests),
                           )
                         ],
                       ),
