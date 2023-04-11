@@ -41,7 +41,7 @@ class LoginProvider extends ChangeNotifier {
        userLogin( BuildContext context) async {
          
           String apiresult = await apirepository.login(_kadi.text,_password.text);
-          if (apiresult == 'success') {
+          if (apiresult == '201') {
           Navigator.push(
             context, MaterialPageRoute(builder: ((context) => const MainPage()))); 
             
@@ -49,5 +49,6 @@ class LoginProvider extends ChangeNotifier {
                     baglantiHatasi(context, apiresult.toString());
           }
         }
+       
   
 }

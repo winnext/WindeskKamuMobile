@@ -111,6 +111,10 @@ class APIRepository {
     }
   }
 
+  
+
+  
+
   //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 //sayfalama get metodu

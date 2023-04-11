@@ -1,60 +1,35 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/widgets/customCalendar.dart';
-import 'package:win_kamu/widgets/input.dart/buttonDropDown.dart';
+import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
 
-import '../../l10n/locale_keys.g.dart';
-import '../../providers/login_provider.dart';
 import '../../providers/main_page_view_provider.dart';
-import '../../providers/new_notif_provider.dart';
 import '../../utils/themes.dart';
-import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
-import '../../widgets/customDropdown.dart';
-import '../../widgets/textfieldsWidgets/customTextArea.dart';
-import '../full_screen_modal/full_screen_modal.dart';
+import '../full_screen_modal/wo_full_screen_modal.dart';
 
-class NewNotifBase  extends StatefulWidget {
-
-  const NewNotifBase({super.key, required this.sayfa});
-  final String sayfa;
+class WoCreate extends StatefulWidget {
+  const WoCreate({super.key});
 
   @override
-  State<NewNotifBase> createState() => _NewNotifBaseState();
+  State<WoCreate> createState() => _WoCreateState();
 }
 
-class _NewNotifBaseState extends State<NewNotifBase> {
-
-    @override
-  void initState() {
-    super.initState();
-    final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
-    
-
-
-  }
-
-
-
+class _WoCreateState extends State<WoCreate> {
+  
   @override
   Widget build(BuildContext context) {
-     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
-        int index = mainViewProvide.currentIndex;
+         final mainViewProvide = Provider.of<MainPageViewProvider>(context);
 
-      final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
+      final woProvider = Provider.of<WorkOrderProvider>(context, listen: true);
      // nProvider.clear = 1;
-     var photos = nProvider.photos;
-     var bases = nProvider.b64s;
-     
-     
+     var photos = woProvider.photos;
+     var bases = woProvider.b64s;
 
-     dynamic _showModal(BuildContext context) async {
+      dynamic _showModal(BuildContext context) async {
     // show the modal dialog and pass some data to it
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -66,14 +41,13 @@ class _NewNotifBaseState extends State<NewNotifBase> {
     final results = await Navigator
     .of(context)
     .push(new MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-  return new TakePictureScreen(camera: firstCamera,sayfa:'Yeni İş Emri',);
+  return new TakePictureScreen(camera: firstCamera,sayfa: 'Yeni İş Emri',);
 }));
 
 
     // print the data returned by the modal if any
   }
-
-        
+     
     return Sizer(      builder: (context, orientation, deviceType) {
 
       return Container(
@@ -81,7 +55,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
             backgroundColor: APPColors.Accent.blue,
-            title: Text(widget.sayfa),
+            title: Text('Yeni İş Emri'),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -126,7 +100,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                                width: 65.w,
                                child: 
                                TextField(                                 
-                                      controller: nProvider.mahal,
+                                      controller: woProvider.mahal,
                                       decoration: 
                                       InputDecoration(
                                           border: UnderlineInputBorder(),
@@ -147,7 +121,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                             IconButton(
                               icon: const Icon(Icons.barcode_reader),
                               onPressed: () {
-                                nProvider.scanQR();
+                                woProvider.scanQR();
                               },
                             ),
                             ),
@@ -157,7 +131,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                             IconButton(
                               icon: const Icon(Icons.qr_code),
                               onPressed: () {
-                                nProvider.scanQR();
+                                woProvider.scanQR();
 
                               },
                             ),
@@ -168,33 +142,26 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                          ),
                          
                                 
-                            CupertinoTextField(
-      decoration: BoxDecoration(
-        color: APPColors.NewNotifi.grey,
-        border: Border.all(color: Color.fromARGB(255, 235, 235, 235)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 7,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      controller: nProvider.aciklama,
-      placeholder: 'Açıklama',
-      placeholderStyle: TextStyle(color: Colors.black,),
-      minLines: 3,
-      maxLines: 6,
-      style: TextStyle(color: Colors.black),
-    ),
+                           
                             
                              TextField(          
                                                      
-                                      controller: nProvider.arayan_num,
+                                      controller: woProvider.arayan_num,
                                       decoration: 
                                       InputDecoration(
-                                          hintText: 'Arayan Numara',
+                                          hintText: 'Açıklama',
+                                           hintStyle: TextStyle(
+                                            color: Colors.black
+                                          )
+                                        ),
+                                        
+                                ),
+                                  TextField(          
+                                                     
+                                      controller: woProvider.arayan_num,
+                                      decoration: 
+                                      InputDecoration(
+                                          hintText: 'Varlık',
                                            hintStyle: TextStyle(
                                             color: Colors.black
                                           )
@@ -203,7 +170,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                                 ),
                                 Center(
                 child: Container(
-                  height: 10.h,
+                  height: 30.h,
                   child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -223,8 +190,8 @@ class _NewNotifBaseState extends State<NewNotifBase> {
     
   ),
   onPressed: () { 
-            nProvider.deletePhotos = index;
-            nProvider.deleteB64 = index;
+            woProvider.deletePhotos = index;
+            woProvider.deleteB64 = index;
 
            
   },
@@ -260,27 +227,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                        children: [
 
-                         photos.length >= 6 ? (Container()) : (
-
-                           Container(
-                          width: 30.w,
-                          height: 5.h,
-                          child:  ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: APPColors.Login.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // <-- Radius
-                          ),
-                        ),
-                        onPressed: () {
-                          _showModal(context);
-
-                        },
-                        child: Icon(Icons.camera),
-                      ),
-                        )
-                         ),
+                        
 
                          Container(
                           width: 60.w,
@@ -301,9 +248,9 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                           ),
                         ),
                         onPressed: () {
-                          nProvider.clear = 1;
+                         photos.length > 0 ? woProvider.clear = 1 :  _showModal(context);
                         },
-                        child: Text('Vazgeç'),
+                        child: photos.length > 0 ? (Text('Vazgeç')) : (Icon(Icons.add_a_photo)),
                       ),
                                ),
 
@@ -324,7 +271,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                         onPressed: () {
                           
                         },
-                        child: Text('Kaydet'),
+                        child: Text('Oluştur'),
                       ),
                                ),
                                
@@ -350,4 +297,3 @@ class _NewNotifBaseState extends State<NewNotifBase> {
     );
   }
 }
-

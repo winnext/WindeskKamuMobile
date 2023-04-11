@@ -2,13 +2,16 @@ import 'package:animated_widgets/widgets/opacity_animated.dart';
 import 'package:animated_widgets/widgets/scale_animated.dart';
 import 'package:animated_widgets/widgets/translation_animated.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/bottomNavBar/bottomNavBar.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 
+import '../../providers/login_provider.dart';
 import '../../utils/themes.dart';
 
 class Splash extends StatefulWidget {
@@ -34,12 +37,17 @@ class _SplashState extends State<Splash> {
         prefs.setString('deviceType', result.data['systemName']);
       } catch (e) {}
 
+
+
+
       if (prefs.getString("prefsUserName") != null) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const BottomNavBar())));
+            Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: ((context) => const BottomNavBar())));
+                            
+      
       } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: ((context) => const Login())));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: ((context) => const Login())));
       }
     });
     super.initState();

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';
+import '../WorkOrder/WoCreate.dart';
 import '../closeRequestsWaitApprove/routeRequests.dart';
 import '../homePage.dart';
 import '../internet_connection/internet_connection.dart';
@@ -24,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
  List<Widget> _buildScreens() {
         return [
           MyHomePage(),
-          OpenRequests(),
+          WoCreate(),
           CloseRequestAwaitApproval(),
           NewNotif()
           
@@ -34,25 +35,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
         return [
             PersistentBottomNavBarItem(
                 icon: Icon(Icons.home),
-                title: ("AnaSayfa"),
+                title: ("Anasayfa"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: APPColors.Main.grey,
             ),
             PersistentBottomNavBarItem(
-                icon: Icon(Icons.content_paste_search),
-                title: ("Açık Taleplerim"),
+                icon: Icon(Icons.add_box),
+                title: ("Yeni İş Emri"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: APPColors.Main.grey,
             ),
              PersistentBottomNavBarItem(
-                icon: Icon(Icons.content_paste_off),
-                title: ("Kapatma Onayı"),
+                icon: Icon(Icons.search),
+                title: ("Arama"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: APPColors.Main.grey,
             ),
              PersistentBottomNavBarItem(
-                icon: Icon(Icons.attachment),
-                title: ("Yeni Bildirim"),
+                icon: Icon(Icons.wifi),
+                title: ("Test"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: APPColors.Main.grey,
             ),

@@ -397,6 +397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
+  keycloak_flutter:
+    dependency: "direct main"
+    description:
+      name: keycloak_flutter
+      sha256: dd97e98cc678549433647a11474fbfefc6bfd91d10b02f19bac70c564939aa89
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.20"
   lints:
     dependency: transitive
     description:
