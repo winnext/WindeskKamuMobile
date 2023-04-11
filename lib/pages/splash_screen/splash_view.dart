@@ -41,41 +41,8 @@ class _SplashState extends State<Splash> {
 
 
       if (prefs.getString("prefsUserName") != null) {
-         String loginUrl = 'http://localhost:3012/user/login';
-                        try {
-                Dio dio = Dio();
-                final response = await dio.post(loginUrl,
-                  data: {'username': prefs.getString('prefsUserName'), 'password': prefs.getString('prefsPassword')},
-                    options: Options(
-                      responseType: ResponseType.json,
-                    ));
-                  print('sonuc');
-                print(response.statusCode);
-                String token = response.data['access_token'];
-                print('token : '+token);
-                if (response.statusCode== 201) {
-                  //print(response.data);
-                // prefs.setString('prefsUserName', prefs.getString('prefsUserName'));
-                  //prefs.setString('prefsPassword',password);
-
-                  print('Giriş İşlemi Başarılı');
-                } else {
-                  print(response.data['result']);
-                }
-                if(token == prefs.getString('prefsToken')){
-                                    prefs.setString('prefsToken',token);
-
-                  print('Tokenlar eşleşti');
-                                Navigator.pushReplacement(context,
+            Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: ((context) => const BottomNavBar())));
-
-                            }else{
-                                Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: ((context) => const Login())));
-                            }
-              } on DioError catch (e) {
-                print('Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz');
-              }
                             
       
       } else {
