@@ -110,6 +110,82 @@ class APIRepository {
     }
   }
 
+  Future login2(String kadi, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    String deviceType = prefs.getString('deviceType').toString();
+
+    String loginUrl = 'http://localhost:3012/user/login';
+    print(loginUrl);
+    var result = '';
+
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
+
+    try {
+      Dio dio = Dio();
+      final response = await dio.post(loginUrl,
+        data: {'username': kadi, 'password': password},
+          options: Options(
+            responseType: ResponseType.json,
+          ));
+        print('sonuc');
+      print(response.statusCode);
+      String token = response.data['access_token'];
+      print('token : '+token);
+      if (response.statusCode== 201) {
+        //print(response.data);
+        prefs.setString('prefsUserName', kadi);
+        prefs.setString('prefsPassword',password);
+        prefs.setString('prefsToken',token);
+
+        print('Giriş İşlemi Başarılı');
+      } else {
+        print(response.data['result']);
+      }
+      return response.statusCode.toString();
+    } on DioError catch (e) {
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+  }
+
+  Future loginCheck(String kadi, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    String deviceType = prefs.getString('deviceType').toString();
+
+    String loginUrl = 'http://localhost:3012/user/login';
+    print(loginUrl);
+    var result = '';
+
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
+
+    try {
+      Dio dio = Dio();
+      final response = await dio.post(loginUrl,
+        data: {'username': kadi, 'password': password},
+          options: Options(
+            responseType: ResponseType.json,
+          ));
+        print('sonuc');
+      print(response.statusCode);
+      String token = response.data['access_token'];
+      print('token : '+token);
+      if (response.statusCode== 201) {
+        //print(response.data);
+        prefs.setString('prefsUserName', kadi);
+        prefs.setString('prefsPassword',password);
+        prefs.setString('prefsToken',token);
+
+        print('Giriş İşlemi Başarılı');
+      } else {
+        print(response.data['result']);
+      }
+      return token;
+    } on DioError catch (e) {
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+  }
+
   //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 //sayfalama get metodu

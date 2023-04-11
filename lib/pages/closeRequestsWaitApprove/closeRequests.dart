@@ -197,7 +197,8 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
                                               }
                                               // extraTitle:
                                               //     listElements.STATUSCODE.toString(),
-                                              )),
+                                              )
+                                            ),
                                     ],
                                   );
                                 }),

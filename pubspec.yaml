@@ -63,6 +63,7 @@ dependencies:
   image_picker: ^0.8.6+4
   camera: ^0.10.3+2
   responsive_framework: ^0.2.0
+  keycloak_flutter: ^0.0.20
 
 dev_dependencies:
   flutter_test:

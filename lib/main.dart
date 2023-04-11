@@ -23,6 +23,7 @@ import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
+import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
@@ -50,6 +51,8 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<MainPageViewProvider>(
       create: (_) => MainPageViewProvider()),
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
+    ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
+
 
 ];
 
@@ -93,7 +96,7 @@ class MyApp extends StatelessWidget {
         OpenRequestDetail.pageName: (context) => OpenRequestDetail(),
         CloseRequestAwaitApproval.closeRequest: (context) =>
             CloseRequestAwaitApproval(),
-        CloseRequestDetail.closeRequestDetail: (context) =>
+        CloseRequestDetail.closeRequestDetail: (context) => 
             CloseRequestDetail(),
         PlannedRequest.plannedRequest: (context) => PlannedRequest(),
         PlannedRequestDetail.plannedRequestDetail: (context) =>
