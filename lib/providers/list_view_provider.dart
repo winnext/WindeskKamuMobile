@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/models/tracing_view.model.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +14,11 @@ import 'main_page_view_provider.dart';
 
 class ListViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
-  String? issueListType;  
+  String? issueListType;
   List<ListViewModel> _exampleListView = [];
   List<ListViewModel> tempexampleListView = [];
+  List<TracingViewModal> _tracingListView = [];
+  List<TracingViewModal> temptracingListView = [];
   PageController? _pageController;
 
   bool _isDataLoading = true;
@@ -33,6 +36,12 @@ class ListViewProvider extends ChangeNotifier {
   List<ListViewModel> get exampleListView => _exampleListView;
   set setiexampleListView(List<ListViewModel> exampleListView) {
     _exampleListView = exampleListView;
+    notifyListeners();
+  }
+
+  List<TracingViewModal> get tracingListView => _tracingListView;
+  set setitracingListView(List<TracingViewModal> tracingListView) {
+    _tracingListView = tracingListView;
     notifyListeners();
   }
 
@@ -103,13 +112,14 @@ class ListViewProvider extends ChangeNotifier {
 
     issueListType = issueType;
 
-    final urlIssueTypes =
-        '${getIssueList + issueListType!}/issue';
+    final urlIssueTypes = '${getIssueList + issueListType!}/issue';
 
     final result = await apirepository.getListForPaging(
         controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
+
+    print('data' +  data.toString());
 
     if (true) {
       tempexampleListView = (result.records['records'] as List)
@@ -118,6 +128,44 @@ class ListViewProvider extends ChangeNotifier {
       Future.delayed(const Duration(milliseconds: 1200), () {
         exampleListView.addAll(tempexampleListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
+        int noOfTasks = tempexampleListView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
+
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void getTracingListWithCount(xusercode, module) async {
+    _isDataLoading = true;
+
+    final urlIssueTypes = '${BASE_URL_V2}/list/module/${module}';
+
+    final result = await apirepository.getTracingListWithCount(
+        controller: urlIssueTypes, xusercode: xusercode, module: module);
+
+    final data = result.lists['lists'];
+
+    print('data ++ ' + data.toString());
+    if (true) {
+      temptracingListView = (result.lists['lists'] as List)
+          .map((e) => TracingViewModal.fromJson(e))
+          .toList();
+
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        tracingListView.addAll(temptracingListView);
         int noOfTasks = tempexampleListView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;

@@ -19,15 +19,22 @@ import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
-import 'openRequestsDetail.dart';
+import 'issueDetail.dart';
 
-class ListScreen extends StatefulWidget {
+class IssueList extends StatefulWidget {
   static String pageName = 'listPage';
 
-  const ListScreen({Key? key, required this.pageController}) : super(key: key);
+  const IssueList(
+      {Key? key,
+      required this.pageController,
+      required this.moduleCode,
+      required this.moduleName})
+      : super(key: key);
   final PageController pageController;
+  final String moduleCode;
+  final String moduleName;
   @override
-  State<ListScreen> createState() => _ListScreenState();
+  State<IssueList> createState() => _IssueListState();
 }
 
 final apirepository = APIRepository();
@@ -35,13 +42,14 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _ListScreenState extends State<ListScreen> {
+class _IssueListState extends State<IssueList> {
   @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
-    exampleList.loadData(1, 'OpenIssuesIsCustomer');
+    print('widget  :: ' + widget.moduleCode);
+    exampleList.loadData(1, widget.moduleCode);
     exampleList.initData(widget.pageController);
   }
 
@@ -70,7 +78,7 @@ class _ListScreenState extends State<ListScreen> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-              'Açık Taleplerim',
+              widget.moduleName,
               style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
             ),
             centerTitle: true,

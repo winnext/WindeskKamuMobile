@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
+import 'package:win_kamu/pages/plannedRequests/plannedRequestsDetail.dart';
 
 import '../providers/main_page_view_provider.dart';
 import '../utils/themes.dart';
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
+    print(mainViewProvider.currentIndex);
 
     mainViewProvider.initForm();
   }
@@ -49,6 +51,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    
     void degis() {
       setState(() {
         mainViewProvide.setVisible = !mainViewProvide.password_visible;
@@ -85,6 +88,7 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: APPColors.Main.white,
         selectedIndex: mainViewProvide.currentIndex,
         onItemSelected: (index) {
+          print(index);
           setState(() => mainViewProvide.setcurrentIndex = index);
           mainViewProvide.pageController!.jumpToPage(index);
         },

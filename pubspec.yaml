@@ -56,6 +56,13 @@ dependencies:
   dropdown_search: ^2.0.1
   flutter_datetime_picker: ^1.5.1
   resize: ^1.0.0
+  sizer: ^2.0.15
+  dropdown_button2: ^2.0.0
+  flutter_barcode_scanner: ^2.0.0
+  image_card: ^0.0.4
+  image_picker: ^0.8.6+4
+  camera: ^0.10.3+2
+  responsive_framework: ^0.2.0
 
 dev_dependencies:
   flutter_test:

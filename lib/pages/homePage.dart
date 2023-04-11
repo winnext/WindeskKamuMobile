@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
+import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
+import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
+import 'issue/routeIssue.dart';
 import 'openRequests/RouteRequests.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -98,15 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Expanded(
                             child: HomeButton(
-                                text: 'Randevulu Taleplerim',
+                                text: 'Vaka-(SLA) Listesi',
                                 iconName: Icons.calendar_month,
-                                navigator: PlannedRequest.plannedRequest),
+                                navigator: Issue()),
                           ),
                           Expanded(
                             child: HomeButton(
-                                text: 'Yeni Bildirim',
+                                text: 'Vaka-(SLA) Arama',
                                 iconName: Icons.attachment,
-                                navigator: 3),
+                                navigator: NewNotif()),
                           )
                         ],
                       ),
@@ -116,15 +120,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Expanded(
                             child: HomeButton(
-                                text: 'Açık Taleplerim',
+                                text: 'İş Emri Listesi',
                                 iconName: Icons.content_paste_search,
-                                navigator: 1),
+                                navigator: OpenRequests()),
                           ),
                           Expanded(
                             child: HomeButton(
-                                text: 'Kapatma Onayını Bekleyenler',
+                                text: 'İş Emri Arama ',
                                 iconName: Icons.content_paste_off,
-                                navigator: 2),
+                                navigator: CloseRequestAwaitApproval()),
                           )
                         ],
                       ),
@@ -134,16 +138,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Expanded(
                             child: HomeButton(
-                                text: 'Şikayet Ettiğim Taleplerim',
+                                text: 'Yeni İş Emri',
                                 iconName: Icons.calendar_month,
-                                navigator: ComplaintRequests.complaintRequests),
+                                navigator: ComplaintRequests() ),
                           ),
-                          Expanded(
-                            child: HomeButton(
-                                text: 'Kapatılmış Taleplerim',
-                                iconName: Icons.attachment,
-                                navigator: ClosedRequests.closedRequests),
-                          )
+                          // Expanded(
+                          //   child: HomeButton(
+                          //       text: 'Kapatılmış Taleplerim',
+                          //       iconName: Icons.attachment,
+                          //       navigator: ClosedRequests()),
+                          // )
                         ],
                       ),
                     )

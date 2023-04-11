@@ -85,7 +85,7 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/mainPage');
+                 listViewProvider.pageController!.jumpTo(0);
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),
@@ -320,6 +320,7 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                               : APPColors.Modal.blue),
                       child: Text(
                         'Talep Yerine Getirildi',
+                        
                         style: TextStyle(
                             color: _isDone
                                 ? APPColors.Main.black

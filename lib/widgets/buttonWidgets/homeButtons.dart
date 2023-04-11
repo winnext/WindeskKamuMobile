@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
@@ -24,11 +25,13 @@ class HomeButton extends StatelessWidget {
           height: size / 9,
           child: ElevatedButton(
             onPressed: () {
-              if (navigator.runtimeType == String) {
-                Navigator.pushNamed(context, navigator!);
-              } else {
-                mainViewProvide.pageController!.jumpToPage(navigator!);
-              }
+              PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: navigator,
+        withNavBar: true, // OPTIONAL VALUE. True by default.
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+    );
+
             },
             child: Icon(
               iconName,

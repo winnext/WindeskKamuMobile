@@ -8,6 +8,7 @@ import 'package:win_kamu/api/static_variables.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import '../models/detail_response.model.dart';
 import '../models/http_response.model.dart';
+import '../models/tracingList_response.model.dart';
 
 class APIRepository {
   // Platform messages may fail, so we use a try/catch PlatformException.
@@ -114,6 +115,92 @@ class APIRepository {
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
+
+  Future<tracingListModal> getTracingListWithCount(
+      {@required String? controller,
+      @required String? xusercode,
+      @required String? module,
+      bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      //ReloadApiBase(StaticVariables.token);
+      final response = await dio.get(controller,
+          options: Options(
+            headers: {"xusercode": xusercode, "xtoken": "ishprod!"},
+          ));
+
+      final data = jsonDecode(response.toString());
+
+      print('data + ' + data.toString());
+
+      print(data['lists'] as List);
+
+      if (response != null) {
+        return tracingListModal(
+          lists: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return tracingListModal(
+        lists: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return tracingListModal(
+            success: false,
+            message: "Yetkisiz Erişim",
+            lists: {},
+          );
+        }
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return tracingListModal(
+          lists: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
   Future<httpSonucModel> getListForPaging(
       {@required String? controller,
       @required Map<String, dynamic>? queryParameters,
@@ -125,7 +212,7 @@ class APIRepository {
       final response = await dio.get(controller,
           queryParameters: queryParameters,
           options: Options(
-            headers: {"xusercode": "k203736", "xtoken": "aehtest!"},
+            headers: {"xusercode": "sgnm1027", "xtoken": "ishprod!"},
           ));
 
       final data = jsonDecode(response.toString());
