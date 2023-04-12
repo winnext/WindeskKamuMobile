@@ -25,7 +25,7 @@ import 'issueDetail.dart';
 import 'issueList.dart';
 
 class IssueTracingList extends StatefulWidget {
-  static String pageName = 'listPage';
+  static String tracingList = 'TracingList';
 
   const IssueTracingList({Key? key, required this.pageController})
       : super(key: key);
@@ -81,14 +81,16 @@ class _IssueTracingListState extends State<IssueTracingList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  listViewProvider.pageController!.jumpTo(0);
+                  Navigator.pop(context);
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
             actions: [
               IconButton(
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ],
           ),
@@ -131,16 +133,17 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                         ));
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 5, 20, 10),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: APPColors.Main.white,
-                                        borderRadius: BorderRadius.circular(16),
+                                        borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
                                             color: APPColors.Main.grey,
                                             blurRadius: 1,
-                                            offset: Offset(0, 2),
+                                            offset: Offset(0, 1),
                                           ),
                                         ],
                                       ),
@@ -220,7 +223,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
             listViewProvider.tracingListView.clear();
             listViewProvider.setcurrentPage = 1;
             listViewProvider.loadData(
-                listViewProvider.currentPage, 'OpenIssuesIsCustomer');
+                listViewProvider.currentPage, 'issue');
           });
         },
         child: const Padding(

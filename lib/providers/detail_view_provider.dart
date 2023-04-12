@@ -6,6 +6,7 @@ import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/detail_response.model.dart';
 import 'package:win_kamu/models/detail_view.model.dart';
+import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,9 @@ class DetailViewProvider extends ChangeNotifier {
   List<DetailActivitiesModal> _listViewActivities = [];
   List<DetailActivitiesModal> tempListViewActivities = [];
 
+  List<IssueSummaryModal> _issueSummary = [];
+  List<IssueSummaryModal> tempIssueSummary = [];
+
   String? _responses;
 
   String? _issueCode;
@@ -35,6 +39,12 @@ class DetailViewProvider extends ChangeNotifier {
   List<DetailViewModel> get exampleListView => _exampleListView;
   set setiexampleListView(List<DetailViewModel> exampleListView) {
     _exampleListView = exampleListView;
+    notifyListeners();
+  }
+
+  List<IssueSummaryModal> get issueSummary => _issueSummary;
+  set setiissueSummary(List<IssueSummaryModal> issueSummary) {
+    _issueSummary = issueSummary;
     notifyListeners();
   }
 
@@ -89,13 +99,11 @@ class DetailViewProvider extends ChangeNotifier {
   loadData(String issuecode, String xusercode) async {
     _isDataLoading = true;
 
-    final responseUrl = getIssueDetail + '/${issueCode}';
-
+    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}';
     final data = await apirepository.getRequestDetail(
         controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
-    //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
-
+    print('dataDetail' + data.toString());
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
@@ -111,41 +119,57 @@ class DetailViewProvider extends ChangeNotifier {
     }
   }
 
-  sendIssueActivity(String issueCode, String userName, String activityCode,
-      String description) async {
-   if (description.toString().length < 20 &&
-          activityCode.toString() == 'AR00000001336') {
-            return 'Lütfen yeterli uzunlukta açıklama giriniz';
+  loadIssueSummary(String issuecode, String xusercode) async {
+    _isDataLoading = true;
+    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}/summary';
 
-          }
-    else {
-        final apiresult = await apirepository.addIssueActivity(
-        userName: userName,
-        issueCode: issueCode,
-        activityCode: activityCode,
-        description: description);
+    final data = await apirepository.getIssueSummary(
+        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
-    print('activity inside' + apiresult.toString());
+    //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
 
-    final results = jsonDecode(apiresult.toString());
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
 
-    print('activity inside 2 ' + results['resultcode'].toString());
-
-    if (results['success'].toString() == 'false') {
-      //_responses = results['resultcode'];
-      print('activityresponse' + results['success'].toString());
-      //notifyListeners();
-      return 'Aktivite girişi başarısız';
+        _issueSummary.add(responseData);
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+      });
     } else {
-      
-        return 'Aktivite girişi başarılı.';
-    }
-
-    }
-
-    
+      // baglantiHatasi(context, result.message);
     }
   }
+
+  sendIssueActivity(String issueCode, String userName, String activityCode,
+      String description) async {
+    if (description.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
+      return 'Lütfen yeterli uzunlukta açıklama giriniz';
+    } else {
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: issueCode,
+          activityCode: activityCode,
+          description: description);
+
+      final results = jsonDecode(apiresult.toString());
+
+      print('activity inside 2 ' + results['resultcode'].toString());
+
+      if (results['success'].toString() == 'false') {
+        //_responses = results['resultcode'];
+        print('activityresponse' + results['success'].toString());
+        //notifyListeners();
+        return 'Aktivite girişi başarısız';
+      } else {
+        return 'Aktivite girişi başarılı.';
+      }
+    }
+  }
+}
 
   // loadIssueActivities(String issuecode) async {
   //   _isDataLoading = true;

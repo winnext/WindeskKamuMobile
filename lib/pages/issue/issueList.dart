@@ -22,7 +22,7 @@ import '../homePage.dart';
 import 'issueDetail.dart';
 
 class IssueList extends StatefulWidget {
-  static String pageName = 'listPage';
+  static String issueList = 'IssueList';
 
   const IssueList(
       {Key? key,
@@ -84,14 +84,16 @@ class _IssueListState extends State<IssueList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  listViewProvider.pageController!.jumpTo(0);
+                  Navigator.pop(context);
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
             actions: [
               IconButton(
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ],
           ),
@@ -125,8 +127,6 @@ class _IssueListState extends State<IssueList> {
                                     .toString();
                                 if (listElements.RESPONDED_IDATE != null &&
                                     listElements.TARGET_FDATE != null) {
-                                  print('responsedI');
-
                                   print(int.parse(listElements.RESPONDED_IDATE
                                           .toString()) -
                                       int.parse(listElements.TARGET_RDATE
@@ -160,6 +160,7 @@ class _IssueListState extends State<IssueList> {
                                               .toString(),
                                           planedDate: listElements.PLANNEDDATE
                                               .toString(),
+                                      
                                           respondedIDate: listElements
                                               .RESPONDED_IDATE
                                               .toString(),
@@ -173,11 +174,17 @@ class _IssueListState extends State<IssueList> {
                                           timeInfoNow: timeNow,
                                           isIcon: true,
                                           onPressed: (code) {
+                                            print('tiklandi' + code);
                                             detailViewProvider.setIssueCode =
                                                 code;
-                                            Navigator.pushNamed(context,
-                                                OpenRequestDetail.pageName);
-                                            print('tiklandi' + code);
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const IssueDetail(),
+                                              ),
+                                            );
+                                            // Navigator.pushNamed(context,
+                                            //     IssueDetail.issueDetail);
                                           },
                                           onPressedLong: () {
                                             print('pressed');

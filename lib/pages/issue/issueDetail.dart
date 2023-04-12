@@ -1,7 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
@@ -23,12 +26,12 @@ import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
 import '../homePage.dart';
 
-class OpenRequestDetail extends StatefulWidget {
-  static String pageName = 'OpenRequestDetail';
+class IssueDetail extends StatefulWidget {
+  static String issueDetail = 'IssueDetail';
 
-  const OpenRequestDetail({Key? key}) : super(key: key);
+  const IssueDetail({Key? key}) : super(key: key);
   @override
-  State<OpenRequestDetail> createState() => _OpenRequestDetailState();
+  State<IssueDetail> createState() => _IssueDetailState();
 }
 
 final apirepository = APIRepository();
@@ -36,23 +39,41 @@ final apirepository = APIRepository();
 DetailViewProvider? detailViewProvider;
 MainPageViewProvider? mainPageViewProvider;
 
-class _OpenRequestDetailState extends State<OpenRequestDetail> {
+class _IssueDetailState extends State<IssueDetail> {
+  String dateNow = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
+
+  changeTime() {
+    setState(() {
+      dateNow = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
+    });
+  }
+
   @override
   void initState() {
-    super.initState();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      changeTime();
+    });
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
     detailViewProvider.exampleListView.clear();
+    detailViewProvider.issueSummary.clear();
     detailViewProvider.loadData(
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
+    detailViewProvider.loadIssueSummary(
+        detailViewProvider.issueCode, mainPageViewProvider.kadi);
+    super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    
+
     detailViewProvider?.dispose();
     super.dispose();
   }
@@ -71,18 +92,15 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
           appBar: AppBar(
             backgroundColor: APPColors.Main.white,
             title: Text(
-                    'Açık Taleplerim Detay',
-                    style:
-                        TextStyle(fontSize: 20, color: APPColors.Secondary.black),
-                  ),
+              'Açık Taleplerim Detay',
+              style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
+            ),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pop();
+                  Navigator.of(context).pop();
                 },
-                icon:  Icon(Icons.arrow_back, color: APPColors.Main.black)),
-                
+                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
           ),
           body: Stack(
             children: [
@@ -102,6 +120,8 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                                 String formattedDate = "";
                                 DetailViewModel? detailElements =
                                     detailViewProvider?.exampleListView[0];
+                                IssueSummaryModal? issueSummary =
+                                    detailViewProvider?.issueSummary[0];
 
                                 final TARGET_FDATE =
                                     timeRecover(detailElements?.TARGET_FDATE);
@@ -112,16 +132,31 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(mainPageViewProvider.kadi),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: APPColors.NewNotifi.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(3)),
+                                        padding: EdgeInsets.all(3),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text(mainPageViewProvider.kadi),
+                                            Text(dateNow.toString()),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,0.0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20.0, 20.0, 20.0, 20.0),
                                       child: DetailListWidget(
                                           ani: detailElements?.ANI,
                                           description:
                                               detailElements?.DESCRIPTION,
-                                          targetFDate: TARGET_FDATE,
-                                          targetRDate: TARGET_RDATE,
+                                          targetFDate: detailElements?.TARGET_FDATE.toString(),
+                                          targetRDate: detailElements?.TARGET_RDATE.toString(),
                                           statusName:
                                               detailElements?.STATUSNAME,
                                           assigneName:
@@ -147,7 +182,13 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                                           title: detailElements?.TITLE,
                                           onPressed: (code) {
                                             print('tiklandi' + code);
-                                          }
+                                          },
+                                          fixTimer: issueSummary?.FIX_TIMER,
+                                          fixedDate: issueSummary?.FIXED_DATE,
+                                          respondedDate:
+                                              issueSummary?.RESPONDED_DATE,
+                                          respondedTimer:
+                                              issueSummary?.RESPONDED_TIMER
                                           // extraTitle:
                                           //     detailElements.STATUSCODE.toString(),
                                           ),

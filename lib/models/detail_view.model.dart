@@ -19,6 +19,7 @@ class DetailViewModel {
   String? HDS;
   String? ASSIGNMENTGROUP;
   String? ASSIGNMENTGROUPNAME;
+  String? ASSIGNEECONTACTCODE;
   String? ASSIGNEENAME;
   String? RELATEDCODE;
   String? SUMDESC1;
@@ -58,7 +59,8 @@ class DetailViewModel {
       this.SLACODE,
       this.SUMDESC1,
       this.WRONGREDIRECT,
-      this.PLANNEDDATE});
+      this.PLANNEDDATE,
+      this.ASSIGNEECONTACTCODE});
   DetailViewModel.fromJson(Map<String, dynamic> json) {
     ID = json['ID'];
     CODE = json['CODE'];
@@ -75,6 +77,7 @@ class DetailViewModel {
     ANI = json['ANI'];
     ASSIGNEENAME = json['ASSIGNEENAME'];
     ASSIGNMENTGROUPNAME = json['ASSIGNMENTGROUPNAME'];
+    ASSIGNEECONTACTCODE = json['ASSIGNEECONTACTCODE'];
     CMDB = json['CMDB'];
     CONTACTNAME = json['CONTACTNAME'];
     HDS = json['HDS'];

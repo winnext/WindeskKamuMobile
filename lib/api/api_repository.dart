@@ -111,10 +111,6 @@ class APIRepository {
     }
   }
 
-  
-
-  
-
   //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 //sayfalama get metodu
@@ -293,13 +289,96 @@ class APIRepository {
       @required String? issueCode,
       @required String? xuserCode,
       bool redirectLogin = false}) async {
-    print('url ' + controller!);
+    print('url DDDDE' + controller!);
 
     try {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller,
           options: Options(
-            headers: {"xusercode": xuserCode, "xtoken": "aehtest!"},
+            headers: {"xusercode": 'sgnm1027', "xtoken": "ishprod!"},
+          ));
+
+      final data = jsonDecode(response.toString());
+
+      print(data['detail']);
+
+      if (response != null) {
+        return detailSonucModel(
+          detail: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return detailSonucModel(
+        detail: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return detailSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            detail: {},
+          );
+        }
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return detailSonucModel(
+          detail: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
+  Future<detailSonucModel> getIssueSummary(
+      {@required String? controller,
+      @required String? issueCode,
+      @required String? xuserCode,
+      bool redirectLogin = false}) async {
+    print('url DDDDE' + controller!);
+
+    try {
+      //ReloadApiBase(StaticVariables.token);
+      final response = await dio.get(controller,
+          options: Options(
+            headers: {"xusercode": 'sgnm1027', "xtoken": "ishprod!"},
           ));
 
       final data = jsonDecode(response.toString());

@@ -45,7 +45,6 @@ class ListViewModel {
     TARGET_RDATE = json['TARGET_RDATE'];
     SUMDESC1 = json['SUMDESC1'];
     CAT1 = json['CAT1'];
-
     STATUSNAME = json['STATUSNAME'];
     STATUSCODE = json['STATUSCODE'];
     IDATE = json['IDATE'];

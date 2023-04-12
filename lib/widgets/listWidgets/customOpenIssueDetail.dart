@@ -47,7 +47,11 @@ class DetailListWidget extends StatefulWidget {
       plannedDesc,
       slaCode,
       parentStatus,
-      wrondDirect;
+      wrondDirect,
+      respondedDate,
+      respondedTimer,
+      fixedDate,
+      fixTimer;
 
   final Color? importanceLevelColor;
   final VoidCallback? press;
@@ -97,7 +101,11 @@ class DetailListWidget extends StatefulWidget {
       this.relatedCode,
       this.slaCode,
       this.title,
-      this.wrondDirect})
+      this.wrondDirect,
+      this.fixTimer,
+      this.fixedDate,
+      this.respondedDate,
+      this.respondedTimer})
       : super(key: key);
 
   @override
@@ -105,30 +113,9 @@ class DetailListWidget extends StatefulWidget {
 }
 
 class _DetailListWidgetState extends State<DetailListWidget> {
-  String dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
-
-  changeTime() {
-    setState(() {
-      dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
-    });
-  }
-
-  @override
-  void initState() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        timer.cancel();
-        return;
-      }
-      changeTime();
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return GestureDetector(
       onTap: () {
         widget.onPressed(widget.code.toString());
@@ -141,6 +128,122 @@ class _DetailListWidgetState extends State<DetailListWidget> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        widget.statusCode == 'OPlanned'
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    color: APPColors.NewNotifi.blue,
+                                    borderRadius: BorderRadius.circular(3)),
+                                padding: EdgeInsets.all(3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text('Randevulu Vakadır'),
+                                    Text(widget.planedDate.toString()),
+                                  ],
+                                ),
+                              )
+                            : widget.respondedTimer == '1'
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3)),
+                                    padding: EdgeInsets.all(3),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text('Hedef Yanıtlama Tarihi'),
+                                        Text(
+                                          timeRecover(widget.targetRDate)
+                                              .toString(),
+                                          style: fixStyle(
+                                              widget.respondedTimer.toString(),
+                                              widget.fixTimer.toString(),
+                                              widget.targetFDate.toString(),
+                                              widget.fixedDate.toString()),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3)),
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                    padding: EdgeInsets.all(3),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text('Yanıtlama Tarihi'),
+                                        Text(
+                                          timeRecover(widget.respondedDate)
+                                              .toString(),
+                                          style: fixStyle(
+                                              widget.respondedTimer.toString(),
+                                              widget.fixTimer.toString(),
+                                              widget.targetFDate.toString(),
+                                              widget.fixedDate.toString()),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                      ],
+                    ),
+                    Column(children: [
+                      widget.fixTimer == '1'
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3)),
+                              padding: EdgeInsets.all(3),
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Hedef Düzeltme Tarihi'),
+                                  Text(
+                                    timeRecover(widget.targetFDate).toString(),
+                                    style: fixStyle(
+                                        widget.respondedTimer.toString(),
+                                        widget.fixTimer.toString(),
+                                        widget.targetFDate.toString(),
+                                        widget.fixedDate.toString()),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3)),
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              padding: EdgeInsets.all(3),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Düzeltme Tarihi'),
+                                  Text(
+                                    timeRecover(widget.fixedDate).toString(),
+                                    style: fixStyle(
+                                        widget.respondedTimer.toString(),
+                                        widget.fixTimer.toString(),
+                                        widget.targetFDate.toString(),
+                                        widget.fixedDate.toString()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ])
+                  ],
+                ),
+              ),
+              Divider(height: 15, color: APPColors.Main.black),
               Row(
                 children: [
                   Expanded(

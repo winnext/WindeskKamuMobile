@@ -4,14 +4,11 @@ const BASE_URL = "https://digipay-test.ardsistem.com.tr/api/";
 const updateNotication = "v1/Notification/UpdateNotification";
 const addNotification = "v1/Notification/AddNotification";
 
-const getIssueList =
-    "http://windeskmobile.ish.yerel/list/";
+const getIssueList = "http://windeskmobile.ish.yerel/list/";
 
-const BASE_URL_V2 =
-    "http://windeskmobile.ish.yerel";
-    
-const getIssueDetail =
-    "http://windeskmobile.ish.yerel.com/issue";
+const BASE_URL_V2 = "http://windeskmobile.ish.yerel";
+
+const getIssueDetail = "http://windeskmobile.ish.yerel/issue";
 
 const loginUrl = "v1/Auth/Login";
 

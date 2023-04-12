@@ -11,6 +11,9 @@ import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/homePage.dart';
+import 'package:win_kamu/pages/issue/issueDetail.dart';
+import 'package:win_kamu/pages/issue/issueList.dart';
+import 'package:win_kamu/pages/issue/issueTracingList.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
@@ -107,6 +110,7 @@ class MyApp extends StatelessWidget {
         ClosedRequests.closedRequests: (context) => ClosedRequests(),
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
+        IssueDetail.issueDetail: (context) => IssueDetail(),
       },
     );
   }

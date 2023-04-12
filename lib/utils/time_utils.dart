@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:win_kamu/utils/themes.dart';
 
 timeRecover(timeInfo) {
   final finalTime;
@@ -44,4 +48,34 @@ timeDifference(date2) {
       '${date3.inDays} gün ${int.parse(date3.inHours.toString()) % 24} saat ${int.parse(date3.inMinutes.toString()) % 60} dakika ${int.parse(date3.inSeconds.toString()) % 60} saniye ';
 
   return finalDuration;
+}
+
+fixStyle(respondedTimer, fixTimer, targetFDate, fixedDate) {
+  String dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
+  final conditionOfTextStyle;
+  if (respondedTimer == 0 && fixTimer == 0) {
+    conditionOfTextStyle =
+        int.parse(fixedDate.toString()) - int.parse(targetFDate.toString()) < 0
+            ? TextStyle(
+                color: APPColors.Main.white,
+                backgroundColor: APPColors.Main.green,
+                fontSize: 13)
+            : TextStyle(
+                color: APPColors.Main.white,
+                backgroundColor: APPColors.Main.red,
+                fontSize: 13);
+  } else {
+    conditionOfTextStyle =
+        int.parse(dateNow.toString()) - int.parse(targetFDate.toString()) < 0
+            ? TextStyle(
+                color: APPColors.Main.green,
+                backgroundColor: APPColors.Main.white,
+                fontSize: 13)
+            : TextStyle(
+                color: APPColors.Main.red,
+                backgroundColor: APPColors.Main.white,
+                fontSize: 13);
+  }
+
+  return conditionOfTextStyle;
 }

@@ -43,6 +43,19 @@ extension APPColorsExtension on APPColors {
     }
   }
 
+  Color get green {
+    switch (this) {
+      case APPColors.Main:
+        return const Color(0xff32CD32);
+      case APPColors.Secondary:
+        return const Color(0xffF9BA59);
+      case APPColors.Accent:
+        return const Color(0xffFFCC7E);
+      default:
+        return const Color(0xffF9AA33);
+    }
+  }
+
   Color get blue {
     switch (this) {
       case APPColors.Login:
