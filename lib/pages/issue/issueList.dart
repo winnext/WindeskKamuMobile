@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
+import 'package:win_kamu/pages/issue/issueSummary.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
@@ -180,7 +181,7 @@ class _IssueListState extends State<IssueList> {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const IssueDetail(),
+                                                    const IssueSummary(),
                                               ),
                                             );
                                             // Navigator.pushNamed(context,

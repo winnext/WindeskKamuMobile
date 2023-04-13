@@ -15,8 +15,8 @@ class DetailViewModel {
   String? TITLE;
   String? CMDB;
   String? ANI;
-  String? HYS;
-  String? HDS;
+  Object? HYS;
+  Object? HDS;
   String? ASSIGNMENTGROUP;
   String? ASSIGNMENTGROUPNAME;
   String? ASSIGNEECONTACTCODE;

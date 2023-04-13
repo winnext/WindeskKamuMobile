@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/components/crud_view/crud_view.dart';
+import 'package:win_kamu/models/issue_activities.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/models/tracing_view.model.dart';
 import 'package:win_kamu/utils/api_urls.dart';
@@ -17,8 +18,13 @@ class ListViewProvider extends ChangeNotifier {
   String? issueListType;
   List<ListViewModel> _exampleListView = [];
   List<ListViewModel> tempexampleListView = [];
+  
   List<TracingViewModal> _tracingListView = [];
   List<TracingViewModal> temptracingListView = [];
+
+  List<IssueActivitiesModal> _issueActivitiesView = [];
+  List<IssueActivitiesModal> tempissueActivitiesView = [];
+
   PageController? _pageController;
 
   bool _isDataLoading = true;
@@ -44,6 +50,13 @@ class ListViewProvider extends ChangeNotifier {
     _tracingListView = tracingListView;
     notifyListeners();
   }
+
+  List<IssueActivitiesModal> get issueActivitiesView => _issueActivitiesView;
+  set setiissueActivitiesView(List<IssueActivitiesModal> issueActivitiesView) {
+    _issueActivitiesView = issueActivitiesView;
+    notifyListeners();
+  }
+
 
   bool get isDataLoading => _isDataLoading;
 
@@ -112,14 +125,14 @@ class ListViewProvider extends ChangeNotifier {
 
     issueListType = issueType;
 
-    final urlIssueTypes = '${getIssueList + issueListType!}/issue';
+    final urlIssueTypes = '${BASE_URL_V2}/list/$issueListType/issue';
 
     final result = await apirepository.getListForPaging(
         controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
 
-    print('data' +  data.toString());
+    print('data' + data.toString());
 
     if (true) {
       tempexampleListView = (result.records['records'] as List)
@@ -175,6 +188,42 @@ class ListViewProvider extends ChangeNotifier {
         } else {
           _currentPage = 1;
 
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void getIssueActivities(xusercode, issuecode) async {
+    _isDataLoading = true;
+
+    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/activities';
+
+    final result = await apirepository.getIssueActivities(
+        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
+
+    final data = result.records['records'];
+
+    //print('dataActivities ++++ ' + data.toString());
+    if (true) {
+      tempissueActivitiesView = (result.records['records'] as List)
+          .map((e) => IssueActivitiesModal.fromJson(e))
+          .toList();
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        issueActivitiesView.addAll(tempissueActivitiesView);
+        int noOfTasks = tempissueActivitiesView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
           _isDataExist = false;
           _loading = false;
           _isDataLoading = false;

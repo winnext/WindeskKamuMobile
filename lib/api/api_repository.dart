@@ -73,7 +73,7 @@ class APIRepository {
     String deviceType = prefs.getString('deviceType').toString();
 
     String loginUrl = base_url_v1 +
-        'wdaehtest!_' +
+        'wdishliveSqAS!_' +
         deviceToken +
         '' +
         '&action=loginCheck&username=' +
@@ -116,7 +116,7 @@ class APIRepository {
 //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 
-  Future<tracingListModal> getTracingListWithCount(
+  Future <tracingListModal> getTracingListWithCount(
       {@required String? controller,
       @required String? xusercode,
       @required String? module,
@@ -127,7 +127,7 @@ class APIRepository {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller,
           options: Options(
-            headers: {"xusercode": xusercode, "xtoken": "ishprod!"},
+            headers: {"xusercode": xusercode, "xtoken": TOKEN_V2},
           ));
 
       final data = jsonDecode(response.toString());
@@ -201,6 +201,90 @@ class APIRepository {
     }
   }
 
+    Future<httpSonucModel> getIssueActivities(
+      {@required String? controller,
+      @required String? xusercode,
+      @required String? issuecode,
+      bool redirectLogin = false}) async {
+    print('dataActivitiesUrl ' + controller! + ' ::: ' + issuecode.toString());
+
+    try {
+      final response = await dio.get(controller,
+          options: Options(
+            headers: {"xusercode": xusercode, "xtoken": TOKEN_V2},
+          ));
+
+      final data = jsonDecode(response.toString());
+
+      print('dataActivities + ' + data.toString());
+
+      //print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
   Future<httpSonucModel> getListForPaging(
       {@required String? controller,
       @required Map<String, dynamic>? queryParameters,
@@ -212,7 +296,7 @@ class APIRepository {
       final response = await dio.get(controller,
           queryParameters: queryParameters,
           options: Options(
-            headers: {"xusercode": "sgnm1027", "xtoken": "ishprod!"},
+            headers: {"xusercode": "sgnm1027", "xtoken": TOKEN_V2},
           ));
 
       final data = jsonDecode(response.toString());
@@ -295,12 +379,12 @@ class APIRepository {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller,
           options: Options(
-            headers: {"xusercode": 'sgnm1027', "xtoken": "ishprod!"},
+            headers: {"xusercode": 'sgnm1027', "xtoken": TOKEN_V2},
           ));
 
       final data = jsonDecode(response.toString());
 
-      print(data['detail']);
+      print('kkkkkkk1  :  ' + data.toString());
 
       if (response != null) {
         return detailSonucModel(
@@ -378,12 +462,12 @@ class APIRepository {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller,
           options: Options(
-            headers: {"xusercode": 'sgnm1027', "xtoken": "ishprod!"},
+            headers: {"xusercode": 'sgnm1027', "xtoken": TOKEN_V2},
           ));
 
       final data = jsonDecode(response.toString());
 
-      print(data['detail']);
+      print('kkkkkkkk2  :  ' + data.toString());
 
       if (response != null) {
         return detailSonucModel(

@@ -80,6 +80,7 @@ class _IssueDetailState extends State<IssueDetail> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     int l = -1;
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final mainPageViewProvider =
@@ -89,126 +90,122 @@ class _IssueDetailState extends State<IssueDetail> {
         return false;
       },
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: APPColors.Main.white,
-            title: Text(
-              'Açık Taleplerim Detay',
-              style: TextStyle(fontSize: 20, color: APPColors.Secondary.black),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
-          ),
           body: Stack(
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  !detailViewProvider.isDataExist
-                      ? Expanded(
-                          child: NotificationListener<ScrollNotification>(
-                          child: ListView.builder(
-                              itemCount:
-                                  detailViewProvider?.exampleListView.length,
-                              itemBuilder: (BuildContext context, int i) {
-                                l++;
-                                if (l == 5) {
-                                  l = 0;
-                                }
-                                String formattedDate = "";
-                                DetailViewModel? detailElements =
-                                    detailViewProvider?.exampleListView[0];
-                                IssueSummaryModal? issueSummary =
-                                    detailViewProvider?.issueSummary[0];
+              !detailViewProvider.isDataExist
+                  ? Expanded(
+                      child: NotificationListener<ScrollNotification>(
+                      child: ListView.builder(
+                          itemCount: detailViewProvider?.exampleListView.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            l++;
+                            if (l == 5) {
+                              l = 0;
+                            }
+                            String formattedDate = "";
+                            DetailViewModel? detailElements =
+                                detailViewProvider?.exampleListView[0];
+                            IssueSummaryModal? issueSummary =
+                                detailViewProvider?.issueSummary[0];
 
-                                final TARGET_FDATE =
-                                    timeRecover(detailElements?.TARGET_FDATE);
-                                final TARGET_RDATE =
-                                    timeRecover(detailElements?.TARGET_RDATE);
+                            final TARGET_FDATE =
+                                timeRecover(detailElements?.TARGET_FDATE);
+                            final TARGET_RDATE =
+                                timeRecover(detailElements?.TARGET_RDATE);
 
-                                return Column(
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: APPColors.NewNotifi.blue,
+                                        borderRadius: BorderRadius.circular(3)),
+                                    padding: EdgeInsets.all(3),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(mainPageViewProvider.kadi),
+                                        Text(dateNow.toString()),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: APPColors.NewNotifi.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(3)),
-                                        padding: EdgeInsets.all(3),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text(mainPageViewProvider.kadi),
-                                            Text(dateNow.toString()),
-                                          ],
-                                        ),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20.0, 0.0, 20.0, 0.0),
+                                      child: Column(
+                                        children: [
+                                          DetailListWidget(
+                                              ani: detailElements?.ANI,
+                                              description:
+                                                  detailElements?.DESCRIPTION,
+                                              targetFDate: detailElements
+                                                  ?.TARGET_FDATE
+                                                  .toString(),
+                                              targetRDate: detailElements
+                                                  ?.TARGET_RDATE
+                                                  .toString(),
+                                              statusName: detailElements?.STATUSNAME,
+                                              assigneName:
+                                                  detailElements?.ASSIGNEENAME,
+                                              assignmentGroup:
+                                                  detailElements?.ASSIGNMENTGROUP,
+                                              assignmentGroupName:
+                                                  detailElements?.ASSIGNMENTGROUPNAME,
+                                              cat1: detailElements?.CAT1,
+                                              cmdb: detailElements?.CMDB,
+                                              code: detailElements?.CODE,
+                                              contactCode:
+                                                  detailElements?.CONTACTCODE,
+                                              contactName:
+                                                  detailElements?.CONTACTNAME,
+                                              idate: detailElements?.IDATE,
+                                              locName: detailElements?.LOCNAME,
+                                              locTree: detailElements?.LOCTREE,
+                                              locTree2: detailElements?.LOCTREE2,
+                                              sumdesc1: detailElements?.SUMDESC1,
+                                              taskNo: detailElements?.CODE.toString(),
+                                              title: detailElements?.TITLE,
+                                              onPressed: (code) {
+                                                print('tiklandi' + code);
+                                              },
+                                              fixTimer: issueSummary?.FIX_TIMER,
+                                              fixedDate: issueSummary?.FIXED_DATE,
+                                              respondedDate:
+                                                  issueSummary?.RESPONDED_DATE,
+                                              respondedTimer:
+                                                  issueSummary?.RESPONDED_TIMER
+                                              // extraTitle:
+                                              //     detailElements.STATUSCODE.toString(),
+                                              ),
+                                        ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20.0, 20.0, 20.0, 20.0),
-                                      child: DetailListWidget(
-                                          ani: detailElements?.ANI,
-                                          description:
-                                              detailElements?.DESCRIPTION,
-                                          targetFDate: detailElements?.TARGET_FDATE.toString(),
-                                          targetRDate: detailElements?.TARGET_RDATE.toString(),
-                                          statusName:
-                                              detailElements?.STATUSNAME,
-                                          assigneName:
-                                              detailElements?.ASSIGNEENAME,
-                                          assignmentGroup:
-                                              detailElements?.ASSIGNMENTGROUP,
-                                          assignmentGroupName: detailElements
-                                              ?.ASSIGNMENTGROUPNAME,
-                                          cat1: detailElements?.CAT1,
-                                          cmdb: detailElements?.CMDB,
-                                          code: detailElements?.CODE,
-                                          contactCode:
-                                              detailElements?.CONTACTCODE,
-                                          contactName:
-                                              detailElements?.CONTACTNAME,
-                                          idate: detailElements?.IDATE,
-                                          locName: detailElements?.LOCNAME,
-                                          locTree: detailElements?.LOCTREE,
-                                          locTree2: detailElements?.LOCTREE2,
-                                          sumdesc1: detailElements?.SUMDESC1,
-                                          taskNo:
-                                              detailElements?.CODE.toString(),
-                                          title: detailElements?.TITLE,
-                                          onPressed: (code) {
-                                            print('tiklandi' + code);
-                                          },
-                                          fixTimer: issueSummary?.FIX_TIMER,
-                                          fixedDate: issueSummary?.FIXED_DATE,
-                                          respondedDate:
-                                              issueSummary?.RESPONDED_DATE,
-                                          respondedTimer:
-                                              issueSummary?.RESPONDED_TIMER
-                                          // extraTitle:
-                                          //     detailElements.STATUSCODE.toString(),
-                                          ),
-                                    ),
+                                    
                                   ],
-                                );
-                              }),
-                        ))
-                      : Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 2.5),
-                          child: const Center(child: AramaSonucBos()),
-                        ),
-                ],
-              ),
-              if (detailViewProvider.isDataLoading == true) ...[
-                loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-              ],
+                                ),
+                              ],
+                            );
+                          }),
+                    ))
+                  : Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 2.5),
+                      child: const Center(child: AramaSonucBos()),
+                    ),
             ],
-          )),
+          ),
+          if (detailViewProvider.isDataLoading == true) ...[
+            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
+          ],
+        ],
+      )),
     );
   }
 

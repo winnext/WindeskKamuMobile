@@ -41,7 +41,7 @@ class LoginProvider extends ChangeNotifier {
        userLogin( BuildContext context) async {
          
           String apiresult = await apirepository.login(_kadi.text,_password.text);
-          if (apiresult == '201') {
+          if (apiresult == 'success') {
           Navigator.push(
             context, MaterialPageRoute(builder: ((context) => const MainPage()))); 
             

@@ -116,476 +116,557 @@ class _DetailListWidgetState extends State<DetailListWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        widget.onPressed(widget.code.toString());
-      },
-      child: Container(
-        width: size.width,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+    return Column(
+      children: [
+        Container(
+          width: size.width,
+          height: size.height / 1.8,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        widget.statusCode == 'OPlanned'
-                            ? Container(
-                                decoration: BoxDecoration(
-                                    color: APPColors.NewNotifi.blue,
-                                    borderRadius: BorderRadius.circular(3)),
-                                padding: EdgeInsets.all(3),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text('Randevulu Vakadır'),
-                                    Text(widget.planedDate.toString()),
-                                  ],
-                                ),
-                              )
-                            : widget.respondedTimer == '1'
+                        Column(
+                          children: [
+                            widget.statusCode == 'OPlanned'
                                 ? Container(
                                     decoration: BoxDecoration(
+                                        color: APPColors.NewNotifi.blue,
                                         borderRadius: BorderRadius.circular(3)),
                                     padding: EdgeInsets.all(3),
-                                    child: Column(
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        Text('Hedef Yanıtlama Tarihi'),
-                                        Text(
-                                          timeRecover(widget.targetRDate)
-                                              .toString(),
-                                          style: fixStyle(
-                                              widget.respondedTimer.toString(),
-                                              widget.fixTimer.toString(),
-                                              widget.targetFDate.toString(),
-                                              widget.fixedDate.toString()),
-                                        ),
+                                        Text('Randevulu Vakadır'),
+                                        Text(widget.planedDate.toString()),
                                       ],
                                     ),
                                   )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(3)),
-                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                    padding: EdgeInsets.all(3),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text('Yanıtlama Tarihi'),
-                                        Text(
-                                          timeRecover(widget.respondedDate)
-                                              .toString(),
-                                          style: fixStyle(
-                                              widget.respondedTimer.toString(),
-                                              widget.fixTimer.toString(),
-                                              widget.targetFDate.toString(),
-                                              widget.fixedDate.toString()),
+                                : widget.respondedTimer == '1'
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(3)),
+                                        padding: EdgeInsets.all(3),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text('Hedef Yanıtlama Tarihi'),
+                                            Text(
+                                              timeRecover(widget.targetRDate)
+                                                  .toString(),
+                                              style: fixStyle(
+                                                  widget.respondedTimer
+                                                      .toString(),
+                                                  widget.fixTimer.toString(),
+                                                  widget.targetFDate.toString(),
+                                                  widget.fixedDate.toString()),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(3)),
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                        padding: EdgeInsets.all(3),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text('Yanıtlama Tarihi'),
+                                            Text(
+                                              timeRecover(widget.respondedDate)
+                                                  .toString(),
+                                              style: fixStyle(
+                                                  widget.respondedTimer
+                                                      .toString(),
+                                                  widget.fixTimer.toString(),
+                                                  widget.targetFDate.toString(),
+                                                  widget.fixedDate.toString()),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                          ],
+                        ),
+                        Column(children: [
+                          widget.fixTimer == '1'
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(3)),
+                                  padding: EdgeInsets.all(3),
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text('Hedef Düzeltme Tarihi'),
+                                      Text(
+                                        timeRecover(widget.targetFDate)
+                                            .toString(),
+                                        style: fixStyle(
+                                            widget.respondedTimer.toString(),
+                                            widget.fixTimer.toString(),
+                                            widget.targetFDate.toString(),
+                                            widget.fixedDate.toString()),
+                                      ),
+                                    ],
                                   ),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(3)),
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  padding: EdgeInsets.all(3),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text('Düzeltme Tarihi'),
+                                      Text(
+                                        timeRecover(widget.fixedDate)
+                                            .toString(),
+                                        style: fixStyle(
+                                            widget.respondedTimer.toString(),
+                                            widget.fixTimer.toString(),
+                                            widget.targetFDate.toString(),
+                                            widget.fixedDate.toString()),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ])
                       ],
                     ),
-                    Column(children: [
-                      widget.fixTimer == '1'
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3)),
-                              padding: EdgeInsets.all(3),
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text('Hedef Düzeltme Tarihi'),
-                                  Text(
-                                    timeRecover(widget.targetFDate).toString(),
-                                    style: fixStyle(
-                                        widget.respondedTimer.toString(),
-                                        widget.fixTimer.toString(),
-                                        widget.targetFDate.toString(),
-                                        widget.fixedDate.toString()),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3)),
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              padding: EdgeInsets.all(3),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text('Düzeltme Tarihi'),
-                                  Text(
-                                    timeRecover(widget.fixedDate).toString(),
-                                    style: fixStyle(
-                                        widget.respondedTimer.toString(),
-                                        widget.fixTimer.toString(),
-                                        widget.targetFDate.toString(),
-                                        widget.fixedDate.toString()),
-                                  ),
-                                ],
+                  ),
+                  Divider(height: 15, color: APPColors.Main.black),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          widget.code.toString(),
+                          style: TextStyle(
+                            color: APPColors.Secondary.black,
+                            fontSize: 15,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          widget.idate.toString(),
+                          style: TextStyle(
+                            color: APPColors.Secondary.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          widget.statusName.toString(),
+                          style: TextStyle(
+                            color: APPColors.Secondary.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      Expanded(flex: 3, child: Text(''))
+                    ],
+                  ),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.description.toString() != ""
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Açıklama',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                    ])
-                  ],
-                ),
-              ),
-              Divider(height: 15, color: APPColors.Main.black),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      widget.code.toString(),
-                      style: TextStyle(
-                        color: APPColors.Secondary.black,
-                        fontSize: 15,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.description.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
                   ),
-                  Expanded(
-                    child: Text(
-                      widget.idate.toString(),
-                      style: TextStyle(
-                        color: APPColors.Secondary.black,
-                        fontSize: 14,
-                      ),
-                    ),
+                  widget.contactName.toString() != ""
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Vaka Sahibi',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.contactName.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
                   ),
+                  widget.locName.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Mahal',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.locName.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.locName.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Mahal Yeri',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.locTree.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.title.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Arama Nedeni',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.title.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.cmdb.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Varlık Bilgisi',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.title.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.idate.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Açılma Tarihi',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.idate.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.ani.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Arayan Numara',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.ani.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.targetRDate.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Hedef Yanıtlama',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                timeRecover(widget.targetRDate).toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.targetFDate.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Hedef Düzeltme',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                timeRecover(widget.targetFDate).toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  Divider(
+                    height: 15,
+                  ),
+                  widget.hys.toString() != ""
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'HYS-48 saat ${widget.hys.toString()}',
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'HDS-48 saat ${widget.hds.toString()}',
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      widget.statusName.toString(),
-                      style: TextStyle(
-                        color: APPColors.Secondary.black,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                height: 15,
-              ),
-              widget.description.toString() != ""
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Vaka Sahibi',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.contactName.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.locName.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Mahal',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.locName.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.locName.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Mahal Yeri',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.locTree.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.title.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Arama Nedeni',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.title.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.cmdb.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Varlık Bilgisi',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.title.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.idate.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Açılma Tarihi',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.idate.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.ani.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Arayan Numara',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.ani.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.targetRDate.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Hedef Yanıtlama',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.targetRDate.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.targetFDate.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Hedef Düzeltme',
-                            style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.targetFDate.toString(),
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-              widget.hys.toString() != ""
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'HYS-48 saat ${widget.hys.toString()}',
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'HDS-48 saat ${widget.hds.toString()}',
-                            style: TextStyle(
-                                color: APPColors.Secondary.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Divider(
-                height: 15,
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        Divider(
+          height: 15,
+          color: APPColors.Main.black,
+        ),
+        FloatingActionButton(
+          onPressed: () {
+            print('object');
+            // return showModalBottomSheet<
+            //                                       void>(
+            //                                     context: context,
+            //                                     builder:
+            //                                         (BuildContext context) {
+            //                                       return StatefulBottomSheet(
+            //                                         code: listElements.CODE,
+            //                                       );
+            //                                     },
+            //                                   );
+          },
+          backgroundColor: APPColors.Modal.red,
+          child: const Icon(Icons.add),
+        ),
+      ],
     );
   }
 }
