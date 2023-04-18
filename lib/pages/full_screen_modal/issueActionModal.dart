@@ -21,16 +21,7 @@ class _StatefullActionModalState extends State<StatefullActionModal> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   print('activities initialState');
-    //   final detailActivities =
-    //       Provider.of<DetailViewProvider>(context, listen: false);
-    //   //detailActivities.listViewActivities.clear();
-    //   detailActivities.listViewActivities.clear();
-    //   await detailActivities.loadIssueActivities(widget.code.toString());
-    // });
   }
-
   @override
   void dispose() {
     // TODO: implement dispose

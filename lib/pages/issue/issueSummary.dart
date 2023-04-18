@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:win_kamu/pages/issue/issueActivities.dart';
 import 'package:win_kamu/pages/issue/issueDetail.dart';
+import 'package:win_kamu/pages/issue/issueFiles.dart';
 import 'package:win_kamu/utils/themes.dart';
 
 void main() => runApp(const IssueSummary());
@@ -28,23 +29,38 @@ class MyStatelessWidget extends StatelessWidget {
 
     return DefaultTabController(
       initialIndex: 0,
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Vaka Listesi Detay', style: TextStyle(color: Colors.black),),
+          title: const Text('Vaka Listesi Detay', style: TextStyle(color: Colors.black ),textAlign: TextAlign.center,),
           backgroundColor: APPColors.Main.white,
-          toolbarHeight: size.height / 40,
+          toolbarHeight: size.height / 30,
+          centerTitle: true,
+          leading: IconButton(
+                onPressed: () =>
+                  //Navigator.pop(context)
+                  Navigator.of(context).pop()
+                ,
+                icon: Icon(Icons.arrow_back_ios_new, color: APPColors.Main.black),alignment: Alignment.topCenter,),
           bottom: const TabBar(
             indicatorColor: Colors.black,
+            labelStyle: TextStyle(
+              fontSize: 11
+            ),
+            labelColor: Colors.black,
+            
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.info_outline, color: Colors.black, ),
+                text: 'Özet',
+                icon: Icon(Icons.info_outline, color: Colors.black, size: 25,),
               ),
               Tab(
-                icon: Icon(Icons.menu, color: Colors.black),
+                text: 'Aktivite',
+                icon: Icon(Icons.menu, color: Colors.black, size: 25,),
               ),
               Tab(
-                icon: Icon(Icons.attach_file, color: Colors.black),
+                text: 'Dosyalar',
+                icon: Icon(Icons.attach_file, color: Colors.black,size: 25,),
               ),
             ],
           ),
@@ -53,9 +69,7 @@ class MyStatelessWidget extends StatelessWidget {
           children: <Widget>[
             IssueDetail(),
             IssueActivities(),
-            Center(
-              child: Text("It's sunny here"),
-            ),
+            IssueFiles(),
           ],
         ),
       ),

@@ -107,6 +107,8 @@ extension APPColorsExtension on APPColors {
     switch (this) {
       case APPColors.Main:
         return const Color(0xffFFFDFD);
+      case APPColors.Secondary:
+        return const Color(0xffedede9);
       default:
         return const Color(0xffFFFDFD);
     }

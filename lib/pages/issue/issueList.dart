@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/issue/issueSummary.dart';
+import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
@@ -19,6 +20,8 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/modalWidgets/filterModal.dart';
+import '../../widgets/modalWidgets/issueActionModal.dart';
 import '../homePage.dart';
 import 'issueDetail.dart';
 
@@ -49,7 +52,6 @@ class _IssueListState extends State<IssueList> {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
-    print('widget  :: ' + widget.moduleCode);
     exampleList.loadData(1, widget.moduleCode);
     exampleList.initData(widget.pageController);
   }
@@ -91,17 +93,17 @@ class _IssueListState extends State<IssueList> {
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
             actions: [
               IconButton(
-                icon: Icon(Icons.arrow_back, color: APPColors.Main.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+                  icon: Icon(Icons.tune, color: APPColors.Main.black),
+                  onPressed: () {
+                showModalBottomSheet(context: context, builder: (context) => IssueFilterModal(moduleCode: widget.moduleCode));
+                  }),
             ],
           ),
           body: Stack(
             children: [
               Column(
                 children: [
+                  //GestureDetector( child: Text('asd'),),
                   listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
@@ -161,7 +163,6 @@ class _IssueListState extends State<IssueList> {
                                               .toString(),
                                           planedDate: listElements.PLANNEDDATE
                                               .toString(),
-                                      
                                           respondedIDate: listElements
                                               .RESPONDED_IDATE
                                               .toString(),

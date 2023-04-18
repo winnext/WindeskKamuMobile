@@ -10,6 +10,8 @@ import 'package:win_kamu/utils/api_urls.dart';
 import 'package:provider/provider.dart';
 
 import '../models/http_response.model.dart';
+import '../models/issue_attachments.modal.dart';
+import '../models/issue_filter.modal.dart';
 import '../utils/global_utils.dart';
 import 'main_page_view_provider.dart';
 
@@ -18,12 +20,18 @@ class ListViewProvider extends ChangeNotifier {
   String? issueListType;
   List<ListViewModel> _exampleListView = [];
   List<ListViewModel> tempexampleListView = [];
-  
+
   List<TracingViewModal> _tracingListView = [];
   List<TracingViewModal> temptracingListView = [];
 
   List<IssueActivitiesModal> _issueActivitiesView = [];
   List<IssueActivitiesModal> tempissueActivitiesView = [];
+
+  List<IssueAttachmentModal> _issueAttachmentView = [];
+  List<IssueAttachmentModal> tempissueAttachmentView = [];
+
+  List<IssueFilterModel> _issueFilterStatusCodes = [];
+  List<IssueFilterModel> tempissueFilterStatusCodes= [];
 
   PageController? _pageController;
 
@@ -32,6 +40,12 @@ class ListViewProvider extends ChangeNotifier {
   bool _isDataExist = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
+  String _status = '';
+  String _build = '';
+  String _floor = '';
+  String _wing = '';
+  String _assigne = '';
+
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -57,6 +71,17 @@ class ListViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<IssueAttachmentModal> get issueAttachmentView => _issueAttachmentView;
+  set setiissueAttachmentView(List<IssueAttachmentModal> issueAttachmentView) {
+    _issueAttachmentView = issueAttachmentView;
+    notifyListeners();
+  }
+
+  List<IssueFilterModel> get issueFilterStatusCodes => _issueFilterStatusCodes;
+  set setiissueFilterStatusCodes(List<IssueFilterModel> issueFilterStatusCodes) {
+    _issueFilterStatusCodes = issueFilterStatusCodes;
+    notifyListeners();
+  }
 
   bool get isDataLoading => _isDataLoading;
 
@@ -83,6 +108,36 @@ class ListViewProvider extends ChangeNotifier {
 
   set settoplamKayitSayisi(int toplamKayitSayisi) {
     _toplamKayitSayisi = toplamKayitSayisi;
+    notifyListeners();
+  }
+
+  String get status => _status;
+  set setstatus(String status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  String get build => _build;
+  set setbuild(String build) {
+    _build = build;
+    notifyListeners();
+  }
+
+  String get floor => _floor;
+  set setfloor(String floor) {
+    _floor = floor;
+    notifyListeners();
+  }
+
+  String get wing => _wing;
+  set setwing(String wing) {
+    _wing = wing;
+    notifyListeners();
+  }
+
+  String get assigne => _assigne;
+  set setassigne(String assigne) {
+    _assigne = assigne;
     notifyListeners();
   }
 
@@ -116,11 +171,11 @@ class ListViewProvider extends ChangeNotifier {
     Map<String, dynamic> queryParameters = {
       "start": _startIssues,
       "end": _endIsses,
-      "status": "",
-      "build": "",
-      "floor": "",
-      "wing": "",
-      "assignee": "",
+      "status": status,
+      "build": build,
+      "floor": floor,
+      "wing": wing,
+      "assignee": assigne,
     };
 
     issueListType = issueType;
@@ -171,11 +226,9 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.lists['lists'];
 
-    print('data ++ ' + data.toString());
     if (true) {
-      temptracingListView = (result.lists['lists'] as List)
-          .map((e) => TracingViewModal.fromJson(e))
-          .toList();
+      temptracingListView =
+          (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
 
       Future.delayed(const Duration(milliseconds: 1200), () {
         tracingListView.addAll(temptracingListView);
@@ -217,6 +270,118 @@ class ListViewProvider extends ChangeNotifier {
       Future.delayed(const Duration(milliseconds: 1200), () {
         issueActivitiesView.addAll(tempissueActivitiesView);
         int noOfTasks = tempissueActivitiesView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void getIssueAttachments(xusercode, issuecode) async {
+    _isDataLoading = true;
+
+    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/attachments';
+
+    final result = await apirepository.getIssueAttachments(
+        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
+
+    final data = result.records['records'];
+
+    //print('dataActivities ++++ ' + data.toString());
+    if (true) {
+      tempissueAttachmentView = (result.records['records'] as List)
+          .map((e) => IssueAttachmentModal.fromJson(e))
+          .toList();
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        issueAttachmentView.addAll(tempissueAttachmentView);
+        int noOfTasks = tempissueAttachmentView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+    void getIssueOpenStatusCodes() async {
+    _isDataLoading = true;
+
+    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}&action=getIssueOpenStatusCodes';
+
+    final result = await apirepository.getIssueOpenStatusCodes(
+        controller: urlIssueTypes);
+
+    final data = result.records['records'];
+
+    print('dataActivities ++++ ' + data.toString());
+    if (true) {
+      tempissueFilterStatusCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
+        int noOfTasks = tempissueActivitiesView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void getSpaceBfwByType(String type) async {
+    _isDataLoading = true;
+
+    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}&action=getSpaceBfwByType&type=${type}';
+
+    final result = await apirepository.getSpaceBfwByType(
+        controller: urlIssueTypes);
+
+    final data = result.records['records'];
+
+    print('issueFilter :  :  ' + data.toString());
+
+    if (true) {
+      tempissueFilterStatusCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+      
+      print('issueFilter 3:  3:  ' + tempissueFilterStatusCodes.toString());
+      Future.delayed(const Duration(milliseconds: 500), () {
+        issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
+
+        int noOfTasks = tempissueFilterStatusCodes.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;
           _loading = false;

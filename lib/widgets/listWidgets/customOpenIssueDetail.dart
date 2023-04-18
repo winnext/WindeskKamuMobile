@@ -6,8 +6,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
+import '../../pages/full_screen_modal/issueActionModal.dart';
 import '../../utils/time_utils.dart';
 import '../../utils/utils.dart';
+import '../dialogWidgets/customActionSheetBottomDialog.dart';
+import '../dialogWidgets/customCuppertinoDialog.dart';
+import '../modalWidgets/issueActionModal.dart';
 
 class DetailListWidget extends StatefulWidget {
   final String? code,
@@ -620,6 +624,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
+                              flex: 2,
                               child: Text(
                                 'HYS-48 saat ${widget.hys.toString()}',
                                 style: TextStyle(
@@ -629,6 +634,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                               ),
                             ),
                             Expanded(
+                              flex: 3,
                               child: Text(
                                 'HDS-48 saat ${widget.hds.toString()}',
                                 style: TextStyle(
@@ -651,17 +657,12 @@ class _DetailListWidgetState extends State<DetailListWidget> {
         ),
         FloatingActionButton(
           onPressed: () {
-            print('object');
-            // return showModalBottomSheet<
-            //                                       void>(
-            //                                     context: context,
-            //                                     builder:
-            //                                         (BuildContext context) {
-            //                                       return StatefulBottomSheet(
-            //                                         code: listElements.CODE,
-            //                                       );
-            //                                     },
-            //                                   );
+            showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return IssueActionButton();
+                            },
+                          );
           },
           backgroundColor: APPColors.Modal.red,
           child: const Icon(Icons.add),

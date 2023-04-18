@@ -68,9 +68,11 @@ class _TaskListWidgetState extends State<TaskListWidget> {
   String dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
 
   changeTime() {
-    setState(() {
-      dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
-    });
+    if (mounted) {
+      setState(() {
+        dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
+      });
+    }
   }
 
   @override

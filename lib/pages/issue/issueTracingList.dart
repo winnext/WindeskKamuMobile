@@ -47,7 +47,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     exampleList.tracingListView.clear();
-    exampleList.getTracingListWithCount('sgnm1027', 'issue');
+    exampleList.getTracingListWithCount('sgnm1040', 'issue');
     exampleList.initData(widget.pageController);
   }
 
@@ -85,14 +85,6 @@ class _IssueTracingListState extends State<IssueTracingList> {
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.arrow_back, color: APPColors.Main.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
           ),
           body: Stack(
             children: [
@@ -222,8 +214,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
             listViewProvider.setisDataLoading = true;
             listViewProvider.tracingListView.clear();
             listViewProvider.setcurrentPage = 1;
-            listViewProvider.loadData(
-                listViewProvider.currentPage, 'issue');
+            listViewProvider.loadData(listViewProvider.currentPage, 'issue');
           });
         },
         child: const Padding(
