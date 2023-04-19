@@ -71,8 +71,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
     String deviceType = prefs.getString('deviceType').toString();
-    print('deviceId :' + deviceToken.toString());
-
+    print(deviceType);
     String loginUrl = base_url_v1 +
         'wdishliveSqAS!_' +
         deviceToken +
@@ -92,7 +91,13 @@ class APIRepository {
     Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
 
     try {
-      Dio dio = Dio();
+       BaseOptions options = new BaseOptions(
+          baseUrl: loginUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 5*1000, // 60 seconds
+          receiveTimeout: 5*1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
       final response = await dio.get(loginUrl,
           options: Options(
             responseType: ResponseType.json,
@@ -103,6 +108,39 @@ class APIRepository {
         prefs.setString('prefsUserName', kadi);
 
         print('Giriş İşlemi Başarılı');
+        
+
+        var platform = deviceType ==  'iOS' ? 'ios' : 'android';
+        var action = platform == 'ios' ? 'addIOSToken' : 'addFireBaseToken';
+        String token = prefs.getString('fbtoken').toString();
+
+         String sendTokenUrl = base_url_v1 +
+        'wdishliveSqAS!_' +
+        deviceToken 
+        +'&username='+kadi+
+        '&platform=' +platform+
+        '&action='+action+
+        '&firebasetoken='+token;
+
+        final responseTokenUrl = await dio.get(sendTokenUrl,
+          options: Options(
+            responseType: ResponseType.json,
+          ));
+
+        if (responseTokenUrl.data['result'] == 'success') {
+
+          print('Firebase Token kaydedildi');
+        }else{
+          print('Firebase Token kaydedilmedi');
+
+        }
+        
+
+
+
+
+
+
       } else {
         print(response.data['result']);
       }
@@ -111,6 +149,94 @@ class APIRepository {
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
     }
   }
+
+  Future getServerTime(xusercode , navigation) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String deviceToken = prefs.getString('deviceId').toString();
+
+    String getServerTimeURL = base_url_v1+'wdishliveSqAS!_'+deviceToken+'&action=getDateTime';
+    print(getServerTimeURL);
+    try {
+      Dio dio = Dio();
+      final getServerTimeResponse = await dio.get(getServerTimeURL,
+          options: Options()
+      );
+
+      print(getServerTimeResponse);
+      if(getServerTimeResponse.statusCode == 200){
+        var tarih = getServerTimeResponse.data['records']; //20230418155418
+        var yil = tarih[0].toString()+tarih[1].toString()+tarih[2].toString()+tarih[3].toString();
+        var ay = tarih[4].toString()+tarih[5].toString();
+        var gun = tarih[6].toString()+tarih[7].toString();
+
+        var saat = tarih[8].toString()+tarih[9].toString();
+        var dakika = tarih[10].toString()+tarih[11].toString();
+        var saniye = tarih[12].toString()+tarih[13].toString();
+
+        var duzenlenmis_tarih = '$gun/$ay/$yil $saat:$dakika:$saniye';
+
+        return duzenlenmis_tarih;
+      }
+      
+
+
+    }on DioError catch (e) {
+      print(e);
+    }
+
+  }
+
+   Future accessTest1() async {
+
+    
+    String url = attachpath + '?&timestamp='+(DateTime.now().millisecondsSinceEpoch).toString();
+
+
+    try {
+      Dio dio = Dio();
+      final response = await dio.get(url,
+          options: Options(
+            
+          ));
+      print('Access Test v1  : '+(response.statusCode).toString());
+      if (response.statusCode == 200) {
+             return 'success';
+
+        
+      } else {
+                     return 'notsuccess';
+
+      }
+    } on DioError catch (e) {
+      return 'notsuccess';
+    }
+  }
+
+  Future accessTest2(String kadi) async {
+
+    
+    String url = BASE_URL_V2 + '/workorder/reactive';
+
+
+
+    try {
+      Dio dio = Dio();
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+
+            responseType: ResponseType.json,
+          ));
+            print('Access Test v2  : '+(response.data['result']).toString());
+
+        return response.data['result'];
+
+    } on DioError catch (e) {
+      return 'notsuccess';
+    }
+  }
+
+  
 
   //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı

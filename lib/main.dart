@@ -1,5 +1,11 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -11,13 +17,14 @@ import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/issue/issueDetail.dart';
-import 'package:win_kamu/pages/issue/issueList.dart';
-import 'package:win_kamu/pages/issue/issueTracingList.dart';
+
+
+import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
+import 'package:win_kamu/pages/notiService.dart';
 import 'package:win_kamu/pages/openRequests/openRequestsDetail.dart';
 import 'package:win_kamu/pages/openRequests/routeRequests.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
@@ -33,10 +40,135 @@ import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/utils/themes.dart';
+import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
 import 'widgets/buttonWidgets/customButtonWithGradient.dart';
+import 'package:rxdart/rxdart.dart';
 
-void main() {
+
+
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+await Firebase.initializeApp();
+
+
+
+
+
+ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+  final onNotifications = BehaviorSubject<String?>();
+
+
+  FirebaseMessaging.onBackgroundMessage((message) =>      NotificationApi.showNotification(title:"message.notification?.title",body:"message.notification?.body",payload:'asd'));
+
+
+FirebaseMessaging messaging = FirebaseMessaging.instance;
+FirebaseMessaging.instance.getInitialMessage().then((message) {
+  if (message != null) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+
+    }
+  }
+});
+
+NotificationSettings settings = await messaging.requestPermission(
+  alert: true,
+  announcement: false,
+  badge: true,
+  carPlay: false,
+  criticalAlert: false,
+  provisional: false,
+  sound: true,
+);
+
+print('User granted permission: ${settings.authorizationStatus}');
+
+
+
+const AndroidInitializationSettings initializationSettingsAndroid =  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+final IOSInitializationSettings initializationSettingsIOS =  const IOSInitializationSettings(
+  requestAlertPermission: true,
+  requestBadgePermission: true,
+  requestSoundPermission: true,
+  );
+
+final MacOSInitializationSettings initializationSettingsMacOS = const MacOSInitializationSettings();
+
+final InitializationSettings initializationSettings = InitializationSettings(
+  android: initializationSettingsAndroid,
+  iOS: initializationSettingsIOS,
+  macOS: initializationSettingsMacOS);
+
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async{
+    onNotifications.add(data);
+  }));
+
+   void onClickedNotification(String? payload){
+          print('Foreground Payload : '+payload.toString());
+          
+
+  }
+
+  
+
+
+  onNotifications.stream.listen(onClickedNotification);
+
+ 
+  
+
+  
+
+
+
+  
+
+  
+
+
+   
+
+  //  cek()async {
+  //   String? fcmToken = '';
+  //   try {
+  //     print('girdi apn');
+  //     fcmToken = await FirebaseMessaging.instance.getAPNSToken(); 
+  //     print('APN TOKEN : '+fcmToken.toString());
+  //   } catch (e) {
+  //           print('fcm');
+
+  //     fcmToken = await FirebaseMessaging.instance.getToken();
+  //           print('FCM TOKEN : '+fcmToken.toString());
+
+  //   }
+  //   print('cek'+fcmToken.toString());
+  //   return fcmToken;
+  // }
+
+  // var fcmToken = cek();
+    
+    
+   
+  // if(settings.authorizationStatus == AuthorizationStatus.authorized){
+  // final fcmToken = await messaging.getToken();
+    
+
+
+  //       print('Token : '+FirebaseMessaging.instance.getToken().toString());
+  // }
+
+      
+ 
+
+  
   runApp(
     MultiProvider(
       providers: providers,
@@ -62,9 +194,14 @@ List<SingleChildWidget> providers = [
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+  
+
+
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
     int numb = 0;
     return MaterialApp(
@@ -110,7 +247,7 @@ class MyApp extends StatelessWidget {
         ClosedRequests.closedRequests: (context) => ClosedRequests(),
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
-        IssueDetail.issueDetail: (context) => IssueDetail(),
+        
       },
     );
   }

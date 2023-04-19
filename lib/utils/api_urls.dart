@@ -37,3 +37,8 @@ const base_url_v1 =
         '&wspassword=' +
         'wdsgnm1017_' +
         '&token=';
+
+//const TOKEN_V2 = 'ishprod!';
+
+
+const attachpath = 'http://10.32.12.22/windesk/';

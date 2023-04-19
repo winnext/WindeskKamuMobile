@@ -1,4 +1,4 @@
-package com.example.win_kamu
+package com.windesk.pppmobilev2
 
 import io.flutter.embedding.android.FlutterActivity
 

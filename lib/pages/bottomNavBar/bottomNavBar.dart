@@ -11,6 +11,7 @@ import '../homePage.dart';
 import '../internet_connection/internet_connection.dart';
 import '../new_notif/new_notif.dart';
 import '../openRequests/RouteRequests.dart';
+import '../test/test.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -20,6 +21,24 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  int _currentIndex = 0;
+  PageController? _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    final mainViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
+    print(mainViewProvider.currentIndex);
+
+    mainViewProvider.initForm();
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
  List<Widget> _buildScreens() {
@@ -27,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           MyHomePage(),
           WoCreate(),
           CloseRequestAwaitApproval(),
-          NewNotif()
+          Test()
           
         ];
     }

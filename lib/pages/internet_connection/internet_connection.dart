@@ -14,7 +14,7 @@ import 'package:win_kamu/utils/global_utils.dart';
       
       AddressCheckOptions(
         address: InternetAddress(
-          '10.86.4.46',              //10.86.4.46 aeh
+          '1.1.1.1',              //10.86.4.46 aeh
                                   // 1.1.1.1 cihaz interneti
           type: InternetAddressType.IPv4,
           

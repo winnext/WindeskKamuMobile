@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "347606667309",
+    "firebase_url": "https://ash-mobile.firebaseio.com",
+    "project_id": "ash-mobile",
+    "storage_bucket": "ash-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347606667309:android:675dcca622f625285aa8a4",
+        "android_client_info": {
+          "package_name": "com.windesk.pppmobilev2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347606667309-oggk6s88ffuru8ndhjr1ajg6gp8e0hei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.windesk.pppmobilev2",
+            "certificate_hash": "568e60704795fc7130667ee6a6b91249e913d60a"
+          }
+        },
+        {
+          "client_id": "347606667309-mrv1gklpoaqgal5oesj1qhsbpgi6nhsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAemq_T6l7LEidR_yzkyjFiQet4b6DeDBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347606667309-mrv1gklpoaqgal5oesj1qhsbpgi6nhsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

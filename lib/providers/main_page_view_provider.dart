@@ -34,7 +34,9 @@ class MainPageViewProvider extends ChangeNotifier {
 
   void initForm() async{
     _pageController = PageController();
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString("prefsUserName"));
     _kadi = prefs.getString('prefsUserName') ?? '';
 
   }
