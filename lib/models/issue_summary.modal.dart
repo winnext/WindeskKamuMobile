@@ -2,7 +2,7 @@ class IssueSummaryModal {
   String? CODE;
   String? TARGET_FDATE;
   String? TARGET_RDATE;
-  String? STATUSCODE;
+  String? STATUS_CODE;
   String? RESPONDED_DATE;
   String? RESPONDED_TIMER;
   String? FIXED_DATE;
@@ -14,7 +14,7 @@ class IssueSummaryModal {
       this.CODE,
       this.TARGET_FDATE,
       this.TARGET_RDATE,
-      this.STATUSCODE,
+      this.STATUS_CODE,
       this.RESPONDED_DATE,
       this.RESPONDED_TIMER,
       this.FIXED_DATE,
@@ -25,7 +25,7 @@ class IssueSummaryModal {
     CODE = json['CODE'];
     TARGET_FDATE = json['TARGET_FDATE'];
     TARGET_RDATE = json['TARGET_RDATE'];
-    STATUSCODE = json['STATUSCODE'];
+    STATUS_CODE = json['STATUS_CODE'];
     RESPONDED_DATE = json['RESPONDED_DATE'];
     RESPONDED_TIMER = json['RESPONDED_TIMER'];
     FIXED_DATE = json['FIXED_DATE'];

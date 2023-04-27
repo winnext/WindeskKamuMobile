@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/issue_activities.modal.dart';
+import 'package:win_kamu/models/issue_operations.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/models/tracing_view.model.dart';
+import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +34,19 @@ class ListViewProvider extends ChangeNotifier {
   List<IssueAttachmentModal> tempissueAttachmentView = [];
 
   List<IssueFilterModel> _issueFilterStatusCodes = [];
-  List<IssueFilterModel> tempissueFilterStatusCodes= [];
+  List<IssueFilterModel> tempissueFilterStatusCodes = [];
+
+  List<IssueFilterModel> _issueFilterBuildCodes = [];
+  List<IssueFilterModel> tempissueFilterBuildCodes = [];
+
+  List<IssueFilterModel> _issueFilterFloorCodes = [];
+  List<IssueFilterModel> tempissueFilterFloorCodes = [];
+
+  List<IssueFilterModel> _issueFilterWingCodes = [];
+  List<IssueFilterModel> tempissueFilterWingCodes = [];
+
+  List<IssueOperationsModal> _issueOperationList = [];
+  List<IssueOperationsModal> tempissueOperationList = [];
 
   PageController? _pageController;
 
@@ -40,12 +55,13 @@ class ListViewProvider extends ChangeNotifier {
   bool _isDataExist = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
-  String _status = '';
-  String _build = '';
+  String _statusName = '';
+  String _statusCode = '';
+  String _buildName = '';
+  String _buildCode = '';
   String _floor = '';
   String _wing = '';
   String _assigne = '';
-
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -78,8 +94,33 @@ class ListViewProvider extends ChangeNotifier {
   }
 
   List<IssueFilterModel> get issueFilterStatusCodes => _issueFilterStatusCodes;
-  set setiissueFilterStatusCodes(List<IssueFilterModel> issueFilterStatusCodes) {
+  set setiissueFilterStatusCodes(
+      List<IssueFilterModel> issueFilterStatusCodes) {
     _issueFilterStatusCodes = issueFilterStatusCodes;
+    notifyListeners();
+  }
+
+  List<IssueFilterModel> get issueFilterBuildCodes => _issueFilterBuildCodes;
+  set setiissueFilterBuildCodes(List<IssueFilterModel> issueFilterBuildCodes) {
+    _issueFilterBuildCodes = issueFilterBuildCodes;
+    notifyListeners();
+  }
+
+    List<IssueFilterModel> get issueFilterFloorCodes => _issueFilterFloorCodes;
+  set setiissueFilterFloorCodes(List<IssueFilterModel> issueFilterFloorCodes) {
+    _issueFilterFloorCodes = issueFilterFloorCodes;
+    notifyListeners();
+  }
+
+    List<IssueFilterModel> get issueFilterWingCodes => _issueFilterWingCodes;
+  set setiissueFilterWingCodes(List<IssueFilterModel> issueFilterWingCodes) {
+    _issueFilterWingCodes = issueFilterWingCodes;
+    notifyListeners();
+  }
+
+  List<IssueOperationsModal> get issueOperationList => _issueOperationList;
+  set setiissueOperationList(List<IssueOperationsModal> issueOperationList) {
+    _issueOperationList = issueOperationList;
     notifyListeners();
   }
 
@@ -111,15 +152,27 @@ class ListViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get status => _status;
-  set setstatus(String status) {
-    _status = status;
+  String get statusName => _statusName;
+  set setstatusName(String statusName) {
+    _statusName = statusName;
     notifyListeners();
   }
 
-  String get build => _build;
-  set setbuild(String build) {
-    _build = build;
+  String get statusCode => _statusCode;
+  set setstatusCode(String statusCode) {
+    _statusCode = statusCode;
+    notifyListeners();
+  }
+
+  String get buildName => _buildName;
+  set setbuildName(String buildName) {
+    _buildName = buildName;
+    notifyListeners();
+  }
+
+  String get buildCode => _buildCode;
+  set setbuildCode(String buildCode) {
+    _buildCode = buildCode;
     notifyListeners();
   }
 
@@ -171,8 +224,8 @@ class ListViewProvider extends ChangeNotifier {
     Map<String, dynamic> queryParameters = {
       "start": _startIssues,
       "end": _endIsses,
-      "status": status,
-      "build": build,
+      "status": statusCode,
+      "build": buildCode,
       "floor": floor,
       "wing": wing,
       "assignee": assigne,
@@ -262,11 +315,13 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    //print('dataActivities ++++ ' + data.toString());
+    print('dataActivities ++++5 ' + data.toString());
     if (true) {
       tempissueActivitiesView = (result.records['records'] as List)
           .map((e) => IssueActivitiesModal.fromJson(e))
           .toList();
+      print('dataActivities ++++55 ' + tempissueActivitiesView.toString());
+
       Future.delayed(const Duration(milliseconds: 1200), () {
         issueActivitiesView.addAll(tempissueActivitiesView);
         int noOfTasks = tempissueActivitiesView.length;
@@ -324,24 +379,31 @@ class ListViewProvider extends ChangeNotifier {
     }
   }
 
-    void getIssueOpenStatusCodes() async {
+  void getIssueOperations(issuecode, xusercode) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}&action=getIssueOpenStatusCodes';
+    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/operationList';
 
-    final result = await apirepository.getIssueOpenStatusCodes(
-        controller: urlIssueTypes);
+    print('dataActivitiesUrl' + urlIssueTypes.toString());
+
+    final result = await apirepository.getIssueOperations(
+        controller: urlIssueTypes, xusercode: xusercode);
 
     final data = result.records['records'];
 
-    print('dataActivities ++++ ' + data.toString());
+    print('dataActivities +++ ' + data.toString());
+    issueOperationList.add(IssueOperationsModal.fromJson(data));
+    print('dataActivities --- ' + issueOperationList.toString());
     if (true) {
-      tempissueFilterStatusCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-      Future.delayed(const Duration(milliseconds: 1200), () {
-        issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
-        int noOfTasks = tempissueActivitiesView.length;
+      print('issueOperationList2' +
+          IssueOperationsModal.fromJson(result.records['records']).toString());
+      Future.delayed(const Duration(milliseconds: 100), () {
+        var responseData =
+            IssueOperationsModal.fromJson(result.records['records']);
+        print('issueOperationList' + responseData.toString());
+        issueOperationList.add(responseData);
+
+        int noOfTasks = issueOperationList.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;
           _loading = false;
@@ -360,42 +422,100 @@ class ListViewProvider extends ChangeNotifier {
     }
   }
 
-  void getSpaceBfwByType(String type) async {
+  void getIssueOpenStatusCodes() async {
     _isDataLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getIssueOpenStatusCodes';
 
-    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}&action=getSpaceBfwByType&type=${type}';
-
-    final result = await apirepository.getSpaceBfwByType(
-        controller: urlIssueTypes);
-
-    final data = result.records['records'];
-
-    print('issueFilter :  :  ' + data.toString());
+    final result =
+        await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
 
     if (true) {
       tempissueFilterStatusCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
-      
-      print('issueFilter 3:  3:  ' + tempissueFilterStatusCodes.toString());
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
-
         int noOfTasks = tempissueFilterStatusCodes.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _currentPage = 1;
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
+
+        print(
+            'dataActivities ++++2' + issueFilterStatusCodes[0].CODE.toString());
+
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
       });
     } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void getSpaceBfwByType(String type) async {
+    _isDataLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
+
+    print('buildingurl' + urlIssueTypes.toString());
+
+    final result =
+        await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
+
+    final data = result.records['records'];
+
+    print('buildingurl 3:  :  ' + result.records['records'].toString());
+
+    if (type == 'BUILDING') {
+      tempissueFilterBuildCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+      print('buildinggg' + tempissueFilterStatusCodes.toString());
+
+      issueFilterBuildCodes.addAll(tempissueFilterBuildCodes);
+      int noOfTasks = tempissueFilterBuildCodes.length;
+
+      print('building ++++2' + issueFilterBuildCodes[0].CODE.toString());
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
+    } 
+    else if(type == 'FLOOR')
+    {
+      tempissueFilterFloorCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+
+      issueFilterFloorCodes.addAll(tempissueFilterFloorCodes);
+      int noOfTasks = tempissueFilterFloorCodes.length;
+
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
+    }
+    else if(type == 'WING')
+    {
+      tempissueFilterWingCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+
+      issueFilterWingCodes.addAll(tempissueFilterWingCodes);
+      int noOfTasks = tempissueFilterWingCodes.length;
+
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
+    }
+    else {
       // baglantiHatasi(context, result.message);
     }
   }

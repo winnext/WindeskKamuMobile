@@ -95,7 +95,7 @@ class _IssueListState extends State<IssueList> {
               IconButton(
                   icon: Icon(Icons.tune, color: APPColors.Main.black),
                   onPressed: () {
-                showModalBottomSheet(context: context, builder: (context) => IssueFilterModal(moduleCode: widget.moduleCode));
+                showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) => IssueFilterModal(moduleCode: widget.moduleCode));
                   }),
             ],
           ),

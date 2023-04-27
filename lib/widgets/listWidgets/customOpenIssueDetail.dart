@@ -55,7 +55,8 @@ class DetailListWidget extends StatefulWidget {
       respondedDate,
       respondedTimer,
       fixedDate,
-      fixTimer;
+      fixTimer,
+      xusercode;
 
   final Color? importanceLevelColor;
   final VoidCallback? press;
@@ -109,7 +110,8 @@ class DetailListWidget extends StatefulWidget {
       this.fixTimer,
       this.fixedDate,
       this.respondedDate,
-      this.respondedTimer})
+      this.respondedTimer,
+      this.xusercode})
       : super(key: key);
 
   @override
@@ -657,12 +659,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
         ),
         FloatingActionButton(
           onPressed: () {
-            showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return IssueActionButton();
-                            },
-                          );
+            showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) => IssueActionButton(code: widget.code, xusercode: widget.xusercode));
           },
           backgroundColor: APPColors.Modal.red,
           child: const Icon(Icons.add),

@@ -142,52 +142,54 @@ class _IssueDetailState extends State<IssueDetail> {
                                       child: Column(
                                         children: [
                                           DetailListWidget(
-                                              ani: detailElements?.ANI,
-                                              description:
-                                                  detailElements?.DESCRIPTION,
-                                              targetFDate: detailElements
-                                                  ?.TARGET_FDATE
-                                                  .toString(),
-                                              targetRDate: detailElements
-                                                  ?.TARGET_RDATE
-                                                  .toString(),
-                                              statusName: detailElements?.STATUSNAME,
-                                              assigneName:
-                                                  detailElements?.ASSIGNEENAME,
-                                              assignmentGroup:
-                                                  detailElements?.ASSIGNMENTGROUP,
-                                              assignmentGroupName:
-                                                  detailElements?.ASSIGNMENTGROUPNAME,
-                                              cat1: detailElements?.CAT1,
-                                              cmdb: detailElements?.CMDB,
-                                              code: detailElements?.CODE,
-                                              contactCode:
-                                                  detailElements?.CONTACTCODE,
-                                              contactName:
-                                                  detailElements?.CONTACTNAME,
-                                              idate: detailElements?.IDATE,
-                                              locName: detailElements?.LOCNAME,
-                                              locTree: detailElements?.LOCTREE,
-                                              locTree2: detailElements?.LOCTREE2,
-                                              sumdesc1: detailElements?.SUMDESC1,
-                                              taskNo: detailElements?.CODE.toString(),
-                                              title: detailElements?.TITLE,
-                                              onPressed: (code) {
-                                                print('tiklandi' + code);
-                                              },
-                                              fixTimer: issueSummary?.FIX_TIMER,
-                                              fixedDate: issueSummary?.FIXED_DATE,
-                                              respondedDate:
-                                                  issueSummary?.RESPONDED_DATE,
-                                              respondedTimer:
-                                                  issueSummary?.RESPONDED_TIMER
-                                              // extraTitle:
-                                              //     detailElements.STATUSCODE.toString(),
-                                              ),
+                                            ani: detailElements?.ANI,
+                                            description:
+                                                detailElements?.DESCRIPTION,
+                                            targetFDate: detailElements
+                                                ?.TARGET_FDATE
+                                                .toString(),
+                                            targetRDate: detailElements
+                                                ?.TARGET_RDATE
+                                                .toString(),
+                                            statusName:
+                                                detailElements?.STATUSNAME,
+                                            assigneName:
+                                                detailElements?.ASSIGNEENAME,
+                                            assignmentGroup:
+                                                detailElements?.ASSIGNMENTGROUP,
+                                            assignmentGroupName: detailElements
+                                                ?.ASSIGNMENTGROUPNAME,
+                                            cat1: detailElements?.CAT1,
+                                            cmdb: detailElements?.CMDB,
+                                            code: detailElements?.CODE,
+                                            contactCode:
+                                                detailElements?.CONTACTCODE,
+                                            contactName:
+                                                detailElements?.CONTACTNAME,
+                                            idate: detailElements?.IDATE,
+                                            locName: detailElements?.LOCNAME,
+                                            locTree: detailElements?.LOCTREE,
+                                            locTree2: detailElements?.LOCTREE2,
+                                            sumdesc1: detailElements?.SUMDESC1,
+                                            taskNo:
+                                                detailElements?.CODE.toString(),
+                                            title: detailElements?.TITLE,
+                                            onPressed: (code) {
+                                              print('tiklandi' + code);
+                                            },
+                                            fixTimer: issueSummary?.FIX_TIMER,
+                                            fixedDate: issueSummary?.FIXED_DATE,
+                                            respondedDate:
+                                                issueSummary?.RESPONDED_DATE,
+                                            respondedTimer:
+                                                issueSummary?.RESPONDED_TIMER,
+                                            xusercode: 'sgnm1040',
+                                            // extraTitle:
+                                            //     detailElements.STATUSCODE.toString(),
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    
                                   ],
                                 ),
                               ],

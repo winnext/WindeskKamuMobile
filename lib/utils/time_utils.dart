@@ -45,7 +45,7 @@ timeDifference(date2) {
   DateTime t2 = DateTime.parse(date2);
   Duration date3 = date1.difference(t2);
   String finalDuration =
-      '${date3.inDays} gün ${int.parse(date3.inHours.toString()) % 24} saat ${int.parse(date3.inMinutes.toString()) % 60} dakika ${int.parse(date3.inSeconds.toString()) % 60} saniye ';
+      '${date3.inDays} gün ${int.parse(date3.inHours.toString()) % 24} saat ${int.parse(date3.inMinutes.toString()) % 60} dk. ${int.parse(date3.inSeconds.toString()) % 60} sn. ';
 
   return finalDuration;
 }

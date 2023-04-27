@@ -103,11 +103,9 @@ class DetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getRequestDetail(
         controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
-    print('dataDetail' + data.toString());
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
-
         exampleListView.add(responseData);
         _isDataLoading = false;
         _loading = false;
@@ -131,7 +129,6 @@ class DetailViewProvider extends ChangeNotifier {
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
-
         _issueSummary.add(responseData);
         _isDataLoading = false;
         _loading = false;
@@ -170,32 +167,3 @@ class DetailViewProvider extends ChangeNotifier {
     }
   }
 }
-
-  // loadIssueActivities(String issuecode) async {
-  //   _isDataLoading = true;
-
-  //   final result =
-  //       await apirepository.getActivitiesDetail(issueCode: issuecode);
-
-  //   final data = result.records['records'];
-
-  //   print('activities 1: ' + data.toString());
-
-  //   if (true) {
-  //     tempListViewActivities = (result.records['records'] as List)
-  //         .map((e) => DetailActivitiesModal.fromJson(e))
-  //         .toList();
-  //     Future.delayed(const Duration(milliseconds: 100), () {
-  //       listViewActivities.addAll(tempListViewActivities);
-  //       print('activities2 : ' + listViewActivities.toString());
-  //       _toplamKayitSayisi = int.parse(result.records['totalcount']);
-  //       _isDataLoading = false;
-  //       _loading = false;
-  //       _isDataExist = false;
-  //       notifyListeners();
-  //     });
-  //   } else {
-  //     // baglantiHatasi(context, result.message);
-  //   }
-  // }
-
