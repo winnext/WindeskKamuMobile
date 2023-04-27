@@ -1,4 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
@@ -6,6 +10,7 @@ import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
+import 'package:win_kamu/pages/notiService.dart';
 import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
@@ -13,6 +18,9 @@ import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
 import 'issue/routeIssue.dart';
 import 'openRequests/RouteRequests.dart';
+import 'dart:convert';
+import 'package:rxdart/rxdart.dart';
+
 
 class MyHomePage extends StatefulWidget {
   static String homePage = '/homePage';
@@ -23,8 +31,140 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  showAlertDialog(BuildContext context, title,body,module,code) {
+
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("İptal"),
+    onPressed:  () {
+      Navigator.of(context, rootNavigator: true).pop('dialog');  
+  },
+  );
+  Widget continueButton = TextButton(
+    child: Text("Talebe Git"),
+    onPressed:  () {},
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(body),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+
+
+  @override
+  void initState() {
+      final onNotifications = BehaviorSubject<String?>();
+
+
+
+     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+
+const AndroidInitializationSettings initializationSettingsAndroid =  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+final IOSInitializationSettings initializationSettingsIOS =  const IOSInitializationSettings(
+  requestAlertPermission: true,
+  requestBadgePermission: true,
+  requestSoundPermission: true,
+  );
+
+final MacOSInitializationSettings initializationSettingsMacOS = const MacOSInitializationSettings();
+
+final InitializationSettings initializationSettings = InitializationSettings(
+  android: initializationSettingsAndroid,
+  iOS: initializationSettingsIOS,
+  macOS: initializationSettingsMacOS);
+
+
+   flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async{
+    onNotifications.add(data);
+  }));
+
+   void onClickedNotification(String? payload){
+          print('Foreground HOME Payload : '+payload.toString());
+          String data = payload.toString();
+          final splitted_data = data.split('/-*-/');
+          String title = splitted_data[0];
+          String body = splitted_data[1];
+          String module = splitted_data[2];
+          String code = splitted_data[3];
+
+      showAlertDialog(context,title,body,module,code);
+
+
+          
+
+  }
+
+  
+
+
+  onNotifications.stream.listen(onClickedNotification);
+
+
+// Lisitnening to the background messages
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  
+  await Firebase.initializeApp();
+  
+  print("Handling a background message: ${message.messageId}");
+}
+
+// Lisitnening to the background messages
+WidgetsFlutterBinding.ensureInitialized();
+FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Listneing to the foreground messages
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+    
+    print('Got a message whilst in the foreground!');
+    print('Message data Home: ${message.data}');
+
+    var payload = (message.notification?.title).toString()+'/-*-/'+(message.notification?.body).toString()+'/-*-/'+message.data?['module']+'/-*-/'+message.data?['code'];
+  
+   NotificationApi.showNotification(title:message.notification?.title,body:message.notification?.body,payload:payload);
+
+   
+  });
+
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('HomePage');
+      print('Firebase notification opened');
+      showAlertDialog(context,message.notification?.title,message.notification?.body,message.data?['module'],message.data?['code']);
+      //FlutterLocalNotificationsPlugin().show(message.notification.messageId, message.notification?.title, message.notification?.body,);
+  });
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  
   @override
   Widget build(BuildContext context) {
+
+
+   
+ 
+
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

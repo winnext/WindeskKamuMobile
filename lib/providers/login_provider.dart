@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
+import 'package:win_kamu/pages/bottomNavBar/bottomNavBar.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/utils/global_utils.dart';
@@ -42,12 +43,17 @@ class LoginProvider extends ChangeNotifier {
          
           String apiresult = await apirepository.login(_kadi.text,_password.text);
           if (apiresult == 'success') {
+            snackBar(context, 'Giriş İşlemi Başarılı', 'success');
           Navigator.push(
-            context, MaterialPageRoute(builder: ((context) => const MainPage()))); 
+            context, MaterialPageRoute(builder: ((context) => const BottomNavBar()))); 
             
            } else {
                     baglantiHatasi(context, apiresult.toString());
           }
+
+          
+
+
         }
        
   

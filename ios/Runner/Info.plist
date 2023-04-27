@@ -24,16 +24,27 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Resim yüklemek için fotoğraf kitaplığınıza erişmek istiyor</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Görevler için fotoğraf çekmek üzere kameranıza erişmek istiyor</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Görevler için fotoğraf çekmek üzere mikrofona erişmek istiyor</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -49,11 +60,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>Görevler için fotoğraf çekmek üzere kameranıza erişmek istiyor</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Görevler için fotoğraf çekmek üzere mikrofona erişmek istiyor</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Resim yüklemek için fotoğraf kitaplığınıza erişmek istiyor</string>
 </dict>
 </plist>

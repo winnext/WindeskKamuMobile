@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 
+import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 
 class Login extends StatefulWidget {
@@ -15,6 +19,25 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+   final RoundedLoadingButtonController _btnController2 =
+      RoundedLoadingButtonController();
+
+  void _doSomething(RoundedLoadingButtonController controller) async {
+    
+    Timer(Duration(seconds: 5), () {
+      
+      controller.success();
+      _btnController2.reset();
+
+    });
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final lProvider = Provider.of<LoginProvider>(context);
@@ -115,7 +138,13 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: () {
-                          lProvider.userLogin(context);
+                          if(lProvider.password.text != '' && lProvider.kadi.text != ''){
+                                lProvider.userLogin(context);
+
+                          }else{
+                              baglantiHatasi(context, 'Lütfen Boş Alan Bırakmayınız');
+
+                          }
                         },
                         child: const Text('Giriş Yap'),
                       ),
