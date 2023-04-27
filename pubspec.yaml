@@ -70,7 +70,7 @@ dependencies:
   firebase_messaging: ^14.4.0
   firebase_core: ^2.9.0
   flutter_local_notifications: ^8.2.0
-  dio: ^4.0.0
+  dio: ^5.1.1
   dropdown_search: ^2.0.1
   flutter_native_timezone: ^2.0.0
   device_info: ^2.0.3
