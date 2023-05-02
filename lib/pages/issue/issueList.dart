@@ -14,6 +14,7 @@ import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
 import 'package:win_kamu/widgets/commons.dart';
 import 'package:provider/provider.dart';
+import 'package:win_kamu/widgets/modalWidgets/filterBox.dart';
 import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
@@ -72,6 +73,7 @@ class _IssueListState extends State<IssueList> {
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
+    final exampleList = Provider.of<ListViewProvider>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -103,7 +105,7 @@ class _IssueListState extends State<IssueList> {
             children: [
               Column(
                 children: [
-                  //GestureDetector( child: Text('asd'),),
+                  FilterBox(moduleCode: widget.moduleCode,),
                   listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(

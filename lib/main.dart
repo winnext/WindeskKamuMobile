@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/bottomNavBar/bottomNavBar.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/closeRequestsDetail.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
@@ -33,13 +34,14 @@ import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
-import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
+//import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
@@ -182,6 +184,9 @@ List<SingleChildWidget> providers = [
       create: (_) => MainPageViewProvider()),
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
     ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
+  ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
+
+  
 
 
 ];
@@ -242,6 +247,7 @@ class MyApp extends StatelessWidget {
         ClosedRequests.closedRequests: (context) => ClosedRequests(),
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
+        WoTracingList.tracingList: (context) => WoTracingList(),
         
       },
     );

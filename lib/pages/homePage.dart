@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
@@ -262,7 +263,7 @@ FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
                             child: HomeButton(
                                 text: 'İş Emri Listesi',
                                 iconName: Icons.content_paste_search,
-                                navigator: OpenRequests()),
+                                navigator: WoTracingList()),
                           ),
                           Expanded(
                             child: HomeButton(
