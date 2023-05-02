@@ -235,9 +235,8 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                         ),
                         items: exampleList.issueFilterFloorCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () => {
-                              exampleList.setfloor = data.NAME.toString()
-                            },
+                            onTap: () =>
+                                {exampleList.setfloor = data.NAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
@@ -281,9 +280,8 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                         ),
                         items: exampleList.issueFilterWingCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () => {
-                              exampleList.setwing = data.NAME.toString()
-                            },
+                            onTap: () =>
+                                {exampleList.setwing = data.NAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
@@ -398,7 +396,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                                         )),
                                   )
                                 : Container(),
-                                exampleList.floor != ''
+                            exampleList.floor != ''
                                 ? Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
@@ -429,7 +427,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                                         )),
                                   )
                                 : Container(),
-                                exampleList.wing != ''
+                            exampleList.wing != ''
                                 ? Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
@@ -463,6 +461,40 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           ],
                         ),
                       ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  APPColors.Clear.blue)),
+                          child: const Text('Temizle'),
+                          onPressed: () {
+                            exampleList.exampleListView.clear();
+                            exampleList.setwing = '';
+                            exampleList.setassigne = '';
+                            exampleList.setbuildCode = '';
+                            exampleList.setbuildName = '';
+                            exampleList.setfloor = '';
+                            exampleList.setstatusCode = '';
+                            exampleList.setstatusName = '';
+                            exampleList.loadData(1, widget.moduleCode);
+                          },
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  APPColors.Filter.blue)),
+                          child: const Text('Filtrele',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 26, 20, 20))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
                     )
                   ],
                 ),

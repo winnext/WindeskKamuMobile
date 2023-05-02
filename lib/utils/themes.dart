@@ -27,7 +27,18 @@ extension APPImagesExtension on APPImages {
   }
 }
 
-enum APPColors { Login, Main, Secondary, Accent, Graident, NewNotifi, Modal, TracingNumber }
+enum APPColors {
+  Login,
+  Main,
+  Secondary,
+  Accent,
+  Graident,
+  NewNotifi,
+  Modal,
+  TracingNumber,
+  Clear,
+  Filter
+}
 
 extension APPColorsExtension on APPColors {
   Color get orange {
@@ -72,6 +83,10 @@ extension APPColorsExtension on APPColors {
         return const Color.fromARGB(1000, 165, 229, 255);
       case APPColors.TracingNumber:
         return const Color(0xff44B6C8);
+      case APPColors.Clear:
+        return const Color(0xff21ADE4);
+      case APPColors.Filter:
+        return const Color(0xff98D6EE);
       default:
         return const Color(0xff4a6572);
     }
