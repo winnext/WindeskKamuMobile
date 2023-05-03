@@ -21,6 +21,7 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/modalWidgets/issueActionModal.dart';
 import '../homePage.dart';
 import 'issueDetail.dart';
 import 'issueList.dart';
@@ -67,96 +68,104 @@ class _IssueActivitiesState extends State<IssueActivities> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: Stack(
-      children: [
-        Container(
-          height: size.height / 1.7,
-          child: Column(
-            children: [
-              listViewProvider.issueActivitiesView.length > 0
-                  ? Expanded(
-                      child: NotificationListener<ScrollNotification>(
-                      // onNotification: listViewProvider.notificationController,
-                      child: ListView.builder(
-                          itemCount:
-                              listViewProvider.issueActivitiesView.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            l++;
-                            if (l == 5) {
-                              l = 0;
-                            }
-                            IssueActivitiesModal listElements =
-                                listViewProvider.issueActivitiesView[i];
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                              child: Container(
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(listElements.NAME.toString()),
-                                        Text(listElements.IDATE.toString()),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 0, 10),
-                                      child: Row(
+      body: Stack(
+        children: [
+          Container(
+            height: size.height / 1.7,
+            child: Column(
+              children: [
+                listViewProvider.issueActivitiesView.length > 0
+                    ? Expanded(
+                        child: NotificationListener<ScrollNotification>(
+                        // onNotification: listViewProvider.notificationController,
+                        child: ListView.builder(
+                            itemCount:
+                                listViewProvider.issueActivitiesView.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              l++;
+                              if (l == 5) {
+                                l = 0;
+                              }
+                              IssueActivitiesModal listElements =
+                                  listViewProvider.issueActivitiesView[i];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                child: Container(
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(''),
-                                              Text(listElements.IUSERNAME
-                                                  .toString()),
-                                            ],
-                                          ),
+                                          Text(listElements.NAME.toString()),
+                                          Text(listElements.IDATE.toString()),
                                         ],
                                       ),
-                                    ),
-                                    Divider(
-                                      height: 10,
-                                      color: APPColors.Main.grey,
-                                      thickness: 5.0,
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 10),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(''),
+                                                Text(listElements.IUSERNAME
+                                                    .toString()),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(
+                                        height: 10,
+                                        color: APPColors.Main.grey,
+                                        thickness: 5.0,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
-                    ))
-                  : Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 2.5),
-                      child: const Center(child: AramaSonucBos()),
-                    ),
-            ],
+                              );
+                            }),
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height / 2.5),
+                        child: const Center(child: AramaSonucBos()),
+                      ),
+              ],
+            ),
           ),
-        ),
-
-        if (listViewProvider.isDataLoading == true) ...[
-          loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
+          if (listViewProvider.isDataLoading == true) ...[
+            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
+          ],
         ],
-      ],
-    ),
-          floatingActionButton:         
-          FloatingActionButton(
-          onPressed: () {
-            print('object');
-          },
-          backgroundColor: APPColors.Modal.red,
-          child: const Icon(Icons.add),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final detailViewProvider =
+          Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) => IssueActionButton(
+                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+        },
+        backgroundColor: APPColors.Modal.red,
+        child: const Icon(Icons.add),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      );
+    );
   }
 
   Widget sayfaYenile() {

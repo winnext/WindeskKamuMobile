@@ -60,9 +60,7 @@ await Firebase.initializeApp();
   final onNotifications = BehaviorSubject<String?>();
 
 
-  FirebaseMessaging.onBackgroundMessage((message) =>      NotificationApi.showNotification(title:"message.notification?.title",body:"message.notification?.body",payload:'asd'));
-
-
+FirebaseMessaging.onBackgroundMessage((message) =>      NotificationApi.showNotification(title:"message.notification?.title",body:"message.notification?.body",payload:'asd'));
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 FirebaseMessaging.instance.getInitialMessage().then((message) {
   if (message != null) {
@@ -111,60 +109,8 @@ final InitializationSettings initializationSettings = InitializationSettings(
    void onClickedNotification(String? payload){
           print('Foreground Payload : '+payload.toString());
           
-
   }
-
-  
-
-
   onNotifications.stream.listen(onClickedNotification);
-
- 
-  
-
-  
-
-
-
-  
-
-  
-
-
-   
-
-  //  cek()async {
-  //   String? fcmToken = '';
-  //   try {
-  //     print('girdi apn');
-  //     fcmToken = await FirebaseMessaging.instance.getAPNSToken(); 
-  //     print('APN TOKEN : '+fcmToken.toString());
-  //   } catch (e) {
-  //           print('fcm');
-
-  //     fcmToken = await FirebaseMessaging.instance.getToken();
-  //           print('FCM TOKEN : '+fcmToken.toString());
-
-  //   }
-  //   print('cek'+fcmToken.toString());
-  //   return fcmToken;
-  // }
-
-  // var fcmToken = cek();
-    
-    
-   
-  // if(settings.authorizationStatus == AuthorizationStatus.authorized){
-  // final fcmToken = await messaging.getToken();
-    
-
-
-  //       print('Token : '+FirebaseMessaging.instance.getToken().toString());
-  // }
-
-      
- 
-
   
   runApp(
     MultiProvider(

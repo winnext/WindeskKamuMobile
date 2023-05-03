@@ -391,17 +391,13 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('dataActivities +++ ' + data.toString());
-    issueOperationList.add(IssueOperationsModal.fromJson(data));
-    print('dataActivities --- ' + issueOperationList.toString());
     if (true) {
-      print('issueOperationList2' +
-          IssueOperationsModal.fromJson(result.records['records']).toString());
-      Future.delayed(const Duration(milliseconds: 100), () {
-        var responseData =
-            IssueOperationsModal.fromJson(result.records['records']);
-        print('issueOperationList' + responseData.toString());
-        issueOperationList.add(responseData);
+
+      Future.delayed(const Duration(milliseconds: 0), () {
+      var responseData = IssueOperationsModal.fromJson(result.records['records']);
+      issueOperationList.add(responseData);
+      print('issueOperationList' + issueOperationList[0].IS_ACTIVITY.toString());
+
 
         int noOfTasks = issueOperationList.length;
         if (noOfTasks > 0) {
@@ -433,6 +429,7 @@ class ListViewProvider extends ChangeNotifier {
         await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
 
     if (true) {
+
       tempissueFilterStatusCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();

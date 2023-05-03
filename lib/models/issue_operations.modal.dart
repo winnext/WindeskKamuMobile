@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 class IssueOperationsModal {
-  String? IS_PHOTO;
-  String? IS_TAKE_OVER;
-  String? IS_SPAREPART;
-  String? IS_ACTIVITY;
-  String? IS_CHANGE_CFG;
-  String? IS_PLANNED_CANCEL;
+  bool? IS_PHOTO;
+  bool? IS_TAKE_OVER;
+  bool? IS_SPAREPART;
+  bool? IS_ACTIVITY;
+  bool? IS_CHANGE_CFG;
+  bool? IS_PLANNED_CANCEL;
 
 
   IssueOperationsModal(
@@ -15,7 +17,6 @@ class IssueOperationsModal {
       this.IS_ACTIVITY,
       this.IS_CHANGE_CFG,
       this.IS_PLANNED_CANCEL,
-
       });
   IssueOperationsModal.fromJson(Map<String, dynamic> json) {
     IS_PHOTO = json['IS_PHOTO'];

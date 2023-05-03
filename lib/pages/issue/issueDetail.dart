@@ -67,13 +67,15 @@ class _IssueDetailState extends State<IssueDetail> {
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
     detailViewProvider.loadIssueSummary(
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
+    print('asdasd' + detailViewProvider.exampleListView[0].toString());
+    print('asdasd' + detailViewProvider.issueSummary[0].toString());
+
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-
     detailViewProvider?.dispose();
     super.dispose();
   }

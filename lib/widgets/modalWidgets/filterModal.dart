@@ -20,10 +20,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
 
   List<DropdownMenuItem<IssueFilterModel>> dropdownItems =
       []; //* you can make nullable if you want, I'm doing it to force having String.
-  String selectedCurrency = 'USD';
 
-  String? _mySelection;
-  List<Map> _myJson = [];
   @override
   void initState() {
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);

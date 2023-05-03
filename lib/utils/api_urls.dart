@@ -54,5 +54,8 @@ const base_url_v1 =
 
 //const TOKEN_V2 = 'ishprod!';
 
+// aktiviteekle = https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=
+// wdmobile&wspassword=wdsgnm1017_&token=wddemo!_C82C122E-2B51-4DF2-943B-434C575C10E7&action=getAvailableActivities&issueCode=
+// AEH00109987&module=issue
 
 const attachpath = 'http://10.32.12.22/windesk/';
