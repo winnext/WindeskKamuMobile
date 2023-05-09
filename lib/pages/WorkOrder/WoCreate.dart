@@ -29,7 +29,7 @@ class _WoCreateState extends State<WoCreate> {
      var photos = woProvider.photos;
      var bases = woProvider.b64s;
 
-      dynamic _showModal(BuildContext context) async {
+    dynamic _showModal(BuildContext context) async {
     // show the modal dialog and pass some data to it
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -42,7 +42,9 @@ class _WoCreateState extends State<WoCreate> {
     .of(context)
     .push(new MaterialPageRoute<dynamic>(builder: (BuildContext context) {
   return new TakePictureScreen(camera: firstCamera,sayfa: 'Yeni İş Emri',);
-}));
+}
+)
+);
 
 
     // print the data returned by the modal if any
@@ -247,7 +249,7 @@ class _WoCreateState extends State<WoCreate> {
                               ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () { 
                          photos.length > 0 ? woProvider.clear = 1 :  _showModal(context);
                         },
                         child: photos.length > 0 ? (Text('Vazgeç')) : (Icon(Icons.add_a_photo)),

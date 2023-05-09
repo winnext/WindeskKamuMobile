@@ -18,11 +18,11 @@ SimpleShowDialog(
         child: AlertDialog(
           title: Column(
             children: [
-              success
-                  ? SuccessIcon(
-                      size: MediaQuery.of(context).size.height / 9,
-                    )
-                  : WarningIcon(size: MediaQuery.of(context).size.height / 9),
+              // success
+              //     ? SuccessIcon(
+              //         size: MediaQuery.of(context).size.height / 9,
+              //       )
+              //     : WarningIcon(size: MediaQuery.of(context).size.height / 9),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

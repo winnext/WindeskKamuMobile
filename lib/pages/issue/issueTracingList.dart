@@ -81,7 +81,10 @@ class _IssueTracingListState extends State<IssueTracingList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyHomePage()));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -115,8 +118,6 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => IssueList(
-                                            pageController: mainViewProvider
-                                                .pageController!,
                                             moduleCode:
                                                 listElements.code.toString(),
                                             moduleName:

@@ -262,7 +262,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
 
                          photos.length >= 6 ? (Container()) : (
 
-                           Container(
+                        Container(
                           width: 30.w,
                           height: 5.h,
                           child:  ElevatedButton(

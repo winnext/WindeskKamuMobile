@@ -55,6 +55,8 @@ class ListViewProvider extends ChangeNotifier {
   bool _isDataExist = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
+  String _moduleCode = '';
+  String _moduleName = '';
   String _statusName = '';
   String _statusCode = '';
   String _buildName = '';
@@ -106,13 +108,13 @@ class ListViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-    List<IssueFilterModel> get issueFilterFloorCodes => _issueFilterFloorCodes;
+  List<IssueFilterModel> get issueFilterFloorCodes => _issueFilterFloorCodes;
   set setiissueFilterFloorCodes(List<IssueFilterModel> issueFilterFloorCodes) {
     _issueFilterFloorCodes = issueFilterFloorCodes;
     notifyListeners();
   }
 
-    List<IssueFilterModel> get issueFilterWingCodes => _issueFilterWingCodes;
+  List<IssueFilterModel> get issueFilterWingCodes => _issueFilterWingCodes;
   set setiissueFilterWingCodes(List<IssueFilterModel> issueFilterWingCodes) {
     _issueFilterWingCodes = issueFilterWingCodes;
     notifyListeners();
@@ -149,6 +151,18 @@ class ListViewProvider extends ChangeNotifier {
 
   set settoplamKayitSayisi(int toplamKayitSayisi) {
     _toplamKayitSayisi = toplamKayitSayisi;
+    notifyListeners();
+  }
+
+  String get moduleCode => _moduleCode;
+  set setmoduleCode(String moduleCode) {
+    _moduleCode = moduleCode;
+    notifyListeners();
+  }
+  
+  String get moduleName => _moduleName;
+  set setmoduleName(String moduleName) {
+    _moduleName = moduleName;
     notifyListeners();
   }
 
@@ -240,7 +254,7 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('data' + data.toString());
+    print('urlISSUE' + urlIssueTypes.toString());
 
     if (true) {
       tempexampleListView = (result.records['records'] as List)
@@ -283,7 +297,7 @@ class ListViewProvider extends ChangeNotifier {
       temptracingListView =
           (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
 
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         tracingListView.addAll(temptracingListView);
         int noOfTasks = tempexampleListView.length;
         if (noOfTasks > 0) {
@@ -392,12 +406,12 @@ class ListViewProvider extends ChangeNotifier {
     final data = result.records['records'];
 
     if (true) {
-
       Future.delayed(const Duration(milliseconds: 0), () {
-      var responseData = IssueOperationsModal.fromJson(result.records['records']);
-      issueOperationList.add(responseData);
-      print('issueOperationList' + issueOperationList[0].IS_ACTIVITY.toString());
-
+        var responseData =
+            IssueOperationsModal.fromJson(result.records['records']);
+        issueOperationList.add(responseData);
+        print('issueOperationList' +
+            issueOperationList[0].IS_ACTIVITY.toString());
 
         int noOfTasks = issueOperationList.length;
         if (noOfTasks > 0) {
@@ -429,7 +443,6 @@ class ListViewProvider extends ChangeNotifier {
         await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
 
     if (true) {
-
       tempissueFilterStatusCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
@@ -481,9 +494,7 @@ class ListViewProvider extends ChangeNotifier {
       _loading = false;
       _isDataExist = false;
       notifyListeners();
-    } 
-    else if(type == 'FLOOR')
-    {
+    } else if (type == 'FLOOR') {
       tempissueFilterFloorCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
@@ -491,14 +502,11 @@ class ListViewProvider extends ChangeNotifier {
       issueFilterFloorCodes.addAll(tempissueFilterFloorCodes);
       int noOfTasks = tempissueFilterFloorCodes.length;
 
-
       _isDataLoading = false;
       _loading = false;
       _isDataExist = false;
       notifyListeners();
-    }
-    else if(type == 'WING')
-    {
+    } else if (type == 'WING') {
       tempissueFilterWingCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
@@ -506,13 +514,11 @@ class ListViewProvider extends ChangeNotifier {
       issueFilterWingCodes.addAll(tempissueFilterWingCodes);
       int noOfTasks = tempissueFilterWingCodes.length;
 
-
       _isDataLoading = false;
       _loading = false;
       _isDataExist = false;
       notifyListeners();
-    }
-    else {
+    } else {
       // baglantiHatasi(context, result.message);
     }
   }

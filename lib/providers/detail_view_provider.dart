@@ -106,6 +106,7 @@ class DetailViewProvider extends ChangeNotifier {
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
+        print('issueDetailll' + responseData.toString());
         exampleListView.add(responseData);
         _isDataLoading = false;
         _loading = false;
@@ -129,6 +130,8 @@ class DetailViewProvider extends ChangeNotifier {
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
+        print('issueDetailll22' + responseData.toString());
+
         _issueSummary.add(responseData);
         _isDataLoading = false;
         _loading = false;

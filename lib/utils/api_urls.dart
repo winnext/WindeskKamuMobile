@@ -16,14 +16,13 @@ const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
 const TOKEN_V1 = "wddemo!_";
 
 
-
 //const TOKEN_V2 = "ishtest!";
 //const TOKEN_V2 = 'ishprod!';
 const TOKEN_V2 = 'demo!';
 
 
-// const ATTACHPATHLIVE =
-//      "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+//  const ATTACHPATHLIVE =
+//       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
 
 // const ATTACHPATHLIVE =
 // "http://10.32.12.22/windesk/xreadattach.php?token=${TOKEN_V1}&id=";

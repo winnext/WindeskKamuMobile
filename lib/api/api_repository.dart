@@ -91,11 +91,11 @@ class APIRepository {
     Future.delayed(const Duration(seconds: 2)).whenComplete(() {});
 
     try {
-       BaseOptions options = new BaseOptions(
+      BaseOptions options = new BaseOptions(
           baseUrl: loginUrl,
           receiveDataWhenStatusError: true,
-          connectTimeout: 5*1000, // 60 seconds
-          receiveTimeout: 5*1000 // 60 seconds
+          connectTimeout: 5 * 1000, // 60 seconds
+          receiveTimeout: 5 * 1000 // 60 seconds
           );
       Dio dio = Dio(options);
       final response = await dio.get(loginUrl,
@@ -108,39 +108,33 @@ class APIRepository {
         prefs.setString('prefsUserName', kadi);
 
         print('Giriş İşlemi Başarılı');
-        
 
-        var platform = deviceType ==  'iOS' ? 'ios' : 'android';
+        var platform = deviceType == 'iOS' ? 'ios' : 'android';
         var action = platform == 'ios' ? 'addIOSToken' : 'addFireBaseToken';
         String token = prefs.getString('fbtoken').toString();
 
-         String sendTokenUrl = base_url_v1 +
-        'wdishliveSqAS!_' +
-        deviceToken 
-        +'&username='+kadi+
-        '&platform=' +platform+
-        '&action='+action+
-        '&firebasetoken='+token;
+        String sendTokenUrl = base_url_v1 +
+            'wdishliveSqAS!_' +
+            deviceToken +
+            '&username=' +
+            kadi +
+            '&platform=' +
+            platform +
+            '&action=' +
+            action +
+            '&firebasetoken=' +
+            token;
 
         final responseTokenUrl = await dio.get(sendTokenUrl,
-          options: Options(
-            responseType: ResponseType.json,
-          ));
+            options: Options(
+              responseType: ResponseType.json,
+            ));
 
         if (responseTokenUrl.data['result'] == 'success') {
-
           print('Firebase Token kaydedildi');
-        }else{
+        } else {
           print('Firebase Token kaydedilmedi');
-
         }
-        
-
-
-
-
-
-
       } else {
         print(response.data['result']);
       }
@@ -150,62 +144,54 @@ class APIRepository {
     }
   }
 
-  Future getServerTime(xusercode , navigation) async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String deviceToken = prefs.getString('deviceId').toString();
+  Future getServerTime(xusercode, navigation) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-    String getServerTimeURL = base_url_v1+'wdishliveSqAS!_'+deviceToken+'&action=getDateTime';
+    String getServerTimeURL =
+        base_url_v1 + 'wdishliveSqAS!_' + deviceToken + '&action=getDateTime';
     print(getServerTimeURL);
     try {
       Dio dio = Dio();
-      final getServerTimeResponse = await dio.get(getServerTimeURL,
-          options: Options()
-      );
+      final getServerTimeResponse =
+          await dio.get(getServerTimeURL, options: Options());
 
       print(getServerTimeResponse);
-      if(getServerTimeResponse.statusCode == 200){
+      if (getServerTimeResponse.statusCode == 200) {
         var tarih = getServerTimeResponse.data['records']; //20230418155418
-        var yil = tarih[0].toString()+tarih[1].toString()+tarih[2].toString()+tarih[3].toString();
-        var ay = tarih[4].toString()+tarih[5].toString();
-        var gun = tarih[6].toString()+tarih[7].toString();
+        var yil = tarih[0].toString() +
+            tarih[1].toString() +
+            tarih[2].toString() +
+            tarih[3].toString();
+        var ay = tarih[4].toString() + tarih[5].toString();
+        var gun = tarih[6].toString() + tarih[7].toString();
 
-        var saat = tarih[8].toString()+tarih[9].toString();
-        var dakika = tarih[10].toString()+tarih[11].toString();
-        var saniye = tarih[12].toString()+tarih[13].toString();
+        var saat = tarih[8].toString() + tarih[9].toString();
+        var dakika = tarih[10].toString() + tarih[11].toString();
+        var saniye = tarih[12].toString() + tarih[13].toString();
 
         var duzenlenmis_tarih = '$gun/$ay/$yil $saat:$dakika:$saniye';
 
         return duzenlenmis_tarih;
       }
-      
-
-
-    }on DioError catch (e) {
+    } on DioError catch (e) {
       print(e);
     }
-
   }
 
-   Future accessTest1() async {
-
-    
-    String url = attachpath + '?&timestamp='+(DateTime.now().millisecondsSinceEpoch).toString();
-
+  Future accessTest1() async {
+    String url = attachpath +
+        '?&timestamp=' +
+        (DateTime.now().millisecondsSinceEpoch).toString();
 
     try {
       Dio dio = Dio();
-      final response = await dio.get(url,
-          options: Options(
-            
-          ));
-      print('Access Test v1  : '+(response.statusCode).toString());
+      final response = await dio.get(url, options: Options());
+      print('Access Test v1  : ' + (response.statusCode).toString());
       if (response.statusCode == 200) {
-             return 'success';
-
-        
+        return 'success';
       } else {
-                     return 'notsuccess';
-
+        return 'notsuccess';
       }
     } on DioError catch (e) {
       return 'notsuccess';
@@ -213,30 +199,22 @@ class APIRepository {
   }
 
   Future accessTest2(String kadi) async {
-
-    
     String url = BASE_URL_V2 + '/workorder/reactive';
-
-
 
     try {
       Dio dio = Dio();
       final response = await dio.get(url,
           options: Options(
             headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
-
             responseType: ResponseType.json,
           ));
-            print('Access Test v2  : '+(response.data['result']).toString());
+      print('Access Test v2  : ' + (response.data['result']).toString());
 
-        return response.data['result'];
-
+      return response.data['result'];
     } on DioError catch (e) {
       return 'notsuccess';
     }
   }
-
-  
 
   //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
@@ -412,14 +390,13 @@ class APIRepository {
     }
   }
 
-    Future<httpSonucModel> getIssueOperations(
+  Future<httpSonucModel> getIssueOperations(
       {@required String? controller,
       @required String? xusercode,
       bool redirectLogin = false}) async {
-
     try {
       final response = await dio.get(controller.toString(),
-      options: Options(
+          options: Options(
             headers: {"xusercode": xusercode, "xtoken": TOKEN_V2},
           ));
 
@@ -495,15 +472,16 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getIssueOpenStatusCodes(
-      {@required String? controller,
-      bool redirectLogin = false}) async {
-
+      {@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 
       final data = jsonDecode(response.toString());
 
-      print('getIssueOpenStatusCodes + ' + data.toString() + '  :  ' + controller.toString());
+      print('getIssueOpenStatusCodes + ' +
+          data.toString() +
+          '  :  ' +
+          controller.toString());
 
       //print(data['records'] as List);
 
@@ -572,10 +550,8 @@ class APIRepository {
     }
   }
 
-    Future<httpSonucModel> getSpaceBfwByType(
-      {@required String? controller,
-      bool redirectLogin = false}) async {
-
+  Future<httpSonucModel> getSpaceBfwByType(
+      {@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 
@@ -983,89 +959,81 @@ class APIRepository {
     }
   }
 
-  //   Future<httpSonucModel> getActivitiesDetail(
-  //     {@required String? issueCode,
-  //     bool redirectLogin = false}) async {
+  Future<httpSonucModel> getAvailableActivities(
+      {@required String? controller, bool redirectLogin = false}) async {
+        
+    try {
+      //ReloadApiBase(StaticVariables.token);
+      final response = await dio.get(controller.toString());
 
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String deviceToken = prefs.getString('deviceId').toString();
+      final data = jsonDecode(response.toString());
 
-  //   String urlActivities = '${base_url_v1}wdaehtest!_$deviceToken&action=getAvailableActivities&issueCode=${issueCode!}&module=issue';
+      print('dataActivities' + data['records'].toString());
 
-  //   print('urlActivities ' + urlActivities! );
-
-  //   try {
-  //     //ReloadApiBase(StaticVariables.token);
-  //     final response = await dio.get(urlActivities);
-
-  //     final data = jsonDecode(response.toString());
-
-  //     print('dataActivities' + data['records'].toString());
-
-  //     if (response != null) {
-  //       return httpSonucModel(
-  //         records: data,
-  //         success: true,
-  //         message: 'Başarılı',
-  //       );
-  //     }
-  //     return httpSonucModel(
-  //       records: data,
-  //       success: false,
-  //       message: 'Hata',
-  //     );
-  //   } on DioError catch (e) {
-  //     if (DioErrorType.other == e.type) {
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: "Bağlantı Hatası",
-  //       );
-  //     }
-  //     if (DioErrorType.response == e.type) {
-  //       if (e.response!.statusCode == 401) {
-  //         return httpSonucModel(
-  //           success: false,
-  //           message: "Yetkisiz Erişim",
-  //           records: {},
-  //         );
-  //       }
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: "İstek hatası",
-  //       );
-  //     }
-  //     if (DioErrorType.connectTimeout == e.type) {
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: "Sistem zaman aşımına uğradı",
-  //       );
-  //     }
-  //     if (DioErrorType.sendTimeout == e.type) {
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: "Sistem zaman aşımına uğradı",
-  //       );
-  //     }
-  //     if (e.response != null) {
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: 'Hata',
-  //       );
-  //     } else {
-  //       //Hata dönüşü
-  //       return httpSonucModel(
-  //         records: {},
-  //         success: false,
-  //         message: e.message,
-  //       );
-  //     }
-  //   }
-  // }
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
 
   Future<dynamic> addIssueActivity(
       {@required String? issueCode,
@@ -1084,5 +1052,84 @@ class APIRepository {
     print('activity response : ' + response.toString());
 
     return response;
+  }
+
+  Future<httpSonucModel> takeOverIssue(
+      {@required String? controller, bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      //ReloadApiBase(StaticVariables.token);
+      final response = await dio.get(controller);
+
+      final data = jsonDecode(response.toString());
+
+      print(data.toString());
+
+      print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
   }
 }

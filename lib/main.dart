@@ -37,6 +37,7 @@ import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 //import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
+import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
@@ -131,9 +132,7 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
     ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
-
-  
-
+  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
 
 ];
 

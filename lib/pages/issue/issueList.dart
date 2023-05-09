@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/issue/issueSummary.dart';
+import 'package:win_kamu/pages/issue/issueTracingList.dart';
 import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
@@ -17,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/modalWidgets/filterBox.dart';
 import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
+import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
@@ -30,12 +32,8 @@ class IssueList extends StatefulWidget {
   static String issueList = 'IssueList';
 
   const IssueList(
-      {Key? key,
-      required this.pageController,
-      required this.moduleCode,
-      required this.moduleName})
+      {Key? key, required this.moduleCode, required this.moduleName})
       : super(key: key);
-  final PageController pageController;
   final String moduleCode;
   final String moduleName;
   @override
@@ -54,7 +52,8 @@ class _IssueListState extends State<IssueList> {
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.exampleListView.clear();
     exampleList.loadData(1, widget.moduleCode);
-    exampleList.initData(widget.pageController);
+    exampleList.setmoduleCode = widget.moduleCode;
+    exampleList.setmoduleName = widget.moduleName;
   }
 
   @override
@@ -74,6 +73,7 @@ class _IssueListState extends State<IssueList> {
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
     final exampleList = Provider.of<ListViewProvider>(context);
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -89,7 +89,11 @@ class _IssueListState extends State<IssueList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => IssueTracingList(
+                              pageController: mainViewProvide.pageController!)));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -97,7 +101,11 @@ class _IssueListState extends State<IssueList> {
               IconButton(
                   icon: Icon(Icons.tune, color: APPColors.Main.black),
                   onPressed: () {
-                showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) => IssueFilterModal(moduleCode: widget.moduleCode));
+                    showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (context) =>
+                            IssueFilterModal(moduleCode: widget.moduleCode));
                   }),
             ],
           ),
@@ -105,7 +113,9 @@ class _IssueListState extends State<IssueList> {
             children: [
               Column(
                 children: [
-                  FilterBox(moduleCode: widget.moduleCode,),
+                  FilterBox(
+                    moduleCode: widget.moduleCode,
+                  ),
                   listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
@@ -225,8 +235,7 @@ class _IssueListState extends State<IssueList> {
             listViewProvider.setisDataLoading = true;
             listViewProvider.exampleListView.clear();
             listViewProvider.setcurrentPage = 1;
-            listViewProvider.loadData(
-                listViewProvider.currentPage, 'OpenIssuesIsCustomer');
+            listViewProvider.loadData(listViewProvider.currentPage, 'issue');
           });
         },
         child: const Padding(

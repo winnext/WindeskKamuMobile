@@ -129,7 +129,6 @@ class DisplayPictureScreen extends StatelessWidget {
 
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: APPColors.Accent.blue,
@@ -157,8 +156,6 @@ class DisplayPictureScreen extends StatelessWidget {
                               
                       Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: ((context) =>  NewNotifBase(sayfa: sayfa,) )));
-                            
-                            
                           },
                           child: Text('Ekle'),
                         ),

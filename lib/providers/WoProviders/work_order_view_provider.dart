@@ -11,8 +11,6 @@ import 'package:win_kamu/utils/global_utils.dart';
 class WorkOrderProvider  extends ChangeNotifier {
     final apirepository = APIRepository();
 
-   
-
   final _mahal = TextEditingController();
   TextEditingController get mahal => _mahal;
   set setMahal(String mahal){
