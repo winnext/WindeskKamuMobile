@@ -131,12 +131,7 @@ setState(() {
             backgroundColor: Colors.white,
             title: Text('Test',style: TextStyle(color: Colors.black),),
             centerTitle: true,
-            leading: IconButton(
-                onPressed: () {
-                  
-                    
-                },
-                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
+            
             actions: [],
           ),
           body: Column(

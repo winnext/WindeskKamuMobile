@@ -72,7 +72,8 @@ class _IssueDetailState extends State<IssueDetail> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // TODO: implement exa
+
     detailViewProvider?.dispose();
     super.dispose();
   }

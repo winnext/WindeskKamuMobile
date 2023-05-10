@@ -77,6 +77,10 @@ dependencies:
   path_provider: ^2.0.14
   rxdart: ^0.27.7
   fluttertoast: ^8.2.1
+  flutter_phoenix: ^1.1.0
+  modal_bottom_sheet: ^2.1.2
+  never_behind_keyboard: ^1.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

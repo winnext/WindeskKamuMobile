@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';
 
-class HomeButton extends StatelessWidget {
+class SearchButton extends StatelessWidget {
   final String? text;
   final IconData? iconName;
   final navigator;
 
-  const HomeButton({this.iconName, this.navigator, this.text, super.key});
+  const SearchButton({this.iconName, this.navigator, this.text, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class HomeButton extends StatelessWidget {
               PersistentNavBarNavigator.pushNewScreen(
         context,
         screen: navigator,
-        withNavBar: true, // OPTIONAL VALUE. True by default.
+        withNavBar: false, // OPTIONAL VALUE. True by default.
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
         
     );
