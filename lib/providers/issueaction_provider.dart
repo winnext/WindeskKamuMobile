@@ -24,7 +24,16 @@ class IssueActionProvider extends ChangeNotifier {
   int _toplamKayitSayisi = 0;
   String _activityCode = '';
   String _activityName = '';
+  String _barcodeSpace = '';
+  String _additionalTimeInput = '';
+  String _assigneeccType = '';
+  String _minDescLength = '';
+  String _mobilePhoto = '';
 
+
+
+
+  
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
     _pageController = pageController;
@@ -82,6 +91,41 @@ class IssueActionProvider extends ChangeNotifier {
 
   set setactivityName(String activityName) {
     _activityName = activityName;
+    notifyListeners();
+  }
+
+  String get barcodeSpace => _barcodeSpace;
+
+  set setbarcodeSpace(String barcodeSpace) {
+    _barcodeSpace = barcodeSpace;
+    notifyListeners();
+  }
+
+  String get additionalTimeInput => _additionalTimeInput;
+
+  set setadditionalTimeInput(String additionalTimeInput) {
+    _additionalTimeInput = additionalTimeInput;
+    notifyListeners();
+  }
+
+  String get assigneeccType => _assigneeccType;
+
+  set setassigneeccType(String assigneeccType) {
+    _assigneeccType = assigneeccType;
+    notifyListeners();
+  }
+
+  String get minDescLength => _minDescLength;
+
+  set setminDescLength(String minDescLength) {
+    _minDescLength = minDescLength;
+    notifyListeners();
+  }
+
+  String get mobilePhoto => _mobilePhoto;
+
+  set setmobilePhoto(String mobilePhoto) {
+    _mobilePhoto = mobilePhoto;
     notifyListeners();
   }
 
@@ -180,4 +224,5 @@ class IssueActionProvider extends ChangeNotifier {
   void initData([PageController? pageController]) {
     _pageController = pageController;
   }
+
 }
