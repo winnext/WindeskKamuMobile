@@ -27,6 +27,7 @@ class IssueActionProvider extends ChangeNotifier {
   bool _isDataLoading = true;
   bool _loading = false;
   bool _isDataExist = false;
+  bool _cfgSuccess = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
   String _activityCode = '';
@@ -40,6 +41,7 @@ class IssueActionProvider extends ChangeNotifier {
   String _liveSelectGroupCode = '';
   String _liveSelectUserName = '';
   String _liveSelectUserCode = '';
+  String _cfgResult = '';
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -89,6 +91,13 @@ class IssueActionProvider extends ChangeNotifier {
 
   set setisDataExist(bool isDataExist) {
     _isDataExist = isDataExist;
+    notifyListeners();
+  }
+
+  bool get cfgSuccess => _cfgSuccess;
+
+  set setcfgSuccess(bool cfgSuccess) {
+    _cfgSuccess = cfgSuccess;
     notifyListeners();
   }
 
@@ -173,6 +182,13 @@ class IssueActionProvider extends ChangeNotifier {
 
   set setliveSelectUserCode(String liveSelectUserCode) {
     _liveSelectUserCode = liveSelectUserCode;
+    notifyListeners();
+  }
+
+  String get cfgResult => _cfgResult;
+
+  set setcfgResult(String cfgResult) {
+    _cfgResult = cfgResult;
     notifyListeners();
   }
 
@@ -345,6 +361,37 @@ class IssueActionProvider extends ChangeNotifier {
           _isDataLoading = false;
           notifyListeners();
         }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void changeCfg(cfgCode, issueCode) async {
+    _isDataLoading = true;
+    //final asg = issuecode;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String urlActivities =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=changeCfg&issuecode=${issueCode!}&cfgCode=${cfgCode}';
+
+    final result = await apirepository.changeCfg(controller: urlActivities);
+
+    final cfgSuccess = result.records['success'];
+    final cfgResult = result.records['result'];
+
+    print('dataCFG' + result.toString());
+
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 0), () {        
+        setcfgResult = cfgResult;
+        setcfgSuccess = cfgSuccess;
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+        _currentPage = 1;
       });
     } else {
       // baglantiHatasi(context, result.message);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
+import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
@@ -34,23 +35,30 @@ class _IssueActionButtonState extends State<IssueActionButton> {
   bool _cameraOn = false;
   bool _isNotDone = false;
 
-  // @override
-  // void initState() {
-  //   final listViewProvider =
-  //       Provider.of<ListViewProvider>(context, listen: false);
-  //   final issueActionProvider =
-  //       Provider.of<IssueActionProvider>(context, listen: false);
-  //   issueActionProvider.setactivityCode = '';
-  //   issueActionProvider.setactivityName = '';
-  //   listViewProvider.getIssueOperations(widget.code, widget.xusercode);
-  //   issueActionProvider.getAvailableActivities(widget.code);
-  //   issueActionProvider.getLiveSelectAsgGroups(widget.code);    
-  //   issueActionProvider
-  //       .getLiveSelectAsgUser(issueActionProvider.liveSelectGroupCode);
-  //   print('widget.code' + issueActionProvider.activityListView[0].ACTIVITYID.toString());
-  //   //issueActionProvider.getLiveSelectAsgGroups(widget.code);
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    // final listViewProvider =
+    //     Provider.of<ListViewProvider>(context, listen: false);
+    // final issueActionProvider =
+    //     Provider.of<IssueActionProvider>(context, listen: false);
+    // issueActionProvider.setactivityCode = '';
+    // issueActionProvider.setactivityName = '';
+    // listViewProvider.getIssueOperations(widget.code, widget.xusercode);
+    // issueActionProvider.getAvailableActivities(widget.code);
+    // issueActionProvider.getLiveSelectAsgGroups(widget.code);
+    // issueActionProvider
+    //     .getLiveSelectAsgUser(issueActionProvider.liveSelectGroupCode);
+    // print('widget.code' + issueActionProvider.activityListView[0].ACTIVITYID.toString());
+    // //issueActionProvider.getLiveSelectAsgGroups(widget.code);
+    // super.initState();
+    final newNotifProvider =
+        Provider.of<NewNotifProvider>(context, listen: false);
+    newNotifProvider.setlocCode = '';
+    newNotifProvider.setserialNumber= '';
+    newNotifProvider.setentityCode = '';
+    newNotifProvider.setrfid= '';
+
+  }
 
   @override
   void dispose() {

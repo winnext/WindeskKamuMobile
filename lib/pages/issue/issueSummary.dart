@@ -76,7 +76,7 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
             textAlign: TextAlign.center,
           ),
           backgroundColor: APPColors.Main.white,
-          toolbarHeight: size.height / 30,
+          toolbarHeight: size.height / 20,
           centerTitle: true,
           leading: IconButton(
             onPressed: () => {
@@ -89,7 +89,7 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
                     ),
                   ))
             },
-            icon: Icon(Icons.arrow_back_ios_new, color: APPColors.Main.black),
+            icon: Icon(Icons.arrow_back_rounded, color: APPColors.Main.black),
             alignment: Alignment.topCenter,
           ),
           bottom: const TabBar(

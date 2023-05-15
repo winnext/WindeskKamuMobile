@@ -82,6 +82,22 @@ void snackBar(BuildContext context, String message, String type) async {
         ),
         displayDuration: Duration(hours: 2));
   }
+  else if (type == 'true') {
+    showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.success(
+          message: message,
+        ),
+        displayDuration: Duration(seconds: 3));
+  }
+  else if (type == 'false') {
+    showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          message: message,
+        ),
+        displayDuration: Duration(seconds: 3));
+  }
 }
 
 Widget loadingBar(
