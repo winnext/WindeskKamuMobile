@@ -169,7 +169,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 1,
+                                                    flex: 3,
                                                     child: Text(
                                                       listElements.count
                                                           .toString(),

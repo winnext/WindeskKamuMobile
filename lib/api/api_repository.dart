@@ -5,7 +5,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/static_variables.dart';
+import 'package:win_kamu/pages/searchPage/mahalArama.dart';
 import 'package:win_kamu/utils/api_urls.dart';
+import 'package:win_kamu/utils/global_utils.dart';
 import '../models/detail_response.model.dart';
 import '../models/http_response.model.dart';
 import '../models/tracingList_response.model.dart';
@@ -66,6 +68,187 @@ class APIRepository {
       },
     ));
   }
+
+  Future cikis(String kadi ) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+
+    String cikis_url = base_url_v1+'wdishliveSqAS!_' +
+        deviceToken +'&action=logout&username='+kadi;
+
+    try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: cikis_url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*1000, // 60 seconds
+          receiveTimeout: 3*1000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(cikis_url);
+          print(response);
+          if (response.data['result'] == 'success') {
+            prefs.remove('prefsUserName');
+            return true;
+          }else{
+            return false;
+
+          }
+
+      
+
+    }on DioError catch (e){
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+  }
+
+    Future mahalAramaKampus( ) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+
+    String mahalAramaKampusUrl= base_url_v1+'wdishliveSqAS!_' +
+        deviceToken +'&action=getBuildings';
+
+    try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: mahalAramaKampusUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*1000, // 60 seconds
+          receiveTimeout: 3*1000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(mahalAramaKampusUrl);
+          //print(response.data['records'][0]);∂
+          if (response.data['result'] == 'success') {
+                        return response.data['records'];
+          }else{
+            return false;
+
+          }
+
+      
+
+    }on DioError catch (e){
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+  }
+
+   Future mahalAramaBina(String buildingCode ) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+
+    String mahalAramaBinaUrl= base_url_v1+'wdishliveSqAS!_' +
+        deviceToken +'&action=getFloors&buildingCode='+buildingCode;
+
+    try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: mahalAramaBinaUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*1000, // 60 seconds
+          receiveTimeout: 3*1000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(mahalAramaBinaUrl);
+          //print(response.data['records'][0]);∂
+          if (response.data['result'] == 'success') {
+                        return response.data['records'];
+          }else{
+            return false;
+
+          }
+
+      
+
+    }on DioError catch (e){
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+  }
+
+
+  Future mahalAramaKat(String floorCode ) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+
+    String mahalAramaBinaUrl= base_url_v1+'wdishliveSqAS!_' +
+        deviceToken +'&action=getBlocks&floorCode='+floorCode;
+
+    try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: mahalAramaBinaUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*1000, // 60 seconds
+          receiveTimeout: 3*1000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(mahalAramaBinaUrl);
+          //print(response.data['records']);
+          if (response.data['result'] == 'success') {
+                        return response.data['records'];
+          }else{
+            return false;
+
+          }
+
+      
+
+    }on DioError catch (e){
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+  }
+
+
+  Future mahalAramaKanat(String blockCode ) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+
+    String mahalAramaBinaUrl= base_url_v1+'wdishliveSqAS!_' +
+        deviceToken +'&action=getSpaces&blockCode='+blockCode;
+
+    try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: mahalAramaBinaUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*1000, // 60 seconds
+          receiveTimeout: 3*1000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(mahalAramaBinaUrl);
+          if (response.data['result'] == 'success') {
+                        return response.data['records'];
+          }else{
+            return false;
+
+          }
+
+      
+
+    }on DioError catch (e){
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+  }
+
+
+
+
 
   Future login(String kadi, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -1132,4 +1315,160 @@ class APIRepository {
       }
     }
   }
+
+    Future<httpSonucModel> getLiveSelectAsgGroups(
+      {@required String? controller, bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      final response = await dio.get(controller);
+
+      final data = jsonDecode(response.toString());
+
+      print(data.toString());
+
+      print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+    Future<httpSonucModel> getLiveSelectAsgUser(
+      {@required String? controller, bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      final response = await dio.get(controller);
+
+      final data = jsonDecode(response.toString());
+
+      print(data.toString());
+
+      print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+  
 }

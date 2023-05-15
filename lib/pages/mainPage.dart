@@ -11,6 +11,7 @@ import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
 import 'package:win_kamu/pages/plannedRequests/plannedRequestsDetail.dart';
+import 'package:win_kamu/pages/searchPage/searchPage.dart';
 
 import '../providers/main_page_view_provider.dart';
 import '../utils/themes.dart';
@@ -77,7 +78,7 @@ class _MainPageState extends State<MainPage> {
           children: <Widget>[
             MyHomePage(),
             ListScreen(pageController: mainViewProvide.pageController!),
-            CloseRequestListScreen(pageController: mainViewProvide.pageController!),
+            NewNotif(),
             NewNotif()
           ],
         ),
@@ -105,7 +106,7 @@ class _MainPageState extends State<MainPage> {
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Kapatma Onayı',
+              title: 'Arama',
               icon: Icon(Icons.content_paste_off),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),

@@ -122,6 +122,53 @@ class _DetailListWidgetState extends State<DetailListWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print('object' + widget.code.toString()
+      // widget.targetFDate.toString()+
+      // widget.targetRDate.toString()+
+      // widget.space.toString() +
+      // widget.taskNo.toString() +
+      // widget.description.toString() +
+      // widget.sumdesc1.toString() +
+      // widget.press.toString() +
+      // widget.importanceLevelColor.toString() +
+      // widget.statusName.toString() +
+      // widget.location.toString() +
+      // widget.idate.toString() +
+      // widget.statusCode.toString() +
+      // widget.planedDate.toString() +
+      //  widget.onPressed.toString() +
+      // widget.respondedIDate.toString() +
+      // widget.fixedTimer.toString() +
+      // widget.responseTimer.toString() +
+      // widget.fixedIDate.toString() +
+      // widget.timeInfoNow.toString() +
+      // widget.ani.toString() +
+      // widget.assigneName.toString() +
+      // widget.assignmentGroup.toString() +
+      // widget.assignmentGroupName.toString() +
+      // widget.cat1.toString() +
+      // widget.cmdb.toString() +
+      // widget.contactCode.toString() +
+      // widget.contactName.toString() +
+      // widget.hds.toString() +
+      // widget.hys.toString() +
+      // widget.id.toString() +
+      // widget.locName.toString() +
+      // widget.locTree.toString() +
+      // widget.locTree2.toString() +
+      // widget.parentStatus.toString() +
+      // widget.plannedDate.toString() +
+      // widget.plannedDesc.toString() +
+      // widget.relatedCode.toString() +
+      // widget.slaCode.toString() +
+      // widget.title.toString() +
+      // widget.wrondDirect.toString() +
+      // widget.fixTimer.toString() +
+      // widget.fixedDate.toString() +
+      // widget.respondedDate.toString() +
+      // widget.respondedTimer.toString() +
+      // widget.xusercode.toString()
+      );
     return Column(
       children: [
         Container(
@@ -167,6 +214,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                               MainAxisAlignment.spaceAround,
                                           children: [
                                             Text('Hedef Yanıtlama Tarihi'),
+                                            widget.targetRDate == '' ? Text('') 
+                                            :
                                             Text(
                                               timeRecover(widget.targetRDate)
                                                   .toString(),
@@ -176,7 +225,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                                   widget.fixTimer.toString(),
                                                   widget.targetFDate.toString(),
                                                   widget.fixedDate.toString()),
-                                            ),
+                                            )
                                           ],
                                         ),
                                       )
@@ -192,6 +241,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                               MainAxisAlignment.spaceAround,
                                           children: [
                                             Text('Yanıtlama Tarihi'),
+                                            widget.respondedDate == '' ? Text('') :
                                             Text(
                                               timeRecover(widget.respondedDate)
                                                   .toString(),
@@ -219,6 +269,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Text('Hedef Düzeltme Tarihi'),
+                                      widget.targetFDate == '' ? Text('') :
                                       Text(
                                         timeRecover(widget.targetFDate)
                                             .toString(),
@@ -241,6 +292,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Text('Düzeltme Tarihi'),
+                                                                            widget.fixedDate == '' ? Text('') :
+
                                       Text(
                                         timeRecover(widget.fixedDate)
                                             .toString(),
@@ -263,7 +316,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          widget.code.toString(),
+                          widget.code != '' ? widget.code.toString() : '',
                           style: TextStyle(
                             color: APPColors.Secondary.black,
                             fontSize: 15,
@@ -275,7 +328,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          widget.idate.toString(),
+                          widget.idate != '' ? widget.idate.toString() : '',
                           style: TextStyle(
                             color: APPColors.Secondary.black,
                             fontSize: 14,
@@ -289,7 +342,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          widget.statusName.toString(),
+                          widget.statusName != '' ? widget.statusName.toString() : '',
                           style: TextStyle(
                             color: APPColors.Secondary.black,
                             fontSize: 14,
@@ -302,8 +355,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                   Divider(
                     height: 15,
                   ),
-                  widget.description.toString() != ""
-                      ? Row(
+                   Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
@@ -317,7 +369,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.description.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.description.toString(),
@@ -326,15 +379,15 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı')
                           ],
-                        )
-                      : Container(),
+                        ),
+
                   Divider(
                     height: 15,
                   ),
-                  widget.contactName.toString() != ""
-                      ? Row(
+                  Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
@@ -348,7 +401,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.contactName.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.contactName.toString(),
@@ -357,15 +411,16 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Vaka Sahibi bilgisi bulunamadı')
+                            ,
                           ],
-                        )
-                      : Container(),
+                        ),
+
                   Divider(
                     height: 15,
                   ),
-                  widget.locName.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -380,7 +435,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                                                        widget.locName.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.locName.toString(),
@@ -389,15 +445,14 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı')
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.locName.toString() != ""
-                      ? Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -412,7 +467,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.locTree.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.locTree.toString(),
@@ -421,15 +477,14 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.title.toString() != ""
-                      ? Row(
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -444,7 +499,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.title.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.title.toString(),
@@ -453,15 +509,15 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
+
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.cmdb.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -476,24 +532,25 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            
+                            widget.cmdb.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
-                                widget.title.toString(),
+                                widget.cmdb.toString(),
                                 style: TextStyle(
                                     color: APPColors.Secondary.black,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.idate.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -508,7 +565,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                        widget.idate.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.idate.toString(),
@@ -517,15 +575,14 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.ani.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -540,7 +597,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.ani.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 widget.ani.toString(),
@@ -549,15 +607,15 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
+                            
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.targetRDate.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -572,7 +630,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.targetRDate.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 timeRecover(widget.targetRDate).toString(),
@@ -581,15 +640,15 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
+                            
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.targetFDate.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -604,7 +663,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            widget.targetFDate.toString() != ""
+                            ? Expanded(
                               flex: 3,
                               child: Text(
                                 timeRecover(widget.targetFDate).toString(),
@@ -613,22 +673,21 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ),
+                            ) : 
+                            Text('Açıklama bilgisi bulunamadı'),
                           ],
-                        )
-                      : Container(),
+                        ),
                   Divider(
                     height: 15,
                   ),
-                  widget.hys.toString() != ""
-                      ? Row(
+                  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               flex: 2,
                               child: Text(
-                                'HYS-48 saat ${widget.hys.toString()}',
+                                'HYS-48 saat ${widget.hys.toString() != '' ? {widget.hys.toString()} : ''}',
                                 style: TextStyle(
                                     color: APPColors.Secondary.black,
                                     fontSize: 14,
@@ -638,7 +697,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                'HDS-48 saat ${widget.hds.toString()}',
+                                'HDS-48 saat ${widget.hds.toString() != '' ? {widget.hds.toString()} : ''}',
                                 style: TextStyle(
                                     color: APPColors.Secondary.black,
                                     fontSize: 14,
@@ -646,8 +705,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                               ),
                             ),
                           ],
-                        )
-                      : Container(),
+                        ),
                 ],
               ),
             ),
@@ -659,6 +717,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
         ),
         FloatingActionButton(
           onPressed: () {
+            
             showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) => IssueActionButton(code: widget.code, xusercode: widget.xusercode));
           },
           backgroundColor: APPColors.Modal.red,

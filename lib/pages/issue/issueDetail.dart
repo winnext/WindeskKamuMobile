@@ -67,12 +67,14 @@ class _IssueDetailState extends State<IssueDetail> {
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
     detailViewProvider.loadIssueSummary(
         detailViewProvider.issueCode, mainPageViewProvider.kadi);
+
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // TODO: implement exa
+
     detailViewProvider?.dispose();
     super.dispose();
   }
@@ -141,47 +143,50 @@ class _IssueDetailState extends State<IssueDetail> {
                                       child: Column(
                                         children: [
                                           DetailListWidget(
-                                            ani: detailElements?.ANI,
+                                            ani: detailElements?.ANI == null ? '' : detailElements?.ANI.toString(),
                                             description:
-                                                detailElements?.DESCRIPTION,
+                                                detailElements?.DESCRIPTION == null ? '' : detailElements?.DESCRIPTION.toString(),
                                             targetFDate: detailElements
                                                 ?.TARGET_FDATE
-                                                .toString(),
+                                                .toString() == null ? '' : detailElements?.TARGET_FDATE.toString(),
                                             targetRDate: detailElements
+                                                ?.TARGET_RDATE
+                                                .toString()== null ? '' : detailElements
                                                 ?.TARGET_RDATE
                                                 .toString(),
                                             statusName:
-                                                detailElements?.STATUSNAME,
+                                                detailElements?.STATUSNAME== null ? '' : detailElements?.STATUSNAME.toString(),
                                             assigneName:
-                                                detailElements?.ASSIGNEENAME,
+                                                detailElements?.ASSIGNEENAME== null ? '' : detailElements?.ASSIGNEENAME.toString(),
                                             assignmentGroup:
-                                                detailElements?.ASSIGNMENTGROUP,
+                                                detailElements?.ASSIGNMENTGROUP== null ? '' : detailElements?.ASSIGNMENTGROUP.toString(),
                                             assignmentGroupName: detailElements
-                                                ?.ASSIGNMENTGROUPNAME,
-                                            cat1: detailElements?.CAT1,
-                                            cmdb: detailElements?.CMDB,
-                                            code: detailElements?.CODE,
+                                                ?.ASSIGNMENTGROUPNAME== null ? '' : detailElements
+                                                ?.ASSIGNMENTGROUPNAME.toString(),
+                                            cat1: detailElements?.CAT1== null ? '' : detailElements?.CAT1.toString(),
+                                            cmdb: detailElements?.CMDB== null ? '' : detailElements?.CMDB.toString(),
+                                            code: detailElements?.CODE== null ? '' : detailElements?.CODE.toString(),
                                             contactCode:
-                                                detailElements?.CONTACTCODE,
+                                                detailElements?.CONTACTCODE== null ? '' : detailElements?.CONTACTCODE.toString(),
                                             contactName:
-                                                detailElements?.CONTACTNAME,
-                                            idate: detailElements?.IDATE,
-                                            locName: detailElements?.LOCNAME,
-                                            locTree: detailElements?.LOCTREE,
-                                            locTree2: detailElements?.LOCTREE2,
-                                            sumdesc1: detailElements?.SUMDESC1,
+                                                detailElements?.CONTACTNAME== null ? '' : detailElements?.CONTACTNAME.toString(),
+                                            idate: detailElements?.IDATE== null ? '' : detailElements?.IDATE.toString(),
+                                            locName: detailElements?.LOCNAME== null ? '' : detailElements?.LOCNAME.toString(),
+                                            locTree: detailElements?.LOCTREE== null ? '' : detailElements?.LOCTREE.toString(),
+                                            locTree2: detailElements?.LOCTREE2== null ? '' : detailElements?.LOCTREE2.toString(),
+                                            sumdesc1: detailElements?.SUMDESC1== null ? '' : detailElements?.SUMDESC1.toString(),
                                             taskNo:
-                                                detailElements?.CODE.toString(),
-                                            title: detailElements?.TITLE,
+                                                detailElements?.CODE.toString()== null ? '' : detailElements?.CODE.toString(),
+                                            title: detailElements?.TITLE== null ? '' : detailElements?.TITLE.toString(),
                                             onPressed: (code) {
                                               print('tiklandi' + code);
                                             },
-                                            fixTimer: issueSummary?.FIX_TIMER,
-                                            fixedDate: issueSummary?.FIXED_DATE,
+                                            fixTimer: issueSummary?.FIX_TIMER== null ? '' : issueSummary?.FIX_TIMER.toString(),
+                                            fixedDate: issueSummary?.FIXED_DATE== null ? '' : issueSummary?.FIXED_DATE.toString(),
                                             respondedDate:
-                                                issueSummary?.RESPONDED_DATE,
+                                                issueSummary?.RESPONDED_DATE== null ? '' : issueSummary?.RESPONDED_DATE.toString(),
                                             respondedTimer:
-                                                issueSummary?.RESPONDED_TIMER,
+                                                issueSummary?.RESPONDED_TIMER== null ? '' : issueSummary?.RESPONDED_TIMER.toString(),
                                             xusercode: 'sgnm1040',
                                             // extraTitle:
                                             //     detailElements.STATUSCODE.toString(),

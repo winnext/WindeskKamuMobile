@@ -1,19 +1,28 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
+import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
 import 'package:win_kamu/pages/login/login.dart';
+import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/notiService.dart';
 import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
+import 'package:win_kamu/utils/global_utils.dart';
+import '../api/api_repository.dart';
+import '../providers/main_page_view_provider.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
@@ -160,7 +169,10 @@ FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   
   @override
   Widget build(BuildContext context) {
+final apirepository = APIRepository();
 
+            final mainViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
 
    
  
@@ -183,7 +195,31 @@ FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
                 color: APPColors.Main.black,
               ),
               tooltip: 'Exit',
-              onPressed: () {},
+              onPressed: () async{
+                var cikis_result = await apirepository.cikis(mainViewProvider.kadi);
+                try {
+                  if(cikis_result){
+                  snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
+                  
+
+                   Future.delayed(const Duration(seconds: 1)).whenComplete(() {
+                                        Phoenix.rebirth(context);
+
+
+                   });
+
+                  
+
+                }else{
+
+
+                } 
+                } catch (e) {
+                  snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
+                }
+                
+                
+              },
             ),
           ],
           centerTitle: true,

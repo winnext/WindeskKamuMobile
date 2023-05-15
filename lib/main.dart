@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -43,6 +44,7 @@ import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/providers/workorder_provider.dart';
+import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
@@ -114,10 +116,13 @@ final InitializationSettings initializationSettings = InitializationSettings(
   onNotifications.stream.listen(onClickedNotification);
   
   runApp(
-    MultiProvider(
+    Phoenix(
+      child: MultiProvider(
       providers: providers,
       child: MyApp(),
     ),
+   
+  )
   );
 }
 
@@ -133,6 +138,9 @@ List<SingleChildWidget> providers = [
     ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
+        ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
+
+
 
 ];
 
@@ -193,6 +201,7 @@ class MyApp extends StatelessWidget {
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
         WoTracingList.tracingList: (context) => WoTracingList(),
+        
         
       },
     );

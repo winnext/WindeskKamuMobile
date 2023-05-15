@@ -74,6 +74,7 @@ class _IssueListState extends State<IssueList> {
     int index = listViewProvider.currentPage;
     final exampleList = Provider.of<ListViewProvider>(context);
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    final ISSUECODE = '';
 
     return WillPopScope(
       onWillPop: () async {
@@ -93,7 +94,8 @@ class _IssueListState extends State<IssueList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => IssueTracingList(
-                              pageController: mainViewProvide.pageController!)));
+                              pageController:
+                                  mainViewProvide.pageController!)));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -136,6 +138,7 @@ class _IssueListState extends State<IssueList> {
                                     timeRecover(listElements.TARGET_FDATE);
                                 final TARGET_RDATE =
                                     timeRecover(listElements.TARGET_RDATE);
+                                final ISSUECODE = listElements.CODE.toString();
                                 final time = DateTime.now();
                                 final String timeNow = DateFormat('yMMddhhmmss')
                                     .format(time)
@@ -188,6 +191,8 @@ class _IssueListState extends State<IssueList> {
                                           timeInfoNow: timeNow,
                                           isIcon: true,
                                           onPressed: (code) {
+                                            detailViewProvider.setIssueCode =
+                                                '';
                                             print('tiklandi' + code);
                                             detailViewProvider.setIssueCode =
                                                 code;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
+import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/detail_view_provider.dart';
@@ -10,7 +11,7 @@ import '../../providers/issueaction_provider.dart';
 import '../../utils/themes.dart';
 import '../dialogWidgets/customSimpleDialog.dart';
 import '../issueWidgets/addActivityScreen.dart';
-import '../issueWidgets/takeOverIssue.dart';
+import '../issueWidgets/takeOverIssueScreen.dart';
 
 class IssueActionButton extends StatefulWidget {
   String? code;
@@ -33,18 +34,23 @@ class _IssueActionButtonState extends State<IssueActionButton> {
   bool _cameraOn = false;
   bool _isNotDone = false;
 
-  @override
-  void initState() {
-    final listViewProvider =
-        Provider.of<ListViewProvider>(context, listen: false);
-    final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: false);
-    listViewProvider.issueOperationList.clear();
-    listViewProvider.getIssueOperations(widget.code, widget.xusercode);
-    print('dataActivitiesxx' + listViewProvider.issueOperationList.toString());
-    issueActionProvider.getAvailableActivities(widget.code);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   final listViewProvider =
+  //       Provider.of<ListViewProvider>(context, listen: false);
+  //   final issueActionProvider =
+  //       Provider.of<IssueActionProvider>(context, listen: false);
+  //   issueActionProvider.setactivityCode = '';
+  //   issueActionProvider.setactivityName = '';
+  //   listViewProvider.getIssueOperations(widget.code, widget.xusercode);
+  //   issueActionProvider.getAvailableActivities(widget.code);
+  //   issueActionProvider.getLiveSelectAsgGroups(widget.code);    
+  //   issueActionProvider
+  //       .getLiveSelectAsgUser(issueActionProvider.liveSelectGroupCode);
+  //   print('widget.code' + issueActionProvider.activityListView[0].ACTIVITYID.toString());
+  //   //issueActionProvider.getLiveSelectAsgGroups(widget.code);
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
@@ -79,272 +85,218 @@ class _IssueActionButtonState extends State<IssueActionButton> {
     final operations = listViewProvider.issueOperationList.toString();
 
     return Align(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       child: SingleChildScrollView(
         child: Container(
           color: Colors.transparent,
           child: Column(
             children: [
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Expanded(
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(4.0),
-              //         child: ElevatedButton(
-              //             style: ElevatedButton.styleFrom(
-              //                 side: BorderSide(color: APPColors.Main.grey),
-              //                 shadowColor: APPColors.Main.black,
-              //                 elevation: 10,
-              //                 backgroundColor: _isDone
-              //                     ? APPColors.Main.white
-              //                     : APPColors.Modal.blue),
-              //             child: Text(
-              //               'Talep Yerine Getirildi',
-              //               style: TextStyle(
-              //                   color: _isDone
-              //                       ? APPColors.Main.black
-              //                       : APPColors.Modal.white),
-              //             ),
-              //             onPressed: () => setState(() => {
-              //                   _isNotDone = false,
-              //                   _isDone = !_isDone,
-              //                   _activityCode = 'AR00000001187'
-              //                 })
-              //             // Navigator.pop(
-              //             //     context),
-              //             ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(4.0),
-              //         child: ElevatedButton(
-              //             style: ElevatedButton.styleFrom(
-              //                 side: BorderSide(color: APPColors.Main.grey),
-              //                 shadowColor: APPColors.Main.black,
-              //                 elevation: 10,
-              //                 backgroundColor: _isNotDone
-              //                     ? APPColors.Main.white
-              //                     : APPColors.Modal.blue),
-              //             child: Text(
-              //               'Talep Yerine Getirilmedi',
-              //               style: TextStyle(
-              //                   color: _isNotDone
-              //                       ? APPColors.Main.black
-              //                       : APPColors.Main.white),
-              //             ),
-              //             onPressed: () => setState(() => {
-              //                   _isDone = false,
-              //                   _isNotDone = !_isNotDone,
-              //                   _activityCode = 'AR00000001336'
-              //                 })
-      
-              //             // Navigator.pop(
-              //             //     context),
-              //             ),
-              //       ),
-              //     ),
-      
-              //   ],
-              // ),
               _isPhoto ? _showModal(context) : Container(),
               listViewProvider.issueOperationList[0].IS_PHOTO == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isPhoto
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Fotoğraf Ekle',
-                                style: TextStyle(
-                                  color: _isPhoto
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isPhoto
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Fotoğraf Ekle',
+                                  style: TextStyle(
+                                    color: _isPhoto
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isPhoto
-                                  ? Icons.arrow_drop_up_rounded
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isPhoto
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isPhoto = !_isPhoto,
-                                _isTakeOver = false,
-                                _isActivity = false,
-                                _isChangeCFG = false,
-                                _isSparepart = false,
-                                _isPlannedCancel = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isPhoto
+                                    ? Icons.arrow_drop_up_rounded
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isPhoto
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isPhoto = !_isPhoto,
+                                  _isTakeOver = false,
+                                  _isActivity = false,
+                                  _isChangeCFG = false,
+                                  _isSparepart = false,
+                                  _isPlannedCancel = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_ACTIVITY == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isActivity
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Aktivite Ekle',
-                                style: TextStyle(
-                                  color: _isActivity
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isActivity
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Aktivite Ekle',
+                                  style: TextStyle(
+                                    color: _isActivity
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isActivity
-                                  ? Icons.arrow_drop_up_rounded
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isActivity
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isActivity = !_isActivity,
-                                _isTakeOver = false,
-                                _isPhoto = false,
-                                _isChangeCFG = false,
-                                _isSparepart = false,
-                                _isPlannedCancel = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isActivity
+                                    ? Icons.arrow_drop_up_rounded
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isActivity
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isActivity = !_isActivity,
+                                  _isTakeOver = false,
+                                  _isPhoto = false,
+                                  _isChangeCFG = false,
+                                  _isSparepart = false,
+                                  _isPlannedCancel = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
                   : Container(),
-              _isActivity ? AddActivityScreen(issueCode: widget.code,) : Container(),
+              _isActivity
+                  ? AddActivityScreen(
+                      issueCode: widget.code,
+                    )
+                  : Container(),
               listViewProvider.issueOperationList[0].IS_CHANGE_CFG == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isChangeCFG
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Varlık Değiştir',
-                                style: TextStyle(
-                                  color: _isChangeCFG
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isChangeCFG
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Varlık Değiştir',
+                                  style: TextStyle(
+                                    color: _isChangeCFG
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isChangeCFG
-                                  ? Icons.arrow_drop_up_rounded
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isChangeCFG
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isChangeCFG = !_isChangeCFG,
-                                _isTakeOver = false,
-                                _isActivity = false,
-                                _isPhoto = false,
-                                _isSparepart = false,
-                                _isPlannedCancel = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isChangeCFG
+                                    ? Icons.arrow_drop_up_rounded
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isChangeCFG
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isChangeCFG = !_isChangeCFG,
+                                  _isTakeOver = false,
+                                  _isActivity = false,
+                                  _isPhoto = false,
+                                  _isSparepart = false,
+                                  _isPlannedCancel = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
+                  : Container(),
+              _isChangeCFG
+                  ? ChangeCfgScreen(
+                      issueCode: widget.code,
+                    )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_TAKE_OVER == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isTakeOver
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Üzerine Al',
-                                style: TextStyle(
-                                  color: _isTakeOver
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isTakeOver
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Üzerine Al',
+                                  style: TextStyle(
+                                    color: _isTakeOver
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isTakeOver
-                                  ? Icons.handshake_outlined
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isTakeOver
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isTakeOver = !_isTakeOver,
-                                _isPhoto = false,
-                                _isActivity = false,
-                                _isChangeCFG = false,
-                                _isSparepart = false,
-                                _isPlannedCancel = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isTakeOver
+                                    ? Icons.handshake_outlined
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isTakeOver
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isTakeOver = !_isTakeOver,
+                                  _isPhoto = false,
+                                  _isActivity = false,
+                                  _isChangeCFG = false,
+                                  _isSparepart = false,
+                                  _isPlannedCancel = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
                   : Container(),
               _isTakeOver
                   ? TakeOverIssue(
@@ -363,101 +315,101 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                   : Container(),
               listViewProvider.issueOperationList[0].IS_PLANNED_CANCEL == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isPlannedCancel
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Randevu İptal',
-                                style: TextStyle(
-                                  color: _isPlannedCancel
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isPlannedCancel
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Randevu İptal',
+                                  style: TextStyle(
+                                    color: _isPlannedCancel
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isPlannedCancel
-                                  ? Icons.arrow_drop_up_rounded
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isPlannedCancel
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isPlannedCancel = !_isPlannedCancel,
-                                _isTakeOver = false,
-                                _isActivity = false,
-                                _isChangeCFG = false,
-                                _isSparepart = false,
-                                _isPhoto = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isPlannedCancel
+                                    ? Icons.arrow_drop_up_rounded
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isPlannedCancel
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isPlannedCancel = !_isPlannedCancel,
+                                  _isTakeOver = false,
+                                  _isActivity = false,
+                                  _isChangeCFG = false,
+                                  _isSparepart = false,
+                                  _isPhoto = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_SPAREPART == true
                   ? Container(
-                    width: size.width / 1.09,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: APPColors.Main.black,
-                            elevation: 10,
-                            backgroundColor: _isSparepart
-                                ? APPColors.Main.white
-                                : APPColors.Modal.blue),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Yedek Parça Gerekiyor',
-                                style: TextStyle(
-                                  color: _isSparepart
-                                      ? APPColors.Main.black
-                                      : APPColors.Main.white,
+                      width: size.width / 1.09,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shadowColor: APPColors.Main.black,
+                              elevation: 10,
+                              backgroundColor: _isSparepart
+                                  ? APPColors.Main.white
+                                  : APPColors.Modal.blue),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Yedek Parça Gerekiyor',
+                                  style: TextStyle(
+                                    color: _isSparepart
+                                        ? APPColors.Main.black
+                                        : APPColors.Main.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              _isSparepart
-                                  ? Icons.arrow_drop_up_rounded
-                                  : Icons.arrow_drop_down_rounded,
-                              color: _isSparepart
-                                  ? APPColors.Main.black
-                                  : APPColors.Main.white,
-                            )
-                          ],
-                        ),
-                        onPressed: () async {
-                          setState(() => {
-                                _isSparepart = !_isSparepart,
-                                _isTakeOver = false,
-                                _isActivity = false,
-                                _isChangeCFG = false,
-                                _isPhoto = false,
-                                _isPlannedCancel = false,
-                              });
-                        }
-                        // Navigator.pop(
-                        //     context),
-                        ),
-                  )
+                              Icon(
+                                _isSparepart
+                                    ? Icons.arrow_drop_up_rounded
+                                    : Icons.arrow_drop_down_rounded,
+                                color: _isSparepart
+                                    ? APPColors.Main.black
+                                    : APPColors.Main.white,
+                              )
+                            ],
+                          ),
+                          onPressed: () async {
+                            setState(() => {
+                                  _isSparepart = !_isSparepart,
+                                  _isTakeOver = false,
+                                  _isActivity = false,
+                                  _isChangeCFG = false,
+                                  _isPhoto = false,
+                                  _isPlannedCancel = false,
+                                });
+                          }
+                          // Navigator.pop(
+                          //     context),
+                          ),
+                    )
                   : Container(),
             ],
           ),

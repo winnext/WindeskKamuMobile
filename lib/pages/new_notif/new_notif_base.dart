@@ -147,7 +147,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                             IconButton(
                               icon: const Icon(Icons.barcode_reader),
                               onPressed: () {
-                                nProvider.scanQR();
+                                nProvider.scanQR('mahal');
                               },
                             ),
                             ),
@@ -157,7 +157,7 @@ class _NewNotifBaseState extends State<NewNotifBase> {
                             IconButton(
                               icon: const Icon(Icons.qr_code),
                               onPressed: () {
-                                nProvider.scanQR();
+                                nProvider.scanQR('mahal');
 
                               },
                             ),

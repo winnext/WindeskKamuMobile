@@ -2,15 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';
+import '../../widgets/buttonWidgets/homeButtons.dart';
 import '../WorkOrder/WoCreate.dart';
 import '../closeRequestsWaitApprove/routeRequests.dart';
+import '../complaintRequests/routeRequests.dart';
 import '../homePage.dart';
 import '../internet_connection/internet_connection.dart';
+import '../issue/routeIssue.dart';
 import '../new_notif/new_notif.dart';
 import '../openRequests/RouteRequests.dart';
+import '../searchPage/searchPage.dart';
 import '../test/test.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -45,7 +50,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         return [
           MyHomePage(),
           WoCreate(),
-          CloseRequestAwaitApproval(),
+          searchPage(),
           Test()
           
         ];
@@ -69,6 +74,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 title: ("Arama"),
                 activeColorPrimary: CupertinoColors.activeBlue,
                 inactiveColorPrimary: APPColors.Main.grey,
+                
+               
             ),
              PersistentBottomNavBarItem(
                 icon: Icon(Icons.wifi),

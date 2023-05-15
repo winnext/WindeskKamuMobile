@@ -155,6 +155,7 @@ class _IssueActivitiesState extends State<IssueActivities> {
           final mainPageViewProvider =
           Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
+              isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) => IssueActionButton(

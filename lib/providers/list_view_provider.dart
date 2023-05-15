@@ -159,7 +159,7 @@ class ListViewProvider extends ChangeNotifier {
     _moduleCode = moduleCode;
     notifyListeners();
   }
-  
+
   String get moduleName => _moduleName;
   set setmoduleName(String moduleName) {
     _moduleName = moduleName;
@@ -407,6 +407,7 @@ class ListViewProvider extends ChangeNotifier {
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
+        issueOperationList.clear();
         var responseData =
             IssueOperationsModal.fromJson(result.records['records']);
         issueOperationList.add(responseData);
