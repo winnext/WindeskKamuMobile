@@ -111,10 +111,10 @@ class _IssueDetailState extends State<IssueDetail> {
                             IssueSummaryModal? issueSummary =
                                 detailViewProvider?.issueSummary[0];
 
-                            final TARGET_FDATE =
-                                timeRecover(detailElements?.TARGET_FDATE);
-                            final TARGET_RDATE =
-                                timeRecover(detailElements?.TARGET_RDATE);
+                            final TARGET_FDATE = detailElements?.TARGET_FDATE != null ? 
+                                timeRecover(detailElements?.TARGET_FDATE) : '';
+                            final TARGET_RDATE = detailElements?.TARGET_RDATE != null ?
+                                timeRecover(detailElements?.TARGET_RDATE) : '';
 
                             return Column(
                               children: [
@@ -148,10 +148,10 @@ class _IssueDetailState extends State<IssueDetail> {
                                                 detailElements?.DESCRIPTION == null ? '' : detailElements?.DESCRIPTION.toString(),
                                             targetFDate: detailElements
                                                 ?.TARGET_FDATE
-                                                .toString() == null ? '' : detailElements?.TARGET_FDATE.toString(),
+                                                 == null ? '' : detailElements?.TARGET_FDATE.toString(),
                                             targetRDate: detailElements
                                                 ?.TARGET_RDATE
-                                                .toString()== null ? '' : detailElements
+                                                == null ? '' : detailElements
                                                 ?.TARGET_RDATE
                                                 .toString(),
                                             statusName:

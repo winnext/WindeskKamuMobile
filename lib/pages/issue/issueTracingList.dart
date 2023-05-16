@@ -48,13 +48,11 @@ class _IssueTracingListState extends State<IssueTracingList> {
         Provider.of<MainPageViewProvider>(context, listen: false);
     exampleList.tracingListView.clear();
     exampleList.getTracingListWithCount('sgnm1040', 'issue');
-    exampleList.initData(widget.pageController);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
     super.dispose();

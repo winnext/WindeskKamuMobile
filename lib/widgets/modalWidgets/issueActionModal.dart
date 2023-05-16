@@ -9,6 +9,7 @@ import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
+import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 import '../dialogWidgets/customSimpleDialog.dart';
 import '../issueWidgets/addActivityScreen.dart';
@@ -313,7 +314,20 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                             widget.code, widget.xusercode);
                         listViewProvider.getIssueOperations(
                             widget.code, widget.xusercode);
-                        Navigator.pop(context);
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          String snackBarText =
+                              issueActionProvider.takeOverMessage.toString();
+                          String takeOverSuccess =
+                              issueActionProvider.takeOverResult.toString();
+
+                          Navigator.pop(context);
+                          snackBar(
+                              context,
+                              takeOverSuccess == 'success'
+                                  ? '$snackBarText'
+                                  : '$snackBarText',
+                              takeOverSuccess);
+                        });
                       },
                       title: 'Üzerine Al',
                       text:

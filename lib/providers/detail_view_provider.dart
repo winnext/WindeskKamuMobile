@@ -128,7 +128,7 @@ class DetailViewProvider extends ChangeNotifier {
     //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
 
     if (true) {
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
         print('issueDetailll22' + responseData.toString());
 

@@ -122,53 +122,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print('object' + widget.code.toString()
-      // widget.targetFDate.toString()+
-      // widget.targetRDate.toString()+
-      // widget.space.toString() +
-      // widget.taskNo.toString() +
-      // widget.description.toString() +
-      // widget.sumdesc1.toString() +
-      // widget.press.toString() +
-      // widget.importanceLevelColor.toString() +
-      // widget.statusName.toString() +
-      // widget.location.toString() +
-      // widget.idate.toString() +
-      // widget.statusCode.toString() +
-      // widget.planedDate.toString() +
-      //  widget.onPressed.toString() +
-      // widget.respondedIDate.toString() +
-      // widget.fixedTimer.toString() +
-      // widget.responseTimer.toString() +
-      // widget.fixedIDate.toString() +
-      // widget.timeInfoNow.toString() +
-      // widget.ani.toString() +
-      // widget.assigneName.toString() +
-      // widget.assignmentGroup.toString() +
-      // widget.assignmentGroupName.toString() +
-      // widget.cat1.toString() +
-      // widget.cmdb.toString() +
-      // widget.contactCode.toString() +
-      // widget.contactName.toString() +
-      // widget.hds.toString() +
-      // widget.hys.toString() +
-      // widget.id.toString() +
-      // widget.locName.toString() +
-      // widget.locTree.toString() +
-      // widget.locTree2.toString() +
-      // widget.parentStatus.toString() +
-      // widget.plannedDate.toString() +
-      // widget.plannedDesc.toString() +
-      // widget.relatedCode.toString() +
-      // widget.slaCode.toString() +
-      // widget.title.toString() +
-      // widget.wrondDirect.toString() +
-      // widget.fixTimer.toString() +
-      // widget.fixedDate.toString() +
-      // widget.respondedDate.toString() +
-      // widget.respondedTimer.toString() +
-      // widget.xusercode.toString()
-      );
+
+
     return Column(
       children: [
         Container(
@@ -311,6 +266,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                     ),
                   ),
                   Divider(height: 15, color: APPColors.Main.black),
+                  widget.code != '' ?
                   Row(
                     children: [
                       Expanded(
@@ -336,7 +292,9 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         ),
                       ),
                     ],
-                  ),
+                  )
+                  : Container(),
+                  widget.statusName != '' ?
                   Row(
                     children: [
                       Expanded(
@@ -351,7 +309,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       ),
                       Expanded(flex: 3, child: Text(''))
                     ],
-                  ),
+                  ) : Container(),
                   Divider(
                     height: 15,
                   ),
@@ -380,7 +338,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı')
+                            Text('Bilgi Yok')
                           ],
                         ),
 
@@ -412,7 +370,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Vaka Sahibi bilgisi bulunamadı')
+                            Text('Bilgi Yok')
                             ,
                           ],
                         ),
@@ -446,7 +404,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı')
+                            Text('Bilgi Yok')
                           ],
                         ),
                   Divider(
@@ -478,7 +436,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                           ],
                         ),
                   Divider(
@@ -510,7 +468,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
 
                           ],
                         ),
@@ -544,7 +502,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                           ],
                         ),
                   Divider(
@@ -576,7 +534,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                           ],
                         ),
                   Divider(
@@ -608,7 +566,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                             
                           ],
                         ),
@@ -641,7 +599,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                             
                           ],
                         ),
@@ -674,7 +632,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ) : 
-                            Text('Açıklama bilgisi bulunamadı'),
+                            Text('Bilgi Yok'),
                           ],
                         ),
                   Divider(

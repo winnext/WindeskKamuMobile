@@ -500,46 +500,46 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                 ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        widget.taskNo.toString(),
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xff025273),
-                          fontSize: 13,
-                        ),
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        widget.sumdesc1.toString(),
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xff025273),
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                  widget.isIcon
-                      ? SizedBox(
-                          width: MediaQuery.of(context).size.width / 18,
-                          child: IconButton(
-                            onPressed: widget.isIcon ? widget.press : () {},
-                            icon: Icon(Icons.info),
-                            color: APPColors.Main.blue,
-                          ),
-                        )
-                      : SizedBox(
-                          width: MediaQuery.of(context).size.width / 18,
-                        ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.end,
+              //       children: [
+              //         Text(
+              //           widget.taskNo.toString(),
+              //           textAlign: TextAlign.right,
+              //           style: TextStyle(
+              //             color: Color(0xff025273),
+              //             fontSize: 13,
+              //           ),
+              //         ),
+              //         SizedBox(height: 6),
+              //         Text(
+              //           widget.sumdesc1.toString(),
+              //           textAlign: TextAlign.right,
+              //           style: TextStyle(
+              //             color: Color(0xff025273),
+              //             fontSize: 13,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     widget.isIcon
+              //         ? SizedBox(
+              //             width: MediaQuery.of(context).size.width / 18,
+              //             child: IconButton(
+              //               onPressed: widget.isIcon ? widget.press : () {},
+              //               icon: Icon(Icons.info),
+              //               color: APPColors.Main.blue,
+              //             ),
+              //           )
+              //         : SizedBox(
+              //             width: MediaQuery.of(context).size.width / 18,
+              //           ),
+              //   ],
+              // ),
             ],
           ),
         ),

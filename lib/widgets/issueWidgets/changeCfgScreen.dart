@@ -248,7 +248,6 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                               issuActionProvider.cfgSuccess.toString();
 
                           Navigator.pop(context);
-
                           snackBar(
                               context,
                               cfgSuccess == true

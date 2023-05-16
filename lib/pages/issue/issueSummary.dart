@@ -43,20 +43,20 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
         Provider.of<ListViewProvider>(context, listen: false);
     final issueActionProvider =
         Provider.of<IssueActionProvider>(context, listen: false);
-    //final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    //final mainPageViewProvider = Provider.of<MainPageViewProvider>(context);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context,listen: false);
+    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context,listen: false);
 
-    //final String issueCode = detailViewProvider.issueCode.toString();
+    final String issueCode = detailViewProvider.issueCode.toString();
 
     issueActionProvider.setactivityCode = '';
     issueActionProvider.setactivityName = '';
-    listViewProvider.getIssueOperations('AEH00334105', 'sgnm1040');
-    issueActionProvider.getAvailableActivities('AEH00334105');
-    issueActionProvider.getLiveSelectAsgGroups('AEH00334105');
+    listViewProvider.getIssueOperations(issueCode, mainPageViewProvider.kadi);
+    issueActionProvider.getAvailableActivities(issueCode);
+    issueActionProvider.getLiveSelectAsgGroups(issueCode);
     issueActionProvider
         .getLiveSelectAsgUser(issueActionProvider.liveSelectGroupCode);
-    print('issueCode' +
-        issueActionProvider.activityListView[0].ACTIVITYID.toString());
+    print('issueCodeee' +
+        issueCode.toString());
   }
 
   @override

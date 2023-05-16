@@ -1247,10 +1247,6 @@ class APIRepository {
 
       final data = jsonDecode(response.toString());
 
-      print(data.toString());
-
-      print(data['records'] as List);
-
       if (response != null) {
         return httpSonucModel(
           records: data,

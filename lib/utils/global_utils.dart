@@ -98,6 +98,14 @@ void snackBar(BuildContext context, String message, String type) async {
         ),
         displayDuration: Duration(seconds: 3));
   }
+  else{
+    showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.error(
+          message: message,
+        ),
+        displayDuration: Duration(seconds: 3));
+  }
 }
 
 Widget loadingBar(

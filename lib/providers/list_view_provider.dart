@@ -260,7 +260,7 @@ class ListViewProvider extends ChangeNotifier {
       tempexampleListView = (result.records['records'] as List)
           .map((e) => ListViewModel.fromJson(e))
           .toList();
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         exampleListView.addAll(tempexampleListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
         int noOfTasks = tempexampleListView.length;
@@ -299,20 +299,13 @@ class ListViewProvider extends ChangeNotifier {
 
       Future.delayed(const Duration(milliseconds: 0), () {
         tracingListView.addAll(temptracingListView);
-        int noOfTasks = tempexampleListView.length;
-        if (noOfTasks > 0) {
+          
           _isDataLoading = false;
           _loading = false;
-          _isDataExist = false;
+          _isDataExist = true;
           notifyListeners();
-        } else {
-          _currentPage = 1;
 
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
+        
       });
     } else {
       // baglantiHatasi(context, result.message);
@@ -336,7 +329,7 @@ class ListViewProvider extends ChangeNotifier {
           .toList();
       print('dataActivities ++++55 ' + tempissueActivitiesView.toString());
 
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         issueActivitiesView.addAll(tempissueActivitiesView);
         int noOfTasks = tempissueActivitiesView.length;
         if (noOfTasks > 0) {
@@ -372,7 +365,7 @@ class ListViewProvider extends ChangeNotifier {
       tempissueAttachmentView = (result.records['records'] as List)
           .map((e) => IssueAttachmentModal.fromJson(e))
           .toList();
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         issueAttachmentView.addAll(tempissueAttachmentView);
         int noOfTasks = tempissueAttachmentView.length;
         if (noOfTasks > 0) {

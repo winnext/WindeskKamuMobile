@@ -42,6 +42,8 @@ class IssueActionProvider extends ChangeNotifier {
   String _liveSelectUserName = '';
   String _liveSelectUserCode = '';
   String _cfgResult = '';
+  String _takeOverResult = '';
+  String _takeOverMessage = '';
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -192,6 +194,20 @@ class IssueActionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get takeOverResult => _takeOverResult;
+
+  set settakeOverResult(String takeOverResult) {
+    _takeOverResult = takeOverResult;
+    notifyListeners();
+  }
+
+  String get takeOverMessage => _takeOverMessage;
+
+  set settakeOverMessage(String takeOverMessage) {
+    _takeOverMessage = takeOverMessage;
+    notifyListeners();
+  }
+
   int get currentPage => _currentPage;
 
   set setcurrentPage(int currentPage) {
@@ -210,28 +226,18 @@ class IssueActionProvider extends ChangeNotifier {
 
     final result = await apirepository.takeOverIssue(controller: urlIssueTypes);
 
-    final data = result.records['records'];
+    final data = result.records['result'];
 
-    print('data' + data.toString());
+    print('issueCode213' + data.toString());
 
     if (true) {
-      Future.delayed(const Duration(milliseconds: 1200), () {
-        exampleListView.addAll(tempexampleListView);
-        _toplamKayitSayisi = int.parse(result.records['totalcount']);
-        int noOfTasks = tempexampleListView.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _currentPage = 1;
-
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
+      Future.delayed(const Duration(milliseconds: 0), () {
+        settakeOverResult = data.toString();
+        settakeOverMessage = result.records['message'].toString();
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
       });
     } else {
       // baglantiHatasi(context, result.message);
@@ -258,7 +264,7 @@ class IssueActionProvider extends ChangeNotifier {
       tempActivityListView = (result.records['records'] as List)
           .map((e) => DetailActivitiesModal.fromJson(e))
           .toList();
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         activityListView.addAll(tempActivityListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
         int noOfTasks = tempActivityListView.length;
@@ -384,7 +390,7 @@ class IssueActionProvider extends ChangeNotifier {
     print('dataCFG' + result.toString());
 
     if (true) {
-      Future.delayed(const Duration(milliseconds: 0), () {        
+      Future.delayed(const Duration(milliseconds: 0), () {
         setcfgResult = cfgResult;
         setcfgSuccess = cfgSuccess;
         _isDataLoading = false;
