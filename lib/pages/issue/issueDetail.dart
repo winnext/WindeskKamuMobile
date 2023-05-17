@@ -16,14 +16,15 @@ import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
 import 'package:win_kamu/widgets/commons.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/widgets/listWidgets/customOpenIssueDetail.dart';
+import 'package:win_kamu/widgets/listWidgets/customIssueDetailWidget.dart';
 import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/ListWidgets/customIssueListWidget.dart';
+import '../../widgets/modalWidgets/issueActionModal.dart';
 import '../homePage.dart';
 
 class IssueDetail extends StatefulWidget {
@@ -211,7 +212,27 @@ class _IssueDetailState extends State<IssueDetail> {
             loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
           ],
         ],
-      )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final detailViewProvider =
+          Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
+          showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) => IssueActionButton(
+                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+        },
+        backgroundColor: APPColors.Modal.red,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      ),
+      
     );
   }
 

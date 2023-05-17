@@ -22,7 +22,7 @@ import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../../widgets/photoDisplayWidgets/customActivitiesPhoto.dart';
 import '../homePage.dart';
 import 'issueDetail.dart';

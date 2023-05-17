@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/models/list_view.model.dart';
@@ -6,6 +9,7 @@ import 'package:win_kamu/utils/api_urls.dart';
 
 import '../models/detail_activities.model.dart';
 import '../models/issue_filter.modal.dart';
+import 'list_view_provider.dart';
 
 class IssueActionProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -221,6 +225,7 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
+
     final urlIssueTypes =
         '${base_url_v1}${TOKEN_V1}${deviceToken}&action=takeOverIssue&issueCode=${issuecode}&username=${username}';
 
@@ -228,7 +233,7 @@ class IssueActionProvider extends ChangeNotifier {
 
     final data = result.records['result'];
 
-    print('issueCode213' + data.toString());
+    print('issueCode213' + result.records['result'] + ' ' + result.records['message']);
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {

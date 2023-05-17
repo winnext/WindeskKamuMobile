@@ -20,7 +20,7 @@ import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../homePage.dart';
 import 'closeRequestsDetail.dart';
 

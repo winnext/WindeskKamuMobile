@@ -312,9 +312,9 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                       onConfirm: () {
                         issueActionProvider.takeOverIssue(
                             widget.code, widget.xusercode);
-                        listViewProvider.getIssueOperations(
-                            widget.code, widget.xusercode);
                         Future.delayed(const Duration(milliseconds: 1000), () {
+                          listViewProvider.getIssueOperations(
+                              widget.code, widget.xusercode);
                           String snackBarText =
                               issueActionProvider.takeOverMessage.toString();
                           String takeOverSuccess =

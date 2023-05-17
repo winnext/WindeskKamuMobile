@@ -3,9 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPageViewProvider extends ChangeNotifier {
 
-
-
-        bool _password_visible = true;
+  bool _password_visible = true;
         bool  get password_visible => _password_visible;
 
         String _kadi = '';

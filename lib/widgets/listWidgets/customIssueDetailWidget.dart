@@ -669,18 +669,6 @@ class _DetailListWidgetState extends State<DetailListWidget> {
             ),
           ),
         ),
-        Divider(
-          height: 15,
-          color: APPColors.Main.black,
-        ),
-        FloatingActionButton(
-          onPressed: () {
-            
-            showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) => IssueActionButton(code: widget.code, xusercode: widget.xusercode));
-          },
-          backgroundColor: APPColors.Modal.red,
-          child: const Icon(Icons.add),
-        ),
       ],
     );
   }

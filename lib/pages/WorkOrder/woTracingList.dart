@@ -13,7 +13,7 @@ import '../../models/tracing_view.model.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customOpenIssueWidget.dart';
+import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../homePage.dart';
 
 class WoTracingList extends StatefulWidget {
@@ -38,7 +38,7 @@ class _WoTracingListState extends State<WoTracingList> {
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     exampleList.tracingListView.clear();
-    exampleList.getTracingListWithCount('sgnm1040', 'workorder');
+    exampleList.getTracingListWithCount(mainViewProvider.kadi, 'workorder');
   }
 
   @override
