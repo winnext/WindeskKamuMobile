@@ -8,18 +8,18 @@ const addNotification = "v1/Notification/AddNotification";
 
 //const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
 //const BASE_URL_V2 = "http://windeskmobile.ish.yerel";
-//const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
-const BASE_URL_V2 = 'http://windeskmobiletest.tekirdag.yerel';
+const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
+//const BASE_URL_V2 = 'http://windeskmobiletest.tekirdag.yerel';
 
 //const TOKEN_V1 = "wdishtest!_";
 //const TOKEN_V1 = "wdishliveSqAS!_";
-// const TOKEN_V1 = "wddemo!_";
-const TOKEN_V1 = 'wdmesktest!_';
+const TOKEN_V1 = "wddemo!_";
+//const TOKEN_V1 = 'wdmesktest!_';
 
 //const TOKEN_V2 = "ishtest!";
 //const TOKEN_V2 = 'ishprod!';
-//const TOKEN_V2 = 'demo!';
-const TOKEN_V2 = 'tkdtest!';
+const TOKEN_V2 = 'demo!';
+//const TOKEN_V2 = 'tkdtest!';
 
 //  const ATTACHPATHLIVE =
 //       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
@@ -27,11 +27,11 @@ const TOKEN_V2 = 'tkdtest!';
 // const ATTACHPATHLIVE =
 // "http://10.32.12.22/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
 
-// const ATTACHPATHLIVE =
-// "https://demo.signumtte.com/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
-
 const ATTACHPATHLIVE =
-    "http://10.159.11.81/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+"https://demo.signumtte.com/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+
+// const ATTACHPATHLIVE =
+//     "http://10.159.11.81/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
 
 const loginUrl = "v1/Auth/Login";
 
@@ -47,19 +47,19 @@ const loginUrl = "v1/Auth/Login";
 //         '&wspassword=' +
 //         'wdsgnm1017_' +
 //         '&token=';
-// const base_url_v1 =
-//     'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-//         'wdmobile' +
-//         '&wspassword=' +
-//         'wdsgnm1017_' +
-//         '&token=';
-
 const base_url_v1 =
-    'http://10.159.11.81/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+    'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
         'wdmobile' +
         '&wspassword=' +
         'wdsgnm1017_' +
         '&token=';
+
+// const base_url_v1 =
+//     'http://10.159.11.81/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
 //const TOKEN_V2 = 'ishprod!';
 
 // aktiviteekle = https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=
