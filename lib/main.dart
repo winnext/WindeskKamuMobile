@@ -48,12 +48,18 @@ import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
+import 'package:win_kamu/widgets/customLoadingScreenDialog.dart';
 import 'widgets/buttonWidgets/customButtonWithGradient.dart';
 import 'package:rxdart/rxdart.dart';
 
 
 
 void main() async{
+
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return CustomLoadingScreen(
+      backgroundColor: Colors.white, textColor: Colors.black);
+  };
 
   WidgetsFlutterBinding.ensureInitialized();
 

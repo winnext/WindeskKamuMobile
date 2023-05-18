@@ -12,9 +12,9 @@ const addNotification = "v1/Notification/AddNotification";
 const BASE_URL_V2 = 'http://windeskmobiletest.tekirdag.yerel';
 
 //const TOKEN_V1 = "wdishtest!_";
-//const TOKEN_V1 = "wdishliveSqAS!_";
-// const TOKEN_V1 = "wddemo!_";
-const TOKEN_V1 = 'wdmesktest!_';
+//const TOKEN_V1 = "wddemo!_";
+const TOKEN_V1 = "wddemo!_";
+
 
 //const TOKEN_V2 = "ishtest!";
 //const TOKEN_V2 = 'ishprod!';

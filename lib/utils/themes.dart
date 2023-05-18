@@ -14,7 +14,7 @@ extension APPImagesExtension on APPImages {
   String get images {
     switch (this) {
       case APPImages.splashScreen:
-        return "lib/assets/images/windesk.jpg";
+        return "lib/assets/images/logo.png";
       case APPImages.defaultImage:
         return "lib/assets/images/example_image.png";
       case APPImages.turkishIcon:
