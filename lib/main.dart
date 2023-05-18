@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:win_kamu/pages/WorkOrder/woList.dart';
 import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/bottomNavBar/bottomNavBar.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/closeRequestsDetail.dart';
@@ -48,12 +49,18 @@ import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/widgets/buttonWidgets/homeButtons.dart';
+import 'package:win_kamu/widgets/customLoadingScreenDialog.dart';
 import 'widgets/buttonWidgets/customButtonWithGradient.dart';
 import 'package:rxdart/rxdart.dart';
 
 
 
 void main() async{
+
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return CustomLoadingScreen(
+      backgroundColor: Colors.white, textColor: Colors.black);
+  };
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -135,12 +142,10 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<MainPageViewProvider>(
       create: (_) => MainPageViewProvider()),
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
-    ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
+  ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
-        ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
-
-
+  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
 
 ];
 

@@ -5,6 +5,7 @@ import 'package:win_kamu/models/issue_activities.modal.dart';
 import 'package:win_kamu/models/issue_operations.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/models/tracing_view.model.dart';
+import 'package:win_kamu/models/woListView.model.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 
 import '../models/issue_attachments.modal.dart';
@@ -12,9 +13,8 @@ import '../models/issue_filter.modal.dart';
 
 class WorkOrderProvider extends ChangeNotifier {
   final apirepository = APIRepository();
-  String? issueListType;
-  List<ListViewModel> _exampleListView = [];
-  List<ListViewModel> tempexampleListView = [];
+  List<WoListViewModel> _woListView= [];
+  List<WoListViewModel> tempwoListView= [];
 
   List<TracingViewModal> _tracingListView = [];
   List<TracingViewModal> temptracingListView = [];
@@ -47,6 +47,8 @@ class WorkOrderProvider extends ChangeNotifier {
   bool _isDataExist = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
+  String _moduleCode = '';
+  String _moduleName = '';
   String _statusName = '';
   String _statusCode = '';
   String _buildName = '';
@@ -54,6 +56,7 @@ class WorkOrderProvider extends ChangeNotifier {
   String _floor = '';
   String _wing = '';
   String _assigne = '';
+  String? woListCode;
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -61,9 +64,9 @@ class WorkOrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<ListViewModel> get exampleListView => _exampleListView;
-  set setiexampleListView(List<ListViewModel> exampleListView) {
-    _exampleListView = exampleListView;
+  List<WoListViewModel> get woListView=> _woListView;
+  set setiwoListView(List<WoListViewModel> woListView) {
+    _woListView= woListView;
     notifyListeners();
   }
 
@@ -186,6 +189,18 @@ class WorkOrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get moduleCode => _moduleCode;
+  set setmoduleCode(String moduleCode) {
+    _moduleCode = moduleCode;
+    notifyListeners();
+  }
+
+  String get moduleName => _moduleName;
+  set setmoduleName(String moduleName) {
+    _moduleName = moduleName;
+    notifyListeners();
+  }
+
   int get currentPage => _currentPage;
 
   set setcurrentPage(int currentPage) {
@@ -197,51 +212,50 @@ class WorkOrderProvider extends ChangeNotifier {
     if (!_isDataLoading &&
         scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
       if (_toplamKayitSayisi != null &&
-          _exampleListView.length >= _toplamKayitSayisi) {
+          _woListView.length >= _toplamKayitSayisi) {
         return false;
       }
       _currentPage = 1 + _currentPage;
-      loadData(_currentPage, issueListType);
+      getListWorkOrders(_currentPage, woListCode);
       _isDataLoading = true;
       notifyListeners();
     } else {}
     return false;
   }
 
-  void loadData(index, issueType) async {
+  void getListWorkOrders(index, listCode) async {
     _isDataLoading = true;
-    int _startIssues = index == 1 ? 0 : (index - 1) * 10;
-    int _endIsses = index * 10;
+    int _startWo= index == 1 ? 0 : (index - 1) * 10;
+    int _endWo = index * 10;
 
     Map<String, dynamic> queryParameters = {
-      "start": _startIssues,
-      "end": _endIsses,
+      "start": _startWo,
+      "end": _endWo,
       "status": statusCode,
       "build": buildCode,
       "floor": floor,
-      "wing": wing,
-      "assignee": assigne,
+      "responsible": assigne,
     };
 
-    issueListType = issueType;
+    woListCode = listCode;
 
-    final urlIssueTypes = '${BASE_URL_V2}/list/$issueListType/issue';
+    final urlIssueTypes = '${BASE_URL_V2}/list/$woListCode/workorder';
 
-    final result = await apirepository.getListForPaging(
+    final result = await apirepository.getListWorkOrders(
         controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
 
-    print('data' + data.toString());
+    print('dataWoList' + data.toString());
 
     if (true) {
-      tempexampleListView = (result.records['records'] as List)
-          .map((e) => ListViewModel.fromJson(e))
+      tempwoListView= (result.records['records'] as List)
+          .map((e) => WoListViewModel.fromJson(e))
           .toList();
       Future.delayed(const Duration(milliseconds: 1200), () {
-        exampleListView.addAll(tempexampleListView);
+        woListView.addAll(tempwoListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
-        int noOfTasks = tempexampleListView.length;
+        int noOfTasks = tempwoListView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;
           _loading = false;
@@ -277,7 +291,7 @@ class WorkOrderProvider extends ChangeNotifier {
 
       Future.delayed(const Duration(milliseconds: 1200), () {
         tracingListView.addAll(temptracingListView);
-        int noOfTasks = tempexampleListView.length;
+        int noOfTasks = temptracingListView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;
           _loading = false;
@@ -297,220 +311,6 @@ class WorkOrderProvider extends ChangeNotifier {
     }
   }
 
-  void getIssueActivities(xusercode, issuecode) async {
-    _isDataLoading = true;
-
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/activities';
-
-    final result = await apirepository.getIssueActivities(
-        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
-
-    final data = result.records['records'];
-
-    print('dataActivities ++++5 ' + data.toString());
-    if (true) {
-      tempissueActivitiesView = (result.records['records'] as List)
-          .map((e) => IssueActivitiesModal.fromJson(e))
-          .toList();
-      print('dataActivities ++++55 ' + tempissueActivitiesView.toString());
-
-      Future.delayed(const Duration(milliseconds: 1200), () {
-        issueActivitiesView.addAll(tempissueActivitiesView);
-        int noOfTasks = tempissueActivitiesView.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _currentPage = 1;
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
-
-  void getIssueAttachments(xusercode, issuecode) async {
-    _isDataLoading = true;
-
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/attachments';
-
-    final result = await apirepository.getIssueAttachments(
-        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
-
-    final data = result.records['records'];
-
-    //print('dataActivities ++++ ' + data.toString());
-    if (true) {
-      tempissueAttachmentView = (result.records['records'] as List)
-          .map((e) => IssueAttachmentModal.fromJson(e))
-          .toList();
-      Future.delayed(const Duration(milliseconds: 1200), () {
-        issueAttachmentView.addAll(tempissueAttachmentView);
-        int noOfTasks = tempissueAttachmentView.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _currentPage = 1;
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
-
-  void getIssueOperations(issuecode, xusercode) async {
-    _isDataLoading = true;
-
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/operationList';
-
-    print('dataActivitiesUrl' + urlIssueTypes.toString());
-
-    final result = await apirepository.getIssueOperations(
-        controller: urlIssueTypes, xusercode: xusercode);
-
-    final data = result.records['records'];
-
-    print('dataActivities +++ ' + data.toString());
-    issueOperationList.add(IssueOperationsModal.fromJson(data));
-    print('dataActivities --- ' + issueOperationList.toString());
-    if (true) {
-      print('issueOperationList2' +
-          IssueOperationsModal.fromJson(result.records['records']).toString());
-      Future.delayed(const Duration(milliseconds: 100), () {
-        var responseData =
-            IssueOperationsModal.fromJson(result.records['records']);
-        print('issueOperationList' + responseData.toString());
-        issueOperationList.add(responseData);
-
-        int noOfTasks = issueOperationList.length;
-        if (noOfTasks > 0) {
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = false;
-          notifyListeners();
-        } else {
-          _currentPage = 1;
-          _isDataExist = false;
-          _loading = false;
-          _isDataLoading = false;
-          notifyListeners();
-        }
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
-
-  void getIssueOpenStatusCodes() async {
-    _isDataLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getIssueOpenStatusCodes';
-
-    final result =
-        await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
-
-    if (true) {
-      tempissueFilterStatusCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-      Future.delayed(const Duration(milliseconds: 0), () {
-        issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
-        int noOfTasks = tempissueFilterStatusCodes.length;
-
-        print(
-            'dataActivities ++++2' + issueFilterStatusCodes[0].CODE.toString());
-
-        _isDataLoading = false;
-        _loading = false;
-        _isDataExist = false;
-        notifyListeners();
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
-
-  void getSpaceBfwByType(String type) async {
-    _isDataLoading = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
-
-    print('buildingurl' + urlIssueTypes.toString());
-
-    final result =
-        await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
-
-    final data = result.records['records'];
-
-    print('buildingurl 3:  :  ' + result.records['records'].toString());
-
-    if (type == 'BUILDING') {
-      tempissueFilterBuildCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-      print('buildinggg' + tempissueFilterStatusCodes.toString());
-
-      issueFilterBuildCodes.addAll(tempissueFilterBuildCodes);
-      int noOfTasks = tempissueFilterBuildCodes.length;
-
-      print('building ++++2' + issueFilterBuildCodes[0].CODE.toString());
-
-      _isDataLoading = false;
-      _loading = false;
-      _isDataExist = false;
-      notifyListeners();
-    } 
-    else if(type == 'FLOOR')
-    {
-      tempissueFilterFloorCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-
-      issueFilterFloorCodes.addAll(tempissueFilterFloorCodes);
-      int noOfTasks = tempissueFilterFloorCodes.length;
-
-
-      _isDataLoading = false;
-      _loading = false;
-      _isDataExist = false;
-      notifyListeners();
-    }
-    else if(type == 'WING')
-    {
-      tempissueFilterWingCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-
-      issueFilterWingCodes.addAll(tempissueFilterWingCodes);
-      int noOfTasks = tempissueFilterWingCodes.length;
-
-
-      _isDataLoading = false;
-      _loading = false;
-      _isDataExist = false;
-      notifyListeners();
-    }
-    else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
 
   void initData([PageController? pageController]) {
     _pageController = pageController;

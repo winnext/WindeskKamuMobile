@@ -29,8 +29,8 @@ class _CustomLoadingScreenState extends State<CustomLoadingScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 8,
-                    height: MediaQuery.of(context).size.height / 13,
+                    width: MediaQuery.of(context).size.width / 6,
+                    height: MediaQuery.of(context).size.height / 11,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [

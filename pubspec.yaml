@@ -80,6 +80,7 @@ dependencies:
   flutter_phoenix: ^1.1.0
   modal_bottom_sheet: ^2.1.2
   never_behind_keyboard: ^1.0.2
+  accordion: ^2.5.1
 
 dev_dependencies:
   flutter_test:

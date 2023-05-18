@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/searchPage/mahalArama.dart';
+import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
 
 import '../api/api_repository.dart';
 
@@ -98,13 +99,25 @@ class SearchViewProvider extends ChangeNotifier {
   }
 
 
+  String _mahalAraKampusValue = '';
+
+    String get mahalAraKampusValue => _mahalAraKampusValue;
+set setmahalAraKampusValue(String mahalAraKampusValue) {
+_mahalAraKampusValue = mahalAraKampusValue;
+notifyListeners();
+}
+
+
     
 mahalAramaKampusFetchData () async{
-List <String> kampus = [];
-List <String> kampusCode = [];
+List <String> kampus = ['Kampüs'];
+List <String> kampusCode = ['Kampüs'];
 
 final mahalAramaKampusSonuc = await apirepository.mahalAramaKampus();
+print('sonuc : ');
+print(mahalAramaKampusSonuc);
     for(var element in mahalAramaKampusSonuc){
+      
      kampus.add(element['NAME'].toString());
 
 }
@@ -114,6 +127,7 @@ for(var element in mahalAramaKampusSonuc){
 }
 
     setMahalAraKampusArray = [kampus]+[kampusCode];
+    setmahalAraKampusValue = mahalAraKampusValue != '' ? mahalAraKampusValue : kampus[0];
     notifyListeners();
   }
 
@@ -130,12 +144,22 @@ _mahalAraBinaArray = mahalAraBinaArray;
 notifyListeners();
 }
 
+String _mahalAraBinaValue = '';
+
+    String get mahalAraBinaValue => _mahalAraBinaValue;
+set setmahalAraBinaValue(String mahalAraBinaValue) {
+_mahalAraBinaValue = mahalAraBinaValue;
+notifyListeners();
+}
+
 
 mahalAramaBinaFetchData (buildingCode) async{
-List<String>  bina = [];
-List<String> binaCode  = [];
+List<String>  bina = ['Bina'];
+List<String> binaCode  = ['Bina'];
 
 final mahalAramaBinaSonuc = await apirepository.mahalAramaBina(buildingCode);
+print(mahalAramaBinaSonuc);
+
 for(var element in mahalAramaBinaSonuc){
   bina.add(element['NAME'].toString());
 
@@ -147,6 +171,9 @@ for(var element in mahalAramaBinaSonuc){
 
     //print(bina);
     setMahalAraBinaArray = [bina]+[binaCode];
+    setmahalAraBinaValue = mahalAraBinaValue != '' ? mahalAraBinaValue : bina[0];
+    print('binakodları');
+    print(binaCode);
     notifyListeners();
   }
 
@@ -162,10 +189,18 @@ _mahalAraKatArray = mahalAraKatArray;
 notifyListeners();
 }
 
+String _mahalAraKatValue = '';
+
+    String get mahalAraKatValue => _mahalAraKatValue;
+set setMahalAraKatValue(String mahalAraKatValue) {
+_mahalAraKatValue = mahalAraKatValue;
+notifyListeners();
+}
+
 
 mahalAramaKatFetchData (floorCode) async{
-List <String> kat = [];
-List <String> katCode = [];
+List <String> kat = ['Kat'];
+List <String> katCode = ['Kat'];
 final mahalAramaKatSonuc = await apirepository.mahalAramaKat(floorCode);
 //print(mahalAramaKatSonuc);
 for(var element in mahalAramaKatSonuc){
@@ -186,6 +221,8 @@ for(var element in mahalAramaKatSonuc){
 
     //print([kat]+[katCode]);
     setMahalAraKatArray = [kat]+[katCode];
+    print('MAHAL ARA KAT VALUE : '+mahalAraKatValue);
+    setMahalAraKatValue = mahalAraKatValue != '' ? mahalAraKatValue : kat[0];
     notifyListeners();
   }
 
@@ -203,9 +240,18 @@ notifyListeners();
 }
 
 
+String _mahalAraKanatValue = '';
+
+    String get mahalAraKanatValue => _mahalAraKanatValue;
+set setMahalAraKanatValue(String mahalAraKanatValue) {
+_mahalAraKanatValue = mahalAraKanatValue;
+notifyListeners();
+}
+
+
 mahalAramaKanatFetchData (blockCode) async{
-List <String> kanat = [];
-List <String> kanatCode = [];
+List <String> kanat = ['Kanat'];
+List <String> kanatCode = ['Kanat'];
 final mahalAramaKanatSonuc = await apirepository.mahalAramaKanat(blockCode);
 //print(mahalAramaKatSonuc);
 for(var element in mahalAramaKanatSonuc){
@@ -226,6 +272,7 @@ for(var element in mahalAramaKanatSonuc){
 
     //print([kat]+[katCode]);
     setMahalAraKanatArray = [kanat]+[kanatCode];
+    setMahalAraKanatValue = mahalAraKanatValue != '' ? mahalAraKanatValue : kanat[0];
     notifyListeners();
   }
 
@@ -239,11 +286,19 @@ for(var element in mahalAramaKanatSonuc){
 /////////////////Sınıf/////////////////////////
 ////////////////////////////////////////////
 
-List _mahalAraSinifArray = [];
+List _mahalAraSinifArray = [['A','B'],['A','B']];
 
     List get mahalAraSinifArray => _mahalAraSinifArray;
 set setMahalAraSinifArray(List mahalAraSinifArray) {
 _mahalAraSinifArray = mahalAraSinifArray;
+notifyListeners();
+}
+
+String _mahalAraSinifValue = '';
+
+    String get mahalAraSinifValue => _mahalAraSinifValue;
+set setMahalAraSinifValue(String mahalAraSinifValue) {
+_mahalAraSinifValue = mahalAraSinifValue;
 notifyListeners();
 }
 
@@ -252,7 +307,7 @@ mahalAramaSinifFetchData (blockCode) async{
 List <String> sinif = [];
 List <String> sinifCode = [];
 final mahalAramaSinifSonuc = [
-  {'NAME':'A','CODE':'A'},{'NAME':'B','CODE':'B'},{'NAME':'C','CODE':'C'},
+{'NAME':'Sınıf','CODE':'Sınıf'},{'NAME':'A','CODE':'A'},{'NAME':'B','CODE':'B'},{'NAME':'C','CODE':'C'},
   {'NAME':'D','CODE':'D'},{'NAME':'E','CODE':'E'}
  ];
 //print(mahalAramaKatSonuc);
@@ -274,10 +329,105 @@ for(var element in mahalAramaSinifSonuc){
 
     //print([kat]+[katCode]);
     setMahalAraSinifArray = [sinif]+[sinifCode];
+    setMahalAraSinifValue = mahalAraSinifValue != '' ? mahalAraSinifValue : sinif[0];
+
+    
     notifyListeners();
   }
 
 
+
+//////////////////////////////////////////////
+////////////   Grup  /////////////////////////
+////////////////////////////////////////////
+
+List _mahalAraGrupArray = [];
+
+    List get mahalAraGrupArray => _mahalAraGrupArray;
+set setMahalAraGrupArray(List mahalAraGrupArray) {
+_mahalAraGrupArray = mahalAraGrupArray;
+notifyListeners();
+}
+
+String _mahalAraGrupValue = '';
+
+    String get mahalAraGrupValue => _mahalAraGrupValue;
+set setMahalAraGrupValue(String mahalAraGrupValue) {
+ _mahalAraGrupValue = mahalAraGrupValue;
+notifyListeners();
+}
+
+
+mahalAramaGrupFetchData () async{
+List <String> grup = ['Grup'];
+List <String> grupCode = ['Grup'];
+final mahalAramaGrupSonuc = await apirepository.mahalAramaGrup();
+//print(mahalAramaGrupSonuc);
+
+for(var element in mahalAramaGrupSonuc){
+  if(grup.indexOf(element['GROUP'].toString()) == -1 ){
+         grup.add(element['GROUP'].toString());
+
+  }
+
+}
+for(var element in mahalAramaGrupSonuc){
+  if(grupCode.indexOf(element['CODE'].toString()) == -1 ){
+        grupCode.add(element['CODE'].toString());
+
+  }
+
+}
+  // mahalAramaKatSonuc.map((i,element) {
+  //       print(element);
+
+  //   kat.add([mahalAramaKatSonuc[i]['NAME'].toString()]);
+  //   kat.add([mahalAramaKatSonuc[i]['CODE'].toString()]);
+  // } );
+    
+
+    print([grup]+[grupCode]);
+    setMahalAraGrupArray = [grup]+[grupCode];
+    setMahalAraGrupValue = mahalAraGrupValue != '' ? mahalAraGrupValue : grup[0];
+    notifyListeners();
+  }
+
+///////////////////////////////////////////////////////////////
+/////////////////////////  MAHALLER LİSTESİ   //////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+
+ String _sayfa = '1';
+        String  get sayfa => _sayfa;
+
+        
+     set setSayfa(String sayfa ){
+        _sayfa = sayfa;
+        notifyListeners();
+      }  
+
+List _mahalAraListeArray = [];
+
+    List get mahalAraListeArray => _mahalAraListeArray;
+set setMahalAraListeArray(List mahalAraListeArray) {
+_mahalAraListeArray = mahalAraListeArray;
+notifyListeners();
+}
+
+mahalAramaListesi(mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup, data, sayfa ) async{
+  mahalAraListeArray.clear();
+  final mahalAramaListesiSonuc = await apirepository.mahalAramaListesiApi(mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup ,data, sayfa);
+  print(mahalAramaListesiSonuc);
+  setMahalAraListeArray = mahalAramaListesiSonuc;
+      notifyListeners();
+
+
+}
+
+
+///////////////////////////////////////////////////////////////
+/////////////////////////  MAHAL DETAY   ///////////////////////
+////////////////////////////////////////////////////////////////
 
 
 

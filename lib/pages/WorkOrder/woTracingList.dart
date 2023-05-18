@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:win_kamu/pages/WorkOrder/woList.dart';
 import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
@@ -101,18 +102,18 @@ class _WoTracingListState extends State<WoTracingList> {
                                         Provider.of<MainPageViewProvider>(
                                             context,
                                             listen: false);
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) => IssueList(
-                                    //         pageController: mainViewProvider
-                                    //             .pageController!,
-                                    //         moduleCode:
-                                    //             listElements.code.toString(),
-                                    //         moduleName:
-                                    //             listElements.name.toString(),
-                                    //       ),
-                                    //     ));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => WoList(
+                                            pageController: mainViewProvider
+                                                .pageController!,
+                                            moduleCode:
+                                                listElements.code.toString(),
+                                            moduleName:
+                                                listElements.name.toString(),
+                                          ),
+                                        ));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(
@@ -158,7 +159,7 @@ class _WoTracingListState extends State<WoTracingList> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 1,
+                                                    flex: 3,
                                                     child: Text(
                                                       listElements.count
                                                           .toString(),
@@ -201,10 +202,10 @@ class _WoTracingListState extends State<WoTracingList> {
       return InkWell(
         onTap: () {
           setState(() {
-            WorkOrderProvider.setisDataLoading = true;
-            WorkOrderProvider.tracingListView.clear();
-            WorkOrderProvider.setcurrentPage = 1;
-            WorkOrderProvider.loadData(WorkOrderProvider.currentPage, 'workorder');
+            // WorkOrderProvider.setisDataLoading = true;
+            // WorkOrderProvider.tracingListView.clear();
+            // WorkOrderProvider.setcurrentPage = 1;
+            // WorkOrderProvider.loadData(WorkOrderProvider.currentPage, 'workorder');
           });
         },
         child: const Padding(

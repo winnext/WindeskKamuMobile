@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:never_behind_keyboard/never_behind_keyboard.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
+import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
+import 'package:win_kamu/utils/global_utils.dart';
 
 import '../../providers/login_provider.dart';
 import '../../utils/themes.dart';
@@ -21,101 +24,57 @@ class mahalArama extends StatefulWidget {
 
 class _mahalAramaState extends State<mahalArama> {
     final globalKey = new GlobalKey();
+      cek() async{
+           var load = true;
+            final searchProvider = Provider.of<SearchViewProvider>(context,listen: false);
+
+            await searchProvider.mahalAramaKampusFetchData();
+             List <String> kampus = searchProvider.mahalAraKampusArray[0];
+            List kampusDatasi = searchProvider.mahalAraKampusArray;   
+            String dropdownvalueKampus = kampusDatasi[0].indexOf(searchProvider.mahalAraKampusValue) != -1 ? searchProvider.mahalAraKampusValue  : kampus[0];    
+            var secilen_deger_kampus = kampusDatasi[1][kampusDatasi[0].indexOf(dropdownvalueKampus)];
+            
+            await searchProvider.mahalAramaBinaFetchData(secilen_deger_kampus);
+             List binaDatasi = searchProvider.mahalAraBinaArray;
+             List <String> bina = searchProvider.mahalAraBinaArray[0];
+             String dropdownvalueBina= binaDatasi[0].indexOf(searchProvider.mahalAraBinaValue) != -1 ? searchProvider.mahalAraBinaValue  : bina[0];   
+             var secilen_deger_bina = binaDatasi[1][binaDatasi[0].indexOf(dropdownvalueBina)];
+
+
+            await searchProvider.mahalAramaKatFetchData(secilen_deger_bina);
+                List <String>  kat = searchProvider.mahalAraKatArray[0];
+                List katDatasi = searchProvider.mahalAraKatArray;
+
+
+                String dropdownvalueKat= katDatasi[0].indexOf(searchProvider.mahalAraKatValue) != -1 ? searchProvider.mahalAraKatValue  : kat[0];   
+
+                var secilen_deger_kat = katDatasi[1][katDatasi[0].indexOf(dropdownvalueKat)];
+
+
+            await searchProvider.mahalAramaKanatFetchData(secilen_deger_kat);
+            await searchProvider.mahalAramaSinifFetchData('');
+            await searchProvider.mahalAramaGrupFetchData();
+            load = false;
+    }
+
+  
+
    
-   List <String> kampus  = [];
-   List <String> bina = [];
-   List <String> kat = [];
-   List <String> kanat = [];
-   List <String> sinif = [];
+  @override
+  void initState() { 
+    
+    super.initState();
+    print('İNİT STATE');
+ 
 
-   String dropdownvalueKampus  = '';
-   String dropdownvalueBina = '';
-   String dropdownvalueKat = '';
-   String dropdownvalueKanat = '';
-   String dropdownvalueSinif = '';
+  cek();
 
-   
-
+    
+  }
     
 
 
-    @override
-  void initState() {
-    print('initState girdi');
-        super.initState();
-
-    // TODO: implement initState
-        final searchProvider = Provider.of<SearchViewProvider>(context,listen: false);
-
-        searchProvider.mahalAramaKampusFetchData();
-
-    List <String> kampusS = searchProvider.mahalAraKampusArray[0];
-    //print(searchProvider.mahalAraKampusArray);
-    List kampusDatasi = searchProvider.mahalAraKampusArray;
-  
-
-    String dropdownvalueKampusS = kampusS[0] != '' ? kampusS[0] : '';   
-
-    var secilen_deger_kampus = kampusDatasi[1][kampusDatasi[0].indexOf(dropdownvalueKampusS)];
-
-
-    searchProvider.mahalAramaBinaFetchData(secilen_deger_kampus);
-    //print(searchProvider.mahalAraBinaArray);
-    List binaDatasi = searchProvider.mahalAraBinaArray;
-    List <String> binaS = searchProvider.mahalAraBinaArray[0];
-
-
-    String dropdownvalueBinaS= binaS[0];   
-    var secilen_deger_bina = binaDatasi[1][binaDatasi[0].indexOf(dropdownvalueBinaS)];
-
-      searchProvider.mahalAramaKatFetchData(secilen_deger_bina);
-    //print(searchProvider.mahalAraKatArray[0]);
-
-     List <String>  katS = searchProvider.mahalAraKatArray[0];
-    List katDatasi = searchProvider.mahalAraKatArray;
-
-
-    String dropdownvalueKatS= katS[0] != '' ? katS[0] : '';   
-
-        var secilen_deger_kat = katDatasi[1][katDatasi[0].indexOf(dropdownvalueKatS)];
-
-   searchProvider.mahalAramaKanatFetchData(secilen_deger_kat);
-
-    List <String>  kanatS = searchProvider.mahalAraKanatArray[0];
-    List kanatDatasi = searchProvider.mahalAraKanatArray;
-
-
-    String dropdownvalueKanatS= kanatS[0] != '' ? kanatS[0] : '';   
-    var secilen_deger_kanat = kanatDatasi[1][kanatDatasi[0].indexOf(dropdownvalueKanatS)];
-
-     searchProvider.mahalAramaSinifFetchData(secilen_deger_kanat);
-       List <String>  sinifS = searchProvider.mahalAraSinifArray[0];
-    List sinifDatasi = searchProvider.mahalAraSinifArray;
-
-
-    String dropdownvalueSinifS= sinifS[0] != '' ? sinifS[0] : '';   
-    var secilen_deger_sinif = sinifDatasi[1][sinifDatasi[0].indexOf(dropdownvalueSinifS)];
-
-  
-    setState(() {
-      List <String> kampus = kampusS;
-      List <String> bina = binaS;
-      List <String> kat = katS;
-      List <String> kanat = kanatS;
-      List <String> sinif = sinifS;
-
-      String dropdownvalueKampus  = dropdownvalueKampusS;
-      String dropdownvalueBina = dropdownvalueBinaS;
-      String dropdownvalueKat = dropdownvalueKatS;
-      String dropdownvalueKanat = dropdownvalueKanatS;
-      String dropdownvalueSinif = dropdownvalueSinifS;
-
-
-
-    });
-
-
-  }
+    
     
 
   
@@ -124,62 +83,129 @@ class _mahalAramaState extends State<mahalArama> {
   Widget build(BuildContext context) {
       
 
-        final searchProvider = Provider.of<SearchViewProvider>(context,listen: false);
+        final searchProvider = Provider.of<SearchViewProvider>(context,listen: true);
     //searchProvider.mahalAramaKampusFetchData();
      TextEditingController vakaNoController = TextEditingController();
   var vakaNo  = 0;
-        searchProvider.mahalAramaKampusFetchData();
+
+  print('girdi build1');
 
     //print(_scrollController);
-
+    ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       KAMPUS     ////////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
     List <String> kampus = searchProvider.mahalAraKampusArray[0];
     //print(searchProvider.mahalAraKampusArray);
     List kampusDatasi = searchProvider.mahalAraKampusArray;
   
 
-    String dropdownvalueKampus = kampus[0] != '' ? kampus[0] : '';   
+            String dropdownvalueKampus = kampusDatasi[0].indexOf(searchProvider.mahalAraKampusValue) != -1 ? searchProvider.mahalAraKampusValue  : kampus[0];    
 
     var secilen_deger_kampus = kampusDatasi[1][kampusDatasi[0].indexOf(dropdownvalueKampus)];
 
+    print(kampus);
+    print(dropdownvalueKampus);
 
-    searchProvider.mahalAramaBinaFetchData(secilen_deger_kampus);
+    print('-----------------');
+
+
+    //searchProvider.mahalAramaBinaFetchData(secilen_deger_kampus);
     //print(searchProvider.mahalAraBinaArray);
+
+
+      ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       BINA       ////////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
     List binaDatasi = searchProvider.mahalAraBinaArray;
     List <String> bina = searchProvider.mahalAraBinaArray[0];
 
 
-    String dropdownvalueBina= bina[0];   
+    String dropdownvalueBina= binaDatasi[0].indexOf(searchProvider.mahalAraBinaValue) != -1 ? searchProvider.mahalAraBinaValue  : bina[0];   
     var secilen_deger_bina = binaDatasi[1][binaDatasi[0].indexOf(dropdownvalueBina)];
+    print(bina);
+    print(dropdownvalueBina);
+      print('-----------------');
 
-      searchProvider.mahalAramaKatFetchData(secilen_deger_bina);
     //print(searchProvider.mahalAraKatArray[0]);
+
+      ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       KAT        ////////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
 
      List <String>  kat = searchProvider.mahalAraKatArray[0];
     List katDatasi = searchProvider.mahalAraKatArray;
 
-
-    String dropdownvalueKat= kat[0] != '' ? kat[0] : '';   
+    String dropdownvalueKat= katDatasi[0].indexOf(searchProvider.mahalAraKatValue) != -1 ? searchProvider.mahalAraKatValue  : kat[0];   
 
         var secilen_deger_kat = katDatasi[1][katDatasi[0].indexOf(dropdownvalueKat)];
+  print(kat);
+  print(dropdownvalueKat);
+    print('-----------------');
 
-   searchProvider.mahalAramaKanatFetchData(secilen_deger_kat);
+    ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       KANAT      /////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
+
+
+
 
     List <String>  kanat = searchProvider.mahalAraKanatArray[0];
     List kanatDatasi = searchProvider.mahalAraKanatArray;
 
 
-    String dropdownvalueKanat= kanat[0] != '' ? kanat[0] : '';   
+    String dropdownvalueKanat= kanatDatasi[0].indexOf(searchProvider.mahalAraKanatValue) != -1 ? searchProvider.mahalAraKanatValue  : kanat[0];   
     var secilen_deger_kanat = kanatDatasi[1][kanatDatasi[0].indexOf(dropdownvalueKanat)];
 
-     searchProvider.mahalAramaSinifFetchData(secilen_deger_kanat);
+     print(kanat);
+  print(dropdownvalueKanat);
+    print('-----------------');
+
+      ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       SINIF     ////////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
+
+     //searchProvider.mahalAramaSinifFetchData(secilen_deger_kanat);
        List <String>  sinif = searchProvider.mahalAraSinifArray[0];
+          print(sinif);
+
     List sinifDatasi = searchProvider.mahalAraSinifArray;
 
 
-    String dropdownvalueSinif= sinif[0] != '' ? sinif[0] : '';   
+    String dropdownvalueSinif= searchProvider.mahalAraSinifValue;   
     var secilen_deger_sinif = sinifDatasi[1][sinifDatasi[0].indexOf(dropdownvalueSinif)];
 
-  
+  print(dropdownvalueSinif);
+    print('-----------------');
+
+
+
+     ///////////////////////////////////////////////////////
+    //////////////////////////////        ///////////////////////
+    ///////////////////////       GRUP     ////////////////////////
+    //////////////////////////           ///////////////////////
+    //////////////////////////////////////////////////////////
+
+     //searchProvider.mahalAramaSinifFetchData(secilen_deger_kanat);
+       List <String>  grup = searchProvider.mahalAraGrupArray[0];
+print(grup);
+    List grupDatasi = searchProvider.mahalAraGrupArray;
+
+
+    String dropdownvalueGrup = searchProvider.mahalAraGrupValue;   
+    var secilen_deger_grup = grupDatasi[1][grupDatasi[0].indexOf(dropdownvalueGrup)];
+
+  print(dropdownvalueGrup);
+    print('-----------------');
 
 
     return Sizer(      builder: (context, orientation, deviceType) {
@@ -205,7 +231,7 @@ class _mahalAramaState extends State<mahalArama> {
           ),
           body: 
           Center(
-            child: SingleChildScrollView(
+            child: grup.length > 0 && kampus.length > 0 && bina.length > 0 && kat.length > 0 && kanat.length > 0 && sinif.length > 0 && grup.length > 0 ? SingleChildScrollView(
               child: Container(
               width: 85.w,
               
@@ -317,10 +343,13 @@ class _mahalAramaState extends State<mahalArama> {
                 setState(() {
                   dropdownvalueKampus = newValue!;
                 });
+                searchProvider.setmahalAraKampusValue = newValue!;
+                cek();
               },
             ),
                   ),
                   
+                 dropdownvalueKampus != 'Kampüs' ? 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: 
@@ -355,9 +384,13 @@ class _mahalAramaState extends State<mahalArama> {
                 setState(() {
                   dropdownvalueBina = newValue!;
                 });
+                  searchProvider.setmahalAraBinaValue = newValue!;
+
+                cek();
               },
             ),
-                  ),
+                  ) : Container(),
+                  dropdownvalueBina != 'Bina' ? 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: 
@@ -390,11 +423,17 @@ class _mahalAramaState extends State<mahalArama> {
               // change button value to selected value
               onChanged: (String? newValue) { 
                 setState(() {
+                  print('newWaluekat : '+newValue!);
                   dropdownvalueKat = newValue!;
+                  searchProvider.setMahalAraKatValue = newValue!;
+
                 });
+                cek();
               },
             ),
-                  ),
+                  ) : 
+                  Container(),
+                  dropdownvalueKat != 'Kat' ? 
 
                    Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -430,9 +469,11 @@ class _mahalAramaState extends State<mahalArama> {
                 setState(() {
                   dropdownvalueKanat = newValue!;
                 });
+                searchProvider.setMahalAraKanatValue = newValue!;
+                cek();
               },
             ),
-                  ),
+                  ) : Container(),
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -468,12 +509,52 @@ class _mahalAramaState extends State<mahalArama> {
                 setState(() {
                   dropdownvalueSinif = newValue!;
                 });
+                searchProvider.setMahalAraSinifValue = newValue!;
+              },
+            ),
+                  ),
+
+                   Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: 
+                     DropdownButtonFormField(
+                          isExpanded: true,
+
+              // Initial Value
+              value: dropdownvalueGrup,
+              decoration: InputDecoration(
+                                  
+                                  border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                                  labelText: 'Grup',
+                                ),
+              
+              
+                
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),    
+                
+              // Array list of items
+              items: grup.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) { 
+                setState(() {
+                  dropdownvalueGrup = newValue!;
+                });
+                searchProvider.setMahalAraGrupValue = newValue!;
               },
             ),
                   ),
                   
                  
-            searchProvider.mahalAramaMahalKodu.text != '' || searchProvider.mahalAramaMahalAdi.text != '' || searchProvider.rfid.text != '' || searchProvider.mahal.text != '' ?
+            searchProvider.mahalAramaMahalKodu.text != '' || searchProvider.mahalAramaMahalAdi.text != '' || dropdownvalueKampus != 'Kampüs' || dropdownvalueBina != 'Bina' || dropdownvalueKat != 'Kat' || dropdownvalueKanat != 'Kanat' || dropdownvalueSinif != 'Sınıf' || dropdownvalueGrup != 'Grup' ?
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -489,11 +570,14 @@ class _mahalAramaState extends State<mahalArama> {
                             ),
                             onPressed: () {
 
-                             searchProvider.setMahalAramaMahalKodu = '';
+                             searchProvider.setmahalAraKampusValue = 'Kampüs';
+                             searchProvider.setmahalAraBinaValue = 'Bina';
+                             searchProvider.setMahalAraKatValue = 'Kat';
+                             searchProvider.setMahalAraKanatValue = 'Kanat';
+                             searchProvider.setMahalAraSinifValue = 'Sınıf';
+                             searchProvider.setMahalAraGrupValue = 'Grup';
                              searchProvider.setMahalAramaMahalAdi = '';
-                             searchProvider.setSeriNo = '';
-                             searchProvider.setRfid = '';
-                             searchProvider.setMahal = '';
+                             searchProvider.setMahalAramaMahalKodu = '';
 
 
 
@@ -520,11 +604,83 @@ class _mahalAramaState extends State<mahalArama> {
                             ),
                             onPressed: () {
 
-                              print("Vaka NO : "+searchProvider.varliKodu.text);
-                              print("Seri NO : "+searchProvider.seriNo.text);
-                              print("RFID : "+searchProvider.rfid.text);
-                              print("Mahal : "+searchProvider.mahal.text);
+           
+            
+            List binaDatasi = searchProvider.mahalAraBinaArray;
+            List <String> bina = searchProvider.mahalAraBinaArray[0];
+            String dropdownvalueBina= binaDatasi[0].indexOf(searchProvider.mahalAraBinaValue) != -1 ? searchProvider.mahalAraBinaValue  : bina[0];   
+            var secilen_deger_bina = binaDatasi[1][binaDatasi[0].indexOf(dropdownvalueBina)];
 
+            List <String>  kat = searchProvider.mahalAraKatArray[0];
+            List katDatasi = searchProvider.mahalAraKatArray;
+            String dropdownvalueKat= katDatasi[0].indexOf(searchProvider.mahalAraKatValue) != -1 ? searchProvider.mahalAraKatValue  : kat[0]; 
+            var secilen_deger_kat = katDatasi[1][katDatasi[0].indexOf(dropdownvalueKat)];
+
+
+            List <String>  kanat = searchProvider.mahalAraKanatArray[0];
+            List kanatDatasi = searchProvider.mahalAraKanatArray;
+            String dropdownvalueKanat= kanatDatasi[0].indexOf(searchProvider.mahalAraKanatValue) != -1 ? searchProvider.mahalAraKanatValue  : kanat[0];   
+            var secilen_deger_kanat = kanatDatasi[1][kanatDatasi[0].indexOf(dropdownvalueKanat)];
+
+
+            List <String>  sinif = searchProvider.mahalAraSinifArray[0];
+            List sinifDatasi = searchProvider.mahalAraSinifArray;
+            String dropdownvalueSinif= searchProvider.mahalAraSinifValue;   
+            var secilen_deger_sinif = sinifDatasi[1][sinifDatasi[0].indexOf(dropdownvalueSinif)];
+
+            List <String>  grup = searchProvider.mahalAraGrupArray[0];
+            List grupDatasi = searchProvider.mahalAraGrupArray;
+            String dropdownvalueGrup = searchProvider.mahalAraGrupValue;   
+            var secilen_deger_grup = grupDatasi[1][grupDatasi[0].indexOf(dropdownvalueGrup)];
+
+
+
+                              var mahalKodu = searchProvider.mahalAramaMahalKodu.text;
+                              var mahalAdi = searchProvider.mahalAramaMahalAdi.text;
+
+                              var binaKodum =  searchProvider.mahalAraBinaArray[1][binaDatasi[0].indexOf(dropdownvalueBina)];
+                              var binaKodu = binaKodum != 'Bina' ? binaKodum : '';
+
+                              var katKodum =  searchProvider.mahalAraKatArray[1][katDatasi[0].indexOf(dropdownvalueKat)];
+                              var katKodu = katKodum != 'Kat' ? katKodum : '';
+
+                              var kanatKodum =  searchProvider.mahalAraKanatArray[1][kanatDatasi[0].indexOf(dropdownvalueKanat)];
+                              var kanatKodu = kanatKodum != 'Kanat' ? kanatKodum : '';
+
+                              var sinifKodum =  searchProvider.mahalAraSinifArray[1][sinifDatasi[0].indexOf(dropdownvalueSinif)];
+                              var sinifKodu = sinifKodum != 'Sınıf' ? sinifKodum : '';
+
+                              var grupKodum =  searchProvider.mahalAraGrupArray[1][grupDatasi[0].indexOf(dropdownvalueGrup)];
+                              var grupKodu = grupKodum != 'Grup' ? grupKodum : '';
+
+                              // var kat = dropdownvalueKat != 'Kat' ? dropdownvalueKat : '';
+                              // var kanat = dropdownvalueKanat != 'Kanat' ? dropdownvalueKanat : '';
+                              // var sinif = dropdownvalueSinif != 'Sınıf' ? dropdownvalueSinif : '';
+                              //var grup = dropdownvalueGrup != 'Grup' ? dropdownvalueGrup : '';
+                                if(
+                                  searchProvider.mahalAramaMahalKodu.text == '' && 
+                                  searchProvider.mahalAramaMahalAdi.text == '' &&
+                                  dropdownvalueKampus == 'Kampüs' &&
+                                  dropdownvalueBina == 'Bina' &&
+                                  dropdownvalueKat == 'Kat' && 
+                                  dropdownvalueKanat == 'Kanat'
+                                  ){
+                                    snackBar(context, 'Arama yaparken en az bir kriter seçilmelidir', 'info');
+                                  }else{
+                                    searchProvider.setSayfa = '1';
+                                    searchProvider.mahalAramaListesi(mahalKodu,mahalAdi,binaKodu,katKodu,kanatKodu,sinifKodu,grupKodu,20,1);
+                                      print('Mahal Arama Sayfası Detayı');
+                                         PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: MahalAramaListe(
+          
+          
+        ),
+        withNavBar: true, // OPTIONAL VALUE. True by default.
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        
+    );
+                                  }
 
                               
                             },
@@ -537,6 +693,8 @@ class _mahalAramaState extends State<mahalArama> {
               ),
             ),
             )
+            :
+            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
           )
           
           ),
