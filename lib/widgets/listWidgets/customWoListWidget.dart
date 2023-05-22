@@ -127,7 +127,7 @@ class _WoListWidgetState extends State<WoListWidget> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: APPColors.Secondary.black,
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontFamily: "Poppins",
                                 fontWeight: FontWeight.bold,
                               ),
@@ -140,7 +140,7 @@ class _WoListWidgetState extends State<WoListWidget> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: APPColors.Secondary.black,
-                                fontSize: 13,
+                                fontSize: 14,
                           ),
                           ),
                         ),
@@ -148,69 +148,69 @@ class _WoListWidgetState extends State<WoListWidget> {
                       ),
                     ),
                   ),
-                  const Divider(
-                    height: 10,
-                    thickness: 5,
-                    indent: 20,
-                    endIndent: 0,
-                    color: Colors.black
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    child: Container(
+                      width: size.width / 1.2,
+                      color: APPColors.Main.black,
+                      height: 1,
+                    ),
                   ),
                   Container(
                     width: size.width/1.2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
+                    child: Text(
                     '${widget.serviceName.toString()}',
                     style: TextStyle(
-                          color: APPColors.Secondary.black,
-                      fontSize: 14,
+                        color: APPColors.Secondary.black,
+                    fontSize: 14,
                     ),
-                      ),
                     ),
                   ),
-                  Divider(
-                    height: 10,
-                    thickness: 20,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    child: Container(
+                      width: size.width / 1.2,
+                      color: APPColors.Main.black,
+                      height: 1,
+                    ),
                   ),
                   Container(
                     width: size.width/1.2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
+                    child: Text(
                     '${widget.name.toString()}',
                     style: TextStyle(
-                          color: APPColors.Secondary.black,
-                      fontSize: 14,
+                        color: APPColors.Secondary.black,
+                    fontSize: 14,
                     ),
-                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    child: Container(
+                      width: size.width / 1.2,
+                      color: APPColors.Main.black,
+                      height: 1,
                     ),
                   ),
                   Container(
                     width: size.width/1.2,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
+                      child: 
+                      widget.moduleLocation != null ? Text(
                     '${widget.moduleLocation.toString()}',
                     style: TextStyle(
                           color: APPColors.Secondary.black,
                       fontSize: 14,
                     ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: size.width/1.2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                    '${widget.moduleLocation.toString()}',
-                    style: TextStyle(
-                          color: APPColors.Secondary.black,
+                      ) : 
+                      Text('Mahal bilgisi bulunmuyor',
+                      style: TextStyle(
+                          color: APPColors.Secondary.red,
                       fontSize: 14,
+                    ),),
                     ),
-                      ),
-                    ),
-                  ),                          
+                  ),                         
                 ],
               ),
             ],

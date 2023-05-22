@@ -72,7 +72,7 @@ class _WoTracingListState extends State<WoTracingList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.popUntil(context, (route) => route.isFirst,);
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),

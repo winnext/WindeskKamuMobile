@@ -133,9 +133,10 @@ extension APPColorsExtension on APPColors {
     switch (this) {
       case APPColors.Main:
         return Colors.redAccent;
+      case APPColors.Secondary:
+        return const Color(0xfff07167);
       case APPColors.NewNotifi:
         return Color.fromARGB(1000, 237, 181, 181);
-
       default:
         return Colors.red;
     }

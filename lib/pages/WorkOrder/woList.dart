@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/issue/issueSummary.dart';
 import 'package:win_kamu/pages/issue/issueTracingList.dart';
 import 'package:win_kamu/providers/workorder_provider.dart';
@@ -10,7 +11,6 @@ import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/widgets/modalWidgets/filterBox.dart';
 import '../../api/api_repository.dart';
 import '../../models/woListView.model.dart';
 import '../../providers/main_page_view_provider.dart';
@@ -18,7 +18,9 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/listWidgets/customWoListWidget.dart';
-import '../../widgets/modalWidgets/filterModal.dart';
+import '../../widgets/modalWidgets/issueFilterModal.dart';
+import '../../widgets/modalWidgets/woFilterBox.dart';
+import '../../widgets/modalWidgets/workOrderFilterModal.dart';
 
 class WoList extends StatefulWidget {
   static String woList = 'WoList';
@@ -87,9 +89,7 @@ class _WoListState extends State<WoList> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => IssueTracingList(
-                              pageController:
-                                  mainViewProvide.pageController!)));
+                          builder: (context) => WoTracingList()));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -101,7 +101,7 @@ class _WoListState extends State<WoList> {
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (context) =>
-                            IssueFilterModal(moduleCode: widget.moduleCode));
+                            WorkOrderFilter(moduleCode: widget.moduleCode));
                   }),
             ],
           ),
@@ -109,7 +109,7 @@ class _WoListState extends State<WoList> {
             children: [
               Column(
                 children: [
-                  FilterBox(
+                  WoFilterBox(
                     moduleCode: widget.moduleCode,
                   ),
                   listViewProvider.woListView.isNotEmpty
@@ -152,7 +152,7 @@ class _WoListState extends State<WoList> {
                                           plannedEndDate: listElements.PLANNED_ENDDATE
                                               .toString(),
                                           moduleLocation: listElements.MODULELOCATION
-                                              .toString(),
+                                              ,
                                           responsible: listElements.RESPONSIBLE
                                               .toString(),
                                           isIcon: true,

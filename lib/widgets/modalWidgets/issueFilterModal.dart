@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/issue_filter.modal.dart';
 import '../../providers/list_view_provider.dart';
 import '../../utils/themes.dart';
-import 'filterBox.dart';
+import 'issueFilterBox.dart';
 
 class IssueFilterModal extends StatefulWidget {
   String? moduleCode;

@@ -464,14 +464,10 @@ class ListViewProvider extends ChangeNotifier {
     final urlIssueTypes =
         '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
 
-    print('buildingurl' + urlIssueTypes.toString());
-
     final result =
         await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
 
     final data = result.records['records'];
-
-    print('buildingurl 3:  :  ' + result.records['records'].toString());
 
     if (type == 'BUILDING') {
       tempissueFilterBuildCodes = (result.records['records'] as List)

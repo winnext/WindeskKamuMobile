@@ -19,26 +19,17 @@ class WorkOrderProvider extends ChangeNotifier {
   List<TracingViewModal> _tracingListView = [];
   List<TracingViewModal> temptracingListView = [];
 
-  List<IssueActivitiesModal> _issueActivitiesView = [];
-  List<IssueActivitiesModal> tempissueActivitiesView = [];
+  List<IssueFilterModel> _woFilterStatusCodes = [];
+  List<IssueFilterModel> tempwoFilterStatusCodes = [];
 
-  List<IssueAttachmentModal> _issueAttachmentView = [];
-  List<IssueAttachmentModal> tempissueAttachmentView = [];
+  List<IssueFilterModel> _woFilterBuildCodes = [];
+  List<IssueFilterModel> tempwoFilterBuildCodes = [];
 
-  List<IssueFilterModel> _issueFilterStatusCodes = [];
-  List<IssueFilterModel> tempissueFilterStatusCodes = [];
+  List<IssueFilterModel> _woFilterFloorCodes = [];
+  List<IssueFilterModel> tempwoFilterFloorCodes = [];
 
-  List<IssueFilterModel> _issueFilterBuildCodes = [];
-  List<IssueFilterModel> tempissueFilterBuildCodes = [];
-
-  List<IssueFilterModel> _issueFilterFloorCodes = [];
-  List<IssueFilterModel> tempissueFilterFloorCodes = [];
-
-  List<IssueFilterModel> _issueFilterWingCodes = [];
-  List<IssueFilterModel> tempissueFilterWingCodes = [];
-
-  List<IssueOperationsModal> _issueOperationList = [];
-  List<IssueOperationsModal> tempissueOperationList = [];
+  List<IssueFilterModel> _woFilterWingCodes = [];
+  List<IssueFilterModel> tempwoFilterWingCodes = [];
 
   PageController? _pageController;
 
@@ -75,47 +66,30 @@ class WorkOrderProvider extends ChangeNotifier {
     _tracingListView = tracingListView;
     notifyListeners();
   }
+  
 
-  List<IssueActivitiesModal> get issueActivitiesView => _issueActivitiesView;
-  set setiissueActivitiesView(List<IssueActivitiesModal> issueActivitiesView) {
-    _issueActivitiesView = issueActivitiesView;
+  List<IssueFilterModel> get woFilterStatusCodes => _woFilterStatusCodes;
+  set setiwoFilterStatusCodes(
+      List<IssueFilterModel> woFilterStatusCodes) {
+    _woFilterStatusCodes = woFilterStatusCodes;
     notifyListeners();
   }
 
-  List<IssueAttachmentModal> get issueAttachmentView => _issueAttachmentView;
-  set setiissueAttachmentView(List<IssueAttachmentModal> issueAttachmentView) {
-    _issueAttachmentView = issueAttachmentView;
+  List<IssueFilterModel> get woFilterBuildCodes => _woFilterBuildCodes;
+  set setiwoFilterBuildCodes(List<IssueFilterModel> woFilterBuildCodes) {
+    _woFilterBuildCodes = woFilterBuildCodes;
     notifyListeners();
   }
 
-  List<IssueFilterModel> get issueFilterStatusCodes => _issueFilterStatusCodes;
-  set setiissueFilterStatusCodes(
-      List<IssueFilterModel> issueFilterStatusCodes) {
-    _issueFilterStatusCodes = issueFilterStatusCodes;
+  List<IssueFilterModel> get woFilterFloorCodes => _woFilterFloorCodes;
+  set setiwoFilterFloorCodes(List<IssueFilterModel> woFilterFloorCodes) {
+    _woFilterFloorCodes = woFilterFloorCodes;
     notifyListeners();
   }
 
-  List<IssueFilterModel> get issueFilterBuildCodes => _issueFilterBuildCodes;
-  set setiissueFilterBuildCodes(List<IssueFilterModel> issueFilterBuildCodes) {
-    _issueFilterBuildCodes = issueFilterBuildCodes;
-    notifyListeners();
-  }
-
-    List<IssueFilterModel> get issueFilterFloorCodes => _issueFilterFloorCodes;
-  set setiissueFilterFloorCodes(List<IssueFilterModel> issueFilterFloorCodes) {
-    _issueFilterFloorCodes = issueFilterFloorCodes;
-    notifyListeners();
-  }
-
-    List<IssueFilterModel> get issueFilterWingCodes => _issueFilterWingCodes;
-  set setiissueFilterWingCodes(List<IssueFilterModel> issueFilterWingCodes) {
-    _issueFilterWingCodes = issueFilterWingCodes;
-    notifyListeners();
-  }
-
-  List<IssueOperationsModal> get issueOperationList => _issueOperationList;
-  set setiissueOperationList(List<IssueOperationsModal> issueOperationList) {
-    _issueOperationList = issueOperationList;
+  List<IssueFilterModel> get woFilterWingCodes => _woFilterWingCodes;
+  set setiwoFilterWingCodes(List<IssueFilterModel> woFilterWingCodes) {
+    _woFilterWingCodes = woFilterWingCodes;
     notifyListeners();
   }
 
@@ -275,6 +249,36 @@ class WorkOrderProvider extends ChangeNotifier {
     }
   }
 
+  void getIssueOpenStatusCodes() async {
+    _isDataLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getIssueOpenStatusCodes';
+
+    final result =
+        await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
+
+    if (true) {
+      tempwoFilterStatusCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+      Future.delayed(const Duration(milliseconds: 0), () {
+        woFilterStatusCodes.addAll(tempwoFilterStatusCodes);
+        int noOfTasks = tempwoFilterStatusCodes.length;
+
+        print(
+            'dataActivities ++++2' + woFilterStatusCodes[0].CODE.toString());
+
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
   void getTracingListWithCount(xusercode, module) async {
     _isDataLoading = true;
 
@@ -306,6 +310,62 @@ class WorkOrderProvider extends ChangeNotifier {
           notifyListeners();
         }
       });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+    void getSpaceBfwByType(String type) async {
+    _isDataLoading = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
+
+    final result =
+        await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
+
+    final data = result.records['records'];
+
+    if (type == 'BUILDING') {
+      tempwoFilterBuildCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+      print('buildinggg' + tempwoFilterStatusCodes.toString());
+
+      woFilterBuildCodes.addAll(tempwoFilterBuildCodes);
+      int noOfTasks = tempwoFilterBuildCodes.length;
+
+      print('building ++++2' + woFilterBuildCodes[0].CODE.toString());
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
+    } else if (type == 'FLOOR') {
+      tempwoFilterFloorCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+
+      woFilterFloorCodes.addAll(tempwoFilterFloorCodes);
+      int noOfTasks = tempwoFilterFloorCodes.length;
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
+    } else if (type == 'WING') {
+      tempwoFilterWingCodes = (result.records['records'] as List)
+          .map((e) => IssueFilterModel.fromJson(e))
+          .toList();
+
+      woFilterWingCodes.addAll(tempwoFilterWingCodes);
+      int noOfTasks = tempwoFilterWingCodes.length;
+
+      _isDataLoading = false;
+      _loading = false;
+      _isDataExist = false;
+      notifyListeners();
     } else {
       // baglantiHatasi(context, result.message);
     }
