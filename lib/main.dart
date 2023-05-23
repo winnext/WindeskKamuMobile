@@ -21,7 +21,6 @@ import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/homePage.dart';
 
-
 import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
@@ -44,6 +43,7 @@ import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/providers/workorder_detail_provider.dart';
 import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
@@ -53,84 +53,80 @@ import 'package:win_kamu/widgets/customLoadingScreenDialog.dart';
 import 'widgets/buttonWidgets/customButtonWithGradient.dart';
 import 'package:rxdart/rxdart.dart';
 
-
-
-void main() async{
-
+void main() async {
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return CustomLoadingScreen(
-      backgroundColor: Colors.white, textColor: Colors.black);
+        backgroundColor: Colors.white, textColor: Colors.black);
   };
 
   WidgetsFlutterBinding.ensureInitialized();
 
-await Firebase.initializeApp();
- FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+  await Firebase.initializeApp();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   final onNotifications = BehaviorSubject<String?>();
 
-
-FirebaseMessaging.onBackgroundMessage((message) =>      NotificationApi.showNotification(title:"message.notification?.title",body:"message.notification?.body",payload:'asd'));
-FirebaseMessaging messaging = FirebaseMessaging.instance;
-FirebaseMessaging.instance.getInitialMessage().then((message) {
-  if (message != null) {
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-    if (notification != null && android != null) {
-
+  FirebaseMessaging.onBackgroundMessage((message) =>
+      NotificationApi.showNotification(
+          title: "message.notification?.title",
+          body: "message.notification?.body",
+          payload: 'asd'));
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging.instance.getInitialMessage().then((message) {
+    if (message != null) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {}
     }
-  }
-});
+  });
 
-NotificationSettings settings = await messaging.requestPermission(
-  alert: true,
-  announcement: false,
-  badge: true,
-  carPlay: false,
-  criticalAlert: false,
-  provisional: false,
-  sound: true,
-);
-
-print('User granted permission: ${settings.authorizationStatus}');
-
-
-
-const AndroidInitializationSettings initializationSettingsAndroid =  AndroidInitializationSettings('@mipmap/ic_launcher');
-
-final IOSInitializationSettings initializationSettingsIOS =  const IOSInitializationSettings(
-  requestAlertPermission: true,
-  requestBadgePermission: true,
-  requestSoundPermission: true,
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
   );
 
-final MacOSInitializationSettings initializationSettingsMacOS = const MacOSInitializationSettings();
+  print('User granted permission: ${settings.authorizationStatus}');
 
-final InitializationSettings initializationSettings = InitializationSettings(
-  android: initializationSettingsAndroid,
-  iOS: initializationSettingsIOS,
-  macOS: initializationSettingsMacOS);
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
+  final IOSInitializationSettings initializationSettingsIOS =
+      const IOSInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+  );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async{
+  final MacOSInitializationSettings initializationSettingsMacOS =
+      const MacOSInitializationSettings();
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+      macOS: initializationSettingsMacOS);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: ((data) async {
     onNotifications.add(data);
   }));
 
-   void onClickedNotification(String? payload){
-          print('Foreground Payload : '+payload.toString());
-          
+  void onClickedNotification(String? payload) {
+    print('Foreground Payload : ' + payload.toString());
   }
+
   onNotifications.stream.listen(onClickedNotification);
-  
-  runApp(
-    Phoenix(
-      child: MultiProvider(
+
+  runApp(Phoenix(
+    child: MultiProvider(
       providers: providers,
       child: MyApp(),
     ),
-   
-  )
-  );
+  ));
 }
 
 List<SingleChildWidget> providers = [
@@ -144,39 +140,36 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
-  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
-  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
-
+  ChangeNotifierProvider<IssueActionProvider>(
+      create: (_) => IssueActionProvider()),
+  ChangeNotifierProvider<SearchViewProvider>(
+      create: (_) => SearchViewProvider()),
+  ChangeNotifierProvider<WoDetailViewProvider>(
+      create: (_) => WoDetailViewProvider()),
 ];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-  
-
-
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
     int numb = 0;
     return MaterialApp(
       builder: (context, child) => ResponsiveWrapper.builder(
-          BouncingScrollWrapper.builder(context, child!),
-          maxWidth: 1200,
-          minWidth: 450,
-          // defaultScale: true,
-          // breakpoints: [
-          //   const ResponsiveBreakpoint.resize(450, name: MOBILE),
-          //   const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-          //   const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-          //   const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-          //   const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-          // ],
-          
-          ),
+        BouncingScrollWrapper.builder(context, child!),
+        maxWidth: 1200,
+        minWidth: 450,
+        // defaultScale: true,
+        // breakpoints: [
+        //   const ResponsiveBreakpoint.resize(450, name: MOBILE),
+        //   const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+        //   const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+        //   const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+        //   const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+        // ],
+      ),
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -194,7 +187,7 @@ class MyApp extends StatelessWidget {
         OpenRequestDetail.pageName: (context) => OpenRequestDetail(),
         CloseRequestAwaitApproval.closeRequest: (context) =>
             CloseRequestAwaitApproval(),
-        CloseRequestDetail.closeRequestDetail: (context) => 
+        CloseRequestDetail.closeRequestDetail: (context) =>
             CloseRequestDetail(),
         PlannedRequest.plannedRequest: (context) => PlannedRequest(),
         PlannedRequestDetail.plannedRequestDetail: (context) =>
@@ -206,8 +199,6 @@ class MyApp extends StatelessWidget {
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
         WoTracingList.tracingList: (context) => WoTracingList(),
-        
-        
       },
     );
   }

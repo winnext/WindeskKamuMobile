@@ -4,6 +4,7 @@ class WoListViewModel {
   String? SERVICE;
   String? SERVICE_NAME;
   String? MODULELOCATION;
+  String? MODULECODE;
   String? NAME;
   String? RESPONSIBLE;
   String? STATUSNAME;
@@ -15,10 +16,12 @@ class WoListViewModel {
     this.SERVICE,
     this.SERVICE_NAME,
     this.MODULELOCATION,
+    this.MODULECODE,
     this.NAME,
     this.RESPONSIBLE,
     this.STATUSNAME,
     this.PLANNED_ENDDATE,
+
   });
   WoListViewModel.fromJson(Map<String, dynamic> json) {
     ID = json['ID'];
@@ -26,6 +29,7 @@ class WoListViewModel {
     SERVICE = json['SERVICE'];
     SERVICE_NAME = json['SERVICE_NAME'];
     MODULELOCATION = json['MODULELOCATION'];
+    MODULECODE = json['MODULECODE'];
     NAME = json['NAME'];
     RESPONSIBLE = json['RESPONSIBLE'];
     STATUSNAME = json['STATUSNAME'];

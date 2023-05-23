@@ -347,7 +347,7 @@ class IssueActionProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('data' + data.toString());
+    print('dataASGUSER' + data.toString());
 
     if (true) {
       liveSelectAsgUsers.clear();

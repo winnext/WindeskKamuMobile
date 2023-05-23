@@ -39,8 +39,6 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
         Provider.of<IssueActionProvider>(context, listen: false);
     final newNotifProvider =
         Provider.of<NewNotifProvider>(context, listen: false);
-    issueActionProvider
-        .getLiveSelectAsgUser(issueActionProvider.liveSelectGroupCode);
     issueActionProvider.setliveSelectGroupCode = '';
     issueActionProvider.setliveSelectGroupName = '';
     issueActionProvider.setliveSelectUserCode = '';
@@ -58,10 +56,10 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
     final newNotifProvider =
         Provider.of<NewNotifProvider>(context, listen: true);
 
-    return WillPopScope(
-      onWillPop: () async => false,
+    return SingleChildScrollView(
       child: Container(
         width: size.width / 1.09,
+        height: size.height / 2.5,
         color: APPColors.Main.white,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -110,7 +108,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                         issueActionProvider.setmobilePhoto =
                             data.MOBILE_PHOTO.toString(),
                         print('dataaaa' +
-                            issueActionProvider.assigneeccType.toString())
+                            issueActionProvider.assigneeccType.toString()),
                       },
                       value: data.CODE.toString(),
                       child: Padding(
@@ -218,6 +216,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                                 onTap: () => {
                                   issueActionProvider.setliveSelectGroupName =
                                       data.NAME.toString(),
+                                  issueActionProvider.getLiveSelectAsgUser(data.CODE.toString()),
                                 },
                                 value: data.CODE.toString(),
                                 child: Padding(

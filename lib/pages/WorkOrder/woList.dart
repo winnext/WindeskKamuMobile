@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
+import 'package:win_kamu/pages/WorkOrder/woDetail.dart';
 import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/issue/issueSummary.dart';
 import 'package:win_kamu/pages/issue/issueTracingList.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../api/api_repository.dart';
 import '../../models/woListView.model.dart';
 import '../../providers/main_page_view_provider.dart';
+import '../../providers/workorder_detail_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
@@ -66,7 +68,7 @@ class _WoListState extends State<WoList> {
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<WorkOrderProvider>(context);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
+    final detailViewProvider = Provider.of<WoDetailViewProvider>(context);
     int index = listViewProvider.currentPage;
     final exampleList = Provider.of<WorkOrderProvider>(context);
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
@@ -86,10 +88,8 @@ class _WoListState extends State<WoList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WoTracingList()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WoTracingList()));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -127,12 +127,11 @@ class _WoListState extends State<WoList> {
                                 String formattedDate = "";
                                 WoListViewModel listElements =
                                     listViewProvider.woListView[i];
-
-                                final ISSUECODE = listElements.CODE.toString();
+                                final moduleCode = listElements.MODULECODE == null ? '' : listElements.MODULECODE;
                                 final time = DateTime.now();
                                 final String timeNow = DateFormat('yMMddhhmmss')
                                     .format(time)
-                                  .toString();
+                                    .toString();
                                 return Column(
                                   children: [
                                     Padding(
@@ -146,30 +145,31 @@ class _WoListState extends State<WoList> {
                                           id: listElements.ID.toString(),
                                           service:
                                               listElements.SERVICE.toString(),
-                                          serviceName: listElements.SERVICE_NAME.toString(),
-                                          name: listElements.NAME
+                                          serviceName: listElements.SERVICE_NAME
                                               .toString(),
-                                          plannedEndDate: listElements.PLANNED_ENDDATE
+                                          name: listElements.NAME.toString(),
+                                          plannedEndDate: listElements
+                                              .PLANNED_ENDDATE
                                               .toString(),
-                                          moduleLocation: listElements.MODULELOCATION
-                                              ,
+                                          moduleLocation:
+                                              listElements.MODULELOCATION,
                                           responsible: listElements.RESPONSIBLE
                                               .toString(),
                                           isIcon: true,
                                           onPressed: (code) {
-                                            detailViewProvider.setIssueCode =
-                                                '';
+                                            detailViewProvider.setwoCode = '';
                                             print('tiklandi' + code);
-                                            detailViewProvider.setIssueCode =
-                                                code;
+                                            detailViewProvider.setwoCode = code;
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const IssueSummary(),
+                                                builder: (context) => WoDetail(
+                                                  moduleCode:
+                                                      moduleCode,
+                                                  woCode: listElements.CODE
+                                                      .toString(),
+                                                ),
                                               ),
                                             );
-                                            // Navigator.pushNamed(context,
-                                            //     IssueDetail.issueDetail);
                                           },
                                           onPressedLong: () {
                                             print('pressed');

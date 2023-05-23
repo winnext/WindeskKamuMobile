@@ -79,3 +79,20 @@ fixStyle(respondedTimer, fixTimer, targetFDate, fixedDate) {
 
   return conditionOfTextStyle;
 }
+
+convertSecToStringFormat(String second) {
+  if (second != null) {
+    int seconds = int.parse(second);
+    int h = (seconds / 3600).floor();
+    int m = ((seconds % 3600) / 60).floor() as int;
+    int s = ((seconds % 3600) % 60).floor() as int;
+
+    var hDisplay = h > 0 ? ' $h sa ' : '';
+    var mDisplay = m > 0 ? '$m dk ' : '';
+    var sDisplay = s > 0 ? '$s sn ' : '';
+    print('timeee' + hDisplay + mDisplay + sDisplay);
+    return hDisplay + mDisplay + sDisplay;
+  } else {
+    return 'Zaman bilgisi bulunamadı';
+  }
+}
