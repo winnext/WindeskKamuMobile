@@ -253,12 +253,13 @@ Erişim Testi''', style: TextStyle(color: Colors.white)),
                                child: Column(
                                    children: [
                                       Container(
-                                                       child: testv1 == 'success' ?  Text('Windesk : Erişim Başarılı',style: TextStyle(color: Colors.green),) : testv1 == 'notsuccess' ? Text('Windesk: Erişim Başarısız',style: TextStyle(color: Colors.red),)  :Text('',style: TextStyle(color: Colors.red),)  ,
+                                                       child: testv1 == 'success' ?  Text('Windesk : Erişim Başarılı',style: TextStyle(color: Colors.green),) :  Text('Windesk: Erişim Bekleniyor...',style: TextStyle(color: Colors.red),)    ,
                                                      ),
                                
                                                      Container(
-                                                       child: testv2 == 'success' ?  Text('Mobil Servis : Erişim Başarılı',style: TextStyle(color: Colors.green),) : testv2 == 'notsuccess' ? Text('Mobil Servis : Erişim Başarısız',style: TextStyle(color: Colors.red),)  :Text('',style: TextStyle(color: Colors.red),)  ,
-                                                     )
+                                                       child: testv2 == 'success' ?  Text('Mobil Servis : Erişim Başarılı',style: TextStyle(color: Colors.green),) :  Text('Mobil Servis : Erişim Bekleniyor...',style: TextStyle(color: Colors.red),)   ,
+                                                     ),
+                                                     
                                    ],
                                  ),
                              ),

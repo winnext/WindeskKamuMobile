@@ -4,6 +4,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/searchPage/mahalArama.dart';
 import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
+import 'package:win_kamu/utils/global_utils.dart';
 
 import '../api/api_repository.dart';
 
@@ -414,11 +415,19 @@ _mahalAraListeArray = mahalAraListeArray;
 notifyListeners();
 }
 
-mahalAramaListesi(mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup, data, sayfa ) async{
+mahalAramaListesi(context,mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup, data, sayfa ) async{
   mahalAraListeArray.clear();
   final mahalAramaListesiSonuc = await apirepository.mahalAramaListesiApi(mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup ,data, sayfa);
   print(mahalAramaListesiSonuc);
-  setMahalAraListeArray = mahalAramaListesiSonuc;
+  if(mahalAramaListesiSonuc.length > 0){
+            setMahalAraListeArray = mahalAramaListesiSonuc;
+
+  }else{
+                //setMahalAraListeArray = [];
+              snackBar(context, 'Sonuç Bulunamadı', 'info');
+              Navigator.pop(context);
+
+  }
       notifyListeners();
 
 
@@ -430,10 +439,46 @@ mahalAramaListesi(mahalKodu, mahalAdi, bina, kat, kanat, sinif, grup, data, sayf
 ////////////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////////
+/////////////////////////  Varlıklar   ///////////////////////
+////////////////////////////////////////////////////////////////
 
 
+ String _varlikSayfa = '1';
+        String  get varlikSayfa => _varlikSayfa;
+
+        
+     set setVarlikSayfa(String varlikSayfa ){
+        _varlikSayfa = varlikSayfa;
+        notifyListeners();
+      }  
+
+List _varlikAraListeArray = [];
+
+    List get varlikAraListeArray => _varlikAraListeArray;
+set setVarlikAraListeArray(List varlikAraListeArray) {
+  _varlikAraListeArray = varlikAraListeArray;
+  notifyListeners();
+}
+
+varlikAramaListesi(context,entity_code, locCode, seriNo, rfid, typeCode, brandCode, modelCode, data_sayisi, sayfa  ) async{
+  varlikAraListeArray.clear();
+  final varlikAramaListesiSonuc = await apirepository.varlikAramaListesiApi(entity_code, locCode, seriNo, rfid, typeCode, brandCode, modelCode, data_sayisi, sayfa );
+  print('varlikAramaListesiSonuc');
+  print(varlikAramaListesiSonuc);
+  if(varlikAramaListesiSonuc.length > 0){
+            setVarlikAraListeArray = varlikAramaListesiSonuc;
+
+  }else{
+                //setMahalAraListeArray = [];
+              snackBar(context, 'Sonuç Bulunamadı', 'info');
+              Navigator.pop(context);
+
+  }
+      notifyListeners();
 
 
+}
 
 
  Future<void> scanQR(setDurumu) async {

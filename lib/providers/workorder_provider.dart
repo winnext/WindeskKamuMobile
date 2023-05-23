@@ -335,9 +335,6 @@ class WorkOrderProvider extends ChangeNotifier {
 
       woFilterBuildCodes.addAll(tempwoFilterBuildCodes);
       int noOfTasks = tempwoFilterBuildCodes.length;
-
-      print('building ++++2' + woFilterBuildCodes[0].CODE.toString());
-
       _isDataLoading = false;
       _loading = false;
       _isDataExist = false;
