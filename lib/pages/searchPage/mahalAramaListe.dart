@@ -32,6 +32,9 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
   Widget build(BuildContext context) {
      final searchProvider = Provider.of<SearchViewProvider>(context,listen: true);
     var data = searchProvider.mahalAraListeArray;
+    print('data');
+    print(data);
+   
     List<String> codes = [];
     List<String> locTrees = [];
     List<String> names = [];
@@ -42,6 +45,7 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
       locTrees.add(element['LOCTREE']);
       names.add(element['NAME']);
     }
+     
 
 
     loadData(sayfa) {
@@ -95,7 +99,7 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
                               var grupKodum =  searchProvider.mahalAraGrupArray[1][grupDatasi[0].indexOf(dropdownvalueGrup)];
                               var grupKodu = grupKodum != 'Grup' ? grupKodum : '';
 
-        searchProvider.mahalAramaListesi(mahalKodu,mahalAdi,binaKodu,katKodu,kanatKodu,sinifKodu,grupKodu,20,sayfa);
+        searchProvider.mahalAramaListesi(context,mahalKodu,mahalAdi,binaKodu,katKodu,kanatKodu,sinifKodu,grupKodu,20,sayfa);
 
     }
 
@@ -122,6 +126,7 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
             actions: [],
           ),
           body: Container(
+            color: Color.fromARGB(255, 224, 224, 224),
             child: Center(
               child: codes.length > 0 ? 
               Padding(
@@ -139,23 +144,25 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
                                       var summary_sonuc = await apirepository.mahalAramaMahalDetaySummaryApi(codes[i]);
                                       var sla_sonuc = await apirepository.mahalAramaMahalDetaySlaApi(codes[i]);
                                       var bakim_is_emri = await apirepository.mahalAraMahalDetayBakimIsEmri(codes[i]);
+                                      var anlik_is_emri = await apirepository.mahalAraMahalDetayAnlikIsEmri(codes[i]);
+
                                        PersistentNavBarNavigator.pushNewScreen(
-        context,
-        screen: MahalAramaDetay(code:codes[i],name:names[i],locTree: locTrees[i],summary: summary_sonuc, sla: sla_sonuc,bakim_is_emri:bakim_is_emri ),
-        withNavBar: true, // OPTIONAL VALUE. True by default.
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        
-    );
+                                          context,
+                                          screen: MahalAramaDetay(code:codes[i],name:names[i],locTree: locTrees[i],summary: summary_sonuc, sla: sla_sonuc,bakim_is_emri:bakim_is_emri,anlik_is_emri: anlik_is_emri, ),
+                                          withNavBar: true, // OPTIONAL VALUE. True by default.
+                                          pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                          
+                                      );
                                     },
                                     child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     
                                     child: Container(
-                                      width: 82.w,
+                                      width: 90.w,
                                       height: 19.h,
                                       
                                       decoration: BoxDecoration(
-                                        color: APPColors.Filter.blue,
+                                        color: Colors.white,
                                           borderRadius: BorderRadius.circular(15),
                                         ),
                                       child: Padding(

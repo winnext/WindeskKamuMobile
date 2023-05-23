@@ -3,11 +3,15 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:never_behind_keyboard/never_behind_keyboard.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
+import 'package:win_kamu/pages/searchPage/varlikAramaListe.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 
 import '../../providers/login_provider.dart';
+import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 
 class varlikArama extends StatefulWidget {
@@ -279,6 +283,33 @@ ScrollController _scrollController = ScrollController();
                               print("Seri NO : "+searchProvider.seriNo.text);
                               print("RFID : "+searchProvider.rfid.text);
                               print("Mahal : "+searchProvider.mahal.text);
+                              String varlikKodu = searchProvider.varliKodu.text.toString();
+                              String seriNo = searchProvider.seriNo.text.toString();
+                              String rfid = searchProvider.rfid.text.toString();
+                              String mahal = searchProvider.mahal.text.toString();
+                                 if(
+                                  searchProvider.varliKodu.text == '' && 
+                                  searchProvider.seriNo.text == '' &&
+                                  searchProvider.rfid.text == '' &&
+                                  searchProvider.mahal.text == ''
+
+                                  ){
+                                    snackBar(context, 'Arama yaparken en az bir kriter seçilmelidir', 'info');
+                                  }else{
+                                    searchProvider.setVarlikSayfa = '1';
+                                    searchProvider.varlikAramaListesi(context,varlikKodu,mahal,seriNo,rfid,'','','',20,1);
+                                      print('Varlık Arama Sayfası Detayı');
+                                         PersistentNavBarNavigator.pushNewScreen(
+        context,
+        screen: VarlikAramaListe(
+          
+          
+        ),
+        withNavBar: true, // OPTIONAL VALUE. True by default.
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        
+    );
+                                  }
 
 
                               

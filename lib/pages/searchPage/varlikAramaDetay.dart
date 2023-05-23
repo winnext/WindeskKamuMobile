@@ -8,24 +8,24 @@ import '../../providers/detail_view_provider.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../providers/search_view_provider.dart';
 import '../../utils/themes.dart';
+import '../issue/issueSummary.dart';
 
-class MahalAramaDetay extends StatefulWidget {
+class VarlikAramaDetay extends StatefulWidget {
   final String code;
-  final String name;
-  final String locTree;
+  
   final Map summary;
   final List sla;
   final List bakim_is_emri;
   final List anlik_is_emri;
 
   
-  const MahalAramaDetay({super.key,required this.code, required this.name, required this.locTree, required this.summary, required this.sla, required this.bakim_is_emri, required this.anlik_is_emri});
+  const VarlikAramaDetay({super.key,required this.code, required this.summary, required this.sla, required this.bakim_is_emri, required this.anlik_is_emri});
 
   @override
-  State<MahalAramaDetay> createState() => _MahalAramaDetayState();
+  State<VarlikAramaDetay> createState() => _VarlikAramaDetayState();
 }
 
-class _MahalAramaDetayState extends State<MahalAramaDetay> {
+class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
 
 
 
@@ -48,7 +48,7 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
             backgroundColor: Colors.white,
-            title: Text('Mahal Detayı',style: TextStyle(color: Colors.black),),
+            title: Text('Varlık Detayı',style: TextStyle(color: Colors.black),),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -92,10 +92,9 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text('Mimari Adı : ',style: TextStyle(color: Colors.white,)),
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['LOCTREE'],  maxLines: 6,
+                                            child: Text(widget.summary['CODE'],  maxLines: 6,
                                               overflow:TextOverflow.clip,style: TextStyle(color: Colors.white,)
                                           ),
                                           )
@@ -104,46 +103,29 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
                                       Row(
                                                       
                                         children: [
-                                          Text('Sınıf : ',style: TextStyle(color: Colors.white,)),
+                                          Text('Adı : ',style: TextStyle(color: Colors.white,)),
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['CLASS'],style: TextStyle(color: Colors.white,))
+                                            child: Text(widget.summary['CMDB_NAME'],style: TextStyle(color: Colors.white,))
                                             )
                                         ],
                                       ),
                                       Row(
                                         children: [
-                                          Text('EK18 Mahal Grubu : ',style: TextStyle(color: Colors.white,)),
-                                          Text(widget.summary['EK18GROUP'] == null ? 'Veri Yok' : widget.summary['EK18GROUP'],style: TextStyle(color: Colors.white,)  )
+                                          Text('Statü : ',style: TextStyle(color: Colors.white,)),
+                                          Text(widget.summary['STATUS'] == null ? 'Veri Yok' : widget.summary['STATUS'],style: TextStyle(color: Colors.white,)  )
                                         ],
                                       ),
                                       Row(
                                         children: [
-                                          Text('Alan : ',style: TextStyle(color: Colors.white,)),
+                                          Text('Kategori : ',style: TextStyle(color: Colors.white,)),
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['AREA'] == null ? 'Veri Yok' : widget.summary['AREA'],style: TextStyle(color: Colors.white,))
+                                            child: Text(widget.summary['CATEGORY'] == null ? 'Veri Yok' : widget.summary['CATEGORY'],style: TextStyle(color: Colors.white,))
                                             )
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Text('Ana Grup : ',style: TextStyle(color: Colors.white,)),
-                                          Container(
-                                            width: 50.w,
-                                            child: Text(widget.summary['TYPE'] == null ? 'Veri Yok' : widget.summary['TYPE'],style: TextStyle(color: Colors.white,))
-                                            )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('Grup : ',style: TextStyle(color: Colors.white,)),
-                                          Container(
-                                            width: 50.w,
-                                            child: Text(widget.summary['TYPE2'] == null ? 'Veri Yok' : widget.summary['TYPE2'],style: TextStyle(color: Colors.white,))
-                                            )
-                                        ],
-                                      )
+                             
                                     ],
                                   ),
                                 ),
@@ -191,13 +173,22 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
               child: Center(
                 child: ElevatedButton(onPressed: (){
                   print('Routing issue detail page');
-               
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
-
+        print(widget.sla[i]['BM_CODE']);
+         detailViewProvider.setIssueCode = '';
         detailViewProvider.setIssueCode = widget.sla[i]['BM_CODE'];
+Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const IssueSummary(),
+                                              ),
+                                            );
                          
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 79, 93, 107),
+                ),
                  child:  Column(
                    mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,6 +242,8 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
                   ///////////////////////////////////
                   ///  İŞ EMRİ SAYFASINA GİDECEK ///
                   //////////////////////////////////
+                  ///
+  
                          
                 },
                  child:  Column(
@@ -349,9 +342,9 @@ class _MahalAramaDetayState extends State<MahalAramaDetay> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.code+'-'+widget.name,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
+                            Text(widget.code+'-'+widget.summary['STATUS'],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
                             Text(''),
-                            Text(widget.locTree,style: TextStyle(color: Colors.black,fontSize: 15),),
+                            Text(widget.summary['CMDB_NAME'],style: TextStyle(color: Colors.black,fontSize: 15),),
                           ],
                         ),
                       ),

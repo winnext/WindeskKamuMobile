@@ -68,8 +68,10 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
+      
       child: Scaffold(
         appBar: AppBar(
+          
           title: const Text(
             'Vaka Listesi Detay',
             style: TextStyle(color: Colors.black),
@@ -78,6 +80,7 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
           backgroundColor: APPColors.Main.white,
           toolbarHeight: size.height / 20,
           centerTitle: true,
+          
           leading: IconButton(
             onPressed: () => {
               Navigator.push(

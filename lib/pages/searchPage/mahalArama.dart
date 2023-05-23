@@ -668,7 +668,7 @@ print(grup);
                                     snackBar(context, 'Arama yaparken en az bir kriter seçilmelidir', 'info');
                                   }else{
                                     searchProvider.setSayfa = '1';
-                                    searchProvider.mahalAramaListesi(mahalKodu,mahalAdi,binaKodu,katKodu,kanatKodu,sinifKodu,grupKodu,20,1);
+                                    searchProvider.mahalAramaListesi(context,mahalKodu,mahalAdi,binaKodu,katKodu,kanatKodu,sinifKodu,grupKodu,20,1);
                                       print('Mahal Arama Sayfası Detayı');
                                          PersistentNavBarNavigator.pushNewScreen(
         context,

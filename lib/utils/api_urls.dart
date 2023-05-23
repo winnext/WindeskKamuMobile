@@ -23,13 +23,11 @@ const TOKEN_V2 = 'ishprod!';
 
 // const ATTACHPATHLIVE =
 //       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-
 const ATTACHPATHLIVE =
 "http://10.32.12.22/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
 
-// const ATTACHPATHLIVE =
-// "https://demo.signumtte.com/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
-
+//  const ATTACHPATHLIVE =
+//       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
 //  const ATTACHPATHLIVE =
 //      "http://10.159.11.81/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
 
