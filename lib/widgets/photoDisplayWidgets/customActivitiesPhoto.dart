@@ -15,7 +15,7 @@ class ActivitiesPhoto extends StatelessWidget {
                 await showDialog(
                     context: context,
                     builder: (_) =>
-                        ImageDialog(photoAdress: photoAdress.toString()));
+                        ImageDialog(photoAdress: photoAdress.toString()),);
               },
             ),
             radius: 30.0,
@@ -29,11 +29,14 @@ class ImageDialog extends StatelessWidget {
   const ImageDialog({Key? key, required this.photoAdress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Dialog(
       child: Container(
-        width: 200,
-        height: 200,
+        width: size.width,
+        height: size.height /4,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
                 image: NetworkImage(photoAdress.toString()),
                 fit: BoxFit.cover)),

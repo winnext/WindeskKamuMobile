@@ -1,7 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 import 'package:win_kamu/models/issue_activities.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/homePage.dart';
@@ -90,8 +93,14 @@ class _IssueFilesState extends State<IssueFiles> {
 
                               IssueAttachmentModal listElements =
                                   listViewProvider.issueAttachmentView[i];
-                              final imageUrl = ATTACHPATHLIVE + listElements.ID.toString();
-                              print('imageUrl : '+ imageUrl.toString());
+                              final fileUrl =
+                                  ATTACHPATHLIVE + listElements.ID.toString();
+                              bool? isPDF =
+                                  listElements.DISPFILENAME?.contains('pdf');
+                              bool? isXLSX =
+                                  listElements.DISPFILENAME?.contains('xlsx');
+                              bool? isDOCX =
+                                  listElements.DISPFILENAME?.contains('docx');
                               return Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -102,30 +111,52 @@ class _IssueFilesState extends State<IssueFiles> {
                                       Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                  'Image ' + listElements.ID.toString()),
+                                              Text('Image ' +
+                                                  listElements.ID.toString()),
                                               Text(
                                                   listElements.IDATE.toString())
                                             ],
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 10),
-                                            child: ActivitiesPhoto(photoAdress: imageUrl,),
-                                          ),
-                                          
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 10),
+                                              child: (isPDF == true ||
+                                                      isXLSX == true ||
+                                                      isDOCX == true)
+                                                  ? Link(
+                                                      uri: Uri.parse(fileUrl),
+                                                      target: LinkTarget.blank,
+                                                      builder:
+                                                          (BuildContext ctx,
+                                                              FollowLink?
+                                                                  openLink) {
+                                                        return TextButton.icon(
+                                                          onPressed: openLink,
+                                                          label: const Text(
+                                                              'Link Widget '),
+                                                          icon: const Icon(
+                                                              Icons.read_more),
+                                                        );
+                                                      },
+                                                    )
+                                                  : ActivitiesPhoto(
+                                                      photoAdress: fileUrl,
+                                                    )),
                                         ],
                                       ),
-                                          Divider(
-                                            height: 10,
-                                            color: APPColors.Main.grey,
-                                            thickness: 5.0,
-                                          ),
+                                      Divider(
+                                        height: 10,
+                                        color: APPColors.Main.grey,
+                                        thickness: 5.0,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -146,9 +177,7 @@ class _IssueFilesState extends State<IssueFiles> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('object');
-        },
+        onPressed: () {},
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
       ),

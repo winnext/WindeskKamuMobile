@@ -1,17 +1,10 @@
 // ignore_for_file:file_names, prefer_const_constructors_in_immutables,prefer_const_constructors,prefer_const_literals_to_create_immutables,use_key_in_widget_constructors
 
 import 'dart:async';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
-
-import '../../pages/full_screen_modal/issueActionModal.dart';
 import '../../utils/time_utils.dart';
-import '../../utils/utils.dart';
-import '../dialogWidgets/customActionSheetBottomDialog.dart';
-import '../dialogWidgets/customCuppertinoDialog.dart';
-import '../modalWidgets/issueActionModal.dart';
+
 
 class DetailListWidget extends StatefulWidget {
   final String? code,

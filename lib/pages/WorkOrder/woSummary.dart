@@ -214,7 +214,6 @@ class _WoSummaryState extends State<WoSummary> {
                     color: APPColors.Main.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  height: size.height / 2,
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),

@@ -81,6 +81,7 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   never_behind_keyboard: ^1.0.2
   accordion: ^2.5.1
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
