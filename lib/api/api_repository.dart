@@ -684,6 +684,110 @@ class APIRepository {
     }
   }
 
+
+
+    Future woCreate(woSpace, woService, woName, woNameLabel, priority_type, workorder_cfg, woDesc,  image) async{
+
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            String deviceToken = prefs.getString('deviceId').toString();
+
+            String? kadi = prefs.getString('prefsUserName'); 
+
+        
+
+            String woCreateUrl = base_url_v1+TOKEN_V1 +
+          deviceToken +'&action=saveWorkorderNfs&workorder_type='+woName+
+          '&workorder_name='+woNameLabel+
+          '&workorder_service='+woService+
+          '&workorder_space='+woSpace+
+          '&workorder_description='+woDesc+
+          '&workorder_priority_type='+priority_type+
+          '&workorder_cfg='+workorder_cfg;
+
+          print(woCreateUrl);
+
+
+              try {
+              BaseOptions options = new BaseOptions(
+            baseUrl: woCreateUrl,
+            receiveDataWhenStatusError: true,
+            connectTimeout: 3*2000, // 60 seconds
+            receiveTimeout: 3*2000 // 60 seconds
+            );
+
+        Dio dio = Dio(options);
+        final response = await dio.get(woCreateUrl);
+        
+            print(response);
+            if (response.data['success'] == true) {
+                          return [[1],response.data];
+            }else{
+              return [[0],response.data['uyari']];
+
+            }
+
+        
+
+      }on DioError catch (e){
+        print('girdi');
+        return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+      }
+
+
+    }
+
+
+    Future woCreateHizmetListesiApi(usercode) async{
+
+       SharedPreferences prefs = await SharedPreferences.getInstance();
+          String deviceToken = prefs.getString('deviceId').toString();
+
+          String? kadi = prefs.getString('prefsUserName'); 
+
+       
+
+          String woCreateHizmetListesiUrl = base_url_v1+TOKEN_V1 +
+        deviceToken +'&action=getServices&username='+kadi.toString();
+
+        print(woCreateHizmetListesiUrl);
+
+
+            try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: woCreateHizmetListesiUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*2000, // 60 seconds
+          receiveTimeout: 3*2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(woCreateHizmetListesiUrl);
+      
+          //print(response);
+          if (response.data['result'] == 'success') {
+                        return response.data['records'];
+          }else{
+            return [];
+
+          }
+
+      
+
+    }on DioError catch (e){
+      print('girdi');
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+
+
+
+    }
+
+
+
+
   Future login(String kadi, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();

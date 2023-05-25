@@ -57,8 +57,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // Fill this out in the next steps.
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
-        title: const Text('Fotoğraf Çek')),
+         backgroundColor: Colors.white,
+        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
+           leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+
+                },
+                icon: Icon(Icons.arrow_back, color: Colors.black)),
+        
+        
+        ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -131,7 +140,7 @@ class DisplayPictureScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
+        backgroundColor: Colors.white,
         title: const Text('Fotoğraf')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
