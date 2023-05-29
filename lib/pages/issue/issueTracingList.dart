@@ -112,7 +112,10 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                         Provider.of<MainPageViewProvider>(
                                             context,
                                             listen: false);
-                                    Navigator.push(
+                                    listElements
+                                          .count
+                                          .toString() ==
+                                      '0' ? null :  Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => IssueList(

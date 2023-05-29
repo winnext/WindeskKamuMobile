@@ -121,154 +121,228 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 8, left: 12, right: 8, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: SizedBox(
-                      width: size.width / 2.0,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          widget.code.toString(),
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 14,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+              Flexible(
+                child: SizedBox(
+                  width: size.width / 2.0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      widget.code.toString(),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Color(0xff025273),
+                        fontSize: 14,
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: SizedBox(
-                      width: size.width / 1.5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          widget.statusName.toString(),
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 13,
-                          ),
-                        ),
+                ),
+              ),
+              Flexible(
+                child: SizedBox(
+                  width: size.width / 1.5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      widget.statusName.toString(),
+                      style: TextStyle(
+                        color: Color(0xff025273),
+                        fontSize: 13,
                       ),
                     ),
                   ),
-                  Divider(
-                    height: 5,
-                  ),
-                  widget.location.toString() != ""
-                      ? Flexible(
-                          child: SizedBox(
-                            width: size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                widget.location.toString(),
-                                style: TextStyle(
-                                  color: Color(0xff025273),
-                                  fontSize: 13,
-                                ),
-                              ),
+                ),
+              ),
+              Divider(
+                height: 5,
+              ),
+              widget.location.toString() != ""
+                  ? Flexible(
+                      child: SizedBox(
+                        width: size.width / 1.5,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            widget.location.toString(),
+                            style: TextStyle(
+                              color: Color(0xff025273),
+                              fontSize: 13,
                             ),
-                          ),
-                        )
-                      : Container(),
-                  Divider(
-                    height: 5,
-                  ),
-                  widget.space.toString() != ""
-                      ? Flexible(
-                          child: SizedBox(
-                            width: size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                widget.space.toString(),
-                                style: TextStyle(
-                                  color: Color(0xff025273),
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(),
-                  widget.description.toString() != ""
-                      ? Flexible(
-                          child: SizedBox(
-                            width: size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                widget.description.toString(),
-                                style: TextStyle(
-                                  color: Color(0xff025273),
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(),
-                  SizedBox(height: 6),
-                  Flexible(
-                    child: SizedBox(
-                      width: size.width / 1.5,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          'Açılma Tarihi:  ${widget.idate.toString()}',
-                          style: TextStyle(
-                            color: Color(0xff025273),
-                            fontSize: 13,
                           ),
                         ),
                       ),
+                    )
+                  : Container(),
+              Divider(
+                height: 5,
+              ),
+              widget.space.toString() != ""
+                  ? Flexible(
+                      child: SizedBox(
+                        width: size.width / 1.5,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            widget.space.toString(),
+                            style: TextStyle(
+                              color: Color(0xff025273),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              widget.description.toString() != ""
+                  ? Flexible(
+                      child: SizedBox(
+                        width: size.width / 1.5,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            widget.description.toString(),
+                            style: TextStyle(
+                              color: Color(0xff025273),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              SizedBox(height: 6),
+              Flexible(
+                child: SizedBox(
+                  width: size.width / 1.5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      'Açılma Tarihi:  ${widget.idate.toString()}',
+                      style: TextStyle(
+                        color: Color(0xff025273),
+                        fontSize: 13,
+                      ),
                     ),
                   ),
-                  widget.statusCode.toString() == "OPlanned"
-                      ? Flexible(
-                          child: SizedBox(
-                            width: size.width / 1.5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                'Randevulu Vaka ${widget.planedDate}',
-                                style: TextStyle(
-                                  color: Color(0xff025273),
-                                  fontSize: 13,
+                ),
+              ),
+              widget.statusCode.toString() == "OPlanned"
+                  ? Flexible(
+                      child: SizedBox(
+                        width: size.width / 1.5,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            'Randevulu Vaka ${widget.planedDate}',
+                            style: TextStyle(
+                              color: Color(0xff025273),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : widget.responseTimer == "0" && widget.fixedTimer == "0"
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Flexible(
+                              child: SizedBox(
+                                width: size.width / 1.5,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(bottom: 8.0),
+                                  child: Container(
+                                    width: size.width,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(5),
+                                      color: int.parse(widget.respondedIDate
+                                                      .toString()) -
+                                                  int.parse(widget
+                                                      .targetRDate
+                                                      .toString()) <
+                                              0
+                                          ? Color(0xff32CD32)
+                                          : Colors.red,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate).toString()}',
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: APPColors.Main.black,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            Flexible(
+                              child: SizedBox(
+                                width: size.width / 1.5,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(bottom: 0.0),
+                                  child: Container(
+                                    width: size.width,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(5),
+                                      color: int.parse((widget.fixedIDate)
+                                                      .toString()) -
+                                                  int.parse(
+                                                      (widget.targetFDate)
+                                                          .toString()) <
+                                              0
+                                          ? Color(0xff32CD32)
+                                          : Colors.red,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        'Gerçekleşen Düzeltme ${timeRecover(widget.fixedIDate).toString()}',
+                                        style: TextStyle(
+                                          color: APPColors.Main.black,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         )
-                      : widget.responseTimer == "0" && widget.fixedTimer == "0"
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(
-                                  child: SizedBox(
+                      : widget.responseTimer == "0" &&
+                              widget.fixedTimer == "1"
+                          ? Flexible(
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
                                     width: size.width / 1.5,
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 8.0),
-                                      child: Container(
-                                        width: size.width,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: int.parse(widget.respondedIDate
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
+                                        style: TextStyle(
+                                          backgroundColor: int.parse(widget
+                                                          .respondedIDate
                                                           .toString()) -
                                                       int.parse(widget
                                                           .targetRDate
@@ -276,270 +350,150 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                                   0
                                               ? Color(0xff32CD32)
                                               : Colors.red,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Text(
-                                            'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate).toString()}',
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: APPColors.Main.black,
-                                              fontSize: 13,
-                                            ),
-                                          ),
+                                          fontSize: 13,
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Flexible(
-                                  child: SizedBox(
-                                    width: size.width / 1.5,
+                                  SizedBox(
+                                    width: size.width / 1.1,
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 0.0),
-                                      child: Container(
-                                        width: size.width,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: int.parse((widget.fixedIDate)
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
                                                           .toString()) -
-                                                      int.parse(
-                                                          (widget.targetFDate)
-                                                              .toString()) <
+                                                      int.parse(widget
+                                                          .targetFDate
+                                                          .toString()) <
                                                   0
                                               ? Color(0xff32CD32)
                                               : Colors.red,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Text(
-                                            'Gerçekleşen Düzeltme ${timeRecover(widget.fixedIDate).toString()}',
-                                            style: TextStyle(
-                                              color: APPColors.Main.black,
-                                              fontSize: 13,
-                                            ),
-                                          ),
+                                          fontSize: 13,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: size.width / 1.1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetFDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
-                          : widget.responseTimer == "0" &&
-                                  widget.fixedTimer == "1"
-                              ? Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
-                                            style: TextStyle(
-                                              backgroundColor: int.parse(widget
-                                                              .respondedIDate
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetRDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
+                          : Flexible(
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetRDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          fontSize: 13,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetFDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetFDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                )
-                              : Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetRDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
+                                  SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetRDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          fontSize: 13,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetRDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetFDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: size.width / 1.5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Text(
-                                            'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
-                                            style: TextStyle(
-                                              color: int.parse(dateNow
-                                                              .toString()) -
-                                                          int.parse(widget
-                                                              .targetFDate
-                                                              .toString()) <
-                                                      0
-                                                  ? Color(0xff32CD32)
-                                                  : Colors.red,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                ],
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       crossAxisAlignment: CrossAxisAlignment.end,
-              //       children: [
-              //         Text(
-              //           widget.taskNo.toString(),
-              //           textAlign: TextAlign.right,
-              //           style: TextStyle(
-              //             color: Color(0xff025273),
-              //             fontSize: 13,
-              //           ),
-              //         ),
-              //         SizedBox(height: 6),
-              //         Text(
-              //           widget.sumdesc1.toString(),
-              //           textAlign: TextAlign.right,
-              //           style: TextStyle(
-              //             color: Color(0xff025273),
-              //             fontSize: 13,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     widget.isIcon
-              //         ? SizedBox(
-              //             width: MediaQuery.of(context).size.width / 18,
-              //             child: IconButton(
-              //               onPressed: widget.isIcon ? widget.press : () {},
-              //               icon: Icon(Icons.info),
-              //               color: APPColors.Main.blue,
-              //             ),
-              //           )
-              //         : SizedBox(
-              //             width: MediaQuery.of(context).size.width / 18,
-              //           ),
-              //   ],
-              // ),
+                                  SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetFDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: size.width / 1.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
+                                        style: TextStyle(
+                                          color: int.parse(dateNow
+                                                          .toString()) -
+                                                      int.parse(widget
+                                                          .targetFDate
+                                                          .toString()) <
+                                                  0
+                                              ? Color(0xff32CD32)
+                                              : Colors.red,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
             ],
           ),
         ),

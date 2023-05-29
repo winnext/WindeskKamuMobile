@@ -54,10 +54,10 @@ import 'widgets/buttonWidgets/customButtonWithGradient.dart';
 import 'package:rxdart/rxdart.dart';
 
 void main() async {
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return CustomLoadingScreen(
-        backgroundColor: Colors.white, textColor: Colors.black);
-  };
+  // ErrorWidget.builder = (FlutterErrorDetails details) {
+  //   return CustomLoadingScreen(
+  //       backgroundColor: Colors.white, textColor: Colors.black);
+  // };
 
   WidgetsFlutterBinding.ensureInitialized();
 

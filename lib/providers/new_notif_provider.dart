@@ -16,8 +16,22 @@ class NewNotifProvider extends ChangeNotifier {
   String _serialNumber = '';
   String _rfid = '';
   String _locCode = '';
-
+  String _imagePath = '';
+  String _base64 = '';
   String get qrCode => _qrCode;
+  
+
+  String get imagePath => _imagePath;
+  set setimagePath(String imagePath) {
+    _imagePath = imagePath;
+    notifyListeners();
+  }
+
+  String get base64 => _base64;
+  set setbase64(String base64) {
+    _base64 = base64;
+    notifyListeners();
+  }
   set setqrCode(String qrCode) {
     _qrCode = qrCode;
     notifyListeners();
@@ -28,6 +42,7 @@ class NewNotifProvider extends ChangeNotifier {
     _entityCode = entityCode;
     notifyListeners();
   }
+  
 
   String get serialNumber => _serialNumber;
   set setserialNumber(String serialNumber) {

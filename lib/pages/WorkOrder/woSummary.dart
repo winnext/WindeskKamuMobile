@@ -206,9 +206,9 @@ class _WoSummaryState extends State<WoSummary> {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 5), // changes position of shadow
                       ),
                     ],
                     color: APPColors.Main.white,

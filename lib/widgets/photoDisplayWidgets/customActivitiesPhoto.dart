@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ActivitiesPhoto extends StatelessWidget {
   final String? photoAdress;
-  const ActivitiesPhoto({Key? key, required this.photoAdress})
+  const   ActivitiesPhoto({Key? key, required this.photoAdress})
       : super(key: key);
 
   @override

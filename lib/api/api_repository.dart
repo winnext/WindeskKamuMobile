@@ -73,11 +73,13 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
+    String cikis_url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=logout&username=' +
+        kadi;
 
-    String cikis_url = base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=logout&username='+kadi;
-
-        print(cikis_url);
+    print(cikis_url);
 
     try {
       BaseOptions options = new BaseOptions(
@@ -101,65 +103,25 @@ class APIRepository {
     }
   }
 
-  Future mahalAraMahalDetayAnlikIsEmri(spaceCode) async{
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
-
-          String? kadi = prefs.getString('prefsUserName'); 
-
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getWorkorderFromCode&username='+
-          kadi.toString()+
-          '&spaceCode='+ spaceCode+
-          '&status='+ '~Closed%2C~Cancelled'+
-          '&module='+ '' +
-          '&entityCode=&type='+ 'reactive';
-
-           try {
-            BaseOptions options = new BaseOptions(
-          baseUrl: url,
-          receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
-          );
-
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print('anlik_is_emri');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['records'];
-                }else{
-                  return false;
-
-                }
-
-            
-
-          }on DioError catch (e){
-            print('girdi');
-            
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
-
-          }
-
-  }
-
-  Future mahalAraMahalDetayBakimIsEmri(spaceCode) async {
+  Future mahalAraMahalDetayAnlikIsEmri(spaceCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
     String? kadi = prefs.getString('prefsUserName');
 
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getWorkorderFromCode&username='+
-          kadi.toString()+
-          '&spaceCode='+ spaceCode+
-          '&status='+ '~Closed%2C~Cancelled'+
-          '&module='+ 'submaintenance' +
-          '&entityCode=&type='+ '';
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getWorkorderFromCode&username=' +
+        kadi.toString() +
+        '&spaceCode=' +
+        spaceCode +
+        '&status=' +
+        '~Closed%2C~Cancelled' +
+        '&module=' +
+        '' +
+        '&entityCode=&type=' +
+        'reactive';
 
     try {
       BaseOptions options = new BaseOptions(
@@ -169,30 +131,64 @@ class APIRepository {
           receiveTimeout: 3 * 2000 // 60 seconds
           );
 
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print('bakim_is_emri');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['records'];
-                }else{
-                  return false;
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print('anlik_is_emri');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
 
-                }
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+  }
 
-            
+  Future mahalAraMahalDetayBakimIsEmri(spaceCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-          }on DioError catch (e){
-            print('girdi');
-            
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    String? kadi = prefs.getString('prefsUserName');
 
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getWorkorderFromCode&username=' +
+        kadi.toString() +
+        '&spaceCode=' +
+        spaceCode +
+        '&status=' +
+        '~Closed%2C~Cancelled' +
+        '&module=' +
+        'submaintenance' +
+        '&entityCode=&type=' +
+        '';
 
-          }
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
 
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print('bakim_is_emri');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
 
-
-
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
   }
 
   Future mahalAramaMahalDetaySlaApi(spaceCode) async {
@@ -201,11 +197,16 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-             String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getIssuesFromCode&username='+kadi.toString()+'&spaceCode='+spaceCode+
-          '&parentStatus=openParentStatus&cmdbCode=';
-            try {
-            BaseOptions options = new BaseOptions(
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getIssuesFromCode&username=' +
+        kadi.toString() +
+        '&spaceCode=' +
+        spaceCode +
+        '&parentStatus=openParentStatus&cmdbCode=';
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
@@ -233,10 +234,15 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getSpaceDetail&username='+kadi.toString()+'&spaceCode='+spaceCode;
-            try {
-            BaseOptions options = new BaseOptions(
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getSpaceDetail&username=' +
+        kadi.toString() +
+        '&spaceCode=' +
+        spaceCode;
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
@@ -263,256 +269,268 @@ class APIRepository {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+  Future mahalAraVarlikDetayAnlikIsEmri(entityCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-  Future mahalAraVarlikDetayAnlikIsEmri(entityCode) async{
+    String? kadi = prefs.getString('prefsUserName');
 
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getWorkorderFromCode&username=' +
+        kadi.toString() +
+        '&entityCode=' +
+        entityCode +
+        '&status=' +
+        '~Closed%2C~Cancelled' +
+        '&module=' +
+        '' +
+        '&spaceCode=&type=' +
+        'reactive';
 
-          String? kadi = prefs.getString('prefsUserName'); 
-
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getWorkorderFromCode&username='+
-          kadi.toString()+
-          '&entityCode='+ entityCode+
-          '&status='+ '~Closed%2C~Cancelled'+
-          '&module='+ '' +
-          '&spaceCode=&type='+ 'reactive';
-
-           try {
-            BaseOptions options = new BaseOptions(
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print('Varlık anlik_is_emri');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['records'];
-                }else{
-                  return false;
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print('Varlık anlik_is_emri');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
 
-                }
-
-            
-
-          }on DioError catch (e){
-            print('girdi');
-            
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
-
-          }
-
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
   }
 
   Future mahalAraVarlikDetayBakimIsEmri(spaceCode) async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-          String? kadi = prefs.getString('prefsUserName'); 
+    String? kadi = prefs.getString('prefsUserName');
 
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getWorkorderFromCode&username='+
-          kadi.toString()+
-          '&entityCode='+ spaceCode+
-          '&status='+ '~Closed%2C~Cancelled'+
-          '&module='+ 'submaintenance' +
-          '&spaceCode=&type='+ '';
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getWorkorderFromCode&username=' +
+        kadi.toString() +
+        '&entityCode=' +
+        spaceCode +
+        '&status=' +
+        '~Closed%2C~Cancelled' +
+        '&module=' +
+        'submaintenance' +
+        '&spaceCode=&type=' +
+        '';
 
-           try {
-            BaseOptions options = new BaseOptions(
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print(' Varlik bakim_is_emri');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['records'];
-                }else{
-                  return false;
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Varlik bakim_is_emri');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
 
-                }
-
-            
-
-          }on DioError catch (e){
-            print('girdi');
-            
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
-
-          }
-
-
-
-
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
   }
 
+  Future mahalAramaVarlikDetaySlaApi(cmdbCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-  Future mahalAramaVarlikDetaySlaApi(cmdbCode) async{
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+    String? kadi = prefs.getString('prefsUserName');
 
-          String? kadi = prefs.getString('prefsUserName'); 
-
-             String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getIssuesFromCode&username='+kadi.toString()+'&cmdbCode='+cmdbCode+
-          '&parentStatus=openParentStatus&spaceCode=';
-            try {
-            BaseOptions options = new BaseOptions(
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getIssuesFromCode&username=' +
+        kadi.toString() +
+        '&cmdbCode=' +
+        cmdbCode +
+        '&parentStatus=openParentStatus&spaceCode=';
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print('varlik detay sla ');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['records'];
-                }else{
-                  return false;
-
-                }
-
-            
-
-          }on DioError catch (e){
-            print('girdi');
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
-          }
-
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print('varlik detay sla ');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
   }
 
-  Future mahalAramaVarlikDetaySummaryApi(case_no)async{
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+  Future mahalAramaVarlikDetaySummaryApi(case_no) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-          String? kadi = prefs.getString('prefsUserName'); 
+    String? kadi = prefs.getString('prefsUserName');
 
-          String url = base_url_v1 + TOKEN_V1+
-          deviceToken+'&action=getEntityDetail&username='+kadi.toString()+'&case_no='+case_no;
-            try {
-            BaseOptions options = new BaseOptions(
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getEntityDetail&username=' +
+        kadi.toString() +
+        '&case_no=' +
+        case_no;
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
-            Dio dio = Dio(options);
-            final response = await dio.get(url);
-                print('varlik detay summary ');
-                print(response);
-                if (response.data['result'] == 'success') {
-                              return response.data['detail'];
-                }else{
-                  return false;
-
-                }
-
-            
-
-          }on DioError catch (e){
-            print('girdi');
-            return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
-          }
-
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print('varlik detay summary ');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['detail'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
   }
 
-  Future varlikAramaListesiApi(entity_code, locCode, seriNo, rfid, typeCode, brandCode, modelCode, data_sayisi, sayfa ) async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+  Future varlikAramaListesiApi(entity_code, locCode, seriNo, rfid, typeCode,
+      brandCode, modelCode, data_sayisi, sayfa) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-          String? kadi = prefs.getString('prefsUserName'); 
+    String? kadi = prefs.getString('prefsUserName');
 
-          int limitStart = data_sayisi * (sayfa-1) ;
-          int limitEnd =  data_sayisi * sayfa;
+    int limitStart = data_sayisi * (sayfa - 1);
+    int limitEnd = data_sayisi * sayfa;
 
-          String varlikAramaListesiUrl = base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getEntity&username='+kadi.toString()+
-        '&case_no='+entity_code.toString()+
-        '&serino='+seriNo.toString()+
-        '&rfid='+rfid.toString()+'&serviceCode=&typeCode='+typeCode.toString()+
-        '&defnCode=&brand='+brandCode.toString()+
-        '&model='+modelCode.toString()+
-        '&mahalno='+locCode.toString()+
-        '&limitStart='+ limitStart.toString()+
-        '&limitEnd='+ limitEnd.toString();
+    String varlikAramaListesiUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getEntity&username=' +
+        kadi.toString() +
+        '&case_no=' +
+        entity_code.toString() +
+        '&serino=' +
+        seriNo.toString() +
+        '&rfid=' +
+        rfid.toString() +
+        '&serviceCode=&typeCode=' +
+        typeCode.toString() +
+        '&defnCode=&brand=' +
+        brandCode.toString() +
+        '&model=' +
+        modelCode.toString() +
+        '&mahalno=' +
+        locCode.toString() +
+        '&limitStart=' +
+        limitStart.toString() +
+        '&limitEnd=' +
+        limitEnd.toString();
 
-        print(varlikAramaListesiUrl);
+    print(varlikAramaListesiUrl);
 
-
-            try {
-            BaseOptions options = new BaseOptions(
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: varlikAramaListesiUrl,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
       Dio dio = Dio(options);
       final response = await dio.get(varlikAramaListesiUrl);
-      
-          //print(response);
-          if (response.data['result'] == 'success') {
-                        return response.data['records'];
-          }else{
-            return [];
 
-          }
-
-      
-
-    }on DioError catch (e){
+      //print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return [];
+      }
+    } on DioError catch (e) {
       print('girdi');
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
     }
+  }
 
+  Future mahalAramaListesiApi(
+    mahalKodu,
+    mahalAdi,
+    binaKodu,
+    katKodu,
+    kanatKodu,
+    sinifKodu,
+    grupKodu,
+    data_sayisi,
+    sayfa,
+  ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
+    String? kadi = prefs.getString('prefsUserName');
 
-    }
+    int limitStart = data_sayisi * (sayfa - 1);
+    int limitEnd = data_sayisi * sayfa;
 
-
-
-  Future mahalAramaListesiApi(mahalKodu, mahalAdi, binaKodu, katKodu, kanatKodu,
-      sinifKodu, grupKodu, data_sayisi, sayfa, ) async {
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
-
-          String? kadi = prefs.getString('prefsUserName'); 
-
-          int limitStart = data_sayisi * (sayfa-1) ;
-          int limitEnd =  data_sayisi * sayfa;
-
-          String mahalAramaListesiUrl = base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getSpace&username='+kadi.toString()+
-        '&spaceCode='+mahalKodu.toString()+
-        '&spaceName='+mahalAdi.toString()+
-        '&buildingCode='+binaKodu.toString()+
-        '&floorCode='+katKodu.toString()+
-        '&blockCode='+kanatKodu.toString()+
-        '&spaceClass='+sinifKodu.toString()+
-        '&groupNo='+grupKodu.toString()+
-        '&limitStart='+ limitStart.toString()+
-        '&limitEnd='+ limitEnd.toString();
-
+    String mahalAramaListesiUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getSpace&username=' +
+        kadi.toString() +
+        '&spaceCode=' +
+        mahalKodu.toString() +
+        '&spaceName=' +
+        mahalAdi.toString() +
+        '&buildingCode=' +
+        binaKodu.toString() +
+        '&floorCode=' +
+        katKodu.toString() +
+        '&blockCode=' +
+        kanatKodu.toString() +
+        '&spaceClass=' +
+        sinifKodu.toString() +
+        '&groupNo=' +
+        grupKodu.toString() +
+        '&limitStart=' +
+        limitStart.toString() +
+        '&limitEnd=' +
+        limitEnd.toString();
 
     try {
       BaseOptions options = new BaseOptions(
@@ -524,14 +542,13 @@ class APIRepository {
 
       Dio dio = Dio(options);
       final response = await dio.get(mahalAramaListesiUrl);
-      
-          //print(response);
-          if (response.data['result'] == 'success') {
-                        return response.data['records'];
-          }else{
-            return [];
 
-          }
+      //print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return [];
+      }
       //print(response);
     } on DioError catch (e) {
       print('girdi');
@@ -543,9 +560,8 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-
-    String mahalAramaKampusUrl= base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getBuildings';
+    String mahalAramaKampusUrl =
+        base_url_v1 + TOKEN_V1 + deviceToken + '&action=getBuildings';
 
     try {
       BaseOptions options = new BaseOptions(
@@ -572,9 +588,11 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-
-    String mahalAramaBinaUrl= base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getFloors&buildingCode='+buildingCode;
+    String mahalAramaBinaUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getFloors&buildingCode=' +
+        buildingCode;
 
     try {
       BaseOptions options = new BaseOptions(
@@ -601,9 +619,11 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-
-    String mahalAramaBinaUrl= base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getBlocks&floorCode='+floorCode;
+    String mahalAramaBinaUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getBlocks&floorCode=' +
+        floorCode;
 
     try {
       BaseOptions options = new BaseOptions(
@@ -630,9 +650,11 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-
-    String mahalAramaBinaUrl= base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getSpaces&blockCode='+blockCode;
+    String mahalAramaBinaUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getSpaces&blockCode=' +
+        blockCode;
 
     try {
       BaseOptions options = new BaseOptions(
@@ -658,9 +680,8 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-
-    String mahalAramaGrupUrl= base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getGroups';
+    String mahalAramaGrupUrl =
+        base_url_v1 + TOKEN_V1 + deviceToken + '&action=getGroups';
 
     try {
       BaseOptions options = new BaseOptions(
@@ -770,11 +791,11 @@ class APIRepository {
         base_url_v1 + TOKEN_V1 + deviceToken + '&action=getDateTime';
     print(getServerTimeURL);
     try {
-        BaseOptions options = new BaseOptions(
+      BaseOptions options = new BaseOptions(
           baseUrl: getServerTimeURL,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*1000, // 60 seconds
-          receiveTimeout: 3*1000 // 60 seconds
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
           );
 
       Dio dio = Dio(options);
@@ -810,13 +831,12 @@ class APIRepository {
         (DateTime.now().millisecondsSinceEpoch).toString();
 
     try {
-        BaseOptions options = new BaseOptions(
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*1000, // 60 seconds
-          receiveTimeout: 3*1000 // 60 seconds
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
           );
-
 
       Dio dio = Dio(options);
       final response = await dio.get(url, options: Options());
@@ -836,11 +856,11 @@ class APIRepository {
     String url = BASE_URL_V2 + '/workorder/reactive';
 
     try {
-       BaseOptions options = new BaseOptions(
+      BaseOptions options = new BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*100, // 60 seconds
-          receiveTimeout: 3*100 // 60 seconds
+          connectTimeout: 3 * 100, // 60 seconds
+          receiveTimeout: 3 * 100 // 60 seconds
           );
       Dio dio = Dio(options);
       final response = await dio.get(url,
@@ -1935,6 +1955,169 @@ class APIRepository {
       final data = jsonDecode(response.toString());
 
       print('dataCCC' + data.toString());
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
+  Future<httpSonucModel> addActivity(
+      {@required String? controller,
+      @required String? description,
+      @required String? image,
+      bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      final response = await dio.post(controller,
+          data: {'description': description, 'base64string': image});
+
+      print('photoAdressAct' + response.toString());
+
+      final data = jsonDecode(response.toString());
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      print('photoAdError' + e.toString());
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
+  Future<httpSonucModel> addAttachment(
+      {@required String? controller,
+      @required String? description,
+      @required String? image,
+      bool redirectLogin = false}) async {
+    print('url ' + controller!);
+
+    try {
+      final response = await dio.post(controller,
+          data: {'description': description, 'base64string': image},  
+          options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
+
+      print('photoAdressAct' + response.toString()+ '  : '+ description.toString() + '   : '+ image.toString());
+
+      final data = jsonDecode(response.toString());
 
       if (response != null) {
         return httpSonucModel(

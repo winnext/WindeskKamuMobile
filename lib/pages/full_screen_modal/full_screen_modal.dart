@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +15,10 @@ class TakePictureScreen extends StatefulWidget {
     super.key,
     required this.camera,
     required this.sayfa,
-
   });
 
-final CameraDescription camera;
-final String sayfa;
+  final CameraDescription camera;
+  final String sayfa;
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
@@ -57,8 +55,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // Fill this out in the next steps.
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
-        title: const Text('Fotoğraf Çek')),
+          backgroundColor: APPColors.Accent.blue,
+          title: const Text('Fotoğraf Çek')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -74,6 +72,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
@@ -86,25 +85,35 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await _controller.takePicture();
+            final nProvider =
+                Provider.of<NewNotifProvider>(context, listen: false);
 
-        File imagefile = File(image.path); //convert Path to File
-        Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
-        String base64string = base64.encode(imagebytes); //convert bytes to base64 string
+            File imagefile = File(image.path); //convert Path to File
+            Uint8List imagebytes =
+                await imagefile.readAsBytes(); //convert to bytes
+            String base64string =
+                base64.encode(imagebytes); //convert bytes to base64 string
+            nProvider.setimagePath = image.path.toString();
+            nProvider.setbase64 = base64string.toString();
 
             if (!mounted) return;
-
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  base64: base64string,
-                  imagePath: image.path,
-                  sayfa:  widget.sayfa,
+            if (widget.sayfa == 'addPhoto') {
+              Navigator.pop(context);
+            }
+            // If the picture was taken, display it on a new screen.,
+            else {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DisplayPictureScreen(
+                    // Pass the automatically generated path to
+                    // the DisplayPictureScreen widget.
+                    base64: base64string,
+                    imagePath: image.path,
+                    sayfa: widget.sayfa,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
@@ -122,44 +131,50 @@ class DisplayPictureScreen extends StatelessWidget {
   final String base64;
   final String sayfa;
 
-  const DisplayPictureScreen({super.key,required this.base64, required this.imagePath, required this.sayfa});
+  const DisplayPictureScreen(
+      {super.key,
+      required this.base64,
+      required this.imagePath,
+      required this.sayfa});
 
   @override
   Widget build(BuildContext context) {
-
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
-        title: const Text('Fotoğraf')),
+          backgroundColor: APPColors.Accent.blue,
+          title: const Text('Fotoğraf')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Container(
         child: Column(
           children: [
             Image.file(File(imagePath)),
-            Center(child: Container(
-              width: 35.w,
-              child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: APPColors.Login.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(20), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            nProvider.setPhotos = imagePath.toString();
-                            nProvider.setB64 = base64.toString();
-                            print(nProvider.photos);
-                              
-                      Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: ((context) =>  NewNotifBase(sayfa: sayfa,) )));
-                          },
-                          child: Text('Ekle'),
-                        ),
-            ),)
+            Center(
+              child: Container(
+                width: 35,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: APPColors.Login.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {
+                    nProvider.setPhotos = imagePath.toString();
+                    nProvider.setB64 = base64.toString();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => NewNotifBase(
+                                  sayfa: sayfa,
+                                ))));
+                  },
+                  child: Text('Ekle'),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -407,6 +407,86 @@ class IssueActionProvider extends ChangeNotifier {
     }
   }
 
+  void addActivityMethod(
+    username,
+    code,
+    activityCode,
+    description,
+    locationCode,
+    asgGroupCode,
+    asgUserCode,
+    additionalTime,
+    module,
+    image,
+    cardNo,
+    patientNo,
+    sampleNo,
+  ) async {
+    _isDataLoading = true;
+    //final asg = issuecode;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String urlActivities =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addActivity&issuecode=${code}&username=${username}&activityCode=${activityCode}&locationCode=${locationCode}&asgGroupCode=${asgGroupCode}&asgUserCode=${asgUserCode}&additionalTime=${additionalTime}&module=issue&from_mobile=1&cardNo=${cardNo}&patientNo=${patientNo}&sampleNo=${sampleNo}&description=${description}';
+
+    final result = await apirepository.addActivity(
+        controller: urlActivities, description: description, image: image);
+
+    print('dataAddActivity' + result.toString());
+
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 0), () {
+        setcfgResult = cfgResult;
+        setcfgSuccess = cfgSuccess;
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+        _currentPage = 1;
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void addAttachmentMethod(
+    username,
+    issueCode,
+    moduleName,
+    description,
+    image,
+  ) async {
+    _isDataLoading = true;
+    //final asg = issuecode;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String urlActivities =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addAttachment&issueCode=${issueCode}&username=${username}&moduleName=${moduleName}';
+
+    print('photoAdressssMethod' + urlActivities.toString());
+
+    final result = await apirepository.addAttachment(
+        controller: urlActivities, description: description, image: image);
+
+    print('photoAdress2' + result.toString());
+
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 0), () {
+        setcfgResult = cfgResult;
+        setcfgSuccess = cfgSuccess;
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+        _currentPage = 1;
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
   void initData([PageController? pageController]) {
     _pageController = pageController;
   }

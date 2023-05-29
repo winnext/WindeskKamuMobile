@@ -26,6 +26,7 @@ import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
+import '../../widgets/modalWidgets/issueActionModal.dart';
 import '../../widgets/photoDisplayWidgets/customActivitiesPhoto.dart';
 import '../homePage.dart';
 import 'issueDetail.dart';
@@ -118,8 +119,11 @@ class _IssueFilesState extends State<IssueFiles> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text('Image ' +
-                                                  listElements.ID.toString()),
+                                              Container(
+                                                width: size.width/ 2.5,
+                                                child: Text(
+                                                    listElements.DISPFILENAME.toString()+' '+listElements.ID.toString()),
+                                              ),
                                               Text(
                                                   listElements.IDATE.toString())
                                             ],
@@ -141,7 +145,7 @@ class _IssueFilesState extends State<IssueFiles> {
                                                         return TextButton.icon(
                                                           onPressed: openLink,
                                                           label: const Text(
-                                                              'Link Widget '),
+                                                              'Linke tıklayınız'),
                                                           icon: const Icon(
                                                               Icons.read_more),
                                                         );
@@ -177,11 +181,23 @@ class _IssueFilesState extends State<IssueFiles> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final detailViewProvider =
+          Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
+          showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) => IssueActionButton(
+                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+        },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
     );
   }
 

@@ -294,6 +294,17 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                       ),
                     )
                   : Container(),
+              issueActionProvider.mobilePhoto == 'Y'
+                  ? const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Açıklama Giriniz',
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),

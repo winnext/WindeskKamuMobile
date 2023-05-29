@@ -104,7 +104,10 @@ class _WoTracingListState extends State<WoTracingList> {
                                         Provider.of<MainPageViewProvider>(
                                             context,
                                             listen: false);
-                                    Navigator.push(
+                                    listElements
+                                          .count
+                                          .toString() ==
+                                      '0' ? null : Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => WoList(
