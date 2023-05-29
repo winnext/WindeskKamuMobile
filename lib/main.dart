@@ -43,7 +43,9 @@ import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/workorder_detail_provider.dart';
+
 import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
@@ -146,6 +148,10 @@ List<SingleChildWidget> providers = [
       create: (_) => SearchViewProvider()),
   ChangeNotifierProvider<WoDetailViewProvider>(
       create: (_) => WoDetailViewProvider()),
+      ChangeNotifierProvider<WorkOrderViewProvider>(create: (_) => WorkOrderViewProvider()),
+
+  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
+  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
 ];
 
 class MyApp extends StatelessWidget {
@@ -199,6 +205,9 @@ class MyApp extends StatelessWidget {
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
         WoTracingList.tracingList: (context) => WoTracingList(),
+        
+        
+        
       },
     );
   }

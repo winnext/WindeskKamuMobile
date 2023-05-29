@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/WorkOrder/WoCreate.dart';
 import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
-import 'package:win_kamu/providers/WoProviders/work_order_view_provider.dart';
+import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 
@@ -59,8 +59,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // Fill this out in the next steps.
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
-        title: const Text('Fotoğraf Çek')),
+        backgroundColor: Colors.white,
+        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
+           leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+
+                },
+                icon: Icon(Icons.arrow_back, color: Colors.black)),
+        ),
+      
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -77,6 +85,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        
         // Provide an onPressed callback.
         onPressed: () async {
           // Take the Picture in a try / catch block. If anything goes wrong,
@@ -112,7 +122,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             print(e);
           }
         },
-        child: const Icon(Icons.camera_alt),
+        child: const Icon(Icons.camera_alt,color: Colors.black,),
       ),
     );
   }
@@ -129,13 +139,22 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final woProvider = Provider.of<WorkOrderProvider>(context, listen: false);
+    final woProvider = Provider.of<WorkOrderViewProvider>(context, listen: false);
 
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: APPColors.Accent.blue,
-        title: const Text('Fotoğraf')),
+          backgroundColor: Colors.white,
+        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
+           leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+
+                },
+                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
+        
+        ),
+        
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Container(

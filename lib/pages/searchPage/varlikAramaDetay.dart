@@ -7,31 +7,57 @@ import 'package:sizer/sizer.dart';
 import '../../providers/detail_view_provider.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../providers/search_view_provider.dart';
+import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
+import '../WorkOrder/woTracingList.dart';
 import '../issue/issueSummary.dart';
 
 class VarlikAramaDetay extends StatefulWidget {
   final String code;
   
-  final Map summary;
-  final List sla;
-  final List bakim_is_emri;
-  final List anlik_is_emri;
+
 
   
-  const VarlikAramaDetay({super.key,required this.code, required this.summary, required this.sla, required this.bakim_is_emri, required this.anlik_is_emri});
+  const VarlikAramaDetay({super.key,required this.code, });
 
   @override
   State<VarlikAramaDetay> createState() => _VarlikAramaDetayState();
 }
 
 class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
+  Map summary = {};
+  List sla = [];
+  List bakim_is_emri = [];
+  List anlik_is_emri = [];
+  cek() async{
+       Map summary_Data = await apirepository.mahalAramaVarlikDetaySummaryApi(widget.code);
+       List sla_Data = await apirepository.mahalAramaVarlikDetaySlaApi(widget.code);
+       List bakim_is_emri_Data = await apirepository.mahalAraVarlikDetayBakimIsEmri(widget.code);
+       List anlik_is_emri_Data = await apirepository.mahalAraVarlikDetayAnlikIsEmri(widget.code);
 
+       setState(() {
+         summary = summary_Data;
+         sla = sla_Data;
+         bakim_is_emri = bakim_is_emri_Data;
+         anlik_is_emri = anlik_is_emri_Data;
+
+       });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    cek();
+    super.initState();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    print(widget.summary);
+
+
+    print(summary);
+    print(summary);
       final _headerStyle = const TextStyle(
       color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
   final _contentStyleHeader = const TextStyle(
@@ -59,7 +85,8 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
             
             actions: [],
           ),
-          body: Container(
+          body: summary.length > 0 ? 
+          Container(
             color: Color.fromARGB(255, 224, 224, 224),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -94,7 +121,7 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
                                         children: [
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['CODE'],  maxLines: 6,
+                                            child: Text(summary['CODE'],  maxLines: 6,
                                               overflow:TextOverflow.clip,style: TextStyle(color: Colors.white,)
                                           ),
                                           )
@@ -106,14 +133,14 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
                                           Text('Adı : ',style: TextStyle(color: Colors.white,)),
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['CMDB_NAME'],style: TextStyle(color: Colors.white,))
+                                            child: Text(summary['CMDB_NAME'],style: TextStyle(color: Colors.white,))
                                             )
                                         ],
                                       ),
                                       Row(
                                         children: [
                                           Text('Statü : ',style: TextStyle(color: Colors.white,)),
-                                          Text(widget.summary['STATUS'] == null ? 'Veri Yok' : widget.summary['STATUS'],style: TextStyle(color: Colors.white,)  )
+                                          Text(summary['STATUS'] == null ? 'Veri Yok' : summary['STATUS'],style: TextStyle(color: Colors.white,)  )
                                         ],
                                       ),
                                       Row(
@@ -121,7 +148,7 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
                                           Text('Kategori : ',style: TextStyle(color: Colors.white,)),
                                           Container(
                                             width: 50.w,
-                                            child: Text(widget.summary['CATEGORY'] == null ? 'Veri Yok' : widget.summary['CATEGORY'],style: TextStyle(color: Colors.white,))
+                                            child: Text(summary['CATEGORY'] == null ? 'Veri Yok' : summary['CATEGORY'],style: TextStyle(color: Colors.white,))
                                             )
                                         ],
                                       ),
@@ -158,7 +185,7 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
 
         children: <Widget>[
           
-          for (int i = 0; i < widget.sla.length; i++)
+          for (int i = 0; i < sla.length; i++)
 
            Padding(
              padding: const EdgeInsets.all(8.0),
@@ -175,9 +202,9 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
                   print('Routing issue detail page');
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
-        print(widget.sla[i]['BM_CODE']);
+        print(sla[i]['BM_CODE']);
          detailViewProvider.setIssueCode = '';
-        detailViewProvider.setIssueCode = widget.sla[i]['BM_CODE'];
+        detailViewProvider.setIssueCode = sla[i]['BM_CODE'];
 Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) =>
@@ -193,15 +220,15 @@ Navigator.of(context).push(
                    mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.sla[i]['BM_CODE']+' - '+widget.sla[i]['BM_STATUSNAME']),
-                    Text(widget.sla[i]['TARGET_FDATE']),
+                    Text(sla[i]['BM_CODE']+' - '+sla[i]['BM_STATUSNAME']),
+                    Text(sla[i]['TARGET_FDATE']),
                   ],
                 ),
                 )
               )
                      ),
            ),
-           widget.sla.length > 0 ? 
+           sla.length > 0 ? 
            Text('') : Text(' Sonuç Bulunamadı ')
         
         
@@ -223,7 +250,7 @@ Navigator.of(context).push(
 
         children: <Widget>[
           
-          for (int i = 0; i < widget.bakim_is_emri.length; i++)
+          for (int i = 0; i < bakim_is_emri.length; i++)
 
            Padding(
              padding: const EdgeInsets.all(8.0),
@@ -250,16 +277,16 @@ Navigator.of(context).push(
                    mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.bakim_is_emri[i]['WO_CODE']+' - '+widget.bakim_is_emri[i]['WO_STATUS']),
-                    Text(widget.bakim_is_emri[i]['WO_NAME']),
-                    Text('Planlanan Bitiş Tarihi : '+widget.bakim_is_emri[i]['PLANNED_ENDDATE']),
+                    Text(bakim_is_emri[i]['WO_CODE']+' - '+bakim_is_emri[i]['WO_STATUS']),
+                    Text(bakim_is_emri[i]['WO_NAME']),
+                    Text('Planlanan Bitiş Tarihi : '+bakim_is_emri[i]['PLANNED_ENDDATE']),
                   ],
                 ),
                 )
               )
                      ),
            ),
-           widget.bakim_is_emri.length > 0 ? 
+           bakim_is_emri.length > 0 ? 
            Text('') : Text(' Sonuç Bulunamadı ')
         
         
@@ -281,7 +308,7 @@ Navigator.of(context).push(
 
         children: <Widget>[
           
-          for (int i = 0; i < widget.anlik_is_emri.length; i++)
+          for (int i = 0; i < anlik_is_emri.length; i++)
 
            Padding(
              padding: const EdgeInsets.all(8.0),
@@ -307,15 +334,15 @@ Navigator.of(context).push(
                    mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.anlik_is_emri[i]['WO_CODE']+' - '+widget.anlik_is_emri[i]['WO_STATUS']),
-                    Text(widget.anlik_is_emri[i]['WO_NAME']),
+                    Text(anlik_is_emri[i]['WO_CODE']+' - '+anlik_is_emri[i]['WO_STATUS']),
+                    Text(anlik_is_emri[i]['WO_NAME']),
                   ],
                 ),
                 )
               )
                      ),
            ),
-           widget.anlik_is_emri.length > 0 ? 
+           anlik_is_emri.length > 0 ? 
            Text('') : Text(' Sonuç Bulunamadı ')
         
         
@@ -342,9 +369,9 @@ Navigator.of(context).push(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.code+'-'+widget.summary['STATUS'],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
+                            Text(widget.code+'-'+summary['STATUS'],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
                             Text(''),
-                            Text(widget.summary['CMDB_NAME'],style: TextStyle(color: Colors.black,fontSize: 15),),
+                            Text(summary['CMDB_NAME'],style: TextStyle(color: Colors.black,fontSize: 15),),
                           ],
                         ),
                       ),
@@ -353,7 +380,9 @@ Navigator.of(context).push(
                 ),
               ),
             )
-          ),
+          ) : 
+          loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
+
       )
     );
   }

@@ -145,14 +145,14 @@ class _VarlikAramaListeState extends State<VarlikAramaListe> {
                                 Center(
                                   child: GestureDetector(
                                     onTap: ()async{
-                                      var summary_sonuc = await apirepository.mahalAramaVarlikDetaySummaryApi(codes[i]);
-                                      var sla_sonuc = await apirepository.mahalAramaVarlikDetaySlaApi(codes[i]);
-                                      var bakim_is_emri = await apirepository.mahalAraVarlikDetayBakimIsEmri(codes[i]);
-                                      var anlik_is_emri = await apirepository.mahalAraVarlikDetayAnlikIsEmri(codes[i]);
+                                      // var summary_sonuc = await apirepository.mahalAramaVarlikDetaySummaryApi(codes[i]);
+                                      // var sla_sonuc = await apirepository.mahalAramaVarlikDetaySlaApi(codes[i]);
+                                      // var bakim_is_emri = await apirepository.mahalAraVarlikDetayBakimIsEmri(codes[i]);
+                                      // var anlik_is_emri = await apirepository.mahalAraVarlikDetayAnlikIsEmri(codes[i]);
 
                                        PersistentNavBarNavigator.pushNewScreen(
                                           context,
-                                          screen: VarlikAramaDetay(code:codes[i],summary: summary_sonuc, sla: sla_sonuc,bakim_is_emri:bakim_is_emri,anlik_is_emri: anlik_is_emri, ),
+                                          screen: VarlikAramaDetay(code:codes[i]),
                                           withNavBar: true, // OPTIONAL VALUE. True by default.
                                           pageTransitionAnimation: PageTransitionAnimation.cupertino,
                                           
