@@ -69,9 +69,10 @@ setState(() {
           String accessTest2 = await apirepository.accessTest2('sgnm1032');
           String getServerTimeResponse = await apirepository.getServerTime('sgnm1048','');
           //print('Durum $getServerTimeResponse');
+            // print('access test 1 '+accessTest1);
+            // print('access test 2 : '+accessTest2);
 
           setState(() { 
-           
             sunucu_saati = getServerTimeResponse;
 
              if(accessTest1 == 'success'){
@@ -88,6 +89,9 @@ setState(() {
               testv2 = 'notsuccess';
           }
             });
+            print('test v1  :  '+testv1);
+
+            print('test v2  :  '+testv2);
         
         }
 
@@ -256,11 +260,11 @@ setState(() {
                                child: Column(
                                    children: [
                                       Container(
-                                                       child: testv1 == 'success' ?  Text('Windesk : Erişim Başarılı',style: TextStyle(color: Colors.green),) :  Text('Windesk: Erişim Bekleniyor...',style: TextStyle(color: Colors.red),)    ,
+                                                       child: testv1 == 'success' ?  Text('Windesk : Erişim Başarılı',style: TextStyle(color: Colors.green),) :  testv1 == 'notsuccess' ? Text('Windesk: Erişim Başarısız',style: TextStyle(color: Colors.red),)   : Text('Windesk: Erişim Bekleniyor...',style: TextStyle(color: Colors.orange),)    ,
                                                      ),
                                
                                                      Container(
-                                                       child: testv2 == 'success' ?  Text('Mobil Servis : Erişim Başarılı',style: TextStyle(color: Colors.green),) :  Text('Mobil Servis : Erişim Bekleniyor...',style: TextStyle(color: Colors.red),)   ,
+                                                       child: testv2 == 'success' ?  Text('Mobil Servis : Erişim Başarılı',style: TextStyle(color: Colors.green),) : testv2 == 'notsuccess' ?  Text('Mobil Servis : Erişim Başarısız',style: TextStyle(color: Colors.red),) :  Text('Mobil Servis : Erişim Bekleniyor...',style: TextStyle(color: Colors.orange),)   ,
                                                      ),
                                                      
                                    ],
