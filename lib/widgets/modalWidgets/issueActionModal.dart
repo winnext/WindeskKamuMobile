@@ -251,6 +251,8 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                       successColor: Colors.amber,
                                       controller: _btnController,
                                       onPressed: () async {
+                                        issueActionProvider
+                                            .setisPhotoAddSuccess = '';
                                         nProvider.base64 != ''
                                             ? issueActionProvider
                                                 .addAttachmentMethod(

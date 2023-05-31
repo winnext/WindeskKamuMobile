@@ -35,17 +35,17 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&token=';
 
 //WINMOBİLE
-const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
-const TOKEN_V1 = "wddemo!_";
-const TOKEN_V2 = 'demo!';
- const ATTACHPATHLIVE =
-      "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
+// const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
+// const TOKEN_V1 = "wddemo!_";
+// const TOKEN_V2 = 'demo!';
+//  const ATTACHPATHLIVE =
+//       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
 
 //TKD PREPROD
 //const BASE_URL_V2 = 'http://windeskmobiletest.tekirdag.yerel';
@@ -101,17 +101,17 @@ const base_url_v1 =
 //         '&token=';
 
 //GSH PREPROD
-// const BASE_URL_V2 = 'http://wd-mobile-test.gaziantep.yerel';
-// const TOKEN_V1 = 'anteptest!_';
-// const TOKEN_V2 = 'anteptest!';
-// const ATTACHPATHLIVE =
-// "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
-// const base_url_v1 =
-//     'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-//         'wdmobile' +
-//         '&wspassword=' +
-//         'wdsgnm1017_' +
-//         '&token=';
+const BASE_URL_V2 = 'http://wd-mobile-test.gaziantep.yerel';
+const TOKEN_V1 = 'anteptest!_';
+const TOKEN_V2 = 'anteptest!';
+const ATTACHPATHLIVE =
+"http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 =
+    'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+        'wdmobile' +
+        '&wspassword=' +
+        'wdsgnm1017_' +
+        '&token=';
 
 
 const loginUrl = "v1/Auth/Login";

@@ -28,6 +28,7 @@ class IssueActionProvider extends ChangeNotifier {
   bool _loading = false;
   bool _isDataExist = false;
   bool _cfgSuccess = false;
+  bool _isActivityAddSuccess = false;
   int _currentPage = 1;
   int _toplamKayitSayisi = 0;
   String _activityCode = '';
@@ -101,6 +102,13 @@ class IssueActionProvider extends ChangeNotifier {
 
   set setcfgSuccess(bool cfgSuccess) {
     _cfgSuccess = cfgSuccess;
+    notifyListeners();
+  }
+
+  bool get isActivityAddSuccess => _isActivityAddSuccess;
+
+  set setisActivityAddSuccess(bool isActivityAddSuccess) {
+    _isActivityAddSuccess = isActivityAddSuccess;
     notifyListeners();
   }
 
@@ -416,8 +424,8 @@ class IssueActionProvider extends ChangeNotifier {
   }
 
   void addActivityMethod(
-    username,
     code,
+    username,
     activityCode,
     description,
     locationCode,
@@ -436,17 +444,17 @@ class IssueActionProvider extends ChangeNotifier {
     String deviceToken = prefs.getString('deviceId').toString();
 
     String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addActivity&issuecode=${code}&username=${username}&activityCode=${activityCode}&locationCode=${locationCode}&asgGroupCode=${asgGroupCode}&asgUserCode=${asgUserCode}&additionalTime=${additionalTime}&module=issue&from_mobile=1&cardNo=${cardNo}&patientNo=${patientNo}&sampleNo=${sampleNo}&description=${description}';
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addActivity&issueCode=${code}&username=${username}&activityCode=${activityCode}&locationCode=${locationCode}&asgGroupCode=${asgGroupCode}&asgUserCode=${asgUserCode}&additionalTime=${additionalTime}&module=issue&from_mobile=1&cardNo=${cardNo}&patientNo=${patientNo}&sampleNo=${sampleNo}&description=${description}';
 
     final result = await apirepository.addActivity(
         controller: urlActivities, description: description, image: image);
 
-    print('dataAddActivity' + result.toString());
+    print('addActivityPro' + result.records['resultcode'].toString());
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
-        setcfgResult = cfgResult;
-        setcfgSuccess = cfgSuccess;
+        _isActivityAddSuccess =
+            result.records['resultcode'].toString() == '-500' ? false : true;
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;

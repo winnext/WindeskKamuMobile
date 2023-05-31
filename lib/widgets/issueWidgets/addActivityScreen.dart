@@ -1,12 +1,19 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/utils.dart';
 
+import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
+import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 
 class AddActivityScreen extends StatefulWidget {
@@ -32,6 +39,11 @@ class AddActivityScreen extends StatefulWidget {
 
 class _AddActivityScreenState extends State<AddActivityScreen> {
   String? selectedFruit;
+  String? addTimeTextInput;
+  String? spaceTextInput;
+  String _textInput = '';
+  String spaceCode = '';
+  String _addTimeTextInput = '';
 
   @override
   void initState() {
@@ -47,22 +59,51 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
+    dynamic _showModal(BuildContext context) async {
+      // show the modal dialog and pass some data to it
+      WidgetsFlutterBinding.ensureInitialized();
+
+      // Obtain a list of the available cameras on the device.
+      final cameras = await availableCameras();
+
+      // Get a specific camera from the list of available cameras.
+      final firstCamera = cameras.first;
+      final results = await Navigator.of(context)
+          .push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+        return TakePictureScreen(
+          camera: firstCamera,
+          sayfa: 'addPhoto',
+        );
+      }));
+    }
+
     Size size = MediaQuery.of(context).size;
-    String spaceCode = '';
 
     final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: false);
+        Provider.of<IssueActionProvider>(context, listen: true);
     final newNotifProvider =
         Provider.of<NewNotifProvider>(context, listen: true);
+    final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
+    final mainPageProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
+    final listViewProvider =
+        Provider.of<ListViewProvider>(context, listen: false);
+    final RoundedLoadingButtonController _btnController =
+        RoundedLoadingButtonController();
 
-    return SingleChildScrollView(
-      child: Container(
-        width: size.width / 1.09,
-        height: size.height / 2.5,
-        color: APPColors.Main.white,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+    return Container(
+      width: size.width / 1.09,
+      height: size.height / 2.5,
+      color: APPColors.Main.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               DropdownButton(
@@ -75,13 +116,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                   ),
                   iconSize: 25,
                   underline: SizedBox(),
-                  onChanged: (newValue) {
-                    setState(() => {
-                          issueActionProvider.setactivityCode =
-                              newValue.toString(),
-                          selectedFruit = newValue.toString()
-                        });
-                  },
+                  onChanged: (newValue) {},
                   hint: Padding(
                     padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text(
@@ -95,20 +130,27 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                   items: issueActionProvider.activityListView.map((data) {
                     return DropdownMenuItem(
                       onTap: () => {
+                        issueActionProvider.setassigneeccType = '',
+                        issueActionProvider.setactivityName = '',
+                        issueActionProvider.setactivityCode = '',
+                        issueActionProvider.setbarcodeSpace = '',
+                        issueActionProvider.setadditionalTimeInput = '',
+                        issueActionProvider.setminDescLength = '',
+                        issueActionProvider.setmobilePhoto = '',
+                        issueActionProvider.setassigneeccType =
+                            data.ASSIGNEECC_TYPE.toString(),
                         issueActionProvider.setactivityName =
                             data.NAME.toString(),
+                        issueActionProvider.setactivityCode =
+                            data.CODE.toString(),
                         issueActionProvider.setbarcodeSpace =
                             data.BARCODE_SPACE.toString(),
                         issueActionProvider.setadditionalTimeInput =
                             data.ADDITIONALTIME_INPUT.toString(),
-                        issueActionProvider.setassigneeccType =
-                            data.ASSIGNEECC_TYPE.toString(),
                         issueActionProvider.setminDescLength =
                             data.MIN_DESC_LENGTH.toString(),
                         issueActionProvider.setmobilePhoto =
                             data.MOBILE_PHOTO.toString(),
-                        print('dataaaa' +
-                            issueActionProvider.assigneeccType.toString()),
                       },
                       value: data.CODE.toString(),
                       child: Padding(
@@ -136,7 +178,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                           child: TextField(
                             onChanged: (String value) {
                               setState(() {
-                                spaceCode = value;
+                                spaceTextInput = value;
                               });
                             },
                             decoration: InputDecoration(
@@ -157,8 +199,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               ),
                               onPressed: () {
                                 newNotifProvider.scanQR('spaceCode');
-                                setState(() {
-                                });
+                                setState(() {});
                               },
                             ),
                           ),
@@ -167,13 +208,18 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                     )
                   : Container(),
               issueActionProvider.additionalTimeInput == 'Y'
-                  ? const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  ? Expanded(
                       child: TextField(
-                        keyboardType: TextInputType.number,
+                        onChanged: (String value) {
+                          setState(() {
+                            _addTimeTextInput = value;
+                          });
+                        },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Ek Süre (Gün)',
+                          hintText: _addTimeTextInput != ''
+                              ? _addTimeTextInput
+                              : 'Ek Süre (Gün)',
                         ),
                       ),
                     )
@@ -216,9 +262,12 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                                 onTap: () => {
                                   issueActionProvider.setliveSelectGroupName =
                                       data.NAME.toString(),
-                                  issueActionProvider.getLiveSelectAsgUser(data.CODE.toString()),
+                                  issueActionProvider.getLiveSelectAsgUser(
+                                      data.CODE.toString()),
                                 },
-                                value: data.CODE.toString(),
+                                value: data.CODE.toString() != null
+                                    ? data.CODE.toString()
+                                    : null,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Text(
@@ -284,27 +333,132 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                     )
                   : Container(),
               issueActionProvider.minDescLength != '0'
-                  ? const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Açıklama Giriniz',
-                        ),
+                  ? TextField(
+                      onChanged: (text) {
+                        setState(() {
+                          _textInput = text;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText:
+                            _textInput != '' ? _textInput : 'Açıklama Giriniz',
                       ),
                     )
                   : Container(),
               issueActionProvider.mobilePhoto == 'Y'
-                  ? const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Açıklama Giriniz',
+                  ? Column(
+                      children: [
+                        nProvider.imagePath.toString() != ''
+                            ? Container(
+                                height: size.width / 4,
+                                width: size.width / 4,
+                                child: Image.file(
+                                  File(nProvider.imagePath.toString()),
+                                ))
+                            : Container(),
+                        GestureDetector(
+                          onTap: () {
+                            _showModal(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(size.width / 10),
+                                  color: APPColors.Clear.blue,
+                                ),
+                                width: size.width / 5,
+                                height: size.width / 5,
+                                padding: const EdgeInsets.all(8),
+                                child: Icon(Icons.camera_alt_outlined)),
+                          ),
                         ),
-                      ),
+                      ],
                     )
                   : Container(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          nProvider.setimagePath = '';
+                          nProvider.setbase64 = '';
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: APPColors.Clear.red,
+                        ),
+                        width: size.width / 3,
+                        height: size.width / 10,
+                        padding: const EdgeInsets.all(8),
+                        // Change button text when light changes state.
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Vazgeç',
+                            style: TextStyle(color: APPColors.Main.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: RoundedLoadingButton(
+                        width: size.width / 3,
+                        height: size.width / 10,
+                        borderRadius: 10,
+                        successColor: Colors.amber,
+                        controller: _btnController,
+                        onPressed: () async {
+                          issueActionProvider.setisPhotoAddSuccess = '';
+                          issueActionProvider.addActivityMethod(
+                              widget.issueCode,
+                              mainPageProvider.kadi,
+                              issueActionProvider.activityCode,
+                              _textInput.trim(),
+                              spaceTextInput.toString().trim(),
+                              issueActionProvider.liveSelectGroupCode,
+                              issueActionProvider.liveSelectUserCode,
+                              addTimeTextInput,
+                              'issue',
+                              nProvider.base64,
+                              '',
+                              '',
+                              '');
+                          Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            _btnController.success();
+                            _btnController.reset();
+                            final photoResult = issueActionProvider
+                                .isActivityAddSuccess
+                                .toString();
+                            print('photoo' + photoResult);
+                            Navigator.pop(context);
+                            listViewProvider.getIssueOperations(
+                              widget.issueCode, mainPageProvider.kadi);
+                            snackBar(
+                                context,
+                                photoResult == true
+                                    ? 'Aktivite girişi başarılı'
+                                    : 'Aktivite girişi başarısız',
+                                photoResult);
+                          });
+                        },
+                        valueColor: Colors.white,
+                        child: Text('Gönder',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

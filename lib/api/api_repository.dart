@@ -2134,9 +2134,11 @@ class APIRepository {
 
     try {
       final response = await dio.post(controller,
-          data: {'description': description, 'base64string': image});
+          data: {'description': description, 'base64string': image},  
+          options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
 
-      print('photoAdressAct' + response.toString());
+      print('addActivity' + response.toString());
 
       final data = jsonDecode(response.toString());
 

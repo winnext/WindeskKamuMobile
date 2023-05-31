@@ -41,7 +41,6 @@ class _WoDetailState extends State<WoDetail> {
     woDetailViewProvider.loadWoDetail(widget.woCode, mainPageViewProvider.kadi);
     woDetailViewProvider.woGetRelatedSpace(
         widget.woCode, mainPageViewProvider.kadi);
-    print('woRele2');
 
     widget.moduleCode.toString() == ''
         ? null
@@ -61,7 +60,6 @@ class _WoDetailState extends State<WoDetail> {
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
-    print('dataExist' + detailViewProvider.isDataExist.toString());
 
     return Scaffold(
       appBar: AppBar(
