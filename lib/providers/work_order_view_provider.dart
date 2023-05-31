@@ -255,6 +255,10 @@ woCreate(context ) async {
     print('WoDesc : '+aciklama.text);
 
     var image = b64s;
+    if(b64s.length > 0){
+      image = b64s[0];
+    }
+    print('b64s length : '+b64s.length.toString());
     print('image  : ');
     print(image);
 
@@ -262,7 +266,13 @@ woCreate(context ) async {
     if(woSpace != '' && woService != '' && woName != ''){
       woService = woCreateHizmetListeArray[1][woCreateHizmetListeArray[0].indexOf(woService)];
       woName = woCreateIsEmriAdiListeArray[1][woCreateIsEmriAdiListeArray[0].indexOf(woName)];
-      priority_type = woCreateOncelikListeArray[1][woCreateOncelikListeArray[0].indexOf(priority_type)];
+      if(woCreateOncelikListeArray[0].indexOf(priority_type) != -1){
+              priority_type = woCreateOncelikListeArray[1][woCreateOncelikListeArray[0].indexOf(priority_type)];
+
+      }else{
+              priority_type = woCreateOncelikListeArray[1][0];
+
+      }
 
       print('woservice val  : ');
       print(woService);
@@ -280,10 +290,11 @@ woCreate(context ) async {
         snackBar(context, woCreateSonuc[1], 'hata');
       }else{
         snackBar(context, woCreateSonuc[1]['uyari'], 'success');
-      
+        
         setWoCreateHizmetValue = woCreateHizmetListeArray[0][0];
         setWoCreateIsEmriAdiListeValue = woCreateIsEmriAdiListeArray[0][0];
         setwoCreateOncelikListeValue = woCreateOncelikListeArray[0][0];
+
       
         clear = 1;
         setVarlik = '';

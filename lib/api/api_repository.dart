@@ -707,6 +707,8 @@ class APIRepository {
 
 
 
+
+
     Future woCreate(woSpace, woService, woName, woNameLabel, priority_type, workorder_cfg, woDesc,  image) async{
 
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -741,6 +743,10 @@ class APIRepository {
         
             print(response);
             if (response.data['success'] == true) {
+                if(image.length > 0){
+                    woCreateFotoEkle(response.data['code'], image);
+
+                }
                           return [[1],response.data];
             }else{
               return [[0],response.data['uyari']];
@@ -751,11 +757,47 @@ class APIRepository {
 
       }on DioError catch (e){
         print('girdi');
-        return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+        return [[0],'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz'];
 
       }
 
 
+    }
+
+    Future woCreateFotoEkle (woCode,image)async{
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+            String deviceToken = prefs.getString('deviceId').toString();
+
+            String? kadi = prefs.getString('prefsUserName'); 
+
+
+        String url = base_url_v1+TOKEN_V1 + deviceToken+ '&action=addAttachment&username='+
+          kadi.toString()+
+          '&moduleName=workorder&issueCode='+woCode;
+          print('Foto ekle url : '+url);
+      FormData formData = FormData.fromMap({
+        "base64string":image
+      });
+            try {
+              BaseOptions options = new BaseOptions(
+                  baseUrl: url,
+                  receiveDataWhenStatusError: true,
+                  connectTimeout: 3*1000, // 60 seconds
+                  receiveTimeout: 3*1000 // 60 seconds
+                  );
+              Dio dio = Dio(options);
+              final response = await dio.post(url,
+                  data: formData,
+              );
+              print('Foto ekle response  : ' + (response.data).toString());
+
+              return response.data;
+            } on DioError catch (e) {
+              print('notsuccess');
+              print(e);
+              return 'notsuccess';
+            }
+    
     }
 
 
@@ -925,7 +967,9 @@ class APIRepository {
         return duzenlenmis_tarih;
       }
     } on DioError catch (e) {
+      print('DIO ERROR CATCH');
       print(e);
+      return '';
     }
   }
 
@@ -1570,7 +1614,7 @@ class APIRepository {
       final response = await dio.get(controller,
           options: Options(
             headers: {"xusercode": 'sgnm1040', "xtoken": TOKEN_V2},
-          ));
+      ));
 
       final data = jsonDecode(response.toString());
 
