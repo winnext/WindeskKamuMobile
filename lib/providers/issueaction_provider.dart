@@ -44,6 +44,7 @@ class IssueActionProvider extends ChangeNotifier {
   String _cfgResult = '';
   String _takeOverResult = '';
   String _takeOverMessage = '';
+  String _isPhotoAddSuccess = '';
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -205,6 +206,13 @@ class IssueActionProvider extends ChangeNotifier {
 
   set settakeOverMessage(String takeOverMessage) {
     _takeOverMessage = takeOverMessage;
+    notifyListeners();
+  }
+
+  String get isPhotoAddSuccess => _isPhotoAddSuccess;
+
+  set setisPhotoAddSuccess(String isPhotoAddSuccess) {
+    _isPhotoAddSuccess = isPhotoAddSuccess;
     notifyListeners();
   }
 
@@ -470,12 +478,11 @@ class IssueActionProvider extends ChangeNotifier {
     final result = await apirepository.addAttachment(
         controller: urlActivities, description: description, image: image);
 
-    print('photoAdress2' + result.toString());
+    print('photoAdress2' + result.records['result'].toString());
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
-        setcfgResult = cfgResult;
-        setcfgSuccess = cfgSuccess;
+        _isPhotoAddSuccess = result.records['result'].toString();
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;

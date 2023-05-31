@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
@@ -38,6 +39,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
   bool _isPlannedCancel = false;
   bool _cameraOn = false;
   bool _isNotDone = false;
+  bool _isLoading = false;
   String _textInput = '';
   String _spaceTextInput = '';
   String _asgGroupValue = '';
@@ -101,6 +103,8 @@ class _IssueActionButtonState extends State<IssueActionButton> {
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final issueActionProvider = Provider.of<IssueActionProvider>(context);
     final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
+    final RoundedLoadingButtonController _btnController =
+        RoundedLoadingButtonController();
 
     return Align(
       alignment: Alignment.center,
@@ -165,12 +169,14 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                         width: size.width / 1.09,
                         child: Column(
                           children: [
-                            Container(
-                                height: size.width / 4,
-                                width: size.width / 4,
-                                child: Image.file(
-                                  File(nProvider.imagePath.toString()),
-                                )),
+                            nProvider.imagePath.toString() != ''
+                                ? Container(
+                                    height: size.width / 4,
+                                    width: size.width / 4,
+                                    child: Image.file(
+                                      File(nProvider.imagePath.toString()),
+                                    ))
+                                : Container(),
                             Padding(
                               padding: EdgeInsets.all(5),
                               child: TextField(
@@ -223,6 +229,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                         color: APPColors.Clear.red,
                                       ),
                                       width: size.width / 3,
+                                      height: size.width / 10,
                                       padding: const EdgeInsets.all(8),
                                       // Change button text when light changes state.
                                       child: Align(
@@ -235,33 +242,47 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                       ),
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      Future.delayed(
-                                          const Duration(milliseconds: 1000),
-                                          () {
-                                        issueActionProvider.addAttachmentMethod(
-                                            widget.xusercode,
-                                            widget.code,
-                                            'issue',
-                                            _textInput,
-                                            nProvider.base64);
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: APPColors.Clear.blue,
-                                      ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: RoundedLoadingButton(
                                       width: size.width / 3,
-                                      padding: const EdgeInsets.all(8),
-                                      // Change button text when light changes state.
-                                      child: Align(
-                                          alignment: Alignment.center,
-                                          child: Text('Kaydet',
-                                              style: TextStyle(
-                                                color: APPColors.Main.white,
-                                              ))),
+                                      height: size.width / 10,
+                                      borderRadius: 10,
+                                      successColor: Colors.amber,
+                                      controller: _btnController,
+                                      onPressed: () async {
+                                        nProvider.base64 != ''
+                                            ? issueActionProvider
+                                                .addAttachmentMethod(
+                                                    widget.xusercode,
+                                                    widget.code,
+                                                    'issue',
+                                                    _textInput,
+                                                    nProvider.base64)
+                                            : null;
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1000),
+                                            () {
+                                          _btnController.success();
+                                          _btnController.reset();
+                                          final photoResult =
+                                              issueActionProvider
+                                                  .isPhotoAddSuccess
+                                                  .toString();
+                                          print('photoo' + photoResult);
+                                          Navigator.pop(context);
+                                          snackBar(
+                                              context,
+                                              photoResult == 'success'
+                                                  ? 'Fotoğraf Ekleme Başarılı'
+                                                  : 'Fotoğraf Ekleme Başarısız',
+                                              photoResult);
+                                        });
+                                      },
+                                      valueColor: Colors.white,
+                                      child: Text('Kaydet',
+                                          style:
+                                              TextStyle(color: Colors.white)),
                                     ),
                                   ),
                                 ],

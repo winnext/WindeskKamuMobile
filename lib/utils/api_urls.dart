@@ -74,6 +74,46 @@ const base_url_v1 =
 //         'wdsgnm1017_' +
 //         '&token=';
 
+//ESH PREPROD
+// const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
+// const TOKEN_V1 = 'wdeshtest!_';
+// const TOKEN_V2 = 'eshtest!';
+// const ATTACHPATHLIVE =
+// "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
+
+//BESK PREPROD
+// const BASE_URL_V2 = 'http://windeskmobiletest.prebesk.yerel';
+// const TOKEN_V1 = 'wdbesktest!_';
+// const TOKEN_V2 = 'besktest!';
+// const ATTACHPATHLIVE =
+// "http://10.198.12.130/besk/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'http://10.198.12.130/besk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
+
+//GSH PREPROD
+// const BASE_URL_V2 = 'http://wd-mobile-test.gaziantep.yerel';
+// const TOKEN_V1 = 'anteptest!_';
+// const TOKEN_V2 = 'anteptest!';
+// const ATTACHPATHLIVE =
+// "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
+
+
 const loginUrl = "v1/Auth/Login";
 
 

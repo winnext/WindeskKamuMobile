@@ -244,8 +244,11 @@ setState(() {
                 onPressed: () => _doSomething(_btnController2),
                 valueColor: Colors.white,
                 borderRadius: 20,
-                child: Text('''
-Erişim Testi''', style: TextStyle(color: Colors.white)),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text('''
+                              Erişim Testi''', style: TextStyle(color: Colors.white)),
+                ),
               ),
                              ),
                              Padding(
