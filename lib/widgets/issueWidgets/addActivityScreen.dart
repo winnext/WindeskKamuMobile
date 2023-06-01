@@ -436,19 +436,19 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               () {
                             _btnController.success();
                             _btnController.reset();
-                            final photoResult = issueActionProvider
+                            final activityResult = issueActionProvider
                                 .isActivityAddSuccess
                                 .toString();
-                            print('photoo' + photoResult);
+                            print('photoo' + activityResult);
                             Navigator.pop(context);
                             listViewProvider.getIssueOperations(
                               widget.issueCode, mainPageProvider.kadi);
                             snackBar(
                                 context,
-                                photoResult == true
+                                activityResult == 'true'
                                     ? 'Aktivite girişi başarılı'
                                     : 'Aktivite girişi başarısız',
-                                photoResult);
+                                activityResult);
                           });
                         },
                         valueColor: Colors.white,

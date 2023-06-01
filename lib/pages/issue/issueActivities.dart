@@ -101,7 +101,7 @@ class _IssueActivitiesState extends State<IssueActivities> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(listElements.NAME.toString()),
+                                          Container(width: size.width/ 2, child: Text(listElements.NAME.toString())),
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),
