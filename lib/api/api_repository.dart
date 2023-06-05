@@ -2494,4 +2494,82 @@ class APIRepository {
       }
     }
   }
+
+    Future<httpSonucModel> getAnnouncements(
+      {@required String? controller,
+      bool redirectLogin = false}) async {
+
+    try {
+      final response = await dio.get(controller.toString());
+
+      final data = jsonDecode(response.toString());
+
+      print('getAnnouncements + ' + data.toString());
+
+      //print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
 }

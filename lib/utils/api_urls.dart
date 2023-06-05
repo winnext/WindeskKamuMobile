@@ -51,7 +51,6 @@ const addNotification = "v1/Notification/AddNotification";
 //         'wdsgnm1017_' +
 //         '&token=';
 
-
 //ISH PROD
 // const BASE_URL_V2 = "http://windeskmobile.ish.yerel";
 // const TOKEN_V1 = "wdishliveSqAS!_";
@@ -72,17 +71,17 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&token=';
 
 //WINMOBİLE
-const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
-const TOKEN_V1 = "wddemo!_";
-const TOKEN_V2 = 'demo!';
- const ATTACHPATHLIVE =
-      "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
+// const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
+// const TOKEN_V1 = "wddemo!_";
+// const TOKEN_V2 = 'demo!';
+//  const ATTACHPATHLIVE =
+//       "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
 
 //TKD PREPROD
 //const BASE_URL_V2 = 'http://windeskmobiletest.tekirdag.yerel';
@@ -106,17 +105,17 @@ const base_url_v1 =
 //         '&token=';
 
 //ESH PREPROD
-// const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
-// const TOKEN_V1 = 'wdeshtest!_';
-// const TOKEN_V2 = 'eshtest!';
-// const ATTACHPATHLIVE =
-// "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
-// const base_url_v1 =
-//     'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-//         'wdmobile' +
-//         '&wspassword=' +
-//         'wdsgnm1017_' +
-//         '&token=';
+const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
+const TOKEN_V1 = 'wdeshtest!_';
+const TOKEN_V2 = 'eshtest!';
+const ATTACHPATHLIVE =
+    "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 =
+    'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+        'wdmobile' +
+        '&wspassword=' +
+        'wdsgnm1017_' +
+        '&token=';
 
 //BESK PREPROD
 // const BASE_URL_V2 = 'http://windeskmobiletest.prebesk.yerel';
@@ -136,7 +135,7 @@ const base_url_v1 =
 // const TOKEN_V1 = 'anteptest!_';
 // const TOKEN_V2 = 'anteptest!';
 // const ATTACHPATHLIVE =
-// "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+//     "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
 // const base_url_v1 =
 //     'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
 //         'wdmobile' +
@@ -144,12 +143,7 @@ const base_url_v1 =
 //         'wdsgnm1017_' +
 //         '&token=';
 
-
 const loginUrl = "v1/Auth/Login";
-
-
-
-
 
 // aktiviteekle = https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=
 // wdmobile&wspassword=wdsgnm1017_&token=wddemo!_C82C122E-2B51-4DF2-943B-434C575C10E7&action=getAvailableActivities&issueCode=

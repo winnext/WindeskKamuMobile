@@ -135,52 +135,49 @@ class _WoTracingListState extends State<WoTracingList> {
                                           ),
                                         ],
                                       ),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Expanded(
-                                                  child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    flex: 8,
-                                                    child: Text(
-                                                      listElements.name
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: listElements
-                                                                      .count
-                                                                      .toString() ==
-                                                                  '0'
-                                                              ? APPColors
-                                                                  .Main.grey
-                                                              : APPColors
-                                                                  .Main.black),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Text(
-                                                      listElements.count
-                                                          .toString(),
-                                                      textAlign:
-                                                          TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          color: APPColors
-                                                              .TracingNumber
-                                                              .blue),
-                                                    ),
-                                                  )
-                                                ],
-                                              )))
-                                        ],
-                                      ),
+                                      child: Padding(
+                                          padding:
+                                              const EdgeInsets.all(12.0),
+                                          child: Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                            Expanded(
+                                              flex: 8,
+                                              child: Text(
+                                                listElements.name
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: listElements
+                                                                .count
+                                                                .toString() ==
+                                                            '0'
+                                                        ? APPColors
+                                                            .Main.grey
+                                                        : APPColors
+                                                            .Main.black),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                listElements.count
+                                                    .toString(),
+                                                textAlign:
+                                                    TextAlign.right,
+                                                style: TextStyle(
+                                                    fontSize: 22,
+                                                    color: APPColors
+                                                        .TracingNumber
+                                                        .blue),
+                                              ),
+                                            )
+                                              ],
+                                            ),
+                                          )),
                                     ),
                                   ),
                                 );

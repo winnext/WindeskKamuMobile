@@ -64,6 +64,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
+    Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
       onWillPop: () async {
@@ -79,10 +80,8 @@ class _IssueTracingListState extends State<IssueTracingList> {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyHomePage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -112,81 +111,79 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                         Provider.of<MainPageViewProvider>(
                                             context,
                                             listen: false);
-                                    listElements
-                                          .count
-                                          .toString() ==
-                                      '0' ? null :  Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => IssueList(
-                                            moduleCode:
-                                                listElements.code.toString(),
-                                            moduleName:
-                                                listElements.name.toString(),
-                                          ),
-                                        ));
+                                    listElements.count.toString() == '0'
+                                        ? null
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => IssueList(
+                                                moduleCode: listElements.code
+                                                    .toString(),
+                                                moduleName: listElements.name
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(
                                         20, 5, 20, 10),
                                     child: Container(
+                                      height: size.height / 16,
                                       decoration: BoxDecoration(
                                         color: APPColors.Main.white,
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
                                             color: APPColors.Main.grey,
-                                            blurRadius: 1,
-                                            offset: Offset(0, 1),
+                                            blurRadius: 2,
+                                            offset: Offset(0, 2),
                                           ),
                                         ],
                                       ),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Expanded(
-                                                  child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    flex: 8,
-                                                    child: Text(
-                                                      listElements.name
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: listElements
-                                                                      .count
-                                                                      .toString() ==
-                                                                  '0'
-                                                              ? APPColors
-                                                                  .Main.grey
-                                                              : APPColors
-                                                                  .Main.black),
-                                                    ),
+                                      child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              12, 0, 12, 0),
+                                          child: Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  flex: 8,
+                                                  child: Text(
+                                                    listElements.name
+                                                        .toString(),
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: listElements
+                                                                    .count
+                                                                    .toString() ==
+                                                                '0'
+                                                            ? APPColors
+                                                                .Main.grey
+                                                            : APPColors
+                                                                .Main.black),
                                                   ),
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Text(
-                                                      listElements.count
-                                                          .toString(),
-                                                      textAlign:
-                                                          TextAlign.right,
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          color: APPColors
-                                                              .TracingNumber
-                                                              .blue),
-                                                    ),
-                                                  )
-                                                ],
-                                              )))
-                                        ],
-                                      ),
+                                                ),
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    listElements.count
+                                                        .toString(),
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                        fontSize: 22,
+                                                        color: APPColors
+                                                            .TracingNumber
+                                                            .blue),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )),
                                     ),
                                   ),
                                 );
