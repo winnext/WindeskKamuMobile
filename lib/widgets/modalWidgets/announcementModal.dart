@@ -87,7 +87,7 @@ class _AnnouncementListState extends State<AnnouncementList> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: APPColors.Main.white,
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(5),
                                   boxShadow: [
                                     BoxShadow(
                                       color: APPColors.Main.grey,
@@ -108,7 +108,7 @@ class _AnnouncementListState extends State<AnnouncementList> {
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             fontSize: 18,
-                                            color: APPColors.Main.black),
+                                            color: APPColors.Accent.blue),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(6.0),
@@ -135,7 +135,7 @@ class _AnnouncementListState extends State<AnnouncementList> {
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     color: APPColors
-                                                        .TracingNumber.blue),
+                                                        .Secondary.black),
                                               ),
                                       )
                                     ],
