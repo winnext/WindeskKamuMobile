@@ -76,11 +76,9 @@ class _AnnouncementListState extends State<AnnouncementList> {
                               mainViewProvider.announcementView[i];
                           bool? isLink =
                               listElements.ANNOUNCEMENT?.contains('http');
+
                           return GestureDetector(
                             onTap: () {
-                              final mainViewProvider =
-                                  Provider.of<MainPageViewProvider>(context,
-                                      listen: false);
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),

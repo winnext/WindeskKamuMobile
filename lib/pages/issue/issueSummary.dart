@@ -4,7 +4,9 @@ import 'package:win_kamu/pages/issue/issueActivities.dart';
 import 'package:win_kamu/pages/issue/issueDetail.dart';
 import 'package:win_kamu/pages/issue/issueFiles.dart';
 import 'package:win_kamu/pages/issue/issueList.dart';
+import 'package:win_kamu/pages/issue/issueNotes.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
+import 'package:win_kamu/utils/api_urls.dart';
 import 'package:win_kamu/utils/themes.dart';
 
 import '../../providers/detail_view_provider.dart';
@@ -43,8 +45,10 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
         Provider.of<ListViewProvider>(context, listen: false);
     final issueActionProvider =
         Provider.of<IssueActionProvider>(context, listen: false);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context,listen: false);
-    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context,listen: false);
+    final detailViewProvider =
+        Provider.of<DetailViewProvider>(context, listen: false);
+    final mainPageViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
 
     final String issueCode = detailViewProvider.issueCode.toString();
 
@@ -53,7 +57,7 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
     listViewProvider.getIssueOperations(issueCode, mainPageViewProvider.kadi);
     issueActionProvider.getAvailableActivities(issueCode);
     issueActionProvider.getLiveSelectAsgGroups(issueCode);
-;
+    ;
   }
 
   @override
@@ -64,11 +68,9 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
 
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
-      
+      length: PPP_PROJECT == "antep" ? 4 : 3,
       child: Scaffold(
         appBar: AppBar(
-          
           title: const Text(
             'Vaka Listesi Detay',
             style: TextStyle(color: Colors.black),
@@ -77,7 +79,6 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
           backgroundColor: APPColors.Main.white,
           toolbarHeight: size.height / 20,
           centerTitle: true,
-          
           leading: IconButton(
             onPressed: () => {
               Navigator.push(
@@ -96,40 +97,82 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
             indicatorColor: Colors.black,
             labelStyle: TextStyle(fontSize: 11),
             labelColor: Colors.black,
-            tabs: <Widget>[
-              Tab(
-                text: 'Özet',
-                icon: Icon(
-                  Icons.info_outline,
-                  color: Colors.black,
-                  size: 25,
-                ),
-              ),
-              Tab(
-                text: 'Aktivite',
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                  size: 25,
-                ),
-              ),
-              Tab(
-                text: 'Dosyalar',
-                icon: Icon(
-                  Icons.attach_file,
-                  color: Colors.black,
-                  size: 25,
-                ),
-              ),
-            ],
+            tabs: PPP_PROJECT == "antep"
+                ? <Widget>[
+                    Tab(
+                      text: 'Özet',
+                      icon: Icon(
+                        Icons.info_outline,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                    Tab(
+                      text: 'Aktivite',
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                    Tab(
+                      text: 'Dosyalar',
+                      icon: Icon(
+                        Icons.attach_file,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                    Tab(
+                      text: 'Notlar',
+                      icon: Icon(
+                        Icons.note_outlined,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    )
+                  ]
+                : <Widget>[
+                    Tab(
+                      text: 'Özet',
+                      icon: Icon(
+                        Icons.info_outline,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                    Tab(
+                      text: 'Aktivite',
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                    Tab(
+                      text: 'Dosyalar',
+                      icon: Icon(
+                        Icons.attach_file,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                    ),
+                  ],
           ),
         ),
         body: const TabBarView(
-          children: <Widget>[
-            IssueDetail(),
-            IssueActivities(),
-            IssueFiles(),
-          ],
+          children: PPP_PROJECT == "antep"
+              ? <Widget>[
+                  IssueDetail(),
+                  IssueActivities(),
+                  IssueFiles(),
+                  IssueNotes()
+                ]
+              : <Widget>[
+                  IssueDetail(),
+                  IssueActivities(),
+                  IssueFiles(),
+                ],
         ),
       ),
     );

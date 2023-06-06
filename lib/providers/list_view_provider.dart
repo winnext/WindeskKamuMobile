@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../models/http_response.model.dart';
 import '../models/issue_attachments.modal.dart';
 import '../models/issue_filter.modal.dart';
+import '../models/issue_notes.modal.dart';
 import '../utils/global_utils.dart';
 import 'main_page_view_provider.dart';
 
@@ -29,6 +30,9 @@ class ListViewProvider extends ChangeNotifier {
 
   List<IssueActivitiesModal> _issueActivitiesView = [];
   List<IssueActivitiesModal> tempissueActivitiesView = [];
+
+  List<IssueNotesModal> _issueNotesView = [];
+  List<IssueNotesModal> tempissueNotesView = [];
 
   List<IssueAttachmentModal> _issueAttachmentView = [];
   List<IssueAttachmentModal> tempissueAttachmentView = [];
@@ -86,6 +90,12 @@ class ListViewProvider extends ChangeNotifier {
   List<IssueActivitiesModal> get issueActivitiesView => _issueActivitiesView;
   set setiissueActivitiesView(List<IssueActivitiesModal> issueActivitiesView) {
     _issueActivitiesView = issueActivitiesView;
+    notifyListeners();
+  }
+
+  List<IssueNotesModal> get issueNotesView => _issueNotesView;
+  set setiissueNotesView(List<IssueNotesModal> issueNotesView) {
+    _issueNotesView = issueNotesView;
     notifyListeners();
   }
 
@@ -332,6 +342,42 @@ class ListViewProvider extends ChangeNotifier {
       Future.delayed(const Duration(milliseconds: 0), () {
         issueActivitiesView.addAll(tempissueActivitiesView);
         int noOfTasks = tempissueActivitiesView.length;
+        if (noOfTasks > 0) {
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+        } else {
+          _currentPage = 1;
+          _isDataExist = false;
+          _loading = false;
+          _isDataLoading = false;
+          notifyListeners();
+        }
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+    void getIssueNotes(issuecode) async {
+    _isDataLoading = true;
+    
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getNotes&module=issue&moduleCode=${issuecode}';
+
+    final result = await apirepository.getIssueNotes(
+        controller: urlIssueTypes);
+
+    if (true) {
+      tempissueNotesView = (result.records['records'] as List)
+          .map((e) => IssueNotesModal.fromJson(e))
+          .toList();
+      Future.delayed(const Duration(milliseconds: 0), () {
+        issueNotesView.addAll(tempissueNotesView);
+        int noOfTasks = tempissueNotesView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;
           _loading = false;

@@ -220,6 +220,11 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (BuildContext context) {
               return badges.Badge(
                 position: badges.BadgePosition.topEnd(top: 10, end: 10),
+                badgeContent: Text(
+                  mainViewProvider.toplamKayitSayisi.toString(),
+                  style: TextStyle(color: APPColors.Main.white),
+                ),
+                onTap: () {},
                 child: IconButton(
                   icon: Icon(
                     Icons.notifications,
@@ -227,19 +232,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: APPColors.Main.black,
                   ),
                   onPressed: () {
-                    showModalBottomSheet<void>(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        elevation: 10,
-                        context: context,
-                        builder: (context) => AnnouncementList());
+                    // ignore: unrelated_type_equality_checks
+                    mainViewProvider.toplamKayitSayisi != 0
+                        ? showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            elevation: 10,
+                            context: context,
+                            builder: (context) => AnnouncementList())
+                        : null;
                   },
                 ),
-                badgeContent: Text(
-                  mainViewProvider.toplamKayitSayisi.toString(),
-                  style: TextStyle(color: APPColors.Main.white),
-                ),
-                onTap: () {},
               );
             },
           ),

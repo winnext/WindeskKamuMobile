@@ -705,151 +705,141 @@ class APIRepository {
     }
   }
 
+  Future woCreate(woSpace, woService, woName, woNameLabel, priority_type,
+      workorder_cfg, woDesc, image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
+    String? kadi = prefs.getString('prefsUserName');
 
+    String woCreateUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=saveWorkorderNfs&workorder_type=' +
+        woName +
+        '&workorder_name=' +
+        woNameLabel +
+        '&workorder_service=' +
+        woService +
+        '&workorder_space=' +
+        woSpace +
+        '&workorder_description=' +
+        woDesc +
+        '&workorder_priority_type=' +
+        priority_type +
+        '&workorder_cfg=' +
+        workorder_cfg;
 
+    print(woCreateUrl);
 
-    Future woCreate(woSpace, woService, woName, woNameLabel, priority_type, workorder_cfg, woDesc,  image) async{
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: woCreateUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
 
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            String deviceToken = prefs.getString('deviceId').toString();
+      Dio dio = Dio(options);
+      final response = await dio.get(woCreateUrl);
 
-            String? kadi = prefs.getString('prefsUserName'); 
-
-        
-
-            String woCreateUrl = base_url_v1+TOKEN_V1 +
-          deviceToken +'&action=saveWorkorderNfs&workorder_type='+woName+
-          '&workorder_name='+woNameLabel+
-          '&workorder_service='+woService+
-          '&workorder_space='+woSpace+
-          '&workorder_description='+woDesc+
-          '&workorder_priority_type='+priority_type+
-          '&workorder_cfg='+workorder_cfg;
-
-          print(woCreateUrl);
-
-
-              try {
-              BaseOptions options = new BaseOptions(
-            baseUrl: woCreateUrl,
-            receiveDataWhenStatusError: true,
-            connectTimeout: 3*2000, // 60 seconds
-            receiveTimeout: 3*2000 // 60 seconds
-            );
-
-        Dio dio = Dio(options);
-        final response = await dio.get(woCreateUrl);
-        
-            print(response);
-            if (response.data['success'] == true) {
-                if(image.length > 0){
-                    woCreateFotoEkle(response.data['code'], image);
-
-                }
-                          return [[1],response.data];
-            }else{
-              return [[0],response.data['uyari']];
-
-            }
-
-        
-
-      }on DioError catch (e){
-        print('girdi');
-        return [[0],'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz'];
-
+      print(response);
+      if (response.data['success'] == true) {
+        if (image.length > 0) {
+          woCreateFotoEkle(response.data['code'], image);
+        }
+        return [
+          [1],
+          response.data
+        ];
+      } else {
+        return [
+          [0],
+          response.data['uyari']
+        ];
       }
-
-
+    } on DioError catch (e) {
+      print('girdi');
+      return [
+        [0],
+        'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz'
+      ];
     }
+  }
 
-    Future woCreateFotoEkle (woCode,image)async{
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-            String deviceToken = prefs.getString('deviceId').toString();
+  Future woCreateFotoEkle(woCode, image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-            String? kadi = prefs.getString('prefsUserName'); 
+    String? kadi = prefs.getString('prefsUserName');
 
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=addAttachment&username=' +
+        kadi.toString() +
+        '&moduleName=workorder&issueCode=' +
+        woCode;
+    print('Foto ekle url : ' + url);
+    FormData formData = FormData.fromMap({"base64string": image});
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.post(
+        url,
+        data: formData,
+      );
+      print('Foto ekle response  : ' + (response.data).toString());
 
-        String url = base_url_v1+TOKEN_V1 + deviceToken+ '&action=addAttachment&username='+
-          kadi.toString()+
-          '&moduleName=workorder&issueCode='+woCode;
-          print('Foto ekle url : '+url);
-      FormData formData = FormData.fromMap({
-        "base64string":image
-      });
-            try {
-              BaseOptions options = new BaseOptions(
-                  baseUrl: url,
-                  receiveDataWhenStatusError: true,
-                  connectTimeout: 3*1000, // 60 seconds
-                  receiveTimeout: 3*1000 // 60 seconds
-                  );
-              Dio dio = Dio(options);
-              final response = await dio.post(url,
-                  data: formData,
-              );
-              print('Foto ekle response  : ' + (response.data).toString());
-
-              return response.data;
-            } on DioError catch (e) {
-              print('notsuccess');
-              print(e);
-              return 'notsuccess';
-            }
-    
+      return response.data;
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
     }
+  }
 
+  Future woCreateHizmetListesiApi(usercode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
 
-    Future woCreateHizmetListesiApi(usercode) async{
+    String? kadi = prefs.getString('prefsUserName');
 
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-          String deviceToken = prefs.getString('deviceId').toString();
+    String woCreateHizmetListesiUrl = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getServices&username=' +
+        kadi.toString();
 
-          String? kadi = prefs.getString('prefsUserName'); 
+    print(woCreateHizmetListesiUrl);
 
-       
-
-          String woCreateHizmetListesiUrl = base_url_v1+TOKEN_V1 +
-        deviceToken +'&action=getServices&username='+kadi.toString();
-
-        print(woCreateHizmetListesiUrl);
-
-
-            try {
-            BaseOptions options = new BaseOptions(
+    try {
+      BaseOptions options = new BaseOptions(
           baseUrl: woCreateHizmetListesiUrl,
           receiveDataWhenStatusError: true,
-          connectTimeout: 3*2000, // 60 seconds
-          receiveTimeout: 3*2000 // 60 seconds
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
           );
 
       Dio dio = Dio(options);
       final response = await dio.get(woCreateHizmetListesiUrl);
-      
-          //print(response);
-          if (response.data['result'] == 'success') {
-                        return response.data['records'];
-          }else{
-            return [];
 
-          }
-
-      
-
-    }on DioError catch (e){
+      //print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return [];
+      }
+    } on DioError catch (e) {
       print('girdi');
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
-
     }
-
-
-
-
-    }
-
-
-
+  }
 
   Future login(String kadi, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -1133,6 +1123,80 @@ class APIRepository {
       print('dataActivities + ' + data.toString());
 
       //print(data['records'] as List);
+
+      if (response != null) {
+        return httpSonucModel(
+          records: data,
+          success: true,
+          message: 'Başarılı',
+        );
+      }
+      return httpSonucModel(
+        records: data,
+        success: false,
+        message: 'Hata',
+      );
+    } on DioError catch (e) {
+      if (DioErrorType.other == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Bağlantı Hatası",
+        );
+      }
+      if (DioErrorType.response == e.type) {
+        if (e.response!.statusCode == 401) {
+          return httpSonucModel(
+            success: false,
+            message: "Yetkisiz Erişim",
+            records: {},
+          );
+        }
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "İstek hatası",
+        );
+      }
+      if (DioErrorType.connectTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (DioErrorType.sendTimeout == e.type) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: "Sistem zaman aşımına uğradı",
+        );
+      }
+      if (e.response != null) {
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: 'Hata',
+        );
+      } else {
+        //Hata dönüşü
+        return httpSonucModel(
+          records: {},
+          success: false,
+          message: e.message,
+        );
+      }
+    }
+  }
+
+  Future<httpSonucModel> getIssueNotes(
+      {@required String? controller, bool redirectLogin = false}) async {
+    print(controller.toString());
+
+    try {
+      final response = await dio.get(controller.toString());
+
+      final data = jsonDecode(response.toString());
 
       if (response != null) {
         return httpSonucModel(
@@ -1614,7 +1678,7 @@ class APIRepository {
       final response = await dio.get(controller,
           options: Options(
             headers: {"xusercode": 'sgnm1040', "xtoken": TOKEN_V2},
-      ));
+          ));
 
       final data = jsonDecode(response.toString());
 
@@ -2177,9 +2241,10 @@ class APIRepository {
     print('url ' + controller!);
 
     try {
-      final response = await dio.post(controller,
-          data: {'description': description, 'base64string': image},  
-          options: Options(contentType: Headers.formUrlEncodedContentType),
+      final response = await dio.post(
+        controller,
+        data: {'description': description, 'base64string': image},
+        options: Options(contentType: Headers.formUrlEncodedContentType),
       );
 
       print('addActivity' + response.toString());
@@ -2260,12 +2325,18 @@ class APIRepository {
     print('url ' + controller!);
 
     try {
-      final response = await dio.post(controller,
-          data: {'description': description, 'base64string': image},  
-          options: Options(contentType: Headers.formUrlEncodedContentType),
+      final response = await dio.post(
+        controller,
+        data: {'description': description, 'base64string': image},
+        options: Options(contentType: Headers.formUrlEncodedContentType),
       );
 
-      print('photoAdressAct' + response.toString()+ '  : '+ description.toString() + '   : '+ image.toString());
+      print('photoAdressAct' +
+          response.toString() +
+          '  : ' +
+          description.toString() +
+          '   : ' +
+          image.toString());
 
       final data = jsonDecode(response.toString());
 
@@ -2495,10 +2566,8 @@ class APIRepository {
     }
   }
 
-    Future<httpSonucModel> getAnnouncements(
-      {@required String? controller,
-      bool redirectLogin = false}) async {
-
+  Future<httpSonucModel> getAnnouncements(
+      {@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 
