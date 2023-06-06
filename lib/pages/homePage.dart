@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
+import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
 import 'package:win_kamu/pages/closedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/internet_connection/internet_connection.dart';
@@ -26,11 +27,11 @@ import '../providers/main_page_view_provider.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
+import '../widgets/modalWidgets/announcementModal.dart';
 import 'issue/routeIssue.dart';
 import 'openRequests/RouteRequests.dart';
 import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
-
 
 class MyHomePage extends StatefulWidget {
   static String homePage = '/homePage';
@@ -41,143 +42,143 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  showAlertDialog(BuildContext context, title, body, module, code) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("İptal"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Talebe Git"),
+      onPressed: () {},
+    );
 
-  showAlertDialog(BuildContext context, title,body,module,code) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(body),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
 
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("İptal"),
-    onPressed:  () {
-      Navigator.of(context, rootNavigator: true).pop('dialog');  
-  },
-  );
-  Widget continueButton = TextButton(
-    child: Text("Talebe Git"),
-    onPressed:  () {},
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(title),
-    content: Text(body),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
-
-
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   void initState() {
-      final onNotifications = BehaviorSubject<String?>();
+    final onNotifications = BehaviorSubject<String?>();
 
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+    final IOSInitializationSettings initializationSettingsIOS =
+        const IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
 
+    final MacOSInitializationSettings initializationSettingsMacOS =
+        const MacOSInitializationSettings();
 
-const AndroidInitializationSettings initializationSettingsAndroid =  AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+            macOS: initializationSettingsMacOS);
 
-final IOSInitializationSettings initializationSettingsIOS =  const IOSInitializationSettings(
-  requestAlertPermission: true,
-  requestBadgePermission: true,
-  requestSoundPermission: true,
-  );
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: ((data) async {
+      onNotifications.add(data);
+    }));
 
-final MacOSInitializationSettings initializationSettingsMacOS = const MacOSInitializationSettings();
+    void onClickedNotification(String? payload) {
+      print('Foreground HOME Payload : ' + payload.toString());
+      String data = payload.toString();
+      final splitted_data = data.split('/-*-/');
+      String title = splitted_data[0];
+      String body = splitted_data[1];
+      String module = splitted_data[2];
+      String code = splitted_data[3];
 
-final InitializationSettings initializationSettings = InitializationSettings(
-  android: initializationSettingsAndroid,
-  iOS: initializationSettingsIOS,
-  macOS: initializationSettingsMacOS);
+      showAlertDialog(context, title, body, module, code);
+    }
 
-
-   flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async{
-    onNotifications.add(data);
-  }));
-
-   void onClickedNotification(String? payload){
-          print('Foreground HOME Payload : '+payload.toString());
-          String data = payload.toString();
-          final splitted_data = data.split('/-*-/');
-          String title = splitted_data[0];
-          String body = splitted_data[1];
-          String module = splitted_data[2];
-          String code = splitted_data[3];
-
-      showAlertDialog(context,title,body,module,code);
-
-
-          
-
-  }
-
-  
-
-
-  onNotifications.stream.listen(onClickedNotification);
-
+    onNotifications.stream.listen(onClickedNotification);
 
 // Lisitnening to the background messages
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  
-  await Firebase.initializeApp();
-  
-  print("Handling a background message: ${message.messageId}");
-}
+    Future<void> _firebaseMessagingBackgroundHandler(
+        RemoteMessage message) async {
+      await Firebase.initializeApp();
+
+      print("Handling a background message: ${message.messageId}");
+    }
 
 // Lisitnening to the background messages
-WidgetsFlutterBinding.ensureInitialized();
-FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    WidgetsFlutterBinding.ensureInitialized();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // Listneing to the foreground messages
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
-    
-    print('Got a message whilst in the foreground!');
-    print('Message data Home: ${message.data}');
+    // Listneing to the foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print('Got a message whilst in the foreground!');
+      print('Message data Home: ${message.data}');
 
-    var payload = (message.notification?.title).toString()+'/-*-/'+(message.notification?.body).toString()+'/-*-/'+message.data?['module']+'/-*-/'+message.data?['code'];
-  
-   NotificationApi.showNotification(title:message.notification?.title,body:message.notification?.body,payload:payload);
+      var payload = (message.notification?.title).toString() +
+          '/-*-/' +
+          (message.notification?.body).toString() +
+          '/-*-/' +
+          message.data?['module'] +
+          '/-*-/' +
+          message.data?['code'];
 
-   
-  });
+      NotificationApi.showNotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          payload: payload);
+    });
 
-
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('HomePage');
       print('Firebase notification opened');
-      showAlertDialog(context,message.notification?.title,message.notification?.body,message.data?['module'],message.data?['code']);
+      showAlertDialog(
+          context,
+          message.notification?.title,
+          message.notification?.body,
+          message.data?['module'],
+          message.data?['code']);
       //FlutterLocalNotificationsPlugin().show(message.notification.messageId, message.notification?.title, message.notification?.body,);
-  });
+    });
+
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
+      mainPageViewProvider.announcementView.clear();
+      mainPageViewProvider.getAnnouncements(mainPageViewProvider.kadi);
+    });
 
     // TODO: implement initState
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
-final apirepository = APIRepository();
+    final apirepository = APIRepository();
 
-            final mainViewProvider =
+    final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
-
-   
- 
-
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -195,30 +196,20 @@ final apirepository = APIRepository();
                 color: APPColors.Main.black,
               ),
               tooltip: 'Exit',
-              onPressed: () async{
-                var cikis_result = await apirepository.cikis(mainViewProvider.kadi);
+              onPressed: () async {
+                var cikis_result =
+                    await apirepository.cikis(mainViewProvider.kadi);
                 try {
-                  if(cikis_result){
-                  snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
-                  
+                  if (cikis_result) {
+                    snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
 
-                   Future.delayed(const Duration(seconds: 1)).whenComplete(() {
-                                        Phoenix.rebirth(context);
-
-
-                   });
-
-                  
-
-                }else{
-
-
-                } 
+                    Future.delayed(const Duration(seconds: 1)).whenComplete(() {
+                      Phoenix.rebirth(context);
+                    });
+                  } else {}
                 } catch (e) {
                   snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
                 }
-                
-                
               },
             ),
           ],
@@ -235,8 +226,20 @@ final apirepository = APIRepository();
                     size: 35,
                     color: APPColors.Main.black,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        elevation: 10,
+                        context: context,
+                        builder: (context) => AnnouncementList());
+                  },
                 ),
+                badgeContent: Text(
+                  mainViewProvider.toplamKayitSayisi.toString(),
+                  style: TextStyle(color: APPColors.Main.white),
+                ),
+                onTap: () {},
               );
             },
           ),
@@ -317,7 +320,7 @@ final apirepository = APIRepository();
                             child: HomeButton(
                                 text: 'Yeni İş Emri',
                                 iconName: Icons.calendar_month,
-                                navigator: ComplaintRequests() ),
+                                navigator: ComplaintRequests()),
                           ),
                           // Expanded(
                           //   child: HomeButton(
