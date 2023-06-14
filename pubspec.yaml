@@ -82,7 +82,10 @@ dependencies:
   never_behind_keyboard: ^1.0.2
   accordion: ^2.5.1
   url_launcher: ^6.1.11
-  animated_radial_menu: ^0.0.1
+  flutter_picker: ^2.1.0
+  numberpicker: ^2.1.2
+  vertical_picker: ^0.0.1
+  selectable_list: ^0.1.1
 
 dev_dependencies:
   flutter_test:

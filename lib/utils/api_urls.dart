@@ -125,5 +125,5 @@ const base_url_v1 =
 //         'wdsgnm1017_' +
 //         '&token=';
 
-const loginUrl = "v1/Auth/Login";
-const attachpath = 'http://10.32.12.22/windesk/';
+// const loginUrl = "v1/Auth/Login";
+// const attachpath = 'http://10.32.12.22/windesk/';

@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+import 'package:win_kamu/pages/WorkOrder/woOperation.dart';
 import 'package:win_kamu/pages/WorkOrder/woSummary.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 
@@ -27,8 +31,9 @@ class WoDetail extends StatefulWidget {
 class _WoDetailState extends State<WoDetail> {
   String dateNow = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
 
-  @override
-  void initState() {
+  
+
+  start() {
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     final detailViewProvider =
@@ -53,15 +58,28 @@ class _WoDetailState extends State<WoDetail> {
   }
 
   @override
+  void initState() {
+    start();
+  }
+
+  @override
   Widget build(BuildContext context) {
     int l = -1;
 
-    final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
+    final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context,listen: true);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context,listen: false);
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
 
-    return Scaffold(
+    
+    var woDetailList = woDetailViewProvider.woDetailView[0];
+    var woRelatedList = woDetailViewProvider.woRelatedView[0];
+  print('İş Emri Durumu : '+woDetailList.STATUS.toString());
+
+  print(woDetailViewProvider.secilenSure);
+
+    return Sizer ( builder: (context, Orientation, deviceType) {
+      return Scaffold(
       appBar: AppBar(
         backgroundColor: APPColors.Main.white,
         title: Text(
@@ -123,7 +141,7 @@ class _WoDetailState extends State<WoDetail> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
                                             children: [
-                                              Text(mainPageViewProvider.kadi),
+                                              Text('asd'),
                                               Text(dateNow.toString()),
                                             ],
                                           ),
@@ -209,12 +227,148 @@ class _WoDetailState extends State<WoDetail> {
                             woCode: widget.woCode,
                           ),
                         ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              /////////////////////////////////
+                               ///Başlat kısmı başlangıç //////////
+                               ////////////////////////////////
+                           woDetailList.STATUS == 'Open'   ?   Container(
+                          
+                                 width: 30.w,
+                                 height: 6.h,
+                                 child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: APPColors.Login.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () {
+                          // iş emri başlat
+                          print('Başlanacak iş emri : '+woDetailList.CODE.toString());
+                          woDetailViewProvider.woActualDateActions('start', woDetailList.CODE);
+                            //woDetailViewProvider.loadWoDetail(widget.woCode, mainPageViewProvider.kadi);
+                          Timer(Duration(seconds: 1), () {
+                              start();
+                          });
+
+                        },
+                        child: Text('Başlat'),
+                                          ),
+                               ) :   Container(
+                          
+                                 width: 30.w,
+                                 height: 6.h,
+                                 child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () {
+                          
+                        },
+                        child: Text('Başlat'),
+                                          ),
+                               ),
+                              /////////////////////////////////
+                               ///Başlat kısmı bitiş //////////
+                               ////////////////////////////////
+                               ///
+                               /// /////////////////////////////////
+                               ///Bitir kısmı başlangıç //////////
+                               ////////////////////////////////
+                           woDetailList.STATUS == 'WIP' ||   woDetailList.STATUS == 'Pending' ? 
+                            Container(
+                          
+                                 width: 30.w,
+                                 height: 6.h,
+                                 child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () {
+                           print('Bitecek iş emri : '+woDetailList.CODE.toString());
+                          woDetailViewProvider.woActualDateActions('end', woDetailList.CODE);
+                              //woDetailViewProvider.loadWoDetail(widget.woCode, mainPageViewProvider.kadi);
+
+                           Timer(Duration(seconds: 1), () {
+                              start();
+                          });
+                        },
+                        child: Text('Bitir'),
+                                          ),
+                               ) : 
+                                Container(
+                          
+                                 width: 30.w,
+                                 height: 6.h,
+                                 child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () {
+                          
+                        },
+                        child: Text('Bitir'),
+                                          ),
+                               ),
+
+                            ],
+                          ) ,
+                        ),
+                         /////////////////////////////////
+                               ///Bitir kısmı bitiş //////////
+                               ////////////////////////////////
+                        Text(''),
+                         Container(
+                          
+                                 width: 15.w,
+                                 height: 6.h,
+                                 child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: APPColors.Login.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () {
+                          
+                        },
+                        child: Icon(Icons.add_a_photo),
+                                          ),
+                               ),
+                               woDetailList.STATUS == 'WIP' ||   woDetailList.STATUS == 'Pending' ? 
+                               WoOperation(woCode: widget.woCode,) : Text('')
+                        
                 ],
               ),
             ],
           ),
         ),
       ]),
+    );
+
+    } 
     );
   }
 }

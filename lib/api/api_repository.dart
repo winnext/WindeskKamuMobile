@@ -356,6 +356,139 @@ class APIRepository {
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
     }
   }
+  //İŞ EMRİ BUTONLARI İŞLEMLERİ start veya end
+  Future woActualDateActions(type,code) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=workorderActualDateActions&workorderCode='+code.toString()+'&username=' +
+        kadi.toString() +
+        '&type=' +
+        type.toString() +
+        '&nfc=0&workorder_wait_reason=&workorder_wait_reasoncode=';
+
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' İş Emri buton başlat bitir butonları');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+  }
+
+  //Add Effort
+
+  Future addEffortApi(code,workPeriod) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=addWorkorderEffort&workorderCode='+code.toString()+'&username=' +
+        kadi.toString() +
+        '&module=workorder' +
+        '&workperiod=' +
+        workPeriod.toString()+
+        '&startdate=1&type=PREDICTED&description=test';
+        print(code);
+  print(url);
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Efor Ekleme');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+  }
+  
+  //Eforlar
+
+  Future getWorkOrderWorklogsApi(woCode) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+            String deviceToken = prefs.getString('deviceId').toString();
+
+            String? kadi = prefs.getString('prefsUserName'); 
+
+
+            String url = BASE_URL_V2 + '/workorder/'+woCode.toString()+'/workloads';
+
+          print('Eforlar listesi url : '+url);
+      
+            try {
+              BaseOptions options = new BaseOptions(
+                  baseUrl: url,
+                  receiveDataWhenStatusError: true,
+                  connectTimeout: 3*1000, // 60 seconds
+                  receiveTimeout: 3*1000 // 60 seconds
+                  );
+              Dio dio = Dio(options);
+             final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+              //print('Eforlar listesi response  : ' + (response.data).toString());
+              if(response.data['result'] == 'success'){
+                print('girdi');
+                              return response.data['records'];
+
+              }
+
+            } on DioError catch (e) {
+              print('notsuccess');
+              print(e);
+              return 'notsuccess';
+            }
+
+
+  }
+
+
 
   Future mahalAramaVarlikDetaySlaApi(cmdbCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -839,7 +972,60 @@ class APIRepository {
       print('girdi');
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
     }
+
+
+
+
+    }
+
+  Future checkWorkorderByAuthorizedServicesApi(String kadi, String woCode) async {
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+          String deviceToken = prefs.getString('deviceId').toString();
+
+          String? kadi = prefs.getString('prefsUserName'); 
+
+       
+
+          String checkSonucUrl = base_url_v1+TOKEN_V1 +
+        deviceToken +'&action=checkWorkorderByAuthorizedServices'+
+        '&workorderCode='+woCode.toString()+
+        '&username='+kadi.toString();
+
+        print(checkSonucUrl);
+
+                try {
+            BaseOptions options = new BaseOptions(
+          baseUrl: checkSonucUrl,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3*2000, // 60 seconds
+          receiveTimeout: 3*2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(checkSonucUrl);
+      
+          print(response);
+          if (response.data['result'] == 'success') {
+                        return response.data['count'].toString();
+          }else{
+                        return response.data['count'].toString();
+
+          }
+
+      
+
+    }on DioError catch (e){
+      print('girdi');
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+
+    }
+
+
+
+
   }
+
+
 
   Future login(String kadi, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -964,7 +1150,7 @@ class APIRepository {
   }
 
   Future accessTest1() async {
-    String url = attachpath +
+    String url = ATTACHPATHLIVE +
         '?&timestamp=' +
         (DateTime.now().millisecondsSinceEpoch).toString();
 
@@ -1015,9 +1201,9 @@ class APIRepository {
     }
   }
 
-  //sayfalama get metodu
+    //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
-//sayfalama get metodu
+    //sayfalama get metodu
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 
   Future<tracingListModal> getTracingListWithCount(

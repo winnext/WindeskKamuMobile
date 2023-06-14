@@ -31,6 +31,15 @@ class SearchViewProvider extends ChangeNotifier {
                 notifyListeners();
           }  
 
+          final _isEmriNo = TextEditingController();
+
+          TextEditingController get isEmriNo => _isEmriNo;
+
+           set setIsEmriNo(String isEmriNo) {
+                _isEmriNo.text = isEmriNo;
+                notifyListeners();
+          }  
+
 
           final _varlikKodu = TextEditingController();
 
