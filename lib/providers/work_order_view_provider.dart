@@ -205,6 +205,7 @@ _woCreateOncelikListeValue = woCreateOncelikListeValue;
 notifyListeners();
 }
 
+
 //////////////////////////////////////////////
 ///////////// WO Create /////////////////////
 ////////////////////////////////////////////  
@@ -280,6 +281,8 @@ woCreate(context ) async {
       print('woName val : ');
       print(woName);
 
+      
+
       print('oncelik val  : ');
       print(priority_type);
 
@@ -314,7 +317,23 @@ woCreate(context ) async {
     
 
 
-} 
+}
+
+
+//////////////////////////////////////////////
+////// WO Search Görebilme Yetkisi //////////
+////////////////////////////////////////////  
+
+checkWorkorderByAuthorizedServices(username,woCode) async{
+        print('WoCode : '+woCode.toString());
+        final checkSonuc = await apirepository.checkWorkorderByAuthorizedServicesApi('kullanıcı_Adi', woCode);
+        print('Check Sonuc : ');
+        print(checkSonuc);
+
+        return checkSonuc;
+
+}
+
 
   
     

@@ -109,14 +109,16 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   loadWoDetail(String woCode, String xusercode) async {
+    print('LoadWoDetail ');
+    woDetailView.clear();
+
     _isDataLoading = true;
 
     final responseUrl = BASE_URL_V2 + '/workorder/detail/${woCode}';
     final data = await apirepository.getRequestDetail(
         controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
-
     if (true) {
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
         woDetailView.add(responseData);
         _isDataLoading = false;
@@ -124,6 +126,9 @@ class WoDetailViewProvider extends ChangeNotifier {
         _isDataExist = false;
         notifyListeners();
       });
+      print('STATUS : : :');
+            print(woDetailView[0].STATUS);
+
     } else {
       // baglantiHatasi(context, result.message);
     }
@@ -204,4 +209,117 @@ class WoDetailViewProvider extends ChangeNotifier {
       }
     }
   }
+
+
+  //iş emri başlat 
+
+  woActualDateActions(type,code) async{
+    
+    final result = await apirepository.woActualDateActions(type, code);
+
+  }
+
+  // eforlar süre 
+
+
+  String _secilenSure = 'Lütfen Süre Seçiniz';  
+
+      String get secilenSure => _secilenSure;
+
+      set setSureDegeri(String sureDegeri) {
+        _secilenSure = sureDegeri;
+        notifyListeners();
+      }  
+                  //eforlar gun
+                  String _secilenGun = '1';  
+
+                      String get secilenGun => _secilenGun;
+
+                      set setSecilenGun(String secilenGun) {
+                        _secilenGun = secilenGun;
+                        notifyListeners();
+                      }  
+                  //eforlar saat
+                  String _secilenSaat = '1';  
+
+                      String get secilenSaat => _secilenSaat;
+
+                      set setSecilenSaat(String secilenSaat) {
+                        _secilenSaat = secilenSaat;
+                        notifyListeners();
+                      }  
+                    //eforlar dakika
+                    String _secilenDakika = '1';  
+
+                      String get secilenDakika => _secilenDakika;
+
+                      set setSecilenDakika(String secilenDakika) {
+                        _secilenDakika = secilenDakika;
+                        notifyListeners();
+                      }  
+    
+
+  // ADD EFFORT
+
+  addEffort(context,code,workPeriod) async {
+    print('WOCODE : '+code);
+    print('WORKPERIOD : '+workPeriod);
+    final result = apirepository.addEffortApi(code, workPeriod);
+    print(result);
+
+  }
+
+  // Eforlar
+  List _eforlarArray = [];
+
+         List get eforlarArray => _eforlarArray;
+  set setEforlarArray(List eforlarArray) {
+    _eforlarArray = eforlarArray;
+    notifyListeners();
+  }
+
+
+  getWorkOrderWorklogs(woCode) async{
+    List <String> codes = [];
+    List <String> users = []; 
+    List <String> timeworkeds = [];
+
+        final result2 = await apirepository.getWorkOrderWorklogsApi(woCode);
+        print(result2);
+
+        for (var element in result2){
+          codes.add(element['CODE']);
+          users.add(element['USER']);
+          // if(element['TIMEWORKED'] > 24.0){
+          //   String gun = element['TIMEWORKED']%24;
+          //   String saat = element['TIMEWORKED'];
+          // }else{
+          //   if(element['TIMEWORKED'] > 1.0){
+          //     var dakika = element['TIMEWORKED']*60%60.toString();
+          //     var saat = int.parse(element['TIMEWORKED']).toString();
+          //     timeworkeds.add(saat+' sa'+dakika+' dk');
+
+          //   }else{
+          //       timeworkeds.add(element['TIMEWORKED']*60.toString()+' dk');
+
+          //   }
+          // }
+          if(element['TIMEWORKED'] > 1){
+              timeworkeds.add((element['TIMEWORKED'].toInt()).toString()+' sa');
+
+          }else{
+              timeworkeds.add((element['TIMEWORKED']*60).toString()+' dk');
+
+          }
+          
+                      //timeworkeds.add('1 gun 1 sa 21 dk ');
+
+
+        }
+        setEforlarArray = [codes]+[users]+[timeworkeds];
+
+
+  }
+
+
 }

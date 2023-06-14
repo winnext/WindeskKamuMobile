@@ -403,6 +403,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  flutter_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_picker
+      sha256: "2f94c6eefba8697b07e3cd008b75f06b4ba7053cb26d23ae0fcd5932b7dc75af"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -501,6 +509,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.3"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      sha256: f6062c1720eb59be553dfa6b89813d3e8dd2f054538445aaa5edaddfa5195ce6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   internet_connection_checker:
     dependency: "direct main"
     description:
@@ -589,6 +605,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  numberpicker:
+    dependency: "direct main"
+    description:
+      name: numberpicker
+      sha256: "4c129154944b0f6b133e693f8749c3f8bfb67c4d07ef9dcab48b595c22d1f156"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   overlay_support:
     dependency: "direct main"
     description:
@@ -789,6 +813,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  selectable_list:
+    dependency: "direct main"
+    description:
+      name: selectable_list
+      sha256: "102c345d6dfccda9744d65c1fd73c806bfa8561d7e7e57b20fa333fa7c3c9db6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1018,6 +1050,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vertical_picker:
+    dependency: "direct main"
+    description:
+      name: vertical_picker
+      sha256: "43a874667546d6bb114b75fa811bb790c68a4c0c1cdab823ffa1af564dbaad5e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   win32:
     dependency: transitive
     description:

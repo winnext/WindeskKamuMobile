@@ -283,10 +283,15 @@ class _WoSummaryState extends State<WoSummary> {
                               child: Row(
                                 children: [
                                   Icon(Icons.navigation_outlined),
-                                  Text(
-                                    woRelatedList.BUSINESS_NAME.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                  Flexible(
+                                    child: Text(
+                                      woRelatedList.BUSINESS_NAME.toString(),
+                                      style:
+                                          TextStyle(color: APPColors.Main.black),
+                                          softWrap: false,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis, // new
+                                    ),
                                   ),
                                 ],
                               ),

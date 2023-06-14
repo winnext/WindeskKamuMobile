@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
+import 'package:win_kamu/providers/work_order_view_provider.dart';
+import 'package:win_kamu/providers/workorder_detail_provider.dart';
+import 'package:win_kamu/utils/global_utils.dart';
 
+import '../../models/woListView.model.dart';
 import '../../providers/login_provider.dart';
 import '../../utils/themes.dart';
+import '../WorkOrder/woDetail.dart';
 
 class isEmriArama extends StatefulWidget {
   const isEmriArama({super.key});
@@ -18,9 +23,10 @@ class _isEmriAramaState extends State<isEmriArama> {
   @override
   Widget build(BuildContext context) {
         final searchProvider = Provider.of<SearchViewProvider>(context);
+        
 
-     TextEditingController vakaNoController = TextEditingController();
-  var vakaNo  = 0;
+     TextEditingController isEmriController = TextEditingController();
+  var isEmriNo  = 0;
 
 
     return Sizer(      builder: (context, orientation, deviceType) {
@@ -51,23 +57,23 @@ class _isEmriAramaState extends State<isEmriArama> {
 
                 children: [
                   TextField(
-                    controller: searchProvider.vakaNo,
+                    controller: searchProvider.isEmriNo,
               decoration: InputDecoration(
                 
                 border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-                labelText: 'WO',
+                labelText: 'İş Emri',
               ),
                 onChanged: (inputValue){
-                  print(searchProvider.vakaNo.text);
+                  print(searchProvider.isEmriNo.text);
           if(searchProvider.vakaNo.text == ''){
-            vakaNo = 0;
+            isEmriNo = 0;
           
             searchProvider.setVakaButonVisible = false;
             
           } else{
-            vakaNo =  1;
+            isEmriNo =  1;
                         searchProvider.setVakaButonVisible = true;
            
             }
@@ -75,7 +81,7 @@ class _isEmriAramaState extends State<isEmriArama> {
                
              
             ),
-            searchProvider.vakaNo.text != ''  ?
+            searchProvider.isEmriNo.text != ''  ?
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -114,9 +120,35 @@ class _isEmriAramaState extends State<isEmriArama> {
                                     BorderRadius.circular(20), // <-- Radius
                               ),
                             ),
-                            onPressed: () {
+                            onPressed: () async{
+                              print('İşEmri NO : '+searchProvider.isEmriNo.text);
+                              final woProvider = Provider.of<WorkOrderViewProvider>(context,listen: false);
+                              String sonuc = await woProvider.checkWorkorderByAuthorizedServices('', searchProvider.isEmriNo.text);
+                              print('İÇ  : '+sonuc.toString());
+                              if(int.parse(sonuc) >  0){
 
-                              print(vakaNoController.text);
+                                final detailViewProvider = Provider.of<WoDetailViewProvider>(context,listen: false);
+
+                              detailViewProvider.setwoCode = '';
+                                            detailViewProvider.setwoCode = searchProvider.isEmriNo.text;
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) => WoDetail(
+                                                  moduleCode:
+                                                      '',
+                                                  woCode: searchProvider.isEmriNo.text
+                                                ),
+                                              ),
+                                            );
+
+                              }else if(int.parse(sonuc) == 0){
+                                snackBar(context, 'İş emrini görmeye yetkiniz yoktur', 'info');
+
+                              }else{
+                                snackBar(context, 'Lütfen İş Emri Numarasını Kontrol Ediniz', 'info');
+                              }
+                              
+                              
                               
                             },
                             child: const Text('Ara'),
