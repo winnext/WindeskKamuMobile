@@ -37,7 +37,8 @@ enum APPColors {
   Modal,
   TracingNumber,
   Clear,
-  Filter
+  Filter,
+  Timer
 }
 
 extension APPColorsExtension on APPColors {
@@ -57,9 +58,9 @@ extension APPColorsExtension on APPColors {
   Color get green {
     switch (this) {
       case APPColors.Main:
-        return const Color(0xff32CD32);
+        return const Color(0xff80ed99);
       case APPColors.Secondary:
-        return const Color(0xffF9BA59);
+        return const Color(0xff38b000);
       case APPColors.Accent:
         return const Color(0xffFFCC7E);
       default:
@@ -134,9 +135,11 @@ extension APPColorsExtension on APPColors {
       case APPColors.Main:
         return Colors.redAccent;
       case APPColors.Secondary:
-        return const Color(0xfff07167);
+        return const Color(0xfff55138);
       case APPColors.NewNotifi:
         return Color.fromARGB(1000, 237, 181, 181);
+      case APPColors.Timer:
+        return const Color(0xffe71d36);
       default:
         return Colors.red;
     }

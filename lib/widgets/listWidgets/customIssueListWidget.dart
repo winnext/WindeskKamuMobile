@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
+import '../../utils/color_Utils.dart';
 import '../../utils/time_utils.dart';
 import '../../utils/utils.dart';
 
@@ -239,7 +240,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
-                            'Randevulu Vaka ${widget.planedDate}',
+                            'Randevulu Vaka ${timeRecover(widget.planedDate)}',
                             style: TextStyle(
                               color: Color(0xff025273),
                               fontSize: 13,
@@ -257,22 +258,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                               child: SizedBox(
                                 width: size.width / 1.5,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(bottom: 8.0),
+                                  padding: const EdgeInsets.only(bottom: 8.0),
                                   child: Container(
                                     width: size.width,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(5),
-                                      color: int.parse(widget.respondedIDate
-                                                      .toString()) -
-                                                  int.parse(widget
-                                                      .targetRDate
-                                                      .toString()) <
-                                              0
-                                          ? Color(0xff32CD32)
-                                          : Colors.red,
-                                    ),
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: colorCalculatorBackground(widget.respondedIDate
+                                                      .toString(), widget.targetRDate
+                                                      .toString())),
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
@@ -280,8 +273,10 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          color: APPColors.Main.black,
                                           fontSize: 13,
+                                          letterSpacing: 0.5,
+                                          color: APPColors.Main.black,
+                                          fontWeight: FontWeight.bold
                                         ),
                                       ),
                                     ),
@@ -293,29 +288,23 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                               child: SizedBox(
                                 width: size.width / 1.5,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(bottom: 0.0),
+                                  padding: const EdgeInsets.only(bottom: 0.0),
                                   child: Container(
                                     width: size.width,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(5),
-                                      color: int.parse((widget.fixedIDate)
-                                                      .toString()) -
-                                                  int.parse(
-                                                      (widget.targetFDate)
-                                                          .toString()) <
-                                              0
-                                          ? Color(0xff32CD32)
-                                          : Colors.red,
-                                    ),
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: colorCalculatorBackground((widget.fixedIDate)
+                                                      .toString(), (widget.targetFDate)
+                                                      .toString())),
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
                                         'Gerçekleşen Düzeltme ${timeRecover(widget.fixedIDate).toString()}',
                                         style: TextStyle(
-                                          color: APPColors.Main.black,
-                                          fontSize: 13,
+                                            fontSize: 13,
+                                            letterSpacing: 0.5,
+                                            color: APPColors.Main.black,
+                                            fontWeight: FontWeight.bold
                                         ),
                                       ),
                                     ),
@@ -325,32 +314,38 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                             ),
                           ],
                         )
-                      : widget.responseTimer == "0" &&
-                              widget.fixedTimer == "1"
+                      : widget.responseTimer == "0" && widget.fixedTimer == "1"
                           ? Flexible(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: size.width / 1.5,
+                                    width: size.width / 1,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
-                                      child: Text(
-                                        'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
-                                        style: TextStyle(
-                                          backgroundColor: int.parse(widget
-                                                          .respondedIDate
-                                                          .toString()) -
-                                                      int.parse(widget
-                                                          .targetRDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
-                                          fontSize: 13,
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Container(
+                                        height: size.height /22,
+                                        alignment: Alignment.centerLeft,
+                                        decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5), 
+                                        color: colorCalculatorBackground(widget
+                                                            .respondedIDate
+                                                            .toString(),widget
+                                                            .targetRDate
+                                                            .toString())),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            'Gerçekleşen Yanıtlama ${timeRecover(widget.respondedIDate.toString())}',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              letterSpacing: 0.5,
+                                              color: APPColors.Main.black,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -358,19 +353,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   SizedBox(
                                     width: size.width / 1.1,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(), widget
                                                           .targetFDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -380,19 +370,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   SizedBox(
                                     width: size.width / 1.1,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Kalan Süreniz ${timeDifference(widget.targetFDate)}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(), widget
                                                           .targetFDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                         ),
                                       ),
@@ -403,26 +388,20 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                             )
                           : Flexible(
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     width: size.width / 1.5,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(),widget
                                                           .targetRDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                         ),
                                       ),
@@ -431,19 +410,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   SizedBox(
                                     width: size.width / 1.5,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(), widget
                                                           .targetRDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                         ),
                                       ),
@@ -452,19 +426,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   SizedBox(
                                     width: size.width / 1.5,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(), widget
                                                           .targetFDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                         ),
                                       ),
@@ -473,19 +442,14 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                   SizedBox(
                                     width: size.width / 1.5,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
                                         'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
                                         style: TextStyle(
-                                          color: int.parse(dateNow
-                                                          .toString()) -
-                                                      int.parse(widget
+                                          color: colorCalculator(dateNow.toString(), widget
                                                           .targetFDate
-                                                          .toString()) <
-                                                  0
-                                              ? Color(0xff32CD32)
-                                              : Colors.red,
+                                                          .toString()),
                                           fontSize: 13,
                                         ),
                                       ),
