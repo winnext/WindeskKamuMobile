@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
 import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/utils/utils.dart';
+import '../../providers/detail_view_provider.dart';
+import '../../providers/list_view_provider.dart';
+import '../../providers/main_page_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
@@ -28,6 +31,12 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
         Provider.of<NewNotifProvider>(context, listen: true);
     final issuActionProvider =
         Provider.of<IssueActionProvider>(context, listen: true);
+    final mainPageProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
+    final listViewProvider =
+        Provider.of<ListViewProvider>(context, listen: false);
+    final detailViewProvider =
+        Provider.of<DetailViewProvider>(context, listen: true);
 
     return SingleChildScrollView(
       child: Container(
@@ -237,16 +246,16 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                             widget.issueCode);
 
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          print('dataCSS' +
-                              issuActionProvider.cfgResult.toString() +
-                              ' ' +
-                              issuActionProvider.cfgSuccess.toString());
-
                           String snackBarText =
                               issuActionProvider.cfgResult.toString();
                           String cfgSuccess =
                               issuActionProvider.cfgSuccess.toString();
 
+                          listViewProvider.getIssueOperations(
+                              widget.issueCode, mainPageProvider.kadi);
+                          detailViewProvider.loadData(
+                              widget.issueCode.toString(),
+                              mainPageProvider.kadi.toString());
                           Navigator.pop(context);
                           snackBar(
                               context,

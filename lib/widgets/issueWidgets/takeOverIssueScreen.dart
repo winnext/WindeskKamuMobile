@@ -30,12 +30,10 @@ class _TakeOverIssueState extends State<TakeOverIssue> {
 
   @override
   void initState() {
-    final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    final exampleList = Provider.of<ListViewProvider>(context);
 
     return WillPopScope(
       onWillPop: () async => false,

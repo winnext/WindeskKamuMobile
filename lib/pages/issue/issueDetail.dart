@@ -84,7 +84,7 @@ class _IssueDetailState extends State<IssueDetail> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     int l = -1;
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: true);
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     return WillPopScope(

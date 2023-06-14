@@ -11,6 +11,7 @@ import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 import 'package:win_kamu/widgets/photoDisplayWidgets/customActivitiesPhoto.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
+import '../../pages/issue/issueSummary.dart';
 import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../utils/global_utils.dart';
@@ -101,6 +102,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
 
     Size size = MediaQuery.of(context).size;
     final listViewProvider = Provider.of<ListViewProvider>(context);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final issueActionProvider = Provider.of<IssueActionProvider>(context);
     final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
     final RoundedLoadingButtonController _btnController =
@@ -460,12 +462,17 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                         Future.delayed(const Duration(milliseconds: 1000), () {
                           listViewProvider.getIssueOperations(
                               widget.code, widget.xusercode);
+
                           String snackBarText =
                               issueActionProvider.takeOverMessage.toString();
                           String takeOverSuccess =
                               issueActionProvider.takeOverResult.toString();
 
-                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const IssueSummary(),
+                            ),
+                          );
                           snackBar(
                               context,
                               takeOverSuccess == 'success'
@@ -529,6 +536,38 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                           ),
                     )
                   : Container(),
+              _isPlannedCancel
+                  ? TakeOverIssue(
+                      onConfirm: () {
+                        issueActionProvider.cancelIssuePlanned(
+                            widget.code, widget.xusercode);
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          listViewProvider.getIssueOperations(
+                              widget.code, widget.xusercode);
+                          String snackBarText =
+                              issueActionProvider.cancelIssueMessage.toString();
+                          String isSuccess =
+                              issueActionProvider.cancelIssueResult.toString();
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const IssueSummary(),
+                            ),
+                          );
+                          snackBar(
+                              context,
+                              isSuccess == 'success'
+                                  ? 'Randevu İptal Başarılı'
+                                  : 'Randevu İptal Başarısız',
+                              isSuccess);
+                        });
+                      },
+                      title: 'Randevu Talebi',
+                      text:
+                          'Bu talebin randevusunu iptal etmek istediğinize emin misiniz?',
+                      success: true,
+                      confirmButtonText: 'Tamam')
+                  : Container(),
               listViewProvider.issueOperationList[0].IS_SPAREPART == true
                   ? Container(
                       width: size.width / 1.09,
@@ -577,6 +616,39 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                           //     context),
                           ),
                     )
+                  : Container(),
+              _isSparepart
+                  ? TakeOverIssue(
+                      onConfirm: () {
+                        issueActionProvider.createSparepartIssue(
+                            widget.code, widget.xusercode);
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          listViewProvider.getIssueOperations(
+                              widget.code, widget.xusercode);
+                          String snackBarText = issueActionProvider
+                              .createSparepartIssueMessage
+                              .toString();
+                          String isSuccess = issueActionProvider
+                              .createSparepartIssueResult
+                              .toString();
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const IssueSummary(),
+                            ),
+                          );
+                          snackBar(
+                              context,
+                              isSuccess == 'success'
+                                  ? '$snackBarText'
+                                  : '$snackBarText',
+                              isSuccess);
+                        });
+                      },
+                      title: 'Yedek Parça Talebi',
+                      text: 'Bu işleme devam etmek istediğinize emin misiniz?',
+                      success: true,
+                      confirmButtonText: 'Tamam')
                   : Container(),
             ],
           ),

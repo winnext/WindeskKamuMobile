@@ -222,7 +222,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                             return DropdownMenuItem(
                               onTap: () =>
                                   {exampleList.setfloor = data.NAME.toString()},
-                              value: data.CODE.toString(),
+                                   value: data.CODE.toString(),
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
@@ -267,7 +267,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                             return DropdownMenuItem(
                               onTap: () =>
                                   {exampleList.setwing = data.NAME.toString()},
-                              value: data.CODE.toString(),
+                                  value: data.CODE.toString(),
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(

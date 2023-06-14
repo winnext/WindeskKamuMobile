@@ -73,7 +73,7 @@ class _IssueListState extends State<IssueList> {
     final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     int index = listViewProvider.currentPage;
     final exampleList = Provider.of<ListViewProvider>(context);
-    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context);
     final ISSUECODE = '';
 
     return WillPopScope(
@@ -95,7 +95,7 @@ class _IssueListState extends State<IssueList> {
                       MaterialPageRoute(
                           builder: (context) => IssueTracingList(
                               pageController:
-                                  mainViewProvide.pageController!)));
+                                  mainPageViewProvider.pageController!)));
                   //   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
@@ -202,11 +202,19 @@ class _IssueListState extends State<IssueList> {
                                                     const IssueSummary(),
                                               ),
                                             );
-                                            // Navigator.pushNamed(context,
-                                            //     IssueDetail.issueDetail);
                                           },
                                           onPressedLong: () {
-                                            print('pressed');
+                                            showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor: Colors
+                                                    .transparent,
+                                                context: context,
+                                                builder: (context) =>
+                                                    IssueActionButton(
+                                                        code: listElements.CODE,
+                                                        xusercode:
+                                                            mainPageViewProvider
+                                                                .kadi));
                                           }
                                           // extraTitle:
                                           //     listElements.STATUSCODE.toString(),

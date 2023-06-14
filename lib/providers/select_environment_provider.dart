@@ -1,25 +1,47 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
-import 'package:win_kamu/models/detail_response.model.dart';
 import 'package:win_kamu/models/detail_view.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
-import 'package:provider/provider.dart';
 
-import '../models/http_response.model.dart';
-import '../utils/global_utils.dart';
-import 'main_page_view_provider.dart';
 
-class DetailViewProvider extends ChangeNotifier {
+class EnvironmentProvider extends ChangeNotifier {
   final apirepository = APIRepository();
-  var data;
 
-  List<DetailViewModel> _exampleListView = [];
-  List<DetailViewModel> tempexampleListView = [];
+  List<Map<String, String>> _endpoints = [
+    {
+      'PPP_PROJECT':'antep',
+      'BASE_URL_V2': 'http://wd-mobile-test.gaziantep.yerel',
+      'TOKEN_V1' : 'anteptest!_',
+      'TOKEN_V2' : 'anteptest!',
+      'ATTACHPATHLIVE' :
+         "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=",
+      'base_url_v1': 
+         'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+             'wdmobile' +
+             '&wspassword=' +
+             'wdsgnm1017_' +
+             '&token=',
+    },
+    {
+      'PPP_PROJECT':'antep',
+      'BASE_URL_V2': 'http://wd-mobile-test.gaziantep.yerel',
+      'TOKEN_V1' : 'anteptest!_',
+      'TOKEN_V2' : 'anteptest!',
+      'ATTACHPATHLIVE' :
+         "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=",
+      'base_url_v1': 
+         'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+             'wdmobile' +
+             '&wspassword=' +
+             'wdsgnm1017_' +
+             '&token=',
+    },
+    // Add more endpoints as needed
+  ];
+
   List<DetailViewModel> queryParameters = [];
 
   List<DetailActivitiesModal> _listViewActivities = [];
@@ -30,15 +52,15 @@ class DetailViewProvider extends ChangeNotifier {
 
   String? _responses;
 
-  String? _issueCode;
+  String? _selectedHospital;
   bool _isDataLoading = true;
   bool _loading = false;
   bool _isDataExist = false;
   int _toplamKayitSayisi = 0;
 
-  List<DetailViewModel> get exampleListView => _exampleListView;
-  set setiexampleListView(List<DetailViewModel> exampleListView) {
-    _exampleListView = exampleListView;
+  List<Map<String, String>> get endpoints => _endpoints;
+  set setiendpoints(List<Map<String, String>> endpoints) {
+    _endpoints = endpoints;
     notifyListeners();
   }
 
@@ -68,17 +90,17 @@ class DetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  get issueCode => _issueCode;
+  get selectedHospital => _selectedHospital;
 
-  set setIssueCode(String issueCode) {
-    _issueCode = issueCode;
+  set setselectedHospital(String selectedHospital) {
+    _selectedHospital = selectedHospital;
     notifyListeners();
   }
 
   get responses => _responses;
 
   set setresponses(String responses) {
-    _issueCode = issueCode;
+    _selectedHospital = selectedHospital;
     notifyListeners();
   }
 
@@ -94,57 +116,6 @@ class DetailViewProvider extends ChangeNotifier {
   set setisDataExist(bool isDataExist) {
     _isDataExist = isDataExist;
     notifyListeners();
-  }
-
-  loadData(String issuecode, String xusercode) async {
-    _isDataLoading = true;
-
-    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
-
-    if (true) {
-      Future.delayed(const Duration(milliseconds: 1200), () {
-        var responseData = DetailViewModel.fromJson(data.detail['detail']);
-        print('objectissueDetailll' +
-            responseData.TARGET_FDATE.toString() +
-            ' : ' +
-            responseData.TARGET_RDATE.toString());
-        exampleListView.clear();
-        exampleListView.add(responseData);
-        _isDataLoading = false;
-        _loading = false;
-        _isDataExist = false;
-        notifyListeners();
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
-  }
-
-  loadIssueSummary(String issuecode, String xusercode) async {
-    _isDataLoading = true;
-    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}/summary';
-
-    final data = await apirepository.getIssueSummary(
-        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
-
-    //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
-
-    if (true) {
-      Future.delayed(const Duration(milliseconds: 0), () {
-        var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
-        print('issueDetailll22' + responseData.toString());
-
-        _issueSummary.add(responseData);
-        _isDataLoading = false;
-        _loading = false;
-        _isDataExist = false;
-        notifyListeners();
-      });
-    } else {
-      // baglantiHatasi(context, result.message);
-    }
   }
 
   sendIssueActivity(String issueCode, String userName, String activityCode,

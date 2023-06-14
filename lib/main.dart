@@ -43,6 +43,7 @@ import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/login_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/providers/select_environment_provider.dart';
 import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/workorder_detail_provider.dart';
 
@@ -152,6 +153,8 @@ List<SingleChildWidget> providers = [
 
   ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
   ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
+  ChangeNotifierProvider<EnvironmentProvider>(create: (_) => EnvironmentProvider()),
+
 ];
 
 class MyApp extends StatelessWidget {
@@ -167,14 +170,6 @@ class MyApp extends StatelessWidget {
         BouncingScrollWrapper.builder(context, child!),
         maxWidth: 1200,
         minWidth: 450,
-        // defaultScale: true,
-        // breakpoints: [
-        //   const ResponsiveBreakpoint.resize(450, name: MOBILE),
-        //   const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-        //   const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-        //   const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-        //   const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-        // ],
       ),
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -205,9 +200,6 @@ class MyApp extends StatelessWidget {
         ClosedRequestDetail.closedRequestDetail: (context) =>
             ClosedRequestDetail(),
         WoTracingList.tracingList: (context) => WoTracingList(),
-        
-        
-        
       },
     );
   }

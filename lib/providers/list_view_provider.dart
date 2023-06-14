@@ -264,7 +264,7 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('urlISSUE' + urlIssueTypes.toString());
+    print('urlISSUE' + data.toString());
 
     if (true) {
       tempexampleListView = (result.records['records'] as List)
@@ -309,13 +309,11 @@ class ListViewProvider extends ChangeNotifier {
 
       Future.delayed(const Duration(milliseconds: 0), () {
         tracingListView.addAll(temptracingListView);
-          
-          _isDataLoading = false;
-          _loading = false;
-          _isDataExist = true;
-          notifyListeners();
 
-        
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = true;
+        notifyListeners();
       });
     } else {
       // baglantiHatasi(context, result.message);
@@ -360,16 +358,16 @@ class ListViewProvider extends ChangeNotifier {
     }
   }
 
-    void getIssueNotes(issuecode) async {
+  void getIssueNotes(issuecode) async {
     _isDataLoading = true;
-    
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    final urlIssueTypes = '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getNotes&module=issue&moduleCode=${issuecode}';
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getNotes&module=issue&moduleCode=${issuecode}';
 
-    final result = await apirepository.getIssueNotes(
-        controller: urlIssueTypes);
+    final result = await apirepository.getIssueNotes(controller: urlIssueTypes);
 
     if (true) {
       tempissueNotesView = (result.records['records'] as List)
@@ -481,6 +479,8 @@ class ListViewProvider extends ChangeNotifier {
 
     final result =
         await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
+
+    print('filterstatus' + result.records['records'].toString());
 
     if (true) {
       tempissueFilterStatusCodes = (result.records['records'] as List)

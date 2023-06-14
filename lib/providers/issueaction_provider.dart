@@ -45,7 +45,12 @@ class IssueActionProvider extends ChangeNotifier {
   String _cfgResult = '';
   String _takeOverResult = '';
   String _takeOverMessage = '';
+  String _cancelIssueResult = '';
+  String _cancelIssueMessage = '';
   String _isPhotoAddSuccess = '';
+  String _createSparepartIssueResult = '';
+  String _createSparepartIssueMessage = '';
+
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -217,6 +222,35 @@ class IssueActionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get createSparepartIssueResult => _createSparepartIssueResult;
+
+  set setcreateSparepartIssueResult(String createSparepartIssueResult) {
+    _createSparepartIssueResult = createSparepartIssueResult;
+    notifyListeners();
+  }
+
+  String get createSparepartIssueMessage => _createSparepartIssueMessage;
+
+  set setcreateSparepartIssueMessage(String createSparepartIssueMessage) {
+    _createSparepartIssueMessage = createSparepartIssueMessage;
+    notifyListeners();
+  }
+
+
+  String get cancelIssueResult => _cancelIssueResult;
+
+  set setcancelIssueResult(String cancelIssueResult) {
+    _cancelIssueResult = cancelIssueResult;
+    notifyListeners();
+  }
+
+  String get cancelIssueMessage => _cancelIssueMessage;
+
+  set setcancelIssueMessage(String cancelIssueMessage) {
+    _cancelIssueMessage = cancelIssueMessage;
+    notifyListeners();
+  }
+
   String get isPhotoAddSuccess => _isPhotoAddSuccess;
 
   set setisPhotoAddSuccess(String isPhotoAddSuccess) {
@@ -244,15 +278,70 @@ class IssueActionProvider extends ChangeNotifier {
 
     final data = result.records['result'];
 
-    print('issueCode213' +
-        result.records['result'] +
-        ' ' +
-        result.records['message']);
-
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         settakeOverResult = data.toString();
         settakeOverMessage = result.records['message'].toString();
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void createSparepartIssue(issuecode, username) async {
+    _isDataLoading = true;
+    //final issueCode = issuecode;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=createSparepartIssue&issuecode=${issuecode}';
+
+    final result =
+        await apirepository.createSparepartIssue(controller: urlIssueTypes);
+
+    final resultt = result.records['result'];
+    final message = result.records['msg'];
+
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 0), () {
+        setcreateSparepartIssueResult = resultt.toString();
+        setcreateSparepartIssueMessage = message.toString();
+        _isDataLoading = false;
+        _loading = false;
+        _isDataExist = false;
+        notifyListeners();
+      });
+    } else {
+      // baglantiHatasi(context, result.message);
+    }
+  }
+
+  void cancelIssuePlanned(issuecode, username) async {
+    _isDataLoading = true;
+    //final issueCode = issuecode;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    final urlIssueTypes =
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=cancelIssuePlanned&issueCode=${issuecode}&username=${username}';
+
+    final result =
+        await apirepository.cancelIssuePlanned(controller: urlIssueTypes);
+
+    print('resultIssuePlanned' +
+        result.message.toString() +
+        ' : ' +
+        result.records.toString());
+
+    if (true) {
+      Future.delayed(const Duration(milliseconds: 0), () {
+        setcancelIssueResult = result.records['result'].toString();
+        setcancelIssueMessage = result.records['resultcode'].toString();
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;

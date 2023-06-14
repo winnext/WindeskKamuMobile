@@ -330,8 +330,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok')
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')),
                           ],
                         ),
 
@@ -362,8 +362,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok')
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) 
                             ,
                           ],
                         ),
@@ -396,8 +396,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok')
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) 
                           ],
                         ),
                   Divider(
@@ -428,8 +428,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                           ],
                         ),
                   Divider(
@@ -460,8 +460,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
 
                           ],
                         ),
@@ -494,8 +494,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                           ],
                         ),
                   Divider(
@@ -526,8 +526,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                           ],
                         ),
                   Divider(
@@ -558,8 +558,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                             
                           ],
                         ),
@@ -591,8 +591,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                             
                           ],
                         ),
@@ -624,8 +624,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400),
                               ),
-                            ) : 
-                            Text('Bilgi Yok'),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                           ],
                         ),
                   Divider(
@@ -655,6 +655,70 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ),
+                          ],
+                        ),
+                  Divider(
+                    height: 15,
+                  ),
+                  Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Atama Grubu',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            widget.assignmentGroupName.toString() != ""
+                            ? Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.assignmentGroupName.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
+                          ],
+                        ),
+                  Divider(
+                    height: 15,
+                  ),
+                  Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'Atanan Kişi',
+                                style: TextStyle(
+                                  color: APPColors.Secondary.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            widget.assigneName.toString() != ""
+                            ? Expanded(
+                              flex: 3,
+                              child: Text(
+                                widget.assigneName.toString(),
+                                style: TextStyle(
+                                    color: APPColors.Secondary.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ) :
+                            Expanded(flex:3, child: Text('Bilgi Yok')) ,
                           ],
                         ),
                 ],

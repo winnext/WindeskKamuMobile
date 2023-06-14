@@ -12,6 +12,7 @@ import 'package:win_kamu/pages/bottomNavBar/bottomNavBar.dart';
 import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/mainPage.dart';
+import 'package:win_kamu/pages/selectHospital/selectHospital.dart';
 
 import '../../providers/login_provider.dart';
 import '../../utils/themes.dart';
@@ -24,53 +25,33 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
-  
-
-
   @override
   void initState() {
-    
-
-
     Future.delayed(const Duration(seconds: 3), () async {
-
-      
-
-
       //Uygulama açıldığı zaman, cihaz üzerinde local olarak kayıtlı olan tokenın kontrol edilmesi sağlanmaktadır.
       //Eğer ki herhangi bir token bulunmuyor ise kullanıcıyı login sayfasına yönlendirir.
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final deviceInfoPlugin = DeviceInfoPlugin();
 
       final result = await deviceInfoPlugin.deviceInfo;
-      print(result);
       var model = result.data['name'];
       var os = result.data['systemVersion'];
 
-    
-      
-      print(model);
       try {
         prefs.setString('deviceId', result.data['identifierForVendor']);
         prefs.setString('deviceType', result.data['systemName']);
       } catch (e) {}
 
-   FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-            print(await messaging.getToken());
-            String? fbtoken = await messaging.getToken();
-            prefs.setString('fbtoken',fbtoken.toString());
-
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      String? fbtoken = await messaging.getToken();
+      prefs.setString('fbtoken', fbtoken.toString());
 
       if (prefs.getString("prefsUserName") != null) {
-            Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: ((context) => const BottomNavBar())));
-                            
-      
-      } else {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const Login())));
+            MaterialPageRoute(builder: ((context) => const BottomNavBar())));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: ((context) => Login())));
       }
     });
     super.initState();

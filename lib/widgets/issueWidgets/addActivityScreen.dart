@@ -10,6 +10,7 @@ import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/utils.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
+import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
@@ -94,6 +95,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
         Provider.of<MainPageViewProvider>(context, listen: false);
     final listViewProvider =
         Provider.of<ListViewProvider>(context, listen: false);
+    final detailViewProvider =
+        Provider.of<DetailViewProvider>(context, listen: true);
     final RoundedLoadingButtonController _btnController =
         RoundedLoadingButtonController();
 
@@ -442,7 +445,11 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             print('photoo' + activityResult);
                             Navigator.pop(context);
                             listViewProvider.getIssueOperations(
-                              widget.issueCode, mainPageProvider.kadi);
+                                widget.issueCode, mainPageProvider.kadi);
+                            detailViewProvider.loadData(
+                                widget.issueCode.toString(),
+                                mainPageProvider.kadi.toString());
+                                
                             snackBar(
                                 context,
                                 activityResult == 'true'
