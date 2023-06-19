@@ -365,7 +365,7 @@ class IssueActionProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('data' + data.toString());
+    print('getAvailableActivities123' + data.toString());
 
     if (true) {
       activityListView.clear();

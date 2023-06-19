@@ -20,6 +20,7 @@ import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
+import '../../utils/isEmpty_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
@@ -158,37 +159,37 @@ class _IssueListState extends State<IssueList> {
                                       child: TaskListWidget(
                                           importanceLevelColor:
                                               generateColor(l),
-                                          code: listElements.CODE.toString(),
+                                          code: isEmpty(listElements.CODE.toString()),
                                           targetFDate:
-                                              listElements.TARGET_FDATE,
+                                              isEmpty(listElements.TARGET_FDATE.toString()),
                                           targetRDate:
-                                              listElements.TARGET_RDATE,
-                                          taskNo: i.toString(),
-                                          description: listElements.DESCRIPTION
-                                              .toString(),
+                                              isEmpty(listElements.TARGET_RDATE.toString()),
+                                          taskNo: isEmpty(i.toString()),
+                                          description: isEmpty(listElements.DESCRIPTION
+                                              .toString()),
                                           sumdesc1:
-                                              listElements.SUMDESC1.toString(),
-                                          statusName: listElements.STATUSNAME
-                                              .toString(),
-                                          space: listElements.SPACE.toString(),
+                                              isEmpty(listElements.SUMDESC1.toString()),
+                                          statusName: isEmpty(listElements.STATUSNAME
+                                              .toString()),
+                                          space: isEmpty(listElements.SPACE.toString()),
                                           location:
-                                              listElements.LOCATION.toString(),
-                                          idate: listElements.IDATE.toString(),
-                                          statusCode: listElements.STATUSCODE
-                                              .toString(),
-                                          planedDate: listElements.PLANNEDDATE
-                                              .toString(),
-                                          respondedIDate: listElements
+                                              isEmpty(listElements.LOCATION.toString()),
+                                          idate: isEmpty(listElements.IDATE.toString()),
+                                          statusCode: isEmpty(listElements.STATUSCODE
+                                              .toString()),
+                                          planedDate: isEmpty(listElements.PLANNEDDATE
+                                              .toString()),
+                                          respondedIDate: isEmpty(listElements
                                               .RESPONDED_IDATE
-                                              .toString(),
-                                          responseTimer: listElements
+                                              .toString()),
+                                          responseTimer: isEmpty(listElements
                                               .response_timer
-                                              .toString(),
-                                          fixedTimer: listElements.fixed_timer
-                                              .toString(),
-                                          fixedIDate: listElements.FIXED_IDATE
-                                              .toString(),
-                                          timeInfoNow: timeNow,
+                                              .toString()),
+                                          fixedTimer: isEmpty(listElements.fixed_timer
+                                              .toString()),
+                                          fixedIDate: isEmpty(listElements.FIXED_IDATE
+                                              .toString()),
+                                          timeInfoNow: isEmpty(timeNow),
                                           isIcon: true,
                                           onPressed: (code) {
                                             detailViewProvider.setIssueCode =

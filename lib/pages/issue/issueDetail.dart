@@ -21,6 +21,7 @@ import '../../api/api_repository.dart';
 import '../../l10n/locale_keys.g.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
+import '../../utils/isEmpty_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
@@ -84,7 +85,8 @@ class _IssueDetailState extends State<IssueDetail> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     int l = -1;
-    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: true);
+    final detailViewProvider =
+        Provider.of<DetailViewProvider>(context, listen: true);
     final mainPageViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
     return WillPopScope(
@@ -92,147 +94,192 @@ class _IssueDetailState extends State<IssueDetail> {
         return false;
       },
       child: Scaffold(
-          body: Stack(
-        children: [
-          Column(
-            children: [
-              !detailViewProvider.isDataExist
-                  ? Expanded(
-                      child: NotificationListener<ScrollNotification>(
-                      child: ListView.builder(
-                          itemCount: detailViewProvider?.exampleListView.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            l++;
-                            if (l == 5) {
-                              l = 0;
-                            }
-                            String formattedDate = "";
-                            DetailViewModel? detailElements =
-                                detailViewProvider?.exampleListView[0];
-                            IssueSummaryModal? issueSummary =
-                                detailViewProvider?.issueSummary[0];
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                !detailViewProvider.isDataExist
+                    ? Expanded(
+                        child: NotificationListener<ScrollNotification>(
+                        child: ListView.builder(
+                            itemCount:
+                                detailViewProvider?.exampleListView.length,
+                            itemBuilder: (BuildContext context, int i) {
+                              l++;
+                              if (l == 5) {
+                                l = 0;
+                              }
+                              String formattedDate = "";
+                              DetailViewModel? detailElements =
+                                  detailViewProvider?.exampleListView[0];
+                              IssueSummaryModal? issueSummary =
+                                  detailViewProvider?.issueSummary[0];
 
-                            final TARGET_FDATE = detailElements?.TARGET_FDATE != null ? 
-                                timeRecover(detailElements?.TARGET_FDATE) : '';
-                            final TARGET_RDATE = detailElements?.TARGET_RDATE != null ?
-                                timeRecover(detailElements?.TARGET_RDATE) : '';
+                              final TARGET_FDATE = detailElements
+                                          ?.TARGET_FDATE !=
+                                      null
+                                  ? timeRecover(detailElements?.TARGET_FDATE)
+                                  : '';
+                              final TARGET_RDATE = detailElements
+                                          ?.TARGET_RDATE !=
+                                      null
+                                  ? timeRecover(detailElements?.TARGET_RDATE)
+                                  : '';
 
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: APPColors.NewNotifi.blue,
-                                        borderRadius: BorderRadius.circular(3)),
-                                    padding: EdgeInsets.all(3),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(mainPageViewProvider.kadi),
-                                        Text(dateNow.toString()),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20.0, 0.0, 20.0, 0.0),
-                                      child: Column(
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: APPColors.NewNotifi.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(3)),
+                                      padding: EdgeInsets.all(3),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
-                                          DetailListWidget(
-                                            ani: detailElements?.ANI == null ? '' : detailElements?.ANI.toString(),
-                                            description:
-                                                detailElements?.DESCRIPTION == null ? '' : detailElements?.DESCRIPTION.toString(),
-                                            targetFDate: detailElements
-                                                ?.TARGET_FDATE
-                                                 == null ? '' : detailElements?.TARGET_FDATE.toString(),
-                                            targetRDate: detailElements
-                                                ?.TARGET_RDATE
-                                                == null ? '' : detailElements
-                                                ?.TARGET_RDATE
-                                                .toString(),
-                                            statusName:
-                                                detailElements?.STATUSNAME== null ? '' : detailElements?.STATUSNAME.toString(),
-                                            assigneName:
-                                                detailElements?.ASSIGNEENAME== null ? '' : detailElements?.ASSIGNEENAME.toString(),
-                                            assignmentGroup:
-                                                detailElements?.ASSIGNMENTGROUP== null ? '' : detailElements?.ASSIGNMENTGROUP.toString(),
-                                            assignmentGroupName: detailElements
-                                                ?.ASSIGNMENTGROUPNAME== null ? '' : detailElements
-                                                ?.ASSIGNMENTGROUPNAME.toString(),
-                                            cat1: detailElements?.CAT1== null ? '' : detailElements?.CAT1.toString(),
-                                            cmdb: detailElements?.CMDB== null ? '' : detailElements?.CMDB.toString(),
-                                            code: detailElements?.CODE== null ? '' : detailElements?.CODE.toString(),
-                                            contactCode:
-                                                detailElements?.CONTACTCODE== null ? '' : detailElements?.CONTACTCODE.toString(),
-                                            contactName:
-                                                detailElements?.CONTACTNAME== null ? '' : detailElements?.CONTACTNAME.toString(),
-                                            idate: detailElements?.IDATE== null ? '' : detailElements?.IDATE.toString(),
-                                            locName: detailElements?.LOCNAME== null ? '' : detailElements?.LOCNAME.toString(),
-                                            locTree: detailElements?.LOCTREE== null ? '' : detailElements?.LOCTREE.toString(),
-                                            locTree2: detailElements?.LOCTREE2== null ? '' : detailElements?.LOCTREE2.toString(),
-                                            sumdesc1: detailElements?.SUMDESC1== null ? '' : detailElements?.SUMDESC1.toString(),
-                                            taskNo:
-                                                detailElements?.CODE.toString()== null ? '' : detailElements?.CODE.toString(),
-                                            title: detailElements?.TITLE== null ? '' : detailElements?.TITLE.toString(),
-                                            onPressed: (code) {
-                                              print('tiklandi' + code);
-                                            },
-                                            fixTimer: issueSummary?.FIX_TIMER== null ? '' : issueSummary?.FIX_TIMER.toString(),
-                                            fixedDate: issueSummary?.FIXED_DATE== null ? '' : issueSummary?.FIXED_DATE.toString(),
-                                            respondedDate:
-                                                issueSummary?.RESPONDED_DATE== null ? '' : issueSummary?.RESPONDED_DATE.toString(),
-                                            respondedTimer:
-                                                issueSummary?.RESPONDED_TIMER== null ? '' : issueSummary?.RESPONDED_TIMER.toString(),
-                                            xusercode: 'sgnm1040',
-                                            // extraTitle:
-                                            //     detailElements.STATUSCODE.toString(),
-                                          ),
+                                          Text(mainPageViewProvider.kadi),
+                                          Text(dateNow.toString()),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
-                    ))
-                  : Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 2.5),
-                      child: const Center(child: AramaSonucBos()),
-                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20.0, 0.0, 20.0, 0.0),
+                                        child: Column(
+                                          children: [
+                                            DetailListWidget(
+                                              ani: isEmptyorUndefined(
+                                                  detailElements!.ANI
+                                                      .toString()),
+                                              description: isEmptyorUndefined(
+                                                  detailElements!.DESCRIPTION
+                                                      .toString()),
+                                              targetFDate: isEmptyorUndefined(
+                                                  detailElements!.TARGET_FDATE
+                                                      .toString()),
+                                              targetRDate: isEmptyorUndefined(
+                                                  detailElements!.TARGET_RDATE
+                                                      .toString()),
+                                              statusName: isEmptyorUndefined(
+                                                  detailElements!.STATUSNAME
+                                                      .toString()),
+                                              assigneName: isEmptyorUndefined(
+                                                  detailElements!.ASSIGNEENAME
+                                                      .toString()),
+                                              assignmentGroup:
+                                                  isEmptyorUndefined(
+                                                      detailElements!
+                                                          .ASSIGNMENTGROUP
+                                                          .toString()),
+                                              assignmentGroupName:
+                                                  isEmptyorUndefined(
+                                                      detailElements!
+                                                          .ASSIGNMENTGROUPNAME
+                                                          .toString()),
+                                              cat1: isEmptyorUndefined(
+                                                  detailElements!.CAT1
+                                                      .toString()),
+                                              cmdb: isEmptyorUndefined(
+                                                  detailElements!.CMDB
+                                                      .toString()),
+                                              code: isEmptyorUndefined(
+                                                  detailElements!.CODE
+                                                      .toString()),
+                                              contactCode: isEmptyorUndefined(
+                                                  detailElements!.CONTACTCODE
+                                                      .toString()),
+                                              contactName: isEmptyorUndefined(
+                                                  detailElements!.CONTACTNAME
+                                                      .toString()),
+                                              idate: isEmptyorUndefined(
+                                                  detailElements!.IDATE
+                                                      .toString()),
+                                              locName: isEmptyorUndefined(
+                                                  detailElements!.LOCNAME
+                                                      .toString()),
+                                              locTree: isEmptyorUndefined(
+                                                  detailElements!.LOCTREE
+                                                      .toString()),
+                                              locTree2: isEmptyorUndefined(
+                                                  detailElements!.LOCTREE2
+                                                      .toString()),
+                                              sumdesc1: isEmptyorUndefined(
+                                                  detailElements!.SUMDESC1
+                                                      .toString()),
+                                              taskNo: isEmptyorUndefined(
+                                                  detailElements!.CODE
+                                                      .toString()),
+                                              title: isEmptyorUndefined(
+                                                  detailElements!.TITLE
+                                                      .toString()),
+                                              onPressed: (code) {},
+                                              fixTimer: isEmptyorUndefined(
+                                                  issueSummary!.FIX_TIMER
+                                                      .toString()),
+                                              fixedDate: isEmptyorUndefined(
+                                                  issueSummary!.FIXED_DATE
+                                                      .toString()),
+                                              respondedDate: isEmptyorUndefined(
+                                                  issueSummary!.RESPONDED_DATE
+                                                      .toString()),
+                                              respondedTimer:
+                                                  isEmptyorUndefined(
+                                                      issueSummary!
+                                                          .RESPONDED_TIMER
+                                                          .toString()),
+                                              xusercode: mainPageViewProvider
+                                                  .kadi
+                                                  .toString(),
+                                              // extraTitle:
+                                              //     detailElements.STATUSCODE.toString(),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }),
+                      ))
+                    : Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height / 2.5),
+                        child: const Center(child: AramaSonucBos()),
+                      ),
+              ],
+            ),
+            if (detailViewProvider.isDataLoading == true) ...[
+              loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
             ],
-          ),
-          if (detailViewProvider.isDataLoading == true) ...[
-            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
           ],
-        ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final detailViewProvider =
+                Provider.of<DetailViewProvider>(context, listen: false);
+            final mainPageViewProvider =
+                Provider.of<MainPageViewProvider>(context, listen: false);
+            showModalBottomSheet(
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) => IssueActionButton(
+                    code: detailViewProvider.issueCode,
+                    xusercode: mainPageViewProvider.kadi));
+          },
+          backgroundColor: APPColors.Modal.red,
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final detailViewProvider =
-          Provider.of<DetailViewProvider>(context, listen: false);
-          final mainPageViewProvider =
-          Provider.of<MainPageViewProvider>(context, listen: false);
-          showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
-        },
-        backgroundColor: APPColors.Modal.red,
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      ),
-      
     );
   }
 

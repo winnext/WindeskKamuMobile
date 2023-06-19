@@ -25,6 +25,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
   void initState() {
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     exampleList.issueFilterStatusCodes.clear();
+    
     exampleList.getIssueOpenStatusCodes();
     exampleList.getSpaceBfwByType('BUILDING');
     exampleList.getSpaceBfwByType('FLOOR');

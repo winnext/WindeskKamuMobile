@@ -483,6 +483,7 @@ class ListViewProvider extends ChangeNotifier {
     print('filterstatus' + result.records['records'].toString());
 
     if (true) {
+      issueFilterStatusCodes.clear();
       tempissueFilterStatusCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
@@ -516,21 +517,20 @@ class ListViewProvider extends ChangeNotifier {
     final data = result.records['records'];
 
     if (type == 'BUILDING') {
+      issueFilterBuildCodes.clear();
       tempissueFilterBuildCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
-      print('buildinggg' + tempissueFilterStatusCodes.toString());
 
       issueFilterBuildCodes.addAll(tempissueFilterBuildCodes);
       int noOfTasks = tempissueFilterBuildCodes.length;
-
-      print('building ++++2' + issueFilterBuildCodes[0].CODE.toString());
 
       _isDataLoading = false;
       _loading = false;
       _isDataExist = false;
       notifyListeners();
     } else if (type == 'FLOOR') {
+      issueFilterFloorCodes.clear();
       tempissueFilterFloorCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();
@@ -543,6 +543,7 @@ class ListViewProvider extends ChangeNotifier {
       _isDataExist = false;
       notifyListeners();
     } else if (type == 'WING') {
+      issueFilterWingCodes.clear();
       tempissueFilterWingCodes = (result.records['records'] as List)
           .map((e) => IssueFilterModel.fromJson(e))
           .toList();

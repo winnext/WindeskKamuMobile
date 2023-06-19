@@ -15,3 +15,11 @@ colorCalculatorBackground(String numberone, String numbertwo) {
     return APPColors.Main.red;
   }
 }
+
+colorCalculatorText(String numberone, String numbertwo) {
+  if (int.parse(numberone) - int.parse(numbertwo) < 0) {
+    return APPColors.Main.black;
+  } else {
+    return APPColors.Main.white;
+  }
+}
