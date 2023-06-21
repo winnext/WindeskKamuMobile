@@ -27,6 +27,20 @@ const addNotification = "v1/Notification/AddNotification";
 //         'wdsgnm1017_' +
 //         '&token=';
 
+//ISH PREPROD
+const PPP_PROJECT = "ish";
+const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
+const TOKEN_V1 = "wdishtest!_";
+const TOKEN_V2 = 'ishtest!';
+const ATTACHPATHLIVE =
+    "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 =
+    'http://10.32.12.42/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+        'wdmobile' +
+        '&wspassword=' +
+        'wdsgnm1017_' +
+        '&token=';
+
 //WINMOBİLE
 // const PPP_PROJECT = "winmobile";
 // const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
@@ -98,18 +112,18 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&token=';
 
 //GSH PREPROD
-const PPP_PROJECT = "antep";
-const BASE_URL_V2 = 'http://wd-mobile-test.gaziantep.yerel';
-const TOKEN_V1 = 'anteptest!_';
-const TOKEN_V2 = 'anteptest!';
-const ATTACHPATHLIVE =
-    "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
+// const PPP_PROJECT = "antep";
+// const BASE_URL_V2 = 'http://wd-mobile-test.gaziantep.yerel';
+// const TOKEN_V1 = 'anteptest!_';
+// const TOKEN_V2 = 'anteptest!';
+// const ATTACHPATHLIVE =
+//     "http://geskwdtestapp.gaziantep.yerel/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'http://geskwdtestapp.gaziantep.yerel/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
 
 //GSH PROD
 // const PPP_PROJECT = "antep";

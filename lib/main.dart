@@ -93,8 +93,6 @@ void main() async {
     sound: true,
   );
 
-  print('User granted permission: ${settings.authorizationStatus}');
-
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -124,6 +122,8 @@ void main() async {
 
   onNotifications.stream.listen(onClickedNotification);
 
+
+
   runApp(Phoenix(
     child: MultiProvider(
       providers: providers,
@@ -149,22 +149,25 @@ List<SingleChildWidget> providers = [
       create: (_) => SearchViewProvider()),
   ChangeNotifierProvider<WoDetailViewProvider>(
       create: (_) => WoDetailViewProvider()),
-      ChangeNotifierProvider<WorkOrderViewProvider>(create: (_) => WorkOrderViewProvider()),
-
-  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
-  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
-  ChangeNotifierProvider<EnvironmentProvider>(create: (_) => EnvironmentProvider()),
-
+  ChangeNotifierProvider<WorkOrderViewProvider>(
+      create: (_) => WorkOrderViewProvider()),
+  ChangeNotifierProvider<IssueActionProvider>(
+      create: (_) => IssueActionProvider()),
+  ChangeNotifierProvider<SearchViewProvider>(
+      create: (_) => SearchViewProvider()),
+  ChangeNotifierProvider<EnvironmentProvider>(
+      create: (_) => EnvironmentProvider()),
 ];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
-    int numb = 0;
+
     return MaterialApp(
       builder: (context, child) => ResponsiveWrapper.builder(
         BouncingScrollWrapper.builder(context, child!),

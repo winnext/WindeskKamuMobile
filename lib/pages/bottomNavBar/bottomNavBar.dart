@@ -26,9 +26,6 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
-  PageController? _pageController;
-
   @override
   void initState() {
     super.initState();

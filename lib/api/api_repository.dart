@@ -79,8 +79,6 @@ class APIRepository {
         '&action=logout&username=' +
         kadi;
 
-    print(cikis_url);
-
     try {
       BaseOptions options = new BaseOptions(
           baseUrl: cikis_url,
@@ -2885,7 +2883,7 @@ class APIRepository {
 
       final data = jsonDecode(response.toString());
 
-      print('getAnnouncements + ' + data.toString());
+      print('getAnnouncements + ' + data.toString() + ' : ' + controller.toString());
 
       //print(data['records'] as List);
 

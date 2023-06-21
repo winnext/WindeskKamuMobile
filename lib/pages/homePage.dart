@@ -106,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }));
 
     void onClickedNotification(String? payload) {
-      print('Foreground HOME Payload : ' + payload.toString());
       String data = payload.toString();
       final splitted_data = data.split('/-*-/');
       String title = splitted_data[0];
@@ -123,8 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Future<void> _firebaseMessagingBackgroundHandler(
         RemoteMessage message) async {
       await Firebase.initializeApp();
-
-      print("Handling a background message: ${message.messageId}");
     }
 
 // Lisitnening to the background messages
@@ -133,9 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Listneing to the foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print('Got a message whilst in the foreground!');
-      print('Message data Home: ${message.data}');
-
       var payload = (message.notification?.title).toString() +
           '/-*-/' +
           (message.notification?.body).toString() +
@@ -143,7 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
           message.data?['module'] +
           '/-*-/' +
           message.data?['code'];
-
       NotificationApi.showNotification(
           title: message.notification?.title,
           body: message.notification?.body,
@@ -151,8 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('HomePage');
-      print('Firebase notification opened');
       showAlertDialog(
           context,
           message.notification?.title,
@@ -163,10 +154,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Future.delayed(const Duration(milliseconds: 1000), () {
+      final apirepository = APIRepository();
       final mainPageViewProvider =
           Provider.of<MainPageViewProvider>(context, listen: false);
       mainPageViewProvider.announcementView.clear();
       mainPageViewProvider.getAnnouncements(mainPageViewProvider.kadi);
+
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        mainPageViewProvider.resultDeviceId == 'success'
+            ? true
+            : {
+                snackBar(context,
+                    'Token süreniz dolmuştur. Yeniden giriş yapınız.', 'error'),
+                apirepository.cikis(mainPageViewProvider.kadi),
+                Future.delayed(const Duration(seconds: 4)).whenComplete(() {
+                  Phoenix.rebirth(context);
+                })
+              };
+      });
     });
 
     // TODO: implement initState

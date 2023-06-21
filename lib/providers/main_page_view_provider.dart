@@ -13,17 +13,17 @@ class MainPageViewProvider extends ChangeNotifier {
 
   bool _password_visible = true;
   bool get password_visible => _password_visible;
-
+  bool _isDataLoading = true;
+  bool _isDataExist = false;
+  int _toplamKayitSayisi = 0;
   String _kadi = '';
+  String _resultDeviceId = '';
+
   String get kadi => _kadi;
   set setVisible(bool password_visible) {
     _password_visible = password_visible;
     notifyListeners();
   }
-
-  bool _isDataLoading = true;
-  bool _isDataExist = false;
-  int _toplamKayitSayisi = 0;
 
   List<AnnouncementViewModel> get announcementView => _announcementView;
   set setiannouncementView(List<AnnouncementViewModel> announcementView) {
@@ -48,6 +48,13 @@ class MainPageViewProvider extends ChangeNotifier {
 
   set settoplamKayitSayisi(int toplamKayitSayisi) {
     _toplamKayitSayisi = toplamKayitSayisi;
+    notifyListeners();
+  }
+
+  String get resultDeviceId => _resultDeviceId;
+
+  set setresultDeviceId(String resultDeviceId) {
+    _resultDeviceId = resultDeviceId;
     notifyListeners();
   }
 
@@ -81,10 +88,11 @@ class MainPageViewProvider extends ChangeNotifier {
     String deviceToken = prefs.getString('deviceId').toString();
 
     final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getAnnouncements&username=${xusercode}';
+        '${base_url_v1}${TOKEN_V1}${deviceToken}aa&action=getAnnouncements&username=${xusercode}';
 
     final result =
         await apirepository.getAnnouncements(controller: urlIssueTypes);
+    setresultDeviceId = result.records['result'];
 
     if (true) {
       tempannouncementView = (result.records['records'] as List)

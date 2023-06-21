@@ -38,21 +38,18 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
-    print(mainViewProvider.currentIndex);
-
     mainViewProvider.initForm();
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final mainViewProvide = Provider.of<MainPageViewProvider>(context);
-    
+
     void degis() {
       setState(() {
         mainViewProvide.setVisible = !mainViewProvide.password_visible;
