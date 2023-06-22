@@ -7,12 +7,10 @@ import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 import 'package:win_kamu/widgets/listWidgets/customIssueDetailWidget.dart';
 import '../../api/api_repository.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/page_titles.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 

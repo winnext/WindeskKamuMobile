@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:never_behind_keyboard/never_behind_keyboard.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -11,8 +8,8 @@ import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 
+import '../../l10n/locale_keys.g.dart';
 import '../../providers/login_provider.dart';
-import '../../utils/page_titles.dart';
 import '../../utils/themes.dart';
 import '../../widgets/appbar/custom_main_appbar.dart';
 
@@ -183,7 +180,7 @@ class _mahalAramaState extends State<mahalArama> {
         width: MediaQuery.of(context).size.width,
         child: Scaffold(
             resizeToAvoidBottomInset: true,
-            appBar: const CustomMainAppbar(title: PageTitles.mahalSearchTitle, returnBack: true),
+            appBar: const CustomMainAppbar(title: LocaleKeys.mahalSearchTitle, returnBack: true),
             body: Center(
                 child: grup.length > 0 &&
                         kampus.length > 0 &&

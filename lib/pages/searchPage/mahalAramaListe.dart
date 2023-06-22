@@ -3,8 +3,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/searchPage/mahalAramaDetay.dart';
-import 'package:win_kamu/utils/page_titles.dart';
 
+import '../../l10n/locale_keys.g.dart';
 import '../../providers/search_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
@@ -96,7 +96,7 @@ class _MahalAramaListeState extends State<MahalAramaListe> {
           width: MediaQuery.of(context).size.width,
           child: Scaffold(
             resizeToAvoidBottomInset: true,
-            appBar: const CustomMainAppbar(title: PageTitles.mahalSearchTitle, returnBack: true),
+            appBar: const CustomMainAppbar(title: LocaleKeys.mahalSearchTitle, returnBack: true),
             body: Container(
               color: Color.fromARGB(255, 224, 224, 224),
               child: Center(

@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
-import 'package:win_kamu/utils/page_titles.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
+import '../../l10n/locale_keys.g.dart';
 import '../../providers/detail_view_provider.dart';
-import '../../providers/login_provider.dart';
 import '../../utils/themes.dart';
 import '../issue/issueSummary.dart';
 
@@ -30,9 +28,9 @@ class _vakaSlaAramaState extends State<vakaSlaArama> {
     return Sizer(builder: (context, orientation, deviceType) {
       return Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: const CustomMainAppbar(title: PageTitles.caseSLASearchTitle, returnBack: true),
+          appBar: const CustomMainAppbar(title: LocaleKeys.caseSLASearchTitle, returnBack: true),
           body: Center(
-              child: Container(
+              child: SizedBox(
             width: 85.w,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

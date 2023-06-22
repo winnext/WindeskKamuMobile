@@ -3,12 +3,10 @@ import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/utils/page_titles.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
+import '../../l10n/locale_keys.g.dart';
 import '../../providers/detail_view_provider.dart';
-import '../../providers/main_page_view_provider.dart';
-import '../../providers/search_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 import '../WorkOrder/woTracingList.dart';
@@ -65,7 +63,7 @@ class _VarlikAramaDetayState extends State<VarlikAramaDetay> {
           width: MediaQuery.of(context).size.width,
           child: Scaffold(
               resizeToAvoidBottomInset: true,
-              appBar: const CustomMainAppbar(title: PageTitles.entityDetailtTitle, returnBack: true),
+              appBar: const CustomMainAppbar(title: LocaleKeys.entityDetailtTitle, returnBack: true),
               body: summary.length > 0
                   ? Container(
                       color: Color.fromARGB(255, 224, 224, 224),

@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:win_kamu/pages/openRequests/routeRequests.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
@@ -10,9 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 import 'package:win_kamu/widgets/listWidgets/customIssueDetailWidget.dart';
 import '../../api/api_repository.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/page_titles.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 
@@ -54,7 +53,7 @@ class _PlannedRequestDetailState extends State<PlannedRequestDetail> {
         return false;
       },
       child: Scaffold(
-          appBar: CustomMainAppbar(title: PageTitles.myAppointmentRequestsDetailTitle, returnBack: true),
+          appBar: CustomMainAppbar(title: LocaleKeys.myAppointmentRequestsDetailTitle, returnBack: true),
           body: Stack(
             children: [
               Column(

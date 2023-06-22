@@ -11,9 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/WorkOrder/WoCreate.dart';
 import 'package:win_kamu/providers/work_order_view_provider.dart';
-import 'package:win_kamu/utils/page_titles.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+
+import '../../l10n/locale_keys.g.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
@@ -147,7 +148,7 @@ class DisplayPictureScreen extends StatelessWidget {
     final woProvider = Provider.of<WorkOrderViewProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: const CustomMainAppbar(title: PageTitles.takePictureTitle, returnBack: true),
+      appBar: const CustomMainAppbar(title: LocaleKeys.takePictureTitle, returnBack: true),
 
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.

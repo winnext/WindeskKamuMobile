@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 import 'package:win_kamu/widgets/listWidgets/customIssueDetailWidget.dart';
 import '../../api/api_repository.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/page_titles.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 
@@ -56,7 +56,7 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
         return false;
       },
       child: Scaffold(
-          appBar: CustomMainAppbar(title: PageTitles.myOpenRequestsDetail, returnBack: true),
+          appBar: CustomMainAppbar(title: LocaleKeys.myOpenRequestsDetail, returnBack: true),
           body: Stack(
             children: [
               Column(

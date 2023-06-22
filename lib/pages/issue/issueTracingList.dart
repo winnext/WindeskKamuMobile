@@ -1,21 +1,18 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:win_kamu/l10n/locale_keys.g.dart';
 import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/providers/crud_view_provider.dart';
-import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
-import 'package:win_kamu/utils/page_titles.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+
 import '../../api/api_repository.dart';
 import '../../models/tracing_view.model.dart';
-import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../homePage.dart';
 import 'issueList.dart';
 
 class IssueTracingList extends StatefulWidget {
@@ -58,7 +55,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
       },
       child: Scaffold(
           appBar: CustomMainAppbar(
-            title: PageTitles.entityListTitle,
+            title: LocaleKeys.entityListTitle,
             returnBack: false,
             leading: IconButton(
                 onPressed: () {

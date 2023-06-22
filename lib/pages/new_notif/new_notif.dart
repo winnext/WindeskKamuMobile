@@ -6,7 +6,7 @@ import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
-import '../../utils/page_titles.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../utils/themes.dart';
 import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
 
@@ -43,7 +43,7 @@ class _NewNotifState extends State<NewNotif> {
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: CustomMainAppbar(
-              title: PageTitles.newNotif,
+              title: LocaleKeys.newNotif,
               leading: IconButton(
                 onPressed: () {
                   index == 0 ? Navigator.popUntil(context, (route) => route.isFirst) : mainViewProvide.pageController!.jumpTo(0);

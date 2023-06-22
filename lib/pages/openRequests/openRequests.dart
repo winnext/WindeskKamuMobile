@@ -11,8 +11,8 @@ import 'package:win_kamu/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 import '../../api/api_repository.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/page_titles.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
@@ -65,7 +65,7 @@ class _ListScreenState extends State<ListScreen> {
       },
       child: Scaffold(
           appBar: CustomMainAppbar(
-            title: PageTitles.myOpenRequests,
+            title: LocaleKeys.myOpenRequests,
             returnBack: true,
             actions: [
               IconButton(icon: Icon(Icons.arrow_back, color: APPColors.Main.black), onPressed: () {}),

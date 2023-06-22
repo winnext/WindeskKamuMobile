@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -9,7 +8,7 @@ import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/workorder_detail_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
-import '../../utils/page_titles.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../utils/themes.dart';
 import '../WorkOrder/woDetail.dart';
 
@@ -32,7 +31,7 @@ class _isEmriAramaState extends State<isEmriArama> {
       return Container(
         child: Scaffold(
             resizeToAvoidBottomInset: true,
-            appBar: const CustomMainAppbar(title: PageTitles.workOrderSearchTitle, returnBack: true),
+            appBar: const CustomMainAppbar(title: LocaleKeys.workOrderSearchTitle, returnBack: true),
             body: Center(
                 child: SizedBox(
               width: 85.w,
