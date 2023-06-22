@@ -14,7 +14,6 @@ import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../pages/issue/issueSummary.dart';
 import '../../providers/detail_view_provider.dart';
-import '../../providers/issueaction_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 import '../issueWidgets/addActivityScreen.dart';
@@ -246,6 +245,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                           _btnController.success();
                                           _btnController.reset();
                                           final photoResult = issueActionProvider.isPhotoAddSuccess.toString();
+
                                           print('photoo$photoResult');
                                           Navigator.pop(context);
                                           snackBar(context, photoResult == 'success' ? 'Fotoğraf Ekleme Başarılı' : 'Fotoğraf Ekleme Başarısız',
@@ -404,21 +404,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                         Future.delayed(const Duration(milliseconds: 1000), () {
                           listViewProvider.getIssueOperations(widget.code, widget.xusercode);
 
-                          detailViewProvider.loadData(widget.code.toString(),
-                              widget.xusercode.toString());
+                          detailViewProvider.loadData(widget.code.toString(), widget.xusercode.toString());
 
-                          String snackBarText =
-                              issueActionProvider.takeOverMessage.toString();
-                          String takeOverSuccess =
-                              issueActionProvider.takeOverResult.toString();
+                          String snackBarText = issueActionProvider.takeOverMessage.toString();
+                          String takeOverSuccess = issueActionProvider.takeOverResult.toString();
 
-                          snackBar(
-                              context,
-                              takeOverSuccess == 'success'
-                                  ? '$snackBarText'
-                                  : '$snackBarText',
-                              takeOverSuccess);
-                              
+                          snackBar(context, takeOverSuccess == 'success' ? '$snackBarText' : '$snackBarText', takeOverSuccess);
+
                           Navigator.pop(context);
                         });
                       },

@@ -27,7 +27,7 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAliveClientMixin <IssueActivities>{
+class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAliveClientMixin<IssueActivities> {
   @override
   void initState() {
     super.initState();
@@ -58,7 +58,7 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: size.height / 1.7,
             child: Column(
               children: [
@@ -84,7 +84,7 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(width: size.width / 2, child: Text(listElements.NAME.toString())),
+                                          SizedBox(width: size.width / 2, child: Text(listElements.NAME.toString())),
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),

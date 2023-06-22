@@ -378,26 +378,22 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               '',
                               '',
                               '');
+
                           Future.delayed(const Duration(milliseconds: 1000), () {
                             _btnController.success();
                             _btnController.reset();
                             final activityResult = issueActionProvider.isActivityAddSuccess.toString();
                             print('photoo$activityResult');
                             Navigator.pop(context);
-                            listViewProvider.getIssueOperations(
-                                widget.issueCode, mainPageProvider.kadi);
+                            listViewProvider.getIssueOperations(widget.issueCode, mainPageProvider.kadi);
 
-                            detailViewProvider.loadData(
-                                widget.issueCode.toString(),
-                                mainPageProvider.kadi.toString());
-                            detailViewProvider.loadIssueSummary(
-                                widget.issueCode.toString(), mainPageProvider.kadi);
-                            snackBar(
-                                context,
-                                activityResult == 'true'
-                                    ? 'Aktivite girişi başarılı'
-                                    : 'Aktivite girişi başarısız',
-                                activityResult);
+                            detailViewProvider.loadData(widget.issueCode.toString(), mainPageProvider.kadi.toString());
+                            detailViewProvider.loadIssueSummary(widget.issueCode.toString(), mainPageProvider.kadi);
+                            if (!issueActionProvider.isDescriptionLengthSuccess) {
+                              snackBar(context, 'Açıklama 20 harften fazla olmalıdır', 'error');
+                            } else {
+                              snackBar(context, activityResult == 'true' ? 'Aktivite girişi başarılı' : 'Aktivite girişi başarısız', activityResult);
+                            }
                           });
                         },
                         valueColor: Colors.white,
