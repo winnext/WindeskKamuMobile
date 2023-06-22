@@ -463,22 +463,22 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                           listViewProvider.getIssueOperations(
                               widget.code, widget.xusercode);
 
+                          detailViewProvider.loadData(widget.code.toString(),
+                              widget.xusercode.toString());
+
                           String snackBarText =
                               issueActionProvider.takeOverMessage.toString();
                           String takeOverSuccess =
                               issueActionProvider.takeOverResult.toString();
 
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const IssueSummary(),
-                            ),
-                          );
                           snackBar(
                               context,
                               takeOverSuccess == 'success'
                                   ? '$snackBarText'
                                   : '$snackBarText',
                               takeOverSuccess);
+                              
+                          Navigator.pop(context);
                         });
                       },
                       title: 'Üzerine Al',

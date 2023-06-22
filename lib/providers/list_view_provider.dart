@@ -65,8 +65,10 @@ class ListViewProvider extends ChangeNotifier {
   String _statusCode = '';
   String _buildName = '';
   String _buildCode = '';
-  String _floor = '';
-  String _wing = '';
+  String _floorName = '';
+  String _floorCode = '';
+  String _wingCode = '';
+  String _wingName = '';
   String _assigne = '';
 
   PageController? get pageController => _pageController;
@@ -200,15 +202,27 @@ class ListViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get floor => _floor;
-  set setfloor(String floor) {
-    _floor = floor;
+  String get floorName => _floorName;
+  set setfloorName(String floorName) {
+    _floorName = floorName;
     notifyListeners();
   }
 
-  String get wing => _wing;
-  set setwing(String wing) {
-    _wing = wing;
+  String get floorCode => _floorCode;
+  set setfloorCode(String floorCode) {
+    _floorCode = floorCode;
+    notifyListeners();
+  }
+
+  String get wingCode => _wingCode;
+  set setwingCode(String wingCode) {
+    _wingCode = wingCode;
+    notifyListeners();
+  }
+
+  String get wingName => _wingName;
+  set setwingName(String wingName) {
+    _wingName = wingName;
     notifyListeners();
   }
 
@@ -250,8 +264,8 @@ class ListViewProvider extends ChangeNotifier {
       "end": _endIsses,
       "status": statusCode,
       "build": buildCode,
-      "floor": floor,
-      "wing": wing,
+      "floor": floorCode,
+      "wing": wingCode,
       "assignee": assigne,
     };
 
@@ -264,13 +278,14 @@ class ListViewProvider extends ChangeNotifier {
 
     final data = result.records['records'];
 
-    print('urlISSUE' + data.toString());
+    print('urlISSUE' + floorCode.toString() + data.toString() + ' : ');
 
     if (true) {
       tempexampleListView = (result.records['records'] as List)
           .map((e) => ListViewModel.fromJson(e))
           .toList();
       Future.delayed(const Duration(milliseconds: 0), () {
+        print('url result   ::::' + data.toString());
         exampleListView.addAll(tempexampleListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
         int noOfTasks = tempexampleListView.length;

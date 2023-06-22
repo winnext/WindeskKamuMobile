@@ -1514,11 +1514,6 @@ class APIRepository {
 
       final data = jsonDecode(response.toString());
 
-      print('getIssueOpenStatusCodes + ' +
-          data.toString() +
-          '  :  ' +
-          controller.toString());
-
       //print(data['records'] as List);
 
       if (response != null) {
@@ -1592,10 +1587,6 @@ class APIRepository {
       final response = await dio.get(controller.toString());
 
       final data = jsonDecode(response.toString());
-
-      print('getSpaceBfwByType + ' + data.toString());
-
-      //print(data['records'] as List);
 
       if (response != null) {
         return httpSonucModel(
@@ -1750,7 +1741,7 @@ class APIRepository {
       {@required String? controller,
       @required Map<String, dynamic>? queryParameters,
       bool redirectLogin = false}) async {
-    print('url ' + controller!);
+    print('url ' + controller! + ' :  :  ' + queryParameters.toString());
 
     try {
       //ReloadApiBase(StaticVariables.token);

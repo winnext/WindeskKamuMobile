@@ -51,7 +51,6 @@ class IssueActionProvider extends ChangeNotifier {
   String _createSparepartIssueResult = '';
   String _createSparepartIssueMessage = '';
 
-
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
     _pageController = pageController;
@@ -235,7 +234,6 @@ class IssueActionProvider extends ChangeNotifier {
     _createSparepartIssueMessage = createSparepartIssueMessage;
     notifyListeners();
   }
-
 
   String get cancelIssueResult => _cancelIssueResult;
 
@@ -538,12 +536,15 @@ class IssueActionProvider extends ChangeNotifier {
     final result = await apirepository.addActivity(
         controller: urlActivities, description: description, image: image);
 
+
     print('addActivityPro' + result.records['resultcode'].toString());
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         _isActivityAddSuccess =
-            result.records['resultcode'].toString() == '-500' ? false : true;
+            result.records['success'].toString() == 'true'
+                ? true
+                : false;
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ import 'package:win_kamu/pages/plannedRequests/routeRequests.dart';
 import 'package:win_kamu/pages/splash_screen/splash_view.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import '../api/api_repository.dart';
+import '../l10n/locale_keys.g.dart';
 import '../providers/main_page_view_provider.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
@@ -184,166 +186,163 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Image.asset(
-            'lib/assets/images/windesk.jpg',
-            width: MediaQuery.of(context).size.width / 1.2,
-            height: MediaQuery.of(context).size.width / 1.2,
-            fit: BoxFit.cover,
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.power_settings_new,
-                size: 35,
-                color: APPColors.Main.black,
-              ),
-              tooltip: 'Exit',
-              onPressed: () async {
-                var cikis_result =
-                    await apirepository.cikis(mainViewProvider.kadi);
-                try {
-                  if (cikis_result) {
-                    snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
-
-                    Future.delayed(const Duration(seconds: 1)).whenComplete(() {
-                      Phoenix.rebirth(context);
-                    });
-                  } else {}
-                } catch (e) {
-                  snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
-                }
-              },
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          'lib/assets/images/windesk.jpg',
+          width: MediaQuery.of(context).size.width / 1.2,
+          height: MediaQuery.of(context).size.width / 1.2,
+          fit: BoxFit.cover,
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.power_settings_new,
+              size: 35,
+              color: APPColors.Main.black,
             ),
-          ],
-          centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: APPColors.Main.white,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return badges.Badge(
-                position: badges.BadgePosition.topEnd(top: 10, end: 10),
-                badgeContent: Text(
-                  mainViewProvider.toplamKayitSayisi.toString(),
-                  style: TextStyle(color: APPColors.Main.white),
-                ),
-                onTap: () {},
-                child: IconButton(
-                  icon: Icon(
-                    Icons.notifications,
-                    size: 35,
-                    color: APPColors.Main.black,
-                  ),
-                  onPressed: () {
-                    // ignore: unrelated_type_equality_checks
-                    mainViewProvider.toplamKayitSayisi != 0
-                        ? showModalBottomSheet<void>(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            elevation: 10,
-                            context: context,
-                            builder: (context) => AnnouncementList())
-                        : null;
-                  },
-                ),
-              );
+            tooltip: 'Exit',
+            onPressed: () async {
+              var cikis_result =
+                  await apirepository.cikis(mainViewProvider.kadi);
+              try {
+                if (cikis_result) {
+                  snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
+
+                  Future.delayed(const Duration(seconds: 1)).whenComplete(() {
+                    Phoenix.rebirth(context);
+                  });
+                } else {}
+              } catch (e) {
+                snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
+              }
             },
           ),
-        ),
+        ],
+        centerTitle: true,
+        elevation: 0.0,
         backgroundColor: APPColors.Main.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              // Expanded(
-              //     flex: 3,
-              //     child: Image.asset(
-              //       'lib/assets/images/home.jpg',
-              //       height: MediaQuery.of(context).size.width / 1,
-              //       width: MediaQuery.of(context).size.width / 1,
-              //       fit: BoxFit.cover,
-              //       //color: Colors.amber,
-              //     )),
-              Expanded(child: Divider()),
-              Expanded(
-                  child: Column(
-                children: [
-                  Text(
-                    'Ankara Etlik Şehir Hastanesi',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
-                  ),
-                  Text(
-                    'Yardım Masası Uygulaması',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
-
-              Expanded(
-                flex: 4,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: HomeButton(
-                                text: 'Vaka-(SLA) Listesi',
-                                iconName: Icons.calendar_month,
-                                navigator: Issue()),
-                          ),
-                          Expanded(
-                            child: HomeButton(
-                                text: 'Vaka-(SLA) Arama',
-                                iconName: Icons.attachment,
-                                navigator: NewNotif()),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: HomeButton(
-                                text: 'İş Emri Listesi',
-                                iconName: Icons.content_paste_search,
-                                navigator: WoTracingList()),
-                          ),
-                          Expanded(
-                            child: HomeButton(
-                                text: 'İş Emri Arama ',
-                                iconName: Icons.content_paste_off,
-                                navigator: CloseRequestAwaitApproval()),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: HomeButton(
-                                text: 'Yeni İş Emri',
-                                iconName: Icons.calendar_month,
-                                navigator: ComplaintRequests()),
-                          ),
-                          // Expanded(
-                          //   child: HomeButton(
-                          //       text: 'Kapatılmış Taleplerim',
-                          //       iconName: Icons.attachment,
-                          //       navigator: ClosedRequests()),
-                          // )
-                        ],
-                      ),
-                    )
-                  ],
+        leading: Builder(
+          builder: (BuildContext context) {
+            return badges.Badge(
+              position: badges.BadgePosition.topEnd(top: 10, end: 10),
+              badgeContent: Text(
+                mainViewProvider.toplamKayitSayisi.toString(),
+                style: TextStyle(color: APPColors.Main.white),
+              ),
+              onTap: () {},
+              child: IconButton(
+                icon: Icon(
+                  Icons.notifications,
+                  size: 35,
+                  color: APPColors.Main.black,
                 ),
-              )
-            ],
-          ),
+                onPressed: () {
+                  mainViewProvider.toplamKayitSayisi != 0
+                      ? showModalBottomSheet<void>(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          elevation: 10,
+                          context: context,
+                          builder: (context) => AnnouncementList())
+                      : null;
+                },
+              ),
+            );
+          },
+        ),
+      ),
+      backgroundColor: APPColors.Main.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            // Expanded(
+            //     flex: 3,
+            //     child: Image.asset(
+            //       'lib/assets/images/home.jpg',
+            //       height: MediaQuery.of(context).size.width / 1,
+            //       width: MediaQuery.of(context).size.width / 1,
+            //       fit: BoxFit.cover,
+            //       //color: Colors.amber,
+            //     )),
+            Expanded(child: Divider()),
+            Expanded(
+                child: Column(
+              children: [
+                Text(
+                  'Ankara Etlik Şehir Hastanesi',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  'Yardım Masası Uygulaması',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ],
+            )),
+
+            Expanded(
+              flex: 4,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: HomeButton(
+                              text: LocaleKeys.vakalist.tr(),
+                              iconName: Icons.calendar_month,
+                              navigator: Issue()),
+                        ),
+                        Expanded(
+                          child: HomeButton(
+                              text: 'Vaka-(SLA) Arama',
+                              iconName: Icons.attachment,
+                              navigator: NewNotif()),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: HomeButton(
+                              text: 'İş Emri Listesi',
+                              iconName: Icons.content_paste_search,
+                              navigator: WoTracingList()),
+                        ),
+                        Expanded(
+                          child: HomeButton(
+                              text: 'İş Emri Arama ',
+                              iconName: Icons.content_paste_off,
+                              navigator: CloseRequestAwaitApproval()),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: HomeButton(
+                              text: 'Yeni İş Emri',
+                              iconName: Icons.calendar_month,
+                              navigator: ComplaintRequests()),
+                        ),
+                        // Expanded(
+                        //   child: HomeButton(
+                        //       text: 'Kapatılmış Taleplerim',
+                        //       iconName: Icons.attachment,
+                        //       navigator: ClosedRequests()),
+                        // )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

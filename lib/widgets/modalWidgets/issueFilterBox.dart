@@ -15,7 +15,7 @@ class FilterBox extends StatefulWidget {
 
 class _FilterBoxState extends State<FilterBox> {
   final textInput = TextEditingController();
-  
+
   List<DropdownMenuItem<IssueFilterModel>> dropdownItems =
       []; //* you can make nullable if you want, I'm doing it to force having String.
   String selectedCurrency = 'USD';
@@ -24,6 +24,7 @@ class _FilterBoxState extends State<FilterBox> {
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -32,7 +33,6 @@ class _FilterBoxState extends State<FilterBox> {
 
   @override
   Widget build(BuildContext context) {
-
     final exampleList = Provider.of<ListViewProvider>(context);
 
     return Padding(
@@ -51,18 +51,15 @@ class _FilterBoxState extends State<FilterBox> {
                         onTap: () {
                           exampleList.exampleListView.clear();
                           exampleList.setassigne = '';
-                          exampleList.loadData(
-                              1, widget.moduleCode);
+                          exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               exampleList.assigne.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -83,18 +80,15 @@ class _FilterBoxState extends State<FilterBox> {
                           exampleList.exampleListView.clear();
                           exampleList.setstatusName = '';
                           exampleList.setstatusCode = '';
-                          exampleList.loadData(
-                              1, widget.moduleCode);
+                          exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               exampleList.statusName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -104,7 +98,7 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.buildCode != ''
+            exampleList.buildName != ''
                 ? Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -115,18 +109,15 @@ class _FilterBoxState extends State<FilterBox> {
                           exampleList.exampleListView.clear();
                           exampleList.setbuildCode = '';
                           exampleList.setbuildName = '';
-                          exampleList.loadData(
-                              1, widget.moduleCode);
+                          exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               exampleList.buildName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -136,7 +127,7 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.floor != ''
+            exampleList.floorCode != ''
                 ? Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -145,19 +136,17 @@ class _FilterBoxState extends State<FilterBox> {
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
-                          exampleList.setfloor = '';
-                          exampleList.loadData(
-                              1, widget.moduleCode);
+                          exampleList.setfloorCode = '';
+                          exampleList.setfloorName = '';
+                          exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              exampleList.floor.toString(),
+                              exampleList.floorName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -167,7 +156,7 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.wing != ''
+            exampleList.wingCode != ''
                 ? Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -176,19 +165,17 @@ class _FilterBoxState extends State<FilterBox> {
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
-                          exampleList.setwing = '';
-                          exampleList.loadData(
-                              1, widget.moduleCode);
+                          exampleList.setwingCode = '';
+                          exampleList.setwingName = '';
+                          exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              exampleList.wing.toString(),
+                              exampleList.wingName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,

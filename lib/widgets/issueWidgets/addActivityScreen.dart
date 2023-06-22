@@ -446,10 +446,12 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             Navigator.pop(context);
                             listViewProvider.getIssueOperations(
                                 widget.issueCode, mainPageProvider.kadi);
+
                             detailViewProvider.loadData(
                                 widget.issueCode.toString(),
                                 mainPageProvider.kadi.toString());
-                                
+                            detailViewProvider.loadIssueSummary(
+                                widget.issueCode.toString(), mainPageProvider.kadi);
                             snackBar(
                                 context,
                                 activityResult == 'true'

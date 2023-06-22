@@ -45,8 +45,11 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueFilesState extends State<IssueFiles> {
+class _IssueFilesState extends State<IssueFiles>
+    with AutomaticKeepAliveClientMixin<IssueFiles> {
   @override
+  bool get wantKeepAlive => true;
+
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
@@ -120,9 +123,12 @@ class _IssueFilesState extends State<IssueFiles> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Container(
-                                                width: size.width/ 2.5,
-                                                child: Text(
-                                                    listElements.DISPFILENAME.toString()+' '+listElements.ID.toString()),
+                                                width: size.width / 2.5,
+                                                child: Text(listElements
+                                                        .DISPFILENAME
+                                                        .toString() +
+                                                    ' ' +
+                                                    listElements.ID.toString()),
                                               ),
                                               Text(
                                                   listElements.IDATE.toString())
@@ -183,15 +189,16 @@ class _IssueFilesState extends State<IssueFiles> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final detailViewProvider =
-          Provider.of<DetailViewProvider>(context, listen: false);
+              Provider.of<DetailViewProvider>(context, listen: false);
           final mainPageViewProvider =
-          Provider.of<MainPageViewProvider>(context, listen: false);
+              Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+                  code: detailViewProvider.issueCode,
+                  xusercode: mainPageViewProvider.kadi));
         },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),

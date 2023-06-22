@@ -49,7 +49,6 @@ dependencies:
   animated_widgets: ^1.1.0
   device_info_plus: ^8.1.0
   bloc: ^8.1.1
-  data_connection_checker: ^0.3.4
   overlay_support: ^2.1.0
   internet_connection_checker: ^1.0.0+1
   top_snackbar_flutter: ^3.0.0+1

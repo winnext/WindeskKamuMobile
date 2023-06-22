@@ -8,38 +8,32 @@ const updateNotication = "v1/Notification/UpdateNotification";
 const addNotification = "v1/Notification/AddNotification";
 
 //ISH PROD
-// const PPP_PROJECT = "ish"
+// const PPP_PROJECT = "ish";
 // const BASE_URL_V2 = "http://windeskmobile.ish.yerel";
 // const TOKEN_V1 = "wdishliveSqAS!_";
 // const TOKEN_V2 = 'ishprod!';
 // const ATTACHPATHLIVE =
-// "http://10.32.12.22/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
+//     "http://10.32.12.22/windesk/xreadattach.php?token=${TOKEN_V1}&id=";
 // const base_url_v1 =
 //     'http://10.32.12.22/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
 //         'wdmobile' +
 //         '&wspassword=' +
 //         'wdsgnm1017_' +
 //         '&token=';
+
+//ISH PREPROD
+// const PPP_PROJECT = "ish";
+// const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
+// const TOKEN_V1 = "wdishtest!_";
+// const TOKEN_V2 = 'ishtest!';
+// const ATTACHPATHLIVE =
+//     "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
 // const base_url_v1 =
-//     'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//     'http://10.32.12.42/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
 //         'wdmobile' +
 //         '&wspassword=' +
 //         'wdsgnm1017_' +
 //         '&token=';
-
-//ISH PREPROD
-const PPP_PROJECT = "ish";
-const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
-const TOKEN_V1 = "wdishtest!_";
-const TOKEN_V2 = 'ishtest!';
-const ATTACHPATHLIVE =
-    "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'http://10.32.12.42/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
 
 //WINMOBİLE
 // const PPP_PROJECT = "winmobile";
@@ -84,18 +78,18 @@ const base_url_v1 =
 //         '&token=';
 
 //// ESH PREPROD
-// const PPP_PROJECT = "esh";
-// const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
-// const TOKEN_V1 = 'wdeshtest!_';
-// const TOKEN_V2 = 'eshtest!';
-// const ATTACHPATHLIVE =
-//     "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
-// const base_url_v1 =
-//     'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-//         'wdmobile' +
-//         '&wspassword=' +
-//         'wdsgnm1017_' +
-//         '&token=';
+const PPP_PROJECT = "esh";
+const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
+const TOKEN_V1 = 'wdeshtest!_';
+const TOKEN_V2 = 'eshtest!';
+const ATTACHPATHLIVE =
+    "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 =
+    'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+        'wdmobile' +
+        '&wspassword=' +
+        'wdsgnm1017_' +
+        '&token=';
 
 //BESK PREPROD
 // const PPP_PROJECT = "besk"

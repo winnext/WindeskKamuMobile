@@ -16,7 +16,6 @@ import 'main_page_view_provider.dart';
 
 class DetailViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
-  var data;
 
   List<DetailViewModel> _exampleListView = [];
   List<DetailViewModel> tempexampleListView = [];
@@ -29,8 +28,8 @@ class DetailViewProvider extends ChangeNotifier {
   List<IssueSummaryModal> tempIssueSummary = [];
 
   String? _responses;
-
   String? _issueCode;
+
   bool _isDataLoading = true;
   bool _loading = false;
   bool _isDataExist = false;
@@ -107,9 +106,7 @@ class DetailViewProvider extends ChangeNotifier {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
         print('objectissueDetailll' +
-            responseData.TARGET_FDATE.toString() +
-            ' : ' +
-            responseData.TARGET_RDATE.toString());
+            responseData.TARGET_FDATE.toString() + ' : ' + responseData.RELATEDCODE.toString());
         exampleListView.clear();
         exampleListView.add(responseData);
         _isDataLoading = false;
@@ -118,7 +115,6 @@ class DetailViewProvider extends ChangeNotifier {
         notifyListeners();
       });
     } else {
-      // baglantiHatasi(context, result.message);
     }
   }
 
@@ -129,13 +125,9 @@ class DetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getIssueSummary(
         controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
-    //print('issueDetail3 : ' + queryParameters.toString() + ' +++ ' + responseUrl.toString());
-
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
-        print('issueDetailll22' + responseData.toString());
-
         _issueSummary.add(responseData);
         _isDataLoading = false;
         _loading = false;

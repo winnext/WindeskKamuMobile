@@ -35,17 +35,13 @@ class IssueTracingList extends StatefulWidget {
 }
 
 final apirepository = APIRepository();
-
 ListViewProvider? listViewProvider;
-DetailViewProvider? detailViewProvider;
 
 class _IssueTracingListState extends State<IssueTracingList> {
   @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
     exampleList.tracingListView.clear();
     exampleList.getTracingListWithCount('sgnm1040', 'issue');
   }
@@ -53,7 +49,6 @@ class _IssueTracingListState extends State<IssueTracingList> {
   @override
   void dispose() {
     // TODO: implement dispose
-    detailViewProvider?.dispose();
     listViewProvider?.dispose();
     super.dispose();
   }
@@ -62,8 +57,6 @@ class _IssueTracingListState extends State<IssueTracingList> {
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
@@ -107,10 +100,7 @@ class _IssueTracingListState extends State<IssueTracingList> {
                                     listViewProvider.tracingListView[i];
                                 return GestureDetector(
                                   onTap: () {
-                                    final mainViewProvider =
-                                        Provider.of<MainPageViewProvider>(
-                                            context,
-                                            listen: false);
+
                                     listElements.count.toString() == '0'
                                         ? null
                                         : Navigator.push(

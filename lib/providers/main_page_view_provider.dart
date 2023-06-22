@@ -88,7 +88,7 @@ class MainPageViewProvider extends ChangeNotifier {
     String deviceToken = prefs.getString('deviceId').toString();
 
     final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}aa&action=getAnnouncements&username=${xusercode}';
+        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getAnnouncements&username=${xusercode}';
 
     final result =
         await apirepository.getAnnouncements(controller: urlIssueTypes);

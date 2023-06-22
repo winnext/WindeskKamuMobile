@@ -28,8 +28,10 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueNotesState extends State<IssueNotes> {
+class _IssueNotesState extends State<IssueNotes>
+    with AutomaticKeepAliveClientMixin<IssueNotes> {
   @override
+  bool get wantKeepAlive => true;
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
@@ -67,8 +69,7 @@ class _IssueNotesState extends State<IssueNotes> {
                         child: NotificationListener<ScrollNotification>(
                         // onNotification: listViewProvider.notificationController,
                         child: ListView.builder(
-                            itemCount:
-                                listViewProvider.issueNotesView.length,
+                            itemCount: listViewProvider.issueNotesView.length,
                             itemBuilder: (BuildContext context, int i) {
                               l++;
                               if (l == 5) {
@@ -89,7 +90,10 @@ class _IssueNotesState extends State<IssueNotes> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(width: size.width/ 2, child: Text(listElements.IUSER.toString())),
+                                          Container(
+                                              width: size.width / 2,
+                                              child: Text(listElements.IUSER
+                                                  .toString())),
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),
@@ -139,15 +143,16 @@ class _IssueNotesState extends State<IssueNotes> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final detailViewProvider =
-          Provider.of<DetailViewProvider>(context, listen: false);
+              Provider.of<DetailViewProvider>(context, listen: false);
           final mainPageViewProvider =
-          Provider.of<MainPageViewProvider>(context, listen: false);
+              Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
               builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+                  code: detailViewProvider.issueCode,
+                  xusercode: mainPageViewProvider.kadi));
         },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
