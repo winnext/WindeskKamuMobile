@@ -1,24 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:win_kamu/pages/homePage.dart';
 
 import 'package:provider/provider.dart';
-import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/openRequests/openRequests.dart';
-import 'package:win_kamu/pages/plannedRequests/plannedRequestsDetail.dart';
-import 'package:win_kamu/pages/searchPage/searchPage.dart';
 
 import '../providers/main_page_view_provider.dart';
 import '../utils/themes.dart';
 import '../widgets/customButtomNavigation.dart';
-import 'closeRequestsWaitApprove/closeRequests.dart';
 import 'internet_connection/internet_connection.dart';
-import 'openRequests/RouteRequests.dart';
 
 class MainPage extends StatefulWidget {
   static String mainPage = '/mainPage';
@@ -36,8 +28,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     mainViewProvider.initForm();
   }
 
@@ -72,12 +63,7 @@ class _MainPageState extends State<MainPage> {
           onPageChanged: (index) {
             setState(() => mainViewProvide.setcurrentIndex = index);
           },
-          children: <Widget>[
-            MyHomePage(),
-            ListScreen(pageController: mainViewProvide.pageController!),
-            NewNotif(),
-            NewNotif()
-          ],
+          children: <Widget>[MyHomePage(), ListScreen(pageController: mainViewProvide.pageController!), NewNotif(), NewNotif()],
         ),
       ),
       bottomNavigationBar: CustomBottomNavigation(
@@ -93,25 +79,16 @@ class _MainPageState extends State<MainPage> {
         items: <CustomBottomNavigationBarItem>[
           /*-------------- Build tabs here -----------------*/
           CustomBottomNavigationBarItem(
-              title: 'AnaSayfa',
-              icon: Icon(Icons.home),
-              activeColor: APPColors.Main.white,
-              inactiveColor: APPColors.Main.grey),
+              title: 'AnaSayfa', icon: Icon(Icons.home), activeColor: APPColors.Main.white, inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
               title: 'Açık Taleplerim',
               icon: Icon(Icons.content_paste_search),
               activeColor: APPColors.Main.white,
               inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Arama',
-              icon: Icon(Icons.content_paste_off),
-              activeColor: APPColors.Main.white,
-              inactiveColor: APPColors.Main.grey),
+              title: 'Arama', icon: Icon(Icons.content_paste_off), activeColor: APPColors.Main.white, inactiveColor: APPColors.Main.grey),
           CustomBottomNavigationBarItem(
-              title: 'Yeni Bildirim',
-              icon: Icon(Icons.attachment),
-              activeColor: APPColors.Main.white,
-              inactiveColor: APPColors.Main.grey),
+              title: 'Yeni Bildirim', icon: Icon(Icons.attachment), activeColor: APPColors.Main.white, inactiveColor: APPColors.Main.grey),
         ],
       ),
     );

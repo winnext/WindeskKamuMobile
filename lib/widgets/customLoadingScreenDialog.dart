@@ -6,7 +6,7 @@ class CustomLoadingScreen extends StatefulWidget {
   final Color? backgroundColor;
   final Color? textColor;
 
-  CustomLoadingScreen({
+  const CustomLoadingScreen({
     Key? key,
     this.backgroundColor = const Color.fromARGB(40, 0, 0, 0),
     this.textColor = Colors.black,

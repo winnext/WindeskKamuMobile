@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/api_repository.dart';
@@ -50,7 +52,6 @@ class IssueActionProvider extends ChangeNotifier {
   String _isPhotoAddSuccess = '';
   String _createSparepartIssueResult = '';
   String _createSparepartIssueMessage = '';
-
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -236,7 +237,6 @@ class IssueActionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   String get cancelIssueResult => _cancelIssueResult;
 
   set setcancelIssueResult(String cancelIssueResult) {
@@ -271,8 +271,7 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=takeOverIssue&issueCode=${issuecode}&username=${username}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=takeOverIssue&issueCode=$issuecode&username=$username';
 
     final result = await apirepository.takeOverIssue(controller: urlIssueTypes);
 
@@ -298,11 +297,9 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=createSparepartIssue&issuecode=${issuecode}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=createSparepartIssue&issuecode=$issuecode';
 
-    final result =
-        await apirepository.createSparepartIssue(controller: urlIssueTypes);
+    final result = await apirepository.createSparepartIssue(controller: urlIssueTypes);
 
     final resultt = result.records['result'];
     final message = result.records['msg'];
@@ -327,16 +324,11 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=cancelIssuePlanned&issueCode=${issuecode}&username=${username}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=cancelIssuePlanned&issueCode=$issuecode&username=$username';
 
-    final result =
-        await apirepository.cancelIssuePlanned(controller: urlIssueTypes);
+    final result = await apirepository.cancelIssuePlanned(controller: urlIssueTypes);
 
-    print('resultIssuePlanned' +
-        result.message.toString() +
-        ' : ' +
-        result.records.toString());
+    print('resultIssuePlanned${result.message} : ${result.records}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
@@ -358,20 +350,17 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getAvailableActivities&issueCode=${issuecode!}&module=issue';
+    String urlActivities = '$base_url_v1$TOKEN_V1$deviceToken&action=getAvailableActivities&issueCode=${issuecode!}&module=issue';
 
     final result = await apirepository.takeOverIssue(controller: urlActivities);
 
     final data = result.records['records'];
 
-    print('getAvailableActivities123' + data.toString());
+    print('getAvailableActivities123$data');
 
     if (true) {
       activityListView.clear();
-      tempActivityListView = (result.records['records'] as List)
-          .map((e) => DetailActivitiesModal.fromJson(e))
-          .toList();
+      tempActivityListView = (result.records['records'] as List).map((e) => DetailActivitiesModal.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         activityListView.addAll(tempActivityListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
@@ -401,21 +390,17 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getLiveSelectAsgGroups&issueCode=${issuecode!}';
+    String urlActivities = '$base_url_v1$TOKEN_V1$deviceToken&action=getLiveSelectAsgGroups&issueCode=$issuecode';
 
-    final result =
-        await apirepository.getLiveSelectAsgGroups(controller: urlActivities);
+    final result = await apirepository.getLiveSelectAsgGroups(controller: urlActivities);
 
     final data = result.records['records'];
 
-    print('data' + data.toString());
+    print('data$data');
 
     if (true) {
       liveSelectAsgGroups.clear();
-      templiveSelectAsgGroups = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      templiveSelectAsgGroups = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         liveSelectAsgGroups.addAll(templiveSelectAsgGroups);
         int noOfTasks = templiveSelectAsgGroups.length;
@@ -444,21 +429,17 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getLiveSelectUsers&asgGroupCode=${asgGroupCode!}';
+    String urlActivities = '$base_url_v1$TOKEN_V1$deviceToken&action=getLiveSelectUsers&asgGroupCode=${asgGroupCode!}';
 
-    final result =
-        await apirepository.getLiveSelectAsgUser(controller: urlActivities);
+    final result = await apirepository.getLiveSelectAsgUser(controller: urlActivities);
 
     final data = result.records['records'];
 
-    print('dataASGUSER' + data.toString());
+    print('dataASGUSER$data');
 
     if (true) {
       liveSelectAsgUsers.clear();
-      templiveSelectAsgUsers = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      templiveSelectAsgUsers = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         liveSelectAsgUsers.addAll(templiveSelectAsgUsers);
         int noOfTasks = templiveSelectAsgUsers.length;
@@ -487,15 +468,14 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=changeCfg&issuecode=${issueCode!}&cfgCode=${cfgCode}';
+    String urlActivities = '$base_url_v1$TOKEN_V1$deviceToken&action=changeCfg&issuecode=${issueCode!}&cfgCode=$cfgCode';
 
     final result = await apirepository.changeCfg(controller: urlActivities);
 
     final cfgSuccess = result.records['success'];
     final cfgResult = result.records['result'];
 
-    print('dataCFG' + result.toString());
+    print('dataCFG$result');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
@@ -533,17 +513,15 @@ class IssueActionProvider extends ChangeNotifier {
     String deviceToken = prefs.getString('deviceId').toString();
 
     String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addActivity&issueCode=${code}&username=${username}&activityCode=${activityCode}&locationCode=${locationCode}&asgGroupCode=${asgGroupCode}&asgUserCode=${asgUserCode}&additionalTime=${additionalTime}&module=issue&from_mobile=1&cardNo=${cardNo}&patientNo=${patientNo}&sampleNo=${sampleNo}&description=${description}';
+        '$base_url_v1$TOKEN_V1$deviceToken&action=addActivity&issueCode=$code&username=$username&activityCode=$activityCode&locationCode=$locationCode&asgGroupCode=$asgGroupCode&asgUserCode=$asgUserCode&additionalTime=$additionalTime&module=issue&from_mobile=1&cardNo=$cardNo&patientNo=$patientNo&sampleNo=$sampleNo&description=$description';
 
-    final result = await apirepository.addActivity(
-        controller: urlActivities, description: description, image: image);
+    final result = await apirepository.addActivity(controller: urlActivities, description: description, image: image);
 
-    print('addActivityPro' + result.records['resultcode'].toString());
+    print('addActivityPro${result.records['resultcode']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
-        _isActivityAddSuccess =
-            result.records['resultcode'].toString() == '-500' ? false : true;
+        _isActivityAddSuccess = result.records['resultcode'].toString() == '-500' ? false : true;
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;
@@ -567,15 +545,13 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=addAttachment&issueCode=${issueCode}&username=${username}&moduleName=${moduleName}';
+    String urlActivities = '$base_url_v1$TOKEN_V1$deviceToken&action=addAttachment&issueCode=$issueCode&username=$username&moduleName=$moduleName';
 
-    print('photoAdressssMethod' + urlActivities.toString());
+    print('photoAdressssMethod$urlActivities');
 
-    final result = await apirepository.addAttachment(
-        controller: urlActivities, description: description, image: image);
+    final result = await apirepository.addAttachment(controller: urlActivities, description: description, image: image);
 
-    print('photoAdress2' + result.records['result'].toString());
+    print('photoAdress2${result.records['result']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {

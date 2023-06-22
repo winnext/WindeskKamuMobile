@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:win_kamu/utils/themes.dart';
 
 class CustomTextArea extends StatefulWidget {
   final String hintText;
   final double? padding;
-  const CustomTextArea(
-      {super.key, this.hintText = "Açıklama", this.padding = 20});
+  const CustomTextArea({super.key, this.hintText = "Açıklama", this.padding = 20});
 
   @override
   State<CustomTextArea> createState() => _CustomTextAreaState();
@@ -20,21 +17,23 @@ class _CustomTextAreaState extends State<CustomTextArea> {
     return CupertinoTextField(
       decoration: BoxDecoration(
         color: APPColors.NewNotifi.grey,
-        border: Border.all(color: Color.fromARGB(255, 235, 235, 235)),
+        border: Border.all(color: const Color.fromARGB(255, 235, 235, 235)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       placeholder: widget.hintText,
-      placeholderStyle: TextStyle(color: Colors.black,),
+      placeholderStyle: const TextStyle(
+        color: Colors.black,
+      ),
       minLines: 3,
       maxLines: 6,
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Colors.black),
     );
   }
 }

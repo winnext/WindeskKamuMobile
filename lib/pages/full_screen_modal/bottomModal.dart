@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import '../../utils/themes.dart';
@@ -33,13 +34,11 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     return Container(
@@ -49,7 +48,7 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
         children: [
           Text(
             widget.code.toString(),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,22 +61,12 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                           side: BorderSide(color: APPColors.Main.grey),
                           shadowColor: APPColors.Main.black,
                           elevation: 10,
-                          backgroundColor: _isDone
-                              ? APPColors.Main.white
-                              : APPColors.Modal.blue),
+                          backgroundColor: _isDone ? APPColors.Main.white : APPColors.Modal.blue),
                       child: Text(
                         'Talep Yerine Getirildi',
-                        
-                        style: TextStyle(
-                            color: _isDone
-                                ? APPColors.Main.black
-                                : APPColors.Modal.white),
+                        style: TextStyle(color: _isDone ? APPColors.Main.black : APPColors.Modal.white),
                       ),
-                      onPressed: () => setState(() => {
-                            _isNotDone = false,
-                            _isDone = !_isDone,
-                            _activityCode = 'AR00000001187'
-                          })
+                      onPressed: () => setState(() => {_isNotDone = false, _isDone = !_isDone, _activityCode = 'AR00000001187'})
                       // Navigator.pop(
                       //     context),
                       ),
@@ -91,21 +80,12 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                           side: BorderSide(color: APPColors.Main.grey),
                           shadowColor: APPColors.Main.black,
                           elevation: 10,
-                          backgroundColor: _isNotDone
-                              ? APPColors.Main.white
-                              : APPColors.Modal.blue),
+                          backgroundColor: _isNotDone ? APPColors.Main.white : APPColors.Modal.blue),
                       child: Text(
                         'Talep Yerine Getirilmedi',
-                        style: TextStyle(
-                            color: _isNotDone
-                                ? APPColors.Main.black
-                                : APPColors.Main.white),
+                        style: TextStyle(color: _isNotDone ? APPColors.Main.black : APPColors.Main.white),
                       ),
-                      onPressed: () => setState(() => {
-                            _isDone = false,
-                            _isNotDone = !_isNotDone,
-                            _activityCode = 'AR00000001336'
-                          })
+                      onPressed: () => setState(() => {_isDone = false, _isNotDone = !_isNotDone, _activityCode = 'AR00000001336'})
 
                       // Navigator.pop(
                       //     context),
@@ -122,7 +102,7 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
               decoration: InputDecoration(
                 filled: true,
                 hintText: 'Açıklama giriniz.',
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(width: 1, color: APPColors.Main.grey),
                 ),
@@ -134,7 +114,7 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
-                print('value' + value.toString());
+                print('value$value');
                 setState(() {
                   _description = value;
                 });
@@ -189,8 +169,7 @@ class _StatefulBottomSheetState extends State<StatefulBottomSheet> {
                           'Vazgeç',
                           style: TextStyle(color: APPColors.Main.white),
                         ),
-                        onPressed: () => setState(
-                            () => {_isDone = false, _isNotDone = !_isNotDone})
+                        onPressed: () => setState(() => {_isDone = false, _isNotDone = !_isNotDone})
 
                         // Navigator.pop(
                         //     context),

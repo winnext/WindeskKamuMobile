@@ -1,15 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
-CustomAlertDialog(
-    BuildContext context,
-    VoidCallback? onConfirm,
-    String title,
-    String text,
-    ArtSweetAlertType type,
-    String confirmButtonText,
+CustomAlertDialog(BuildContext context, VoidCallback? onConfirm, String title, String text, ArtSweetAlertType type, String confirmButtonText,
     String denyButtonText) {
   return ArtSweetAlert.show(
       barrierDismissible: false,

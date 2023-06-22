@@ -2,19 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';
-import '../../widgets/buttonWidgets/homeButtons.dart';
 import '../WorkOrder/WoCreate.dart';
-import '../closeRequestsWaitApprove/routeRequests.dart';
-import '../complaintRequests/routeRequests.dart';
 import '../homePage.dart';
 import '../internet_connection/internet_connection.dart';
-import '../issue/routeIssue.dart';
-import '../new_notif/new_notif.dart';
-import '../openRequests/RouteRequests.dart';
 import '../searchPage/searchPage.dart';
 import '../test/test.dart';
 
@@ -29,8 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     print(mainViewProvider.currentIndex);
 
     mainViewProvider.initForm();
@@ -38,56 +30,49 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   void dispose() {
-
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
- List<Widget> _buildScreens() {
-        return [
-          MyHomePage(),
-          WoCreate(),
-          searchPage(),
-          Test()
-          
-        ];
+    List<Widget> _buildScreens() {
+      return [const MyHomePage(), const WoCreate(), const searchPage(), const Test()];
     }
+
     List<PersistentBottomNavBarItem> _navBarsItems() {
-        return [
-            PersistentBottomNavBarItem(
-                icon: Icon(Icons.home),
-                title: ("Anasayfa"),
-                activeColorPrimary: CupertinoColors.activeBlue,
-                inactiveColorPrimary: APPColors.Main.grey,
-            ),
-            PersistentBottomNavBarItem(
-                icon: Icon(Icons.add_box),
-                title: ("Yeni İş Emri"),
-                activeColorPrimary: CupertinoColors.activeBlue,
-                inactiveColorPrimary: APPColors.Main.grey,
-            ),
-             PersistentBottomNavBarItem(
-                icon: Icon(Icons.search),
-                title: ("Arama"),
-                activeColorPrimary: CupertinoColors.activeBlue,
-                inactiveColorPrimary: APPColors.Main.grey,
-                
-               
-            ),
-             PersistentBottomNavBarItem(
-                icon: Icon(Icons.wifi),
-                title: ("Test"),
-                activeColorPrimary: CupertinoColors.activeBlue,
-                inactiveColorPrimary: APPColors.Main.grey,
-            ),
-        ];
+      return [
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home),
+          title: ("Anasayfa"),
+          activeColorPrimary: CupertinoColors.activeBlue,
+          inactiveColorPrimary: APPColors.Main.grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.add_box),
+          title: ("Yeni İş Emri"),
+          activeColorPrimary: CupertinoColors.activeBlue,
+          inactiveColorPrimary: APPColors.Main.grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.search),
+          title: ("Arama"),
+          activeColorPrimary: CupertinoColors.activeBlue,
+          inactiveColorPrimary: APPColors.Main.grey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.wifi),
+          title: ("Test"),
+          activeColorPrimary: CupertinoColors.activeBlue,
+          inactiveColorPrimary: APPColors.Main.grey,
+        ),
+      ];
     }
 
     PersistentTabController _controller;
 
-_controller = PersistentTabController(initialIndex: 0);
-  final mainViewProvide = Provider.of<MainPageViewProvider>(context);
-    
+    _controller = PersistentTabController(initialIndex: 0);
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+
     void degis() {
       setState(() {
         mainViewProvide.setVisible = !mainViewProvide.password_visible;
@@ -102,33 +87,35 @@ _controller = PersistentTabController(initialIndex: 0);
       });
     }
 
-
     return PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Colors.white, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
-        resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
-        hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.
-    );  }
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.white, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.white,
+      ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.
+    );
+  }
 }

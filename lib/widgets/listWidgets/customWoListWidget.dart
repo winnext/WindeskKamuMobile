@@ -6,19 +6,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
-import '../../utils/time_utils.dart';
-import '../../utils/utils.dart';
-
 class WoListWidget extends StatefulWidget {
-  final String? id,
-      code,
-      statusName,
-      service,
-      serviceName,
-      moduleLocation,
-      name,
-      responsible,
-      plannedEndDate;
+  final String? id, code, statusName, service, serviceName, moduleLocation, name, responsible, plannedEndDate;
 
   final Color? importanceLevelColor;
   final VoidCallback? press;
@@ -73,7 +62,6 @@ class _WoListWidgetState extends State<WoListWidget> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     changeTime().dispose();
     super.dispose();
   }
@@ -115,7 +103,7 @@ class _WoListWidgetState extends State<WoListWidget> {
                 children: [
                   Flexible(
                     child: Container(
-                      width: size.width/1.2,
+                      width: size.width / 1.2,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -141,15 +129,15 @@ class _WoListWidgetState extends State<WoListWidget> {
                                 fontWeight: FontWeight.bold,
                                 color: APPColors.Secondary.black,
                                 fontSize: 14,
+                              ),
+                            ),
                           ),
-                          ),
-                        ),
                         ],
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Container(
                       width: size.width / 1.2,
                       color: APPColors.Main.black,
@@ -157,60 +145,62 @@ class _WoListWidgetState extends State<WoListWidget> {
                     ),
                   ),
                   Container(
-                    width: size.width/1.2,
+                    width: size.width / 1.2,
                     child: Text(
-                    '${widget.serviceName.toString()}',
-                    style: TextStyle(
+                      '${widget.serviceName.toString()}',
+                      style: TextStyle(
                         color: APPColors.Secondary.black,
-                    fontSize: 14,
-                    ),
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Container(
                       width: size.width / 1.2,
                       color: APPColors.Main.black,
                       height: 1,
                     ),
                   ),
-                  Container(
-                    width: size.width/1.2,
+                  SizedBox(
+                    width: size.width / 1.2,
                     child: Text(
-                    '${widget.name.toString()}',
-                    style: TextStyle(
+                      widget.name.toString(),
+                      style: TextStyle(
                         color: APPColors.Secondary.black,
-                    fontSize: 14,
-                    ),
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,10,0,10),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Container(
                       width: size.width / 1.2,
                       color: APPColors.Main.black,
                       height: 1,
                     ),
                   ),
-                  Container(
-                    width: size.width/1.2,
+                  SizedBox(
+                    width: size.width / 1.2,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
-                      child: 
-                      widget.moduleLocation != null ? Text(
-                    '${widget.moduleLocation.toString()}',
-                    style: TextStyle(
-                          color: APPColors.Secondary.black,
-                      fontSize: 14,
+                      child: widget.moduleLocation != null
+                          ? Text(
+                              widget.moduleLocation.toString(),
+                              style: TextStyle(
+                                color: APPColors.Secondary.black,
+                                fontSize: 14,
+                              ),
+                            )
+                          : Text(
+                              'Mahal bilgisi bulunmuyor',
+                              style: TextStyle(
+                                color: APPColors.Secondary.red,
+                                fontSize: 14,
+                              ),
+                            ),
                     ),
-                      ) : 
-                      Text('Mahal bilgisi bulunmuyor',
-                      style: TextStyle(
-                          color: APPColors.Secondary.red,
-                      fontSize: 14,
-                    ),),
-                    ),
-                  ),                         
+                  ),
                 ],
               ),
             ],

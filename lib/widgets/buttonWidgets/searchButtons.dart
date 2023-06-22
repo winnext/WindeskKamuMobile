@@ -26,32 +26,28 @@ class SearchButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               PersistentNavBarNavigator.pushNewScreen(
-        context,
-        screen: navigator,
-        withNavBar: false, // OPTIONAL VALUE. True by default.
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        
-    );
-
+                context,
+                screen: navigator,
+                withNavBar: false, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
             },
-            child: Icon(
-              iconName,
-              size: MediaQuery.of(context).size.width / 10,
-              color: APPColors.Accent.blue,
-            ),
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(APPColors.Secondary.blue),
-              minimumSize: MaterialStateProperty.all(Size.square(60)),
+              backgroundColor: MaterialStateProperty.all(APPColors.Secondary.blue),
+              minimumSize: MaterialStateProperty.all(const Size.square(60)),
               foregroundColor: MaterialStateProperty.all(Colors.white),
               elevation: MaterialStateProperty.all(2),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      MediaQuery.of(context).size.width / 8),
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width / 8),
                   side: BorderSide(color: APPColors.Secondary.blue),
                 ),
               ),
+            ),
+            child: Icon(
+              iconName,
+              size: MediaQuery.of(context).size.width / 10,
+              color: APPColors.Accent.blue,
             ),
           ),
         ),

@@ -1,22 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: non_constant_identifier_names
 
-CustomDialogActionSheet(BuildContext context, String header, String subHeader,
-    List<Widget> actions) {
+import 'package:flutter/cupertino.dart';
+
+CustomDialogActionSheet(BuildContext context, String header, String subHeader, List<Widget> actions) {
   return showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-            title: Text(header,
-                style:
-                    TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
-            message: Text(subHeader,
-                style:
-                    TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+            title: Text(header, style: const TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+            message: Text(subHeader, style: const TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
             actions: actions,
             cancelButton: CupertinoActionSheetAction(
-              child: Text("Cancel",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+              child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -26,8 +20,7 @@ CustomDialogActionSheet(BuildContext context, String header, String subHeader,
 
 CustomDialogActionSheetButtons(BuildContext context, String header) {
   return CupertinoActionSheetAction(
-    child: Text(header,
-        style: TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+    child: Text(header, style: const TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
     onPressed: () {
       Navigator.pop(context);
     },

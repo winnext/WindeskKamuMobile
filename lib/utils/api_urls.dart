@@ -1,4 +1,6 @@
 //aeh preprod
+// ignore_for_file: constant_identifier_names, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,33 +29,29 @@ const addNotification = "v1/Notification/AddNotification";
 //         'wdsgnm1017_' +
 //         '&token=';
 
-//ISH PREPROD
-const PPP_PROJECT = "ish";
-const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
-const TOKEN_V1 = "wdishtest!_";
-const TOKEN_V2 = 'ishtest!';
-const ATTACHPATHLIVE =
-    "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'http://10.32.12.42/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
+// //ISH PREPROD
+// const PPP_PROJECT = "ish";
+// const BASE_URL_V2 = "http://windeskmobiletest.ish.yerel";
+// const TOKEN_V1 = "wdishtest!_";
+// const TOKEN_V2 = 'ishtest!';
+// const ATTACHPATHLIVE = "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 = 'http://10.32.12.42/windesktest/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//     'wdmobile' +
+//     '&wspassword=' +
+//     'wdsgnm1017_' +
+//     '&token=';
 
-//WINMOBİLE
-// const PPP_PROJECT = "winmobile";
-// const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
-// const TOKEN_V1 = "wddemo!_";
-// const TOKEN_V2 = 'demo!';
-// const ATTACHPATHLIVE =
-//     "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
-// const base_url_v1 =
-//     'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-//         'wdmobile' +
-//         '&wspassword=' +
-//         'wdsgnm1017_' +
-//         '&token=';
+// WINMOBİLE
+const PPP_PROJECT = "winmobile";
+const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
+const TOKEN_V1 = "wddemo!_";
+const TOKEN_V2 = 'demo!';
+const ATTACHPATHLIVE = "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 = 'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+    'wdmobile' +
+    '&wspassword=' +
+    'wdsgnm1017_' +
+    '&token=';
 
 //TKD PREPROD
 // const PPP_PROJECT = "tkd"

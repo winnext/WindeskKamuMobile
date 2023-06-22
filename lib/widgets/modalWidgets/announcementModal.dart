@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 import 'package:win_kamu/models/announcement.model.dart';
@@ -25,22 +25,19 @@ class _AnnouncementListState extends State<AnnouncementList> {
   @override
   void initState() {
     super.initState();
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     //mainViewProvider.announcementView.clear();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     int l = -1;
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: true);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: true);
     Size size = MediaQuery.of(context).size;
 
     return WillPopScope(
@@ -72,14 +69,11 @@ class _AnnouncementListState extends State<AnnouncementList> {
                           if (l == 5) {
                             l = 0;
                           }
-                          AnnouncementViewModel listElements =
-                              mainViewProvider.announcementView[i];
-                          bool? isLink =
-                              listElements.ANNOUNCEMENT?.contains('http');
+                          AnnouncementViewModel listElements = mainViewProvider.announcementView[i];
+                          bool? isLink = listElements.ANNOUNCEMENT?.contains('http');
 
                           return GestureDetector(
-                            onTap: () {
-                            },
+                            onTap: () {},
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
                               child: Container(
@@ -97,43 +91,32 @@ class _AnnouncementListState extends State<AnnouncementList> {
                                 child: Container(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         listElements.NAME.toString(),
                                         maxLines: 1,
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: APPColors.Accent.blue),
+                                        style: TextStyle(fontSize: 18, color: APPColors.Accent.blue),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(6.0),
                                         child: isLink == true
                                             ? Link(
-                                                uri: Uri.parse(listElements.ANNOUNCEMENT
-                                                    .toString()),
+                                                uri: Uri.parse(listElements.ANNOUNCEMENT.toString()),
                                                 target: LinkTarget.blank,
-                                                builder: (BuildContext ctx,
-                                                    FollowLink? openLink) {
+                                                builder: (BuildContext ctx, FollowLink? openLink) {
                                                   return TextButton.icon(
                                                     onPressed: openLink,
-                                                    label: const Text(
-                                                        'Ankete Git : '),
-                                                    icon: const Icon(
-                                                        Icons.read_more),
+                                                    label: const Text('Ankete Git : '),
+                                                    icon: const Icon(Icons.read_more),
                                                   );
                                                 },
                                               )
                                             : Text(
-                                                listElements.ANNOUNCEMENT
-                                                    .toString(),
+                                                listElements.ANNOUNCEMENT.toString(),
                                                 textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: APPColors
-                                                        .Secondary.black),
+                                                style: TextStyle(fontSize: 15, color: APPColors.Secondary.black),
                                               ),
                                       )
                                     ],
@@ -145,8 +128,7 @@ class _AnnouncementListState extends State<AnnouncementList> {
                         }),
                   ))
                 : Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 2.5),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                     child: const Center(child: AramaSonucBos()),
                   ),
           ],

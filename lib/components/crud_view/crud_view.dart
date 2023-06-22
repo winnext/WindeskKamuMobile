@@ -16,8 +16,7 @@ import '../../../models/list_view.model.dart';
 import '../../../widgets/customDropdown.dart';
 
 class CrudView extends StatefulWidget {
-  const CrudView(
-      {super.key, required this.listElements, required this.pageController});
+  const CrudView({super.key, required this.listElements, required this.pageController});
 
   final ListViewModel listElements;
   final PageController pageController;
@@ -51,9 +50,7 @@ class _CrudViewState extends State<CrudView> {
         appBar: AppBar(
           leading: Container(),
           centerTitle: true,
-          title: Text(LocaleKeys.ornekKayitEkleme.tr() +
-              "/" +
-              LocaleKeys.ornekKayitGuncelleme.tr()),
+          title: Text("${LocaleKeys.ornekKayitEkleme.tr()}/${LocaleKeys.ornekKayitGuncelleme.tr()}"),
           backgroundColor: APPColors.Main.blue,
         ),
         body: SingleChildScrollView(
@@ -73,78 +70,44 @@ class _CrudViewState extends State<CrudView> {
                           // ignore: sort_child_properties_last
                           children: [
                             Container(
-                              decoration: BoxDecoration(
-                                  color: mainWhiteColor,
-                                  borderRadius:
-                                      BorderRadius.circular(radius_size_10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: container_box_shadow,
-                                        blurRadius: radius_size_10,
-                                        offset: Offset(
-                                            radius_size_0, radius_size_10))
-                                  ]),
+                              decoration: BoxDecoration(color: mainWhiteColor, borderRadius: BorderRadius.circular(radius_size_10), boxShadow: [
+                                BoxShadow(
+                                    color: container_box_shadow, blurRadius: radius_size_10, offset: const Offset(radius_size_0, radius_size_10))
+                              ]),
                               child: CustomTextFormFieldContent(
                                   icon: Icons.text_format,
                                   iconColor: APPColors.Secondary.blue,
                                   validator: formBos,
-                                  controller:
-                                      crudProvider.descriptionController,
+                                  controller: crudProvider.descriptionController,
                                   name: LocaleKeys.bildirimIsmi.tr()),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            const SizedBox(height: 20),
                             Container(
-                              decoration: BoxDecoration(
-                                  color: mainWhiteColor,
-                                  borderRadius:
-                                      BorderRadius.circular(radius_size_10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: container_box_shadow,
-                                        blurRadius: radius_size_10,
-                                        offset: Offset(
-                                            radius_size_0, radius_size_10))
-                                  ]),
+                              decoration: BoxDecoration(color: mainWhiteColor, borderRadius: BorderRadius.circular(radius_size_10), boxShadow: [
+                                BoxShadow(
+                                    color: container_box_shadow, blurRadius: radius_size_10, offset: const Offset(radius_size_0, radius_size_10))
+                              ]),
                               child: CustomTextFormFieldContent(
                                   icon: Icons.date_range,
                                   isSuffix: false,
                                   isDate: true,
                                   validator: formBos,
                                   isTime: true,
-                                  controller:
-                                      crudProvider.descriptionDateController,
+                                  controller: crudProvider.descriptionDateController,
                                   name: LocaleKeys.bildirimTarihi.tr()),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            const SizedBox(height: 20),
                             Container(
-                              decoration: BoxDecoration(
-                                  color: mainWhiteColor,
-                                  borderRadius:
-                                      BorderRadius.circular(radius_size_10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: container_box_shadow,
-                                        blurRadius: radius_size_10,
-                                        offset: Offset(
-                                            radius_size_0, radius_size_10))
-                                  ]),
+                              decoration: BoxDecoration(color: mainWhiteColor, borderRadius: BorderRadius.circular(radius_size_10), boxShadow: [
+                                BoxShadow(color: container_box_shadow, blurRadius: radius_size_10, offset: Offset(radius_size_0, radius_size_10))
+                              ]),
                               child: Column(
                                 children: [
                                   CustomDropdown(
                                     onChanged: (val) {
-                                      crudProvider
-                                              .setdescriptionReadedController =
-                                          val!;
-                                      if (crudProvider
-                                          .descriptionReadedController
-                                          .text
-                                          .isNotEmpty) {
-                                        crudProvider.setIsKurumTuruEmpty =
-                                            false;
+                                      crudProvider.setdescriptionReadedController = val!;
+                                      if (crudProvider.descriptionReadedController.text.isNotEmpty) {
+                                        crudProvider.setIsKurumTuruEmpty = false;
                                       } else {
                                         crudProvider.setIsKurumTuruEmpty = true;
                                       }
@@ -152,33 +115,19 @@ class _CrudViewState extends State<CrudView> {
                                     disableClear: true,
                                     icons: Icons.notification_add,
                                     listHeight: 2,
-                                    controller: crudProvider
-                                        .descriptionReadedController,
+                                    controller: crudProvider.descriptionReadedController,
                                     header: LocaleKeys.bildirimDurumu.tr(),
-                                    items: [
-                                      LocaleKeys.evet.tr(),
-                                      LocaleKeys.hayir.tr()
-                                    ],
+                                    items: [LocaleKeys.evet.tr(), LocaleKeys.hayir.tr()],
                                   ),
                                   crudProvider.iskurumTuruEmpty
                                       ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      19,
-                                                  bottom: 10),
+                                              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 19, bottom: 10),
                                               child: Text(
                                                 LocaleKeys.buAlanBosOlamaz.tr(),
-                                                style: TextStyle(
-                                                    color: APPColors.Main.red,
-                                                    fontSize: height_12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(color: APPColors.Main.red, fontSize: height_12, fontWeight: FontWeight.bold),
                                               ),
                                             ),
                                           ],
@@ -207,19 +156,13 @@ class _CrudViewState extends State<CrudView> {
                       onTap: () => crudProvider.clearForm(),
                     ),
                     CustomIconButton(
-                      colors: crudProvider.isUpdateActivated
-                          ? APPColors.Secondary.orange
-                          : APPColors.Main.blue,
+                      colors: crudProvider.isUpdateActivated ? APPColors.Secondary.orange : APPColors.Main.blue,
                       height: height_18,
                       width: height_3,
-                      name: crudProvider.isUpdateActivated
-                          ? LocaleKeys.ornekKayitGuncelleme.tr()
-                          : LocaleKeys.kaydet.tr(),
+                      name: crudProvider.isUpdateActivated ? LocaleKeys.ornekKayitGuncelleme.tr() : LocaleKeys.kaydet.tr(),
                       icons: Icon(
                         Icons.add,
-                        color: crudProvider.isUpdateActivated
-                            ? APPColors.Secondary.white
-                            : APPColors.Main.white,
+                        color: crudProvider.isUpdateActivated ? APPColors.Secondary.white : APPColors.Main.white,
                       ),
                       // onTap: () => crudProvider.addOrUpdateForm(context),
                     ),

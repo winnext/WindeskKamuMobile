@@ -1,4 +1,6 @@
 // A screen that allows users to take a picture using a given camera.
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -8,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/WorkOrder/WoCreate.dart';
-import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
 import 'package:win_kamu/providers/work_order_view_provider.dart';
-import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 
 class TakePictureScreen extends StatefulWidget {
@@ -18,11 +18,10 @@ class TakePictureScreen extends StatefulWidget {
     super.key,
     required this.camera,
     required this.sayfa,
-
   });
 
-final CameraDescription camera;
-final String sayfa;
+  final CameraDescription camera;
+  final String sayfa;
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
@@ -60,15 +59,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
-           leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-
-                },
-                icon: Icon(Icons.arrow_back, color: Colors.black)),
+        title: const Text(
+          'Fotoğraf Çek',
+          style: TextStyle(color: Colors.black),
         ),
-      
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
+      ),
+
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -86,7 +87,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
-        
+
         // Provide an onPressed callback.
         onPressed: () async {
           // Take the Picture in a try / catch block. If anything goes wrong,
@@ -99,9 +100,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // where it was saved.
             final image = await _controller.takePicture();
 
-        File imagefile = File(image.path); //convert Path to File
-        Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
-        String base64string = base64.encode(imagebytes); //convert bytes to base64 string
+            File imagefile = File(image.path); //convert Path to File
+            Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
+            String base64string = base64.encode(imagebytes); //convert bytes to base64 string
 
             if (!mounted) return;
 
@@ -113,7 +114,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   // the DisplayPictureScreen widget.
                   base64: base64string,
                   imagePath: image.path,
-                  sayfa:  widget.sayfa,
+                  sayfa: widget.sayfa,
                 ),
               ),
             );
@@ -122,7 +123,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             print(e);
           }
         },
-        child: const Icon(Icons.camera_alt,color: Colors.black,),
+        child: const Icon(
+          Icons.camera_alt,
+          color: Colors.black,
+        ),
       ),
     );
   }
@@ -134,63 +138,57 @@ class DisplayPictureScreen extends StatelessWidget {
   final String base64;
   final String sayfa;
 
-  const DisplayPictureScreen({super.key,required this.base64, required this.imagePath, required this.sayfa});
+  const DisplayPictureScreen({super.key, required this.base64, required this.imagePath, required this.sayfa});
 
   @override
   Widget build(BuildContext context) {
-
     final woProvider = Provider.of<WorkOrderViewProvider>(context, listen: false);
-
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
-        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
-           leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-
-                },
-                icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
-        
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Fotoğraf Çek',
+          style: TextStyle(color: Colors.black),
         ),
-        
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
+      ),
+
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              height: 60.h,
-              child:Image.file(File(imagePath)),
-            ),
-            
-            Center(child: Container(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(
+            height: 60.h,
+            child: Image.file(File(imagePath)),
+          ),
+          Center(
+            child: SizedBox(
               width: 35.w,
               child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: APPColors.Login.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(20), // <-- Radius
-                            ),
-                          ),
-                          onPressed: () {
-                            woProvider.setPhotos = imagePath.toString();
-                            woProvider.setB64 = base64.toString();
-                            print(woProvider.photos);
-                              
-                      Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: ((context) =>  WoCreate() )));
-                            
-                            
-                          },
-                          child: Text('Ekle'),
-                        ),
-            ),)
-          ],
-        ),
+                style: ElevatedButton.styleFrom(
+                  primary: APPColors.Login.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // <-- Radius
+                  ),
+                ),
+                onPressed: () {
+                  woProvider.setPhotos = imagePath.toString();
+                  woProvider.setB64 = base64.toString();
+                  print(woProvider.photos);
+
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => WoCreate())));
+                },
+                child: const Text('Ekle'),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

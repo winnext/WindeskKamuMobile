@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:win_kamu/pages/login/login.dart';
-import 'package:win_kamu/utils/themes.dart';
 
 void main() => runApp(SelectHospital());
 
@@ -18,7 +16,7 @@ class _SelectHospitalState extends State<SelectHospital> {
       title: 'Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Radial Speed Dial"),
+          title: const Text("Radial Speed Dial"),
           centerTitle: true,
         ),
         body: Stack(

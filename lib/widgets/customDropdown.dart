@@ -20,7 +20,8 @@ class CustomDropdown extends StatefulWidget {
   final Future<List<String?>> Function(String?)? onFind;
 
   CustomDropdown(
-      {this.onPressed,
+      {super.key,
+      this.onPressed,
       this.items,
       required this.controller,
       required this.onChanged,
@@ -33,8 +34,7 @@ class CustomDropdown extends StatefulWidget {
       this.dropdownBuilder,
       this.disableClear = false,
       this.icons = Icons.date_range,
-      this.disable = false})
-      : super();
+      this.disable = false});
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -47,7 +47,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
       child: DropdownSearch<String?>(
           enabled: !widget.disable,
           onSaved: (newValue) => {},
-          
           maxHeight: 75 + (50 * widget.listHeight).toDouble(),
           selectedItem: widget.selectedItem,
           key: widget.key,
@@ -84,9 +83,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
             return Future.value(true);
           },
-          emptyBuilder: (context, searchEntry) => Center(
-              child: Text('Herhangi bir veri bulunamadı.',
-                  style: TextStyle(color: Colors.black))),
+          emptyBuilder: (context, searchEntry) => const Center(child: Text('Herhangi bir veri bulunamadı.', style: TextStyle(color: Colors.black))),
           showAsSuffixIcons: false,
           validator: widget.validator,
           isFilteredOnline: widget.onFind == null ? false : true,
@@ -110,16 +107,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
   Widget _customDropDownAddress(BuildContext context, String? itemDesignation) {
     return TextField(
-      
       controller: widget.controller,
       enabled: false,
       decoration: InputDecoration(
-       border: UnderlineInputBorder(),
-       
-        labelStyle: TextStyle(
-            
-            color:
-                !widget.disable ? Colors.black : APPColors.Main.black),
+        border: const UnderlineInputBorder(),
+        labelStyle: TextStyle(color: !widget.disable ? Colors.black : APPColors.Main.black),
         labelText: widget.header,
       ),
     );

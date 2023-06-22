@@ -1,20 +1,15 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
-import 'package:win_kamu/models/detail_response.model.dart';
-import 'package:win_kamu/models/detail_view.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
-import 'package:provider/provider.dart';
 
-import '../models/http_response.model.dart';
 import '../models/worelated_modal.dart';
 import '../models/workoder_detail_modal.dart';
-import '../utils/global_utils.dart';
-import 'main_page_view_provider.dart';
 
 class WoDetailViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -114,9 +109,8 @@ class WoDetailViewProvider extends ChangeNotifier {
 
     _isDataLoading = true;
 
-    final responseUrl = BASE_URL_V2 + '/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
+    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -127,8 +121,7 @@ class WoDetailViewProvider extends ChangeNotifier {
         notifyListeners();
       });
       print('STATUS : : :');
-            print(woDetailView[0].STATUS);
-
+      print(woDetailView[0].STATUS);
     } else {
       // baglantiHatasi(context, result.message);
     }
@@ -137,17 +130,14 @@ class WoDetailViewProvider extends ChangeNotifier {
   woGetRelatedSpace(String woCode, String xusercode) async {
     _isDataLoading = true;
 
-    final responseUrl = BASE_URL_V2 + '/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(
-        controller: responseUrl, xuserCode: xusercode);
-    print('woReleatedd' + data.records['records'].toString());
+    final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
+    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
+    print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List)
-            .map((e) => WoRelatedViewModel.fromJson(e))
-            .toList();
+        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -183,25 +173,20 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode,
-      String description) async {
-    if (description.toString().length < 20 &&
-        activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
+    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult = await apirepository.addIssueActivity(
-          userName: userName,
-          issueCode: woCode,
-          activityCode: activityCode,
-          description: description);
+      final apiresult =
+          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
 
       final results = jsonDecode(apiresult.toString());
 
-      print('activity inside 2 ' + results['resultcode'].toString());
+      print('activity inside 2 ${results['resultcode']}');
 
       if (results['success'].toString() == 'false') {
         //_responses = results['resultcode'];
-        print('activityresponse' + results['success'].toString());
+        print('activityresponse${results['success']}');
         //notifyListeners();
         return 'Aktivite girişi başarısız';
       } else {
@@ -210,116 +195,104 @@ class WoDetailViewProvider extends ChangeNotifier {
     }
   }
 
+  //iş emri başlat
 
-  //iş emri başlat 
-
-  woActualDateActions(type,code) async{
-    
+  woActualDateActions(type, code) async {
     final result = await apirepository.woActualDateActions(type, code);
-
   }
 
-  // eforlar süre 
+  // eforlar süre
 
+  String _secilenSure = 'Lütfen Süre Seçiniz';
 
-  String _secilenSure = 'Lütfen Süre Seçiniz';  
+  String get secilenSure => _secilenSure;
 
-      String get secilenSure => _secilenSure;
+  set setSureDegeri(String sureDegeri) {
+    _secilenSure = sureDegeri;
+    notifyListeners();
+  }
 
-      set setSureDegeri(String sureDegeri) {
-        _secilenSure = sureDegeri;
-        notifyListeners();
-      }  
-                  //eforlar gun
-                  String _secilenGun = '1';  
+  //eforlar gun
+  String _secilenGun = '1';
 
-                      String get secilenGun => _secilenGun;
+  String get secilenGun => _secilenGun;
 
-                      set setSecilenGun(String secilenGun) {
-                        _secilenGun = secilenGun;
-                        notifyListeners();
-                      }  
-                  //eforlar saat
-                  String _secilenSaat = '1';  
+  set setSecilenGun(String secilenGun) {
+    _secilenGun = secilenGun;
+    notifyListeners();
+  }
 
-                      String get secilenSaat => _secilenSaat;
+  //eforlar saat
+  String _secilenSaat = '1';
 
-                      set setSecilenSaat(String secilenSaat) {
-                        _secilenSaat = secilenSaat;
-                        notifyListeners();
-                      }  
-                    //eforlar dakika
-                    String _secilenDakika = '1';  
+  String get secilenSaat => _secilenSaat;
 
-                      String get secilenDakika => _secilenDakika;
+  set setSecilenSaat(String secilenSaat) {
+    _secilenSaat = secilenSaat;
+    notifyListeners();
+  }
 
-                      set setSecilenDakika(String secilenDakika) {
-                        _secilenDakika = secilenDakika;
-                        notifyListeners();
-                      }  
-    
+  //eforlar dakika
+  String _secilenDakika = '1';
+
+  String get secilenDakika => _secilenDakika;
+
+  set setSecilenDakika(String secilenDakika) {
+    _secilenDakika = secilenDakika;
+    notifyListeners();
+  }
 
   // ADD EFFORT
 
-  addEffort(context,code,workPeriod) async {
-    print('WOCODE : '+code);
-    print('WORKPERIOD : '+workPeriod);
+  addEffort(context, code, workPeriod) async {
+    print('WOCODE : ' + code);
+    print('WORKPERIOD : ' + workPeriod);
     final result = apirepository.addEffortApi(code, workPeriod);
     print(result);
-
   }
 
   // Eforlar
   List _eforlarArray = [];
 
-         List get eforlarArray => _eforlarArray;
+  List get eforlarArray => _eforlarArray;
   set setEforlarArray(List eforlarArray) {
     _eforlarArray = eforlarArray;
     notifyListeners();
   }
 
+  getWorkOrderWorklogs(woCode) async {
+    List<String> codes = [];
+    List<String> users = [];
+    List<String> timeworkeds = [];
 
-  getWorkOrderWorklogs(woCode) async{
-    List <String> codes = [];
-    List <String> users = []; 
-    List <String> timeworkeds = [];
+    final result2 = await apirepository.getWorkOrderWorklogsApi(woCode);
+    print(result2);
 
-        final result2 = await apirepository.getWorkOrderWorklogsApi(woCode);
-        print(result2);
+    for (var element in result2) {
+      codes.add(element['CODE']);
+      users.add(element['USER']);
+      // if(element['TIMEWORKED'] > 24.0){
+      //   String gun = element['TIMEWORKED']%24;
+      //   String saat = element['TIMEWORKED'];
+      // }else{
+      //   if(element['TIMEWORKED'] > 1.0){
+      //     var dakika = element['TIMEWORKED']*60%60.toString();
+      //     var saat = int.parse(element['TIMEWORKED']).toString();
+      //     timeworkeds.add(saat+' sa'+dakika+' dk');
 
-        for (var element in result2){
-          codes.add(element['CODE']);
-          users.add(element['USER']);
-          // if(element['TIMEWORKED'] > 24.0){
-          //   String gun = element['TIMEWORKED']%24;
-          //   String saat = element['TIMEWORKED'];
-          // }else{
-          //   if(element['TIMEWORKED'] > 1.0){
-          //     var dakika = element['TIMEWORKED']*60%60.toString();
-          //     var saat = int.parse(element['TIMEWORKED']).toString();
-          //     timeworkeds.add(saat+' sa'+dakika+' dk');
+      //   }else{
+      //       timeworkeds.add(element['TIMEWORKED']*60.toString()+' dk');
 
-          //   }else{
-          //       timeworkeds.add(element['TIMEWORKED']*60.toString()+' dk');
+      //   }
+      // }
+      if (element['TIMEWORKED'] > 1) {
+        timeworkeds.add('${element['TIMEWORKED'].toInt()} sa');
+      } else {
+        timeworkeds.add('${element['TIMEWORKED'] * 60} dk');
+      }
 
-          //   }
-          // }
-          if(element['TIMEWORKED'] > 1){
-              timeworkeds.add((element['TIMEWORKED'].toInt()).toString()+' sa');
-
-          }else{
-              timeworkeds.add((element['TIMEWORKED']*60).toString()+' dk');
-
-          }
-          
-                      //timeworkeds.add('1 gun 1 sa 21 dk ');
-
-
-        }
-        setEforlarArray = [codes]+[users]+[timeworkeds];
-
-
+      //timeworkeds.add('1 gun 1 sa 21 dk ');
+    }
+    setEforlarArray = [codes] + [users] + [timeworkeds];
   }
-
-
 }

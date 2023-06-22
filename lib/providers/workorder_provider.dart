@@ -1,20 +1,18 @@
+// ignore_for_file: dead_code
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/models/issue_activities.modal.dart';
-import 'package:win_kamu/models/issue_operations.modal.dart';
-import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/models/tracing_view.model.dart';
 import 'package:win_kamu/models/woListView.model.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 
-import '../models/issue_attachments.modal.dart';
 import '../models/issue_filter.modal.dart';
 
 class WorkOrderProvider extends ChangeNotifier {
   final apirepository = APIRepository();
-  List<WoListViewModel> _woListView= [];
-  List<WoListViewModel> tempwoListView= [];
+  List<WoListViewModel> _woListView = [];
+  List<WoListViewModel> tempwoListView = [];
 
   List<TracingViewModal> _tracingListView = [];
   List<TracingViewModal> temptracingListView = [];
@@ -55,9 +53,9 @@ class WorkOrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<WoListViewModel> get woListView=> _woListView;
+  List<WoListViewModel> get woListView => _woListView;
   set setiwoListView(List<WoListViewModel> woListView) {
-    _woListView= woListView;
+    _woListView = woListView;
     notifyListeners();
   }
 
@@ -66,11 +64,9 @@ class WorkOrderProvider extends ChangeNotifier {
     _tracingListView = tracingListView;
     notifyListeners();
   }
-  
 
   List<IssueFilterModel> get woFilterStatusCodes => _woFilterStatusCodes;
-  set setiwoFilterStatusCodes(
-      List<IssueFilterModel> woFilterStatusCodes) {
+  set setiwoFilterStatusCodes(List<IssueFilterModel> woFilterStatusCodes) {
     _woFilterStatusCodes = woFilterStatusCodes;
     notifyListeners();
   }
@@ -183,10 +179,8 @@ class WorkOrderProvider extends ChangeNotifier {
   }
 
   bool notificationController(ScrollNotification scrollInfo) {
-    if (!_isDataLoading &&
-        scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-      if (_toplamKayitSayisi != null &&
-          _woListView.length >= _toplamKayitSayisi) {
+    if (!_isDataLoading && scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+      if (_toplamKayitSayisi != null && _woListView.length >= _toplamKayitSayisi) {
         return false;
       }
       _currentPage = 1 + _currentPage;
@@ -199,7 +193,7 @@ class WorkOrderProvider extends ChangeNotifier {
 
   void getListWorkOrders(index, listCode) async {
     _isDataLoading = true;
-    int _startWo= index == 1 ? 0 : (index - 1) * 10;
+    int _startWo = index == 1 ? 0 : (index - 1) * 10;
     int _endWo = index * 10;
 
     Map<String, dynamic> queryParameters = {
@@ -213,19 +207,16 @@ class WorkOrderProvider extends ChangeNotifier {
 
     woListCode = listCode;
 
-    final urlIssueTypes = '${BASE_URL_V2}/list/$woListCode/workorder';
+    final urlIssueTypes = '$BASE_URL_V2/list/$woListCode/workorder';
 
-    final result = await apirepository.getListWorkOrders(
-        controller: urlIssueTypes, queryParameters: queryParameters);
+    final result = await apirepository.getListWorkOrders(controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
 
-    print('dataWoList' + data.toString());
+    print('dataWoList$data');
 
     if (true) {
-      tempwoListView= (result.records['records'] as List)
-          .map((e) => WoListViewModel.fromJson(e))
-          .toList();
+      tempwoListView = (result.records['records'] as List).map((e) => WoListViewModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 1200), () {
         woListView.addAll(tempwoListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
@@ -253,22 +244,17 @@ class WorkOrderProvider extends ChangeNotifier {
     _isDataLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getIssueOpenStatusCodes';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=getIssueOpenStatusCodes';
 
-    final result =
-        await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
+    final result = await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
 
     if (true) {
-      tempwoFilterStatusCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempwoFilterStatusCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         woFilterStatusCodes.addAll(tempwoFilterStatusCodes);
         int noOfTasks = tempwoFilterStatusCodes.length;
 
-        print(
-            'dataActivities ++++2' + woFilterStatusCodes[0].CODE.toString());
+        print('dataActivities ++++2${woFilterStatusCodes[0].CODE}');
 
         _isDataLoading = false;
         _loading = false;
@@ -279,19 +265,18 @@ class WorkOrderProvider extends ChangeNotifier {
       // baglantiHatasi(context, result.message);
     }
   }
+
   void getTracingListWithCount(xusercode, module) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${BASE_URL_V2}/list/module/${module}';
+    final urlIssueTypes = '$BASE_URL_V2/list/module/$module';
 
-    final result = await apirepository.getTracingListWithCount(
-        controller: urlIssueTypes, xusercode: xusercode, module: module);
+    final result = await apirepository.getTracingListWithCount(controller: urlIssueTypes, xusercode: xusercode, module: module);
 
     final data = result.lists['lists'];
 
     if (true) {
-      temptracingListView =
-          (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
+      temptracingListView = (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
 
       Future.delayed(const Duration(milliseconds: 1200), () {
         tracingListView.addAll(temptracingListView);
@@ -315,23 +300,19 @@ class WorkOrderProvider extends ChangeNotifier {
     }
   }
 
-    void getSpaceBfwByType(String type) async {
+  void getSpaceBfwByType(String type) async {
     _isDataLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaceBfwByType&type=$type';
 
-    final result =
-        await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
+    final result = await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
 
     final data = result.records['records'];
 
     if (type == 'BUILDING') {
-      tempwoFilterBuildCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
-      print('buildinggg' + tempwoFilterStatusCodes.toString());
+      tempwoFilterBuildCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
+      print('buildinggg$tempwoFilterStatusCodes');
 
       woFilterBuildCodes.addAll(tempwoFilterBuildCodes);
       int noOfTasks = tempwoFilterBuildCodes.length;
@@ -340,9 +321,7 @@ class WorkOrderProvider extends ChangeNotifier {
       _isDataExist = false;
       notifyListeners();
     } else if (type == 'FLOOR') {
-      tempwoFilterFloorCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempwoFilterFloorCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
 
       woFilterFloorCodes.addAll(tempwoFilterFloorCodes);
       int noOfTasks = tempwoFilterFloorCodes.length;
@@ -352,9 +331,7 @@ class WorkOrderProvider extends ChangeNotifier {
       _isDataExist = false;
       notifyListeners();
     } else if (type == 'WING') {
-      tempwoFilterWingCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempwoFilterWingCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
 
       woFilterWingCodes.addAll(tempwoFilterWingCodes);
       int noOfTasks = tempwoFilterWingCodes.length;
@@ -367,7 +344,6 @@ class WorkOrderProvider extends ChangeNotifier {
       // baglantiHatasi(context, result.message);
     }
   }
-
 
   void initData([PageController? pageController]) {
     _pageController = pageController;

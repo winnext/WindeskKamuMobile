@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
@@ -20,38 +22,34 @@ class HomeButton extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(5),
           width: size / 9,
           height: size / 9,
           child: ElevatedButton(
             onPressed: () {
               PersistentNavBarNavigator.pushNewScreen(
-        context,
-        screen: navigator,
-        withNavBar: true, // OPTIONAL VALUE. True by default.
-        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        
-    );
-
+                context,
+                screen: navigator,
+                withNavBar: true, // OPTIONAL VALUE. True by default.
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
             },
-            child: Icon(
-              iconName,
-              size: MediaQuery.of(context).size.width / 10,
-              color: APPColors.Accent.blue,
-            ),
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(APPColors.Secondary.blue),
-              minimumSize: MaterialStateProperty.all(Size.square(60)),
+              backgroundColor: MaterialStateProperty.all(APPColors.Secondary.blue),
+              minimumSize: MaterialStateProperty.all(const Size.square(60)),
               foregroundColor: MaterialStateProperty.all(Colors.white),
               elevation: MaterialStateProperty.all(2),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      MediaQuery.of(context).size.width / 8),
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width / 8),
                   side: BorderSide(color: APPColors.Secondary.blue),
                 ),
               ),
+            ),
+            child: Icon(
+              iconName,
+              size: MediaQuery.of(context).size.width / 10,
+              color: APPColors.Accent.blue,
             ),
           ),
         ),

@@ -48,7 +48,7 @@ class _CustomBoxState extends State<CustomBox> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 3,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -63,8 +63,7 @@ class _CustomBoxState extends State<CustomBox> {
                 )
               : Text(
                   widget.title!,
-                  style: TextStyle(
-                      fontSize: height_24, color: widget.descriptionColor),
+                  style: TextStyle(fontSize: height_24, color: widget.descriptionColor),
                 ),
           SizedBox(
             height: widget.isIcon! ? 0 : 3,
@@ -73,10 +72,7 @@ class _CustomBoxState extends State<CustomBox> {
             padding: EdgeInsets.all(widget.descriptionPadding!),
             child: Text(widget.description!,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: widget.descriptionColor,
-                    fontSize: widget.descriptionFontSize!)),
+                style: TextStyle(fontWeight: FontWeight.bold, color: widget.descriptionColor, fontSize: widget.descriptionFontSize!)),
           )
         ],
       ),

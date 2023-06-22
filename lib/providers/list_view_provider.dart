@@ -1,23 +1,17 @@
-import 'dart:convert';
+// ignore_for_file: no_leading_underscores_for_local_identifiers, dead_code, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/issue_activities.modal.dart';
 import 'package:win_kamu/models/issue_operations.modal.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/models/tracing_view.model.dart';
-import 'package:win_kamu/pages/issue/routeIssue.dart';
 import 'package:win_kamu/utils/api_urls.dart';
-import 'package:provider/provider.dart';
 
-import '../models/http_response.model.dart';
 import '../models/issue_attachments.modal.dart';
 import '../models/issue_filter.modal.dart';
 import '../models/issue_notes.modal.dart';
-import '../utils/global_utils.dart';
-import 'main_page_view_provider.dart';
 
 class ListViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -106,8 +100,7 @@ class ListViewProvider extends ChangeNotifier {
   }
 
   List<IssueFilterModel> get issueFilterStatusCodes => _issueFilterStatusCodes;
-  set setiissueFilterStatusCodes(
-      List<IssueFilterModel> issueFilterStatusCodes) {
+  set setiissueFilterStatusCodes(List<IssueFilterModel> issueFilterStatusCodes) {
     _issueFilterStatusCodes = issueFilterStatusCodes;
     notifyListeners();
   }
@@ -226,10 +219,8 @@ class ListViewProvider extends ChangeNotifier {
   }
 
   bool notificationController(ScrollNotification scrollInfo) {
-    if (!_isDataLoading &&
-        scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-      if (_toplamKayitSayisi != null &&
-          _exampleListView.length >= _toplamKayitSayisi) {
+    if (!_isDataLoading && scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+      if (_toplamKayitSayisi != null && _exampleListView.length >= _toplamKayitSayisi) {
         return false;
       }
       _currentPage = 1 + _currentPage;
@@ -257,19 +248,16 @@ class ListViewProvider extends ChangeNotifier {
 
     issueListType = issueType;
 
-    final urlIssueTypes = '${BASE_URL_V2}/list/$issueListType/issue';
+    final urlIssueTypes = '$BASE_URL_V2/list/$issueListType/issue';
 
-    final result = await apirepository.getListForPaging(
-        controller: urlIssueTypes, queryParameters: queryParameters);
+    final result = await apirepository.getListForPaging(controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
 
-    print('urlISSUE' + data.toString());
+    print('urlISSUE$data');
 
     if (true) {
-      tempexampleListView = (result.records['records'] as List)
-          .map((e) => ListViewModel.fromJson(e))
-          .toList();
+      tempexampleListView = (result.records['records'] as List).map((e) => ListViewModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         exampleListView.addAll(tempexampleListView);
         _toplamKayitSayisi = int.parse(result.records['totalcount']);
@@ -296,16 +284,14 @@ class ListViewProvider extends ChangeNotifier {
   void getTracingListWithCount(xusercode, module) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${BASE_URL_V2}/list/module/${module}';
+    final urlIssueTypes = '$BASE_URL_V2/list/module/$module';
 
-    final result = await apirepository.getTracingListWithCount(
-        controller: urlIssueTypes, xusercode: xusercode, module: module);
+    final result = await apirepository.getTracingListWithCount(controller: urlIssueTypes, xusercode: xusercode, module: module);
 
     final data = result.lists['lists'];
 
     if (true) {
-      temptracingListView =
-          (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
+      temptracingListView = (data as List).map((e) => TracingViewModal.fromJson(e)).toList();
 
       Future.delayed(const Duration(milliseconds: 0), () {
         tracingListView.addAll(temptracingListView);
@@ -323,19 +309,16 @@ class ListViewProvider extends ChangeNotifier {
   void getIssueActivities(xusercode, issuecode) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/activities';
+    final urlIssueTypes = '$BASE_URL_V2/issue/$issuecode/activities';
 
-    final result = await apirepository.getIssueActivities(
-        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
+    final result = await apirepository.getIssueActivities(controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
 
     final data = result.records['records'];
 
-    print('dataActivities ++++5 ' + data.toString());
+    print('dataActivities ++++5 $data');
     if (true) {
-      tempissueActivitiesView = (result.records['records'] as List)
-          .map((e) => IssueActivitiesModal.fromJson(e))
-          .toList();
-      print('dataActivities ++++55 ' + tempissueActivitiesView.toString());
+      tempissueActivitiesView = (result.records['records'] as List).map((e) => IssueActivitiesModal.fromJson(e)).toList();
+      print('dataActivities ++++55 $tempissueActivitiesView');
 
       Future.delayed(const Duration(milliseconds: 0), () {
         issueActivitiesView.addAll(tempissueActivitiesView);
@@ -364,15 +347,12 @@ class ListViewProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getNotes&module=issue&moduleCode=${issuecode}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=getNotes&module=issue&moduleCode=$issuecode';
 
     final result = await apirepository.getIssueNotes(controller: urlIssueTypes);
 
     if (true) {
-      tempissueNotesView = (result.records['records'] as List)
-          .map((e) => IssueNotesModal.fromJson(e))
-          .toList();
+      tempissueNotesView = (result.records['records'] as List).map((e) => IssueNotesModal.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         issueNotesView.addAll(tempissueNotesView);
         int noOfTasks = tempissueNotesView.length;
@@ -397,18 +377,15 @@ class ListViewProvider extends ChangeNotifier {
   void getIssueAttachments(xusercode, issuecode) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/attachments';
+    final urlIssueTypes = '$BASE_URL_V2/issue/$issuecode/attachments';
 
-    final result = await apirepository.getIssueAttachments(
-        controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
+    final result = await apirepository.getIssueAttachments(controller: urlIssueTypes, xusercode: xusercode, issuecode: issuecode);
 
     final data = result.records['records'];
 
     //print('dataActivities ++++ ' + data.toString());
     if (true) {
-      tempissueAttachmentView = (result.records['records'] as List)
-          .map((e) => IssueAttachmentModal.fromJson(e))
-          .toList();
+      tempissueAttachmentView = (result.records['records'] as List).map((e) => IssueAttachmentModal.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         issueAttachmentView.addAll(tempissueAttachmentView);
         int noOfTasks = tempissueAttachmentView.length;
@@ -433,23 +410,20 @@ class ListViewProvider extends ChangeNotifier {
   void getIssueOperations(issuecode, xusercode) async {
     _isDataLoading = true;
 
-    final urlIssueTypes = '${BASE_URL_V2}/issue/${issuecode}/operationList';
+    final urlIssueTypes = '$BASE_URL_V2/issue/$issuecode/operationList';
 
-    print('dataActivitiesUrl' + urlIssueTypes.toString());
+    print('dataActivitiesUrl$urlIssueTypes');
 
-    final result = await apirepository.getIssueOperations(
-        controller: urlIssueTypes, xusercode: xusercode);
+    final result = await apirepository.getIssueOperations(controller: urlIssueTypes, xusercode: xusercode);
 
     final data = result.records['records'];
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         issueOperationList.clear();
-        var responseData =
-            IssueOperationsModal.fromJson(result.records['records']);
+        var responseData = IssueOperationsModal.fromJson(result.records['records']);
         issueOperationList.add(responseData);
-        print('issueOperationList' +
-            issueOperationList[0].IS_ACTIVITY.toString());
+        print('issueOperationList${issueOperationList[0].IS_ACTIVITY}');
 
         int noOfTasks = issueOperationList.length;
         if (noOfTasks > 0) {
@@ -474,25 +448,20 @@ class ListViewProvider extends ChangeNotifier {
     _isDataLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getIssueOpenStatusCodes';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=getIssueOpenStatusCodes';
 
-    final result =
-        await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
+    final result = await apirepository.getIssueOpenStatusCodes(controller: urlIssueTypes);
 
-    print('filterstatus' + result.records['records'].toString());
+    print('filterstatus${result.records['records']}');
 
     if (true) {
       issueFilterStatusCodes.clear();
-      tempissueFilterStatusCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempissueFilterStatusCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         issueFilterStatusCodes.addAll(tempissueFilterStatusCodes);
         int noOfTasks = tempissueFilterStatusCodes.length;
 
-        print(
-            'dataActivities ++++2' + issueFilterStatusCodes[0].CODE.toString());
+        print('dataActivities ++++2${issueFilterStatusCodes[0].CODE}');
 
         _isDataLoading = false;
         _loading = false;
@@ -508,19 +477,15 @@ class ListViewProvider extends ChangeNotifier {
     _isDataLoading = true;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
-    final urlIssueTypes =
-        '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getSpaceBfwByType&type=${type}';
+    final urlIssueTypes = '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaceBfwByType&type=$type';
 
-    final result =
-        await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
+    final result = await apirepository.getSpaceBfwByType(controller: urlIssueTypes);
 
     final data = result.records['records'];
 
     if (type == 'BUILDING') {
       issueFilterBuildCodes.clear();
-      tempissueFilterBuildCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempissueFilterBuildCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
 
       issueFilterBuildCodes.addAll(tempissueFilterBuildCodes);
       int noOfTasks = tempissueFilterBuildCodes.length;
@@ -531,9 +496,7 @@ class ListViewProvider extends ChangeNotifier {
       notifyListeners();
     } else if (type == 'FLOOR') {
       issueFilterFloorCodes.clear();
-      tempissueFilterFloorCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempissueFilterFloorCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
 
       issueFilterFloorCodes.addAll(tempissueFilterFloorCodes);
       int noOfTasks = tempissueFilterFloorCodes.length;
@@ -544,9 +507,7 @@ class ListViewProvider extends ChangeNotifier {
       notifyListeners();
     } else if (type == 'WING') {
       issueFilterWingCodes.clear();
-      tempissueFilterWingCodes = (result.records['records'] as List)
-          .map((e) => IssueFilterModel.fromJson(e))
-          .toList();
+      tempissueFilterWingCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
 
       issueFilterWingCodes.addAll(tempissueFilterWingCodes);
       int noOfTasks = tempissueFilterWingCodes.length;

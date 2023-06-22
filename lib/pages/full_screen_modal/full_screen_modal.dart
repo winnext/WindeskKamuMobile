@@ -1,11 +1,12 @@
 // A screen that allows users to take a picture using a given camera.
+// ignore_for_file: use_build_context_synchronously, avoid_print, deprecated_member_use
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
@@ -55,17 +56,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // Fill this out in the next steps.
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Colors.white,
-        title: const Text('Fotoğraf Çek',style: TextStyle(color:Colors.black),),
-           leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-
-                },
-                icon: Icon(Icons.arrow_back, color: Colors.black)),
-        
-        
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Fotoğraf Çek',
+          style: TextStyle(color: Colors.black),
         ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
+      ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -94,14 +95,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await _controller.takePicture();
-            final nProvider =
-                Provider.of<NewNotifProvider>(context, listen: false);
+            final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
             File imagefile = File(image.path); //convert Path to File
-            Uint8List imagebytes =
-                await imagefile.readAsBytes(); //convert to bytes
-            String base64string =
-                base64.encode(imagebytes); //convert bytes to base64 string
+            Uint8List imagebytes = await imagefile.readAsBytes(); //convert to bytes
+            String base64string = base64.encode(imagebytes); //convert bytes to base64 string
             nProvider.setimagePath = image.path.toString();
             nProvider.setbase64 = base64string.toString();
 
@@ -140,52 +138,44 @@ class DisplayPictureScreen extends StatelessWidget {
   final String base64;
   final String sayfa;
 
-  const DisplayPictureScreen(
-      {super.key,
-      required this.base64,
-      required this.imagePath,
-      required this.sayfa});
+  const DisplayPictureScreen({super.key, required this.base64, required this.imagePath, required this.sayfa});
 
   @override
   Widget build(BuildContext context) {
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('Fotoğraf')),
+      appBar: AppBar(backgroundColor: Colors.white, title: const Text('Fotoğraf')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Container(
-        child: Column(
-          children: [
-            Image.file(File(imagePath)),
-            Center(
-              child: Container(
-                width: 35,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: APPColors.Login.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // <-- Radius
-                    ),
+      body: Column(
+        children: [
+          Image.file(File(imagePath)),
+          Center(
+            child: SizedBox(
+              width: 35,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: APPColors.Login.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // <-- Radius
                   ),
-                  onPressed: () {
-                    nProvider.setPhotos = imagePath.toString();
-                    nProvider.setB64 = base64.toString();
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => NewNotifBase(
-                                  sayfa: sayfa,
-                                ))));
-                  },
-                  child: Text('Ekle'),
                 ),
+                onPressed: () {
+                  nProvider.setPhotos = imagePath.toString();
+                  nProvider.setB64 = base64.toString();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => NewNotifBase(
+                                sayfa: sayfa,
+                              ))));
+                },
+                child: const Text('Ekle'),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
