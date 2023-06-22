@@ -1,30 +1,18 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/issue_activities.modal.dart';
-import 'package:win_kamu/models/list_view.model.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
 import 'package:provider/provider.dart';
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
-import '../../models/tracing_view.model.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../../widgets/modalWidgets/issueActionModal.dart';
-import '../homePage.dart';
-import 'issueDetail.dart';
-import 'issueList.dart';
 
 class IssueActivities extends StatefulWidget {
   static String activitiesList = 'ActivitiesList';
@@ -44,8 +32,7 @@ class _IssueActivitiesState extends State<IssueActivities> {
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
     exampleList.issueActivitiesView.clear();
     exampleList.getIssueActivities('sgnm1040', detailViewProvider.issueCode);
   }
@@ -79,46 +66,37 @@ class _IssueActivitiesState extends State<IssueActivities> {
                         child: NotificationListener<ScrollNotification>(
                         // onNotification: listViewProvider.notificationController,
                         child: ListView.builder(
-                            itemCount:
-                                listViewProvider.issueActivitiesView.length,
+                            itemCount: listViewProvider.issueActivitiesView.length,
                             itemBuilder: (BuildContext context, int i) {
                               l++;
                               if (l == 5) {
                                 l = 0;
                               }
-                              IssueActivitiesModal listElements =
-                                  listViewProvider.issueActivitiesView[i];
+                              IssueActivitiesModal listElements = listViewProvider.issueActivitiesView[i];
                               return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: Container(
                                   decoration: BoxDecoration(),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(width: size.width/ 2, child: Text(listElements.NAME.toString())),
+                                          Container(width: size.width / 2, child: Text(listElements.NAME.toString())),
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 0, 0, 10),
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                                         child: Row(
                                           children: [
                                             Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Text(''),
-                                                Text(listElements.IUSERNAME
-                                                    .toString()),
+                                                Text(listElements.IUSERNAME.toString()),
                                               ],
                                             ),
                                           ],
@@ -136,30 +114,24 @@ class _IssueActivitiesState extends State<IssueActivities> {
                             }),
                       ))
                     : Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height / 2.5),
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                         child: const Center(child: AramaSonucBos()),
                       ),
               ],
             ),
           ),
-          if (listViewProvider.isDataLoading == true) ...[
-            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-          ],
+          if (listViewProvider.isDataLoading == true) ...[loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)],
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final detailViewProvider =
-          Provider.of<DetailViewProvider>(context, listen: false);
-          final mainPageViewProvider =
-          Provider.of<MainPageViewProvider>(context, listen: false);
+          final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
-              builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
+              builder: (context) => IssueActionButton(code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
         },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
@@ -170,8 +142,7 @@ class _IssueActivitiesState extends State<IssueActivities> {
   }
 
   Widget sayfaYenile() {
-    return Consumer<ListViewProvider>(
-        builder: (context, listViewProvider, child) {
+    return Consumer<ListViewProvider>(builder: (context, listViewProvider, child) {
       return InkWell(
         onTap: () {
           setState(() {

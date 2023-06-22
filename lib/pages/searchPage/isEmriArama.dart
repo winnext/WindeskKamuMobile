@@ -8,6 +8,8 @@ import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/workorder_detail_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+import '../../utils/page_titles.dart';
 import '../../utils/themes.dart';
 import '../WorkOrder/woDetail.dart';
 
@@ -30,20 +32,7 @@ class _isEmriAramaState extends State<isEmriArama> {
       return Container(
         child: Scaffold(
             resizeToAvoidBottomInset: true,
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: const Text(
-                'İş Emri Arama',
-                style: TextStyle(color: Colors.black),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
-              actions: [],
-            ),
+            appBar: const CustomMainAppbar(title: PageTitles.workOrderSearchTitle, returnBack: true),
             body: Center(
                 child: SizedBox(
               width: 85.w,

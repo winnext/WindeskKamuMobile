@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
+import 'package:win_kamu/utils/page_titles.dart';
 import 'package:win_kamu/utils/themes.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
@@ -145,7 +147,7 @@ class DisplayPictureScreen extends StatelessWidget {
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white, title: const Text('Fotoğraf')),
+      appBar: const CustomMainAppbar(title: PageTitles.pictureTitle),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Column(

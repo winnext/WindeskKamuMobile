@@ -1,27 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:win_kamu/models/list_view.model.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
-import 'package:win_kamu/pages/openRequests/routeRequests.dart';
-import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
 import 'package:provider/provider.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 import 'package:win_kamu/widgets/listWidgets/customIssueDetailWidget.dart';
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
 import '../../models/detail_view.model.dart';
 import '../../utils/global_utils.dart';
+import '../../utils/page_titles.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customIssueListWidget.dart';
-import '../homePage.dart';
 
 class OpenRequestDetail extends StatefulWidget {
   static String pageName = 'OpenRequestDetail';
@@ -40,19 +32,16 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
   @override
   void initState() {
     super.initState();
-    final mainPageViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: false);
+    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
     detailViewProvider.exampleListView.clear();
-    detailViewProvider.loadData(
-        detailViewProvider.issueCode, mainPageViewProvider.kadi);
+    detailViewProvider.loadData(detailViewProvider.issueCode, mainPageViewProvider.kadi);
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    
+
     detailViewProvider?.dispose();
     super.dispose();
   }
@@ -61,29 +50,13 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
   Widget build(BuildContext context) {
     int l = -1;
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final mainPageViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: APPColors.Main.white,
-            title: Text(
-                    'Açık Taleplerim Detay',
-                    style:
-                        TextStyle(fontSize: 20, color: APPColors.Secondary.black),
-                  ),
-            centerTitle: true,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pop();
-                },
-                icon:  Icon(Icons.arrow_back, color: APPColors.Main.black)),
-                
-          ),
+          appBar: CustomMainAppbar(title: PageTitles.myOpenRequestsDetail, returnBack: true),
           body: Stack(
             children: [
               Column(
@@ -92,21 +65,17 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                           child: ListView.builder(
-                              itemCount:
-                                  detailViewProvider?.exampleListView.length,
+                              itemCount: detailViewProvider?.exampleListView.length,
                               itemBuilder: (BuildContext context, int i) {
                                 l++;
                                 if (l == 5) {
                                   l = 0;
                                 }
                                 String formattedDate = "";
-                                DetailViewModel? detailElements =
-                                    detailViewProvider?.exampleListView[0];
+                                DetailViewModel? detailElements = detailViewProvider?.exampleListView[0];
 
-                                final TARGET_FDATE =
-                                    timeRecover(detailElements?.TARGET_FDATE);
-                                final TARGET_RDATE =
-                                    timeRecover(detailElements?.TARGET_RDATE);
+                                final TARGET_FDATE = timeRecover(detailElements?.TARGET_FDATE);
+                                final TARGET_RDATE = timeRecover(detailElements?.TARGET_RDATE);
 
                                 return Column(
                                   children: [
@@ -115,35 +84,27 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                                       child: Text(mainPageViewProvider.kadi),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(20.0,20.0,20.0,0.0),
+                                      padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
                                       child: DetailListWidget(
                                           ani: detailElements?.ANI,
-                                          description:
-                                              detailElements?.DESCRIPTION,
+                                          description: detailElements?.DESCRIPTION,
                                           targetFDate: TARGET_FDATE,
                                           targetRDate: TARGET_RDATE,
-                                          statusName:
-                                              detailElements?.STATUSNAME,
-                                          assigneName:
-                                              detailElements?.ASSIGNEENAME,
-                                          assignmentGroup:
-                                              detailElements?.ASSIGNMENTGROUP,
-                                          assignmentGroupName: detailElements
-                                              ?.ASSIGNMENTGROUPNAME,
+                                          statusName: detailElements?.STATUSNAME,
+                                          assigneName: detailElements?.ASSIGNEENAME,
+                                          assignmentGroup: detailElements?.ASSIGNMENTGROUP,
+                                          assignmentGroupName: detailElements?.ASSIGNMENTGROUPNAME,
                                           cat1: detailElements?.CAT1,
                                           cmdb: detailElements?.CMDB,
                                           code: detailElements?.CODE,
-                                          contactCode:
-                                              detailElements?.CONTACTCODE,
-                                          contactName:
-                                              detailElements?.CONTACTNAME,
+                                          contactCode: detailElements?.CONTACTCODE,
+                                          contactName: detailElements?.CONTACTNAME,
                                           idate: detailElements?.IDATE,
                                           locName: detailElements?.LOCNAME,
                                           locTree: detailElements?.LOCTREE,
                                           locTree2: detailElements?.LOCTREE2,
                                           sumdesc1: detailElements?.SUMDESC1,
-                                          taskNo:
-                                              detailElements?.CODE.toString(),
+                                          taskNo: detailElements?.CODE.toString(),
                                           title: detailElements?.TITLE,
                                           onPressed: (code) {
                                             print('tiklandi' + code);
@@ -157,30 +118,25 @@ class _OpenRequestDetailState extends State<OpenRequestDetail> {
                               }),
                         ))
                       : Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 2.5),
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                           child: const Center(child: AramaSonucBos()),
                         ),
                 ],
               ),
-              if (detailViewProvider.isDataLoading == true) ...[
-                loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-              ],
+              if (detailViewProvider.isDataLoading == true) ...[loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)],
             ],
           )),
     );
   }
 
   Widget sayfaYenile(username) {
-    return Consumer<DetailViewProvider>(
-        builder: (context, DetailViewProvider, child) {
+    return Consumer<DetailViewProvider>(builder: (context, DetailViewProvider, child) {
       return InkWell(
         onTap: () {
           setState(() {
             detailViewProvider?.setisDataLoading = true;
             detailViewProvider?.exampleListView.clear();
-            detailViewProvider?.loadData(
-                detailViewProvider?.issueCode, username);
+            detailViewProvider?.loadData(detailViewProvider?.issueCode, username);
           });
         },
         child: const Padding(

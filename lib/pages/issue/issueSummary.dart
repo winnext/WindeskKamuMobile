@@ -8,10 +8,12 @@ import 'package:win_kamu/pages/issue/issueNotes.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:win_kamu/utils/themes.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
 import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
+import '../../utils/page_titles.dart';
 
 void main() => runApp(const IssueSummary());
 
@@ -41,14 +43,10 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
   void initState() {
     super.initState();
 
-    final listViewProvider =
-        Provider.of<ListViewProvider>(context, listen: false);
-    final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: false);
-    final mainPageViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final listViewProvider = Provider.of<ListViewProvider>(context, listen: false);
+    final issueActionProvider = Provider.of<IssueActionProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
+    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
 
     final String issueCode = detailViewProvider.issueCode.toString();
 
@@ -162,12 +160,7 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
         ),
         body: const TabBarView(
           children: PPP_PROJECT == "antep"
-              ? <Widget>[
-                  IssueDetail(),
-                  IssueActivities(),
-                  IssueFiles(),
-                  IssueNotes()
-                ]
+              ? <Widget>[IssueDetail(), IssueActivities(), IssueFiles(), IssueNotes()]
               : <Widget>[
                   IssueDetail(),
                   IssueActivities(),

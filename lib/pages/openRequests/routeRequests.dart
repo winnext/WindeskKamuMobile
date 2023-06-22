@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
@@ -21,16 +20,14 @@ class _OpenRequestsState extends State<OpenRequests> {
   @override
   void initState() {
     super.initState();
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
 
     mainViewProvider.initForm();
   }
 
   @override
   void dispose() {
-    final mainViewProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     mainViewProvider.pageController!.dispose();
     super.dispose();
   }

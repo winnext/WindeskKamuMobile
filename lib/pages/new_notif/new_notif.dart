@@ -1,199 +1,179 @@
-import 'dart:async';
-
-import 'package:art_sweetalert/art_sweetalert.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
-import 'package:win_kamu/utils/utils.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
 
-import '../../l10n/locale_keys.g.dart';
-import '../../providers/list_view_provider.dart';
+import '../../utils/page_titles.dart';
 import '../../utils/themes.dart';
-import '../../widgets/cardWidgets/customCardWithImage.dart';
 import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
-import '../../widgets/dialogWidgets/customAlertDialog.dart';
-import '../login/login.dart';
 
 class NewNotif extends StatefulWidget {
-    static String newNotif = '/newNotif';
+  static String newNotif = '/newNotif';
 
-  const NewNotif({super.key,String});
-  
+  const NewNotif({super.key, String});
 
   @override
   State<NewNotif> createState() => _NewNotifState();
-
- 
 }
 
 class _NewNotifState extends State<NewNotif> {
-
-    @override
+  @override
   void initState() {
     super.initState();
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
-   
   }
 
+  String time = "";
 
-
-
-    String time = "";
-    
-    String date = '';
-
-    
-
- 
-  
-
+  String date = '';
 
   @override
   Widget build(BuildContext context) {
-     
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context);
+    int index = mainViewProvide.currentIndex;
 
+    String datetime = DateTime.now().toString();
+    print(datetime);
 
-        final mainViewProvide = Provider.of<MainPageViewProvider>(context);
-        int index = mainViewProvide.currentIndex;
-
-        
-       String datetime = DateTime.now().toString();
-       print(datetime);
-
-        
-       
-
-       
-        
     return Resize(builder: () {
       return Container(
-      child:  Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            backgroundColor: APPColors.Accent.blue,
-            title: Text('Yeni Bildirim'),
-            centerTitle: true,
-            leading: IconButton(
+        child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: CustomMainAppbar(
+              title: PageTitles.newNotif,
+              leading: IconButton(
                 onPressed: () {
-                  index  == 0 ?     Navigator.popUntil(context, (route) => route.isFirst): mainViewProvide.pageController!.jumpTo(0);
-
-
+                  index == 0 ? Navigator.popUntil(context, (route) => route.isFirst) : mainViewProvide.pageController!.jumpTo(0);
                 },
-                icon: index == 0 ? const Icon(  Icons.arrow_back ) : const Icon(  Icons.home )
-                ),
-            actions: [],
-          ),
-          body: Column(
-            children: [
-             
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.all(5),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    Container(
-                      color: APPColors.NewNotifi.red,
-                      height:40.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(mainViewProvide.kadi),
-                          Text(date),
-                          Text(time)
-                        ],
-                      ),
-                    ),
-                    GridView.count(
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        padding: EdgeInsets.all(10),
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1.5,
-                        crossAxisSpacing: 10,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: <Widget>[
-                          CustomCardWithImageSmall(
-                            title: 'Numune taşıma personel talebi',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 1,
-                            navigation: NewNotifBase(sayfa: 'Numune taşıma personel talebi',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Kan gazı için numune taşıma personel talebi',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 2,
-                            navigation: NewNotifBase(sayfa: 'Kan gazı için numune taşıma personel talebi',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Hasta taşıma talebi',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 3,
-                            navigation: NewNotifBase(sayfa: 'Hasta taşıma talebi',),
-                          ),CustomCardWithImageSmall(
-                            title: 'İlaç taşıma',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 4,
-                            navigation: NewNotifBase(sayfa: 'İlaç taşıma',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Vefat eden taşıma',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 5,
-                            navigation: NewNotifBase(sayfa: 'Vefat eden taşıma',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Oda destek personeli',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 6,
-                            navigation: NewNotifBase(sayfa: 'Oda destek personeli',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Malzeme taşıma personel talebi',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 7,
-                            navigation: NewNotifBase(sayfa: 'Malzeme taşıma personel talebi',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Temizlik talebi',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 8,
-                            navigation: NewNotifBase(sayfa: 'Temizlik talebi',),
-                          ),CustomCardWithImageSmall(
-                            title: 'Diğer',
-                            iconData: Icons.text_fields,
-                            cardPadding: 0,
-                            cardInlinePadding: 10,
-                            numara: 9,
-                            navigation: NewNotifBase(sayfa: 'Diğer',),
-                          ),
-                        ]),
-                  ],
-                ),
+                icon: index == 0 ? const Icon(Icons.arrow_back) : const Icon(Icons.home),
               ),
-            ],
-            
-          )
-          ),
-    );
+            ),
+            body: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.all(5),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Container(
+                        color: APPColors.NewNotifi.red,
+                        height: 40.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [Text(mainViewProvide.kadi), Text(date), Text(time)],
+                        ),
+                      ),
+                      GridView.count(
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          padding: EdgeInsets.all(10),
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 1.5,
+                          crossAxisSpacing: 10,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: <Widget>[
+                            CustomCardWithImageSmall(
+                              title: 'Numune taşıma personel talebi',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 1,
+                              navigation: NewNotifBase(
+                                sayfa: 'Numune taşıma personel talebi',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Kan gazı için numune taşıma personel talebi',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 2,
+                              navigation: NewNotifBase(
+                                sayfa: 'Kan gazı için numune taşıma personel talebi',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Hasta taşıma talebi',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 3,
+                              navigation: NewNotifBase(
+                                sayfa: 'Hasta taşıma talebi',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'İlaç taşıma',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 4,
+                              navigation: NewNotifBase(
+                                sayfa: 'İlaç taşıma',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Vefat eden taşıma',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 5,
+                              navigation: NewNotifBase(
+                                sayfa: 'Vefat eden taşıma',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Oda destek personeli',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 6,
+                              navigation: NewNotifBase(
+                                sayfa: 'Oda destek personeli',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Malzeme taşıma personel talebi',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 7,
+                              navigation: NewNotifBase(
+                                sayfa: 'Malzeme taşıma personel talebi',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Temizlik talebi',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 8,
+                              navigation: NewNotifBase(
+                                sayfa: 'Temizlik talebi',
+                              ),
+                            ),
+                            CustomCardWithImageSmall(
+                              title: 'Diğer',
+                              iconData: Icons.text_fields,
+                              cardPadding: 0,
+                              cardInlinePadding: 10,
+                              numara: 9,
+                              navigation: NewNotifBase(
+                                sayfa: 'Diğer',
+                              ),
+                            ),
+                          ]),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+      );
     });
   }
 }
