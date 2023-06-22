@@ -1,18 +1,11 @@
-// ignore_for_file: prefer_final_fields, use_build_context_synchronously
+// ignore_for_file: prefer_final_fields, use_build_context_synchronously, unrelated_type_equality_checks
 
-import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:win_kamu/models/http_response.model.dart';
-import 'package:win_kamu/models/user.model.dart';
-import 'package:win_kamu/widgets/dialogWidgets/customAlertDialog.dart';
-import 'package:intl/intl.dart';
 
 import '../api/api_repository.dart';
 import '../l10n/locale_keys.g.dart';
 import '../models/list_view.model.dart';
-import '../utils/api_urls.dart';
-import '../widgets/dialogWidgets/customDialogOnlyConfirm.dart';
 
 class CrudViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -63,16 +56,14 @@ class CrudViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  TextEditingController get descriptionDateController =>
-      _descriptionDateController;
+  TextEditingController get descriptionDateController => _descriptionDateController;
 
   set setdescriptionDateController(String descriptionDateController) {
     _descriptionDateController.text = descriptionDateController;
     notifyListeners();
   }
 
-  TextEditingController get descriptionReadedController =>
-      _descriptionReadedController;
+  TextEditingController get descriptionReadedController => _descriptionReadedController;
 
   set setdescriptionReadedController(String descriptionReadedController) {
     _descriptionReadedController.text = descriptionReadedController;
@@ -80,9 +71,7 @@ class CrudViewProvider extends ChangeNotifier {
   }
 
   clearForm() {
-    if (_descriptionController.text.isNotEmpty ||
-        _descriptionDateController.text.isNotEmpty ||
-        _descriptionReadedController.text.isNotEmpty) {
+    if (_descriptionController.text.isNotEmpty || _descriptionDateController.text.isNotEmpty || _descriptionReadedController.text.isNotEmpty) {
       _descriptionController.clear();
       _descriptionDateController.clear();
       _descriptionReadedController.clear();
@@ -113,8 +102,7 @@ class CrudViewProvider extends ChangeNotifier {
     _iskurumTuruEmpty = false;
   }
 
-  void fillForm(BuildContext context, ListViewModel listElements,
-      PageController pageController) {
+  void fillForm(BuildContext context, ListViewModel listElements, PageController pageController) {
     _isUpdateActivated = true;
     _pageController = pageController;
     _pageController!.jumpToPage(2);
@@ -122,9 +110,7 @@ class CrudViewProvider extends ChangeNotifier {
     DateTime dateTime = DateTime.parse(listElements.TARGET_RDATE!);
     String formattedDate = DateFormat("dd/MM/yyyy").format(dateTime);
     _descriptionDateController.text = formattedDate;
-    _descriptionReadedController.text = listElements.response_timer == true
-        ? LocaleKeys.evet.tr()
-        : LocaleKeys.hayir.tr();
+    _descriptionReadedController.text = listElements.response_timer == true ? LocaleKeys.evet.tr() : LocaleKeys.hayir.tr();
   }
 
   // void addForm(BuildContext context) async {

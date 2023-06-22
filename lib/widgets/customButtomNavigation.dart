@@ -17,7 +17,7 @@ class CustomBottomNavigation extends StatelessWidget {
   final TextStyle? textStyle;
 
   CustomBottomNavigation({
-    Key? key,
+    super.key,
     this.selectedIndex = 0,
     this.showElevation = true,
     this.iconSize = 24,
@@ -37,9 +37,7 @@ class CustomBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = (backgroundColor == null)
-        ? Theme.of(context).bottomAppBarColor
-        : backgroundColor;
+    final bgColor = (backgroundColor == null) ? Theme.of(context).bottomAppBarColor : backgroundColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -120,10 +118,10 @@ class _ItemWidget extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             width: isSelected ? 180 : 50,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -133,21 +131,13 @@ class _ItemWidget extends StatelessWidget {
                   IconTheme(
                     data: IconThemeData(
                       size: iconSize,
-                      color: isSelected
-                          ? item.activeColor!.withOpacity(1)
-                          : item.inactiveColor == null
-                              ? item.activeColor
-                              : item.inactiveColor,
+                      color: isSelected ? item.activeColor!.withOpacity(1) : item.inactiveColor ?? item.activeColor,
                     ),
-                    child: isSelected
-                        ? (item.activeIcon != null
-                            ? item.activeIcon!
-                            : item.icon)
-                        : item.icon,
+                    child: isSelected ? (item.activeIcon != null ? item.activeIcon! : item.icon) : item.icon,
                   ),
                   if (isSelected)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Text(item.title,
                           style: TextStyle(
                             color: item.activeColor,

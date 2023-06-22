@@ -15,22 +15,20 @@ class WoFilterBox extends StatefulWidget {
 }
 
 class _WoFilterBoxState extends State<WoFilterBox> {
-  List<DropdownMenuItem<IssueFilterModel>> dropdownItems =
-      []; //* you can make nullable if you want, I'm doing it to force having String.
+  List<DropdownMenuItem<IssueFilterModel>> dropdownItems = []; //* you can make nullable if you want, I'm doing it to force having String.
 
   @override
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final workOrderProvider = Provider.of<WorkOrderProvider>(context);
 
     return Padding(
@@ -41,26 +39,21 @@ class _WoFilterBoxState extends State<WoFilterBox> {
           children: [
             workOrderProvider.assigne != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           workOrderProvider.woListView.clear();
                           workOrderProvider.setassigne = '';
-                          workOrderProvider.getListWorkOrders(
-                              1, widget.moduleCode);
+                          workOrderProvider.getListWorkOrders(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               workOrderProvider.assigne.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -72,27 +65,22 @@ class _WoFilterBoxState extends State<WoFilterBox> {
                 : Container(),
             workOrderProvider.statusName != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           workOrderProvider.woListView.clear();
                           workOrderProvider.setstatusName = '';
                           workOrderProvider.setstatusCode = '';
-                          workOrderProvider.getListWorkOrders(
-                              1, widget.moduleCode);
+                          workOrderProvider.getListWorkOrders(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               workOrderProvider.statusName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -104,27 +92,22 @@ class _WoFilterBoxState extends State<WoFilterBox> {
                 : Container(),
             workOrderProvider.buildCode != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           workOrderProvider.woListView.clear();
                           workOrderProvider.setbuildCode = '';
                           workOrderProvider.setbuildName = '';
-                          workOrderProvider.getListWorkOrders(
-                              1, widget.moduleCode);
+                          workOrderProvider.getListWorkOrders(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               workOrderProvider.buildName.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -136,26 +119,21 @@ class _WoFilterBoxState extends State<WoFilterBox> {
                 : Container(),
             workOrderProvider.floor != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           workOrderProvider.woListView.clear();
                           workOrderProvider.setfloor = '';
-                          workOrderProvider.getListWorkOrders(
-                              1, widget.moduleCode);
+                          workOrderProvider.getListWorkOrders(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               workOrderProvider.floor.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,
@@ -167,26 +145,21 @@ class _WoFilterBoxState extends State<WoFilterBox> {
                 : Container(),
             workOrderProvider.wing != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           workOrderProvider.woListView.clear();
                           workOrderProvider.setwing = '';
-                          workOrderProvider.getListWorkOrders(
-                              1, widget.moduleCode);
+                          workOrderProvider.getListWorkOrders(1, widget.moduleCode);
                         },
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               workOrderProvider.wing.toString(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: APPColors.Modal.blue),
+                              style: TextStyle(color: APPColors.Modal.blue),
                             ),
                             Icon(
                               Icons.clear,

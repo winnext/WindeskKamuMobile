@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -8,7 +10,6 @@ import 'package:win_kamu/providers/issueaction_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/new_notif_provider.dart';
 import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
-import 'package:win_kamu/widgets/photoDisplayWidgets/customActivitiesPhoto.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../pages/issue/issueSummary.dart';
@@ -16,7 +17,6 @@ import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
-import '../dialogWidgets/customSimpleDialog.dart';
 import '../issueWidgets/addActivityScreen.dart';
 import '../issueWidgets/takeOverIssueScreen.dart';
 
@@ -60,10 +60,8 @@ class _IssueActionButtonState extends State<IssueActionButton> {
     // print('widget.code' + issueActionProvider.activityListView[0].ACTIVITYID.toString());
     // //issueActionProvider.getLiveSelectAsgGroups(widget.code);
     // super.initState();
-    final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: false);
-    final newNotifProvider =
-        Provider.of<NewNotifProvider>(context, listen: false);
+    final issueActionProvider = Provider.of<IssueActionProvider>(context, listen: false);
+    final newNotifProvider = Provider.of<NewNotifProvider>(context, listen: false);
 
     issueActionProvider.getAvailableActivities(widget.code);
 
@@ -71,12 +69,11 @@ class _IssueActionButtonState extends State<IssueActionButton> {
     newNotifProvider.setserialNumber = '';
     newNotifProvider.setentityCode = '';
     newNotifProvider.setrfid = '';
-    print('photoAdressinitial ::  ' + newNotifProvider.imagePath.toString());
+    print('photoAdressinitial ::  ${newNotifProvider.imagePath}');
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -91,8 +88,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
-      final results = await Navigator.of(context)
-          .push(new MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      final results = await Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return new TakePictureScreen(
           camera: firstCamera,
           sayfa: 'addPhoto',
@@ -105,8 +101,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
     final issueActionProvider = Provider.of<IssueActionProvider>(context);
     final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
-    final RoundedLoadingButtonController _btnController =
-        RoundedLoadingButtonController();
+    final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
     return Align(
       alignment: Alignment.center,
@@ -122,9 +117,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isPhoto
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isPhoto ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -133,19 +126,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Fotoğraf Ekle',
                                   style: TextStyle(
-                                    color: _isPhoto
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isPhoto ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isPhoto
-                                    ? Icons.arrow_drop_up_rounded
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isPhoto
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isPhoto ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+                                color: _isPhoto ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -180,14 +167,14 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                     ))
                                 : Container(),
                             Padding(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               child: TextField(
                                 onChanged: (value) {
                                   setState(() {
                                     _textInput = value;
                                   });
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: 'Açıklama Giriniz',
                                 ),
@@ -201,21 +188,19 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          size.width / 10),
+                                      borderRadius: BorderRadius.circular(size.width / 10),
                                       color: APPColors.Clear.blue,
                                     ),
                                     width: size.width / 5,
                                     height: size.width / 5,
                                     padding: const EdgeInsets.all(8),
-                                    child: Icon(Icons.camera_alt_outlined)),
+                                    child: const Icon(Icons.camera_alt_outlined)),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   GestureDetector(
                                     onTap: () {
@@ -238,8 +223,7 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Vazgeç',
-                                          style: TextStyle(
-                                              color: APPColors.Main.white),
+                                          style: TextStyle(color: APPColors.Main.white),
                                         ),
                                       ),
                                     ),
@@ -253,40 +237,23 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                       successColor: Colors.amber,
                                       controller: _btnController,
                                       onPressed: () async {
-                                        issueActionProvider
-                                            .setisPhotoAddSuccess = '';
+                                        issueActionProvider.setisPhotoAddSuccess = '';
                                         nProvider.base64 != ''
-                                            ? issueActionProvider
-                                                .addAttachmentMethod(
-                                                    widget.xusercode,
-                                                    widget.code,
-                                                    'issue',
-                                                    _textInput,
-                                                    nProvider.base64)
+                                            ? issueActionProvider.addAttachmentMethod(
+                                                widget.xusercode, widget.code, 'issue', _textInput, nProvider.base64)
                                             : null;
-                                        Future.delayed(
-                                            const Duration(milliseconds: 1000),
-                                            () {
+                                        Future.delayed(const Duration(milliseconds: 1000), () {
                                           _btnController.success();
                                           _btnController.reset();
-                                          final photoResult =
-                                              issueActionProvider
-                                                  .isPhotoAddSuccess
-                                                  .toString();
-                                          print('photoo' + photoResult);
+                                          final photoResult = issueActionProvider.isPhotoAddSuccess.toString();
+                                          print('photoo$photoResult');
                                           Navigator.pop(context);
-                                          snackBar(
-                                              context,
-                                              photoResult == 'success'
-                                                  ? 'Fotoğraf Ekleme Başarılı'
-                                                  : 'Fotoğraf Ekleme Başarısız',
+                                          snackBar(context, photoResult == 'success' ? 'Fotoğraf Ekleme Başarılı' : 'Fotoğraf Ekleme Başarısız',
                                               photoResult);
                                         });
                                       },
                                       valueColor: Colors.white,
-                                      child: Text('Kaydet',
-                                          style:
-                                              TextStyle(color: Colors.white)),
+                                      child: const Text('Kaydet', style: TextStyle(color: Colors.white)),
                                     ),
                                   ),
                                 ],
@@ -298,15 +265,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                     )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_ACTIVITY == true
-                  ? Container(
+                  ? SizedBox(
                       width: size.width / 1.09,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isActivity
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isActivity ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -315,19 +280,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Aktivite Ekle',
                                   style: TextStyle(
-                                    color: _isActivity
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isActivity ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isActivity
-                                    ? Icons.arrow_drop_up_rounded
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isActivity
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isActivity ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+                                color: _isActivity ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -352,15 +311,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                     )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_CHANGE_CFG == true
-                  ? Container(
+                  ? SizedBox(
                       width: size.width / 1.09,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isChangeCFG
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isChangeCFG ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -369,19 +326,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Varlık Değiştir',
                                   style: TextStyle(
-                                    color: _isChangeCFG
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isChangeCFG ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isChangeCFG
-                                    ? Icons.arrow_drop_up_rounded
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isChangeCFG
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isChangeCFG ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+                                color: _isChangeCFG ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -406,15 +357,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                     )
                   : Container(),
               listViewProvider.issueOperationList[0].IS_TAKE_OVER == true
-                  ? Container(
+                  ? SizedBox(
                       width: size.width / 1.09,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isTakeOver
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isTakeOver ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -423,19 +372,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Üzerine Al',
                                   style: TextStyle(
-                                    color: _isTakeOver
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isTakeOver ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isTakeOver
-                                    ? Icons.handshake_outlined
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isTakeOver
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isTakeOver ? Icons.handshake_outlined : Icons.arrow_drop_down_rounded,
+                                color: _isTakeOver ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -457,11 +400,9 @@ class _IssueActionButtonState extends State<IssueActionButton> {
               _isTakeOver
                   ? TakeOverIssue(
                       onConfirm: () {
-                        issueActionProvider.takeOverIssue(
-                            widget.code, widget.xusercode);
+                        issueActionProvider.takeOverIssue(widget.code, widget.xusercode);
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          listViewProvider.getIssueOperations(
-                              widget.code, widget.xusercode);
+                          listViewProvider.getIssueOperations(widget.code, widget.xusercode);
 
                           detailViewProvider.loadData(widget.code.toString(),
                               widget.xusercode.toString());
@@ -482,21 +423,18 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                         });
                       },
                       title: 'Üzerine Al',
-                      text:
-                          'Bu vakayı üzerinize almak istediğinizden emin misiniz?',
+                      text: 'Bu vakayı üzerinize almak istediğinizden emin misiniz?',
                       success: true,
                       confirmButtonText: 'Tamam')
                   : Container(),
               listViewProvider.issueOperationList[0].IS_PLANNED_CANCEL == true
-                  ? Container(
+                  ? SizedBox(
                       width: size.width / 1.09,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isPlannedCancel
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isPlannedCancel ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -505,19 +443,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Randevu İptal',
                                   style: TextStyle(
-                                    color: _isPlannedCancel
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isPlannedCancel ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isPlannedCancel
-                                    ? Icons.arrow_drop_up_rounded
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isPlannedCancel
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isPlannedCancel ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+                                color: _isPlannedCancel ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -539,45 +471,33 @@ class _IssueActionButtonState extends State<IssueActionButton> {
               _isPlannedCancel
                   ? TakeOverIssue(
                       onConfirm: () {
-                        issueActionProvider.cancelIssuePlanned(
-                            widget.code, widget.xusercode);
+                        issueActionProvider.cancelIssuePlanned(widget.code, widget.xusercode);
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          listViewProvider.getIssueOperations(
-                              widget.code, widget.xusercode);
-                          String snackBarText =
-                              issueActionProvider.cancelIssueMessage.toString();
-                          String isSuccess =
-                              issueActionProvider.cancelIssueResult.toString();
+                          listViewProvider.getIssueOperations(widget.code, widget.xusercode);
+                          String snackBarText = issueActionProvider.cancelIssueMessage.toString();
+                          String isSuccess = issueActionProvider.cancelIssueResult.toString();
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const IssueSummary(),
                             ),
                           );
-                          snackBar(
-                              context,
-                              isSuccess == 'success'
-                                  ? 'Randevu İptal Başarılı'
-                                  : 'Randevu İptal Başarısız',
-                              isSuccess);
+                          snackBar(context, isSuccess == 'success' ? 'Randevu İptal Başarılı' : 'Randevu İptal Başarısız', isSuccess);
                         });
                       },
                       title: 'Randevu Talebi',
-                      text:
-                          'Bu talebin randevusunu iptal etmek istediğinize emin misiniz?',
+                      text: 'Bu talebin randevusunu iptal etmek istediğinize emin misiniz?',
                       success: true,
                       confirmButtonText: 'Tamam')
                   : Container(),
               listViewProvider.issueOperationList[0].IS_SPAREPART == true
-                  ? Container(
+                  ? SizedBox(
                       width: size.width / 1.09,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shadowColor: APPColors.Main.black,
                               elevation: 10,
-                              backgroundColor: _isSparepart
-                                  ? APPColors.Main.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: _isSparepart ? APPColors.Main.white : APPColors.Modal.blue),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -586,19 +506,13 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                 child: Text(
                                   'Yedek Parça Gerekiyor',
                                   style: TextStyle(
-                                    color: _isSparepart
-                                        ? APPColors.Main.black
-                                        : APPColors.Main.white,
+                                    color: _isSparepart ? APPColors.Main.black : APPColors.Main.white,
                                   ),
                                 ),
                               ),
                               Icon(
-                                _isSparepart
-                                    ? Icons.arrow_drop_up_rounded
-                                    : Icons.arrow_drop_down_rounded,
-                                color: _isSparepart
-                                    ? APPColors.Main.black
-                                    : APPColors.Main.white,
+                                _isSparepart ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
+                                color: _isSparepart ? APPColors.Main.black : APPColors.Main.white,
                               )
                             ],
                           ),
@@ -620,29 +534,18 @@ class _IssueActionButtonState extends State<IssueActionButton> {
               _isSparepart
                   ? TakeOverIssue(
                       onConfirm: () {
-                        issueActionProvider.createSparepartIssue(
-                            widget.code, widget.xusercode);
+                        issueActionProvider.createSparepartIssue(widget.code, widget.xusercode);
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          listViewProvider.getIssueOperations(
-                              widget.code, widget.xusercode);
-                          String snackBarText = issueActionProvider
-                              .createSparepartIssueMessage
-                              .toString();
-                          String isSuccess = issueActionProvider
-                              .createSparepartIssueResult
-                              .toString();
+                          listViewProvider.getIssueOperations(widget.code, widget.xusercode);
+                          String snackBarText = issueActionProvider.createSparepartIssueMessage.toString();
+                          String isSuccess = issueActionProvider.createSparepartIssueResult.toString();
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const IssueSummary(),
                             ),
                           );
-                          snackBar(
-                              context,
-                              isSuccess == 'success'
-                                  ? '$snackBarText'
-                                  : '$snackBarText',
-                              isSuccess);
+                          snackBar(context, isSuccess == 'success' ? snackBarText : snackBarText, isSuccess);
                         });
                       },
                       title: 'Yedek Parça Talebi',

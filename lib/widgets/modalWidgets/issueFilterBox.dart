@@ -27,7 +27,6 @@ class _FilterBoxState extends State<FilterBox> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -44,9 +43,7 @@ class _FilterBoxState extends State<FilterBox> {
             exampleList.assigne != ''
                 ? Container(
                     padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
@@ -71,10 +68,8 @@ class _FilterBoxState extends State<FilterBox> {
                 : Container(),
             exampleList.statusName != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
@@ -100,10 +95,8 @@ class _FilterBoxState extends State<FilterBox> {
                 : Container(),
             exampleList.buildName != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
@@ -129,10 +122,8 @@ class _FilterBoxState extends State<FilterBox> {
                 : Container(),
             exampleList.floorCode != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
@@ -158,10 +149,8 @@ class _FilterBoxState extends State<FilterBox> {
                 : Container(),
             exampleList.wingCode != ''
                 ? Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: APPColors.Main.white),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();

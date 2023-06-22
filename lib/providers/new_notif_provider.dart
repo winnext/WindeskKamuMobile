@@ -1,12 +1,9 @@
-import 'dart:ffi';
+// ignore_for_file: prefer_final_fields, non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
-import 'package:win_kamu/utils/global_utils.dart';
 
 class NewNotifProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -19,7 +16,6 @@ class NewNotifProvider extends ChangeNotifier {
   String _imagePath = '';
   String _base64 = '';
   String get qrCode => _qrCode;
-  
 
   String get imagePath => _imagePath;
   set setimagePath(String imagePath) {
@@ -32,6 +28,7 @@ class NewNotifProvider extends ChangeNotifier {
     _base64 = base64;
     notifyListeners();
   }
+
   set setqrCode(String qrCode) {
     _qrCode = qrCode;
     notifyListeners();
@@ -42,7 +39,6 @@ class NewNotifProvider extends ChangeNotifier {
     _entityCode = entityCode;
     notifyListeners();
   }
-  
 
   String get serialNumber => _serialNumber;
   set setserialNumber(String serialNumber) {
@@ -132,8 +128,7 @@ class NewNotifProvider extends ChangeNotifier {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'İptal', true, ScanMode.QR);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'İptal', true, ScanMode.QR);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
@@ -144,7 +139,7 @@ class NewNotifProvider extends ChangeNotifier {
     // setState to update our non-existent appearance.
 
     if (barcodeScanRes != '-1') {
-      print('object' + barcodeScanRes);
+      print('object$barcodeScanRes');
       setqrCode = '';
       setentityCode = '';
       setlocCode = '';
@@ -168,8 +163,7 @@ class NewNotifProvider extends ChangeNotifier {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'İptal', true, ScanMode.BARCODE);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'İptal', true, ScanMode.BARCODE);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';

@@ -4,60 +4,54 @@ import 'package:sizer/sizer.dart';
 
 class ButtonDropDown extends StatefulWidget {
   final String? metin;
-   ButtonDropDown({super.key,this.metin});
-
-
-  
+  const ButtonDropDown({super.key, this.metin});
 
   @override
   State<ButtonDropDown> createState() => _ButtonDropDownState();
 }
 
 class _ButtonDropDownState extends State<ButtonDropDown> {
+  final List<String> items = [
+    'A_Item1',
+    'A_Item2',
+    'A_Item3',
+    'A_Item4',
+    'B_Item1',
+    'B_Item2',
+    'B_Item3',
+    'B_Item4',
+  ];
 
-    final List<String> items = [
-  'A_Item1',
-  'A_Item2',
-  'A_Item3',
-  'A_Item4',
-  'B_Item1',
-  'B_Item2',
-  'B_Item3',
-  'B_Item4',
-];
+  String? selectedValue;
+  final TextEditingController textEditingController = TextEditingController();
 
-String? selectedValue;
-final TextEditingController textEditingController = TextEditingController();
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
-@override
-void dispose() {
-  textEditingController.dispose();
-  super.dispose();
-}
   @override
   Widget build(BuildContext context) {
-    return  Sizer(      builder: (context, orientation, deviceType) {
-
+    return Sizer(builder: (context, orientation, deviceType) {
       return DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
           isExpanded: true,
           hint: Text(
             widget.metin.toString(),
-            style: TextStyle(
-              color: Colors.black,
-            ),
+            style: const TextStyle(color: Colors.black),
           ),
           items: items
-                  .map((item) => DropdownMenuItem(
-            value: item,
-            child: Text(
-              item,
-              style: const TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ))
-                  .toList(),
+              .map((item) => DropdownMenuItem(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+              .toList(),
           value: selectedValue,
           onChanged: (value) {
             setState(() {
@@ -114,12 +108,6 @@ void dispose() {
           },
         ),
       );
-
-      }
-    );
+    });
   }
 }
-
-
-
-

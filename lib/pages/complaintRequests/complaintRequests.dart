@@ -1,26 +1,20 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, non_constant_identifier_names, unused_local_variable, prefer_interpolation_to_compose_strings, avoid_print
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/complaintRequests/complaintRequestsDetail.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
 import 'package:provider/provider.dart';
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
-import '../closedRequests/closedRequestsDetail.dart';
-import '../homePage.dart';
 
 class ComplaintRequestsListScreen extends StatefulWidget {
   static String pageName = 'listPageComplaintRequests';
@@ -48,7 +42,6 @@ class _ComplaintRequestsListScreenState extends State<ComplaintRequestsListScree
 
   @override
   void dispose() {
-    // TODO: implement dispose
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
     super.dispose();
@@ -87,37 +80,25 @@ class _ComplaintRequestsListScreenState extends State<ComplaintRequestsListScree
                   listViewProvider.exampleListView.isNotEmpty
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
-                          onNotification:
-                              listViewProvider.notificationController,
+                          onNotification: listViewProvider.notificationController,
                           child: ListView.builder(
-                              itemCount:
-                                  listViewProvider.exampleListView.length,
+                              itemCount: listViewProvider.exampleListView.length,
                               itemBuilder: (BuildContext context, int i) {
                                 l++;
                                 if (l == 5) {
                                   l = 0;
                                 }
                                 String formattedDate = "";
-                                ListViewModel listElements =
-                                    listViewProvider.exampleListView[i];
-                                final TARGET_FDATE =
-                                    timeRecover(listElements.TARGET_FDATE);
-                                final TARGET_RDATE =
-                                    timeRecover(listElements.TARGET_RDATE);
-                                final PLANNED_DATE =
-                                    timeRecover(listElements.PLANNEDDATE);
+                                ListViewModel listElements = listViewProvider.exampleListView[i];
+                                final TARGET_FDATE = timeRecover(listElements.TARGET_FDATE);
+                                final TARGET_RDATE = timeRecover(listElements.TARGET_RDATE);
+                                final PLANNED_DATE = timeRecover(listElements.PLANNEDDATE);
                                 final time = DateTime.now();
-                                final String timeNow = DateFormat('yMMddhhmmss')
-                                    .format(time)
-                                    .toString();
-                                if (listElements.RESPONDED_IDATE != null &&
-                                    listElements.TARGET_FDATE != null) {
+                                final String timeNow = DateFormat('yMMddhhmmss').format(time).toString();
+                                if (listElements.RESPONDED_IDATE != null && listElements.TARGET_FDATE != null) {
                                   print('responsedI');
 
-                                  print(int.parse(listElements.RESPONDED_IDATE
-                                          .toString()) -
-                                      int.parse(listElements.TARGET_RDATE
-                                          .toString()));
+                                  print(int.parse(listElements.RESPONDED_IDATE.toString()) - int.parse(listElements.TARGET_RDATE.toString()));
                                 }
 
                                 return Column(
@@ -125,46 +106,28 @@ class _ComplaintRequestsListScreenState extends State<ComplaintRequestsListScree
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TaskListWidget(
-                                          importanceLevelColor:
-                                              generateColor(l),
+                                          importanceLevelColor: generateColor(l),
                                           code: listElements.CODE.toString(),
-                                          targetFDate:
-                                              listElements.TARGET_FDATE,
-                                          targetRDate:
-                                              listElements.TARGET_RDATE,
+                                          targetFDate: listElements.TARGET_FDATE,
+                                          targetRDate: listElements.TARGET_RDATE,
                                           taskNo: i.toString(),
-                                          description: listElements.DESCRIPTION
-                                              .toString(),
-                                          sumdesc1:
-                                              listElements.SUMDESC1.toString(),
-                                          statusName: listElements.STATUSNAME
-                                              .toString(),
+                                          description: listElements.DESCRIPTION.toString(),
+                                          sumdesc1: listElements.SUMDESC1.toString(),
+                                          statusName: listElements.STATUSNAME.toString(),
                                           space: listElements.SPACE.toString(),
-                                          location:
-                                              listElements.LOCATION.toString(),
+                                          location: listElements.LOCATION.toString(),
                                           idate: listElements.IDATE.toString(),
-                                          statusCode: listElements.STATUSCODE
-                                              .toString(),
+                                          statusCode: listElements.STATUSCODE.toString(),
                                           planedDate: PLANNED_DATE.toString(),
-                                          respondedIDate: listElements
-                                              .RESPONDED_IDATE
-                                              .toString(),
-                                          responseTimer: listElements
-                                              .response_timer
-                                              .toString(),
-                                          fixedTimer: listElements.fixed_timer
-                                              .toString(),
-                                          fixedIDate: listElements.FIXED_IDATE
-                                              .toString(),
+                                          respondedIDate: listElements.RESPONDED_IDATE.toString(),
+                                          responseTimer: listElements.response_timer.toString(),
+                                          fixedTimer: listElements.fixed_timer.toString(),
+                                          fixedIDate: listElements.FIXED_IDATE.toString(),
                                           timeInfoNow: timeNow,
                                           isIcon: true,
                                           onPressed: (code) {
-                                            detailViewProvider.setIssueCode =
-                                                code;
-                                            Navigator.pushNamed(
-                                                context,
-                                                ComplaintdRequestDetail
-                                                    .complaintdRequestDetail);
+                                            detailViewProvider.setIssueCode = code;
+                                            Navigator.pushNamed(context, ComplaintdRequestDetail.complaintdRequestDetail);
                                             print('tiklandi' + code);
                                           },
                                           onPressedLong: () {
@@ -179,31 +142,26 @@ class _ComplaintRequestsListScreenState extends State<ComplaintRequestsListScree
                               }),
                         ))
                       : Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 2.5),
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                           child: const Center(child: AramaSonucBos()),
                         ),
                 ],
               ),
-              if (listViewProvider.isDataLoading == true) ...[
-                loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-              ],
+              if (listViewProvider.isDataLoading == true) ...[loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)],
             ],
           )),
     );
   }
 
   Widget sayfaYenile() {
-    return Consumer<ListViewProvider>(
-        builder: (context, listViewProvider, child) {
+    return Consumer<ListViewProvider>(builder: (context, listViewProvider, child) {
       return InkWell(
         onTap: () {
           setState(() {
             listViewProvider.setisDataLoading = true;
             listViewProvider.exampleListView.clear();
             listViewProvider.setcurrentPage = 1;
-            listViewProvider.loadData(
-                listViewProvider.currentPage, 'OPlannedIssuesIsCustomer');
+            listViewProvider.loadData(listViewProvider.currentPage, 'OPlannedIssuesIsCustomer');
           });
         },
         child: const Padding(

@@ -1,5 +1,7 @@
 //Uygulama içerisinde kullanılacak imajların merkezi olarak yönetilmesi için oluşturulmuştur.
 //Buraya ekleme yapmadan önce pubspec.yaml dosyasına imajın yolu verilmesi gerekmektedir.
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 enum APPImages {
@@ -27,25 +29,13 @@ extension APPImagesExtension on APPImages {
   }
 }
 
-enum APPColors {
-  Login,
-  Main,
-  Secondary,
-  Accent,
-  Graident,
-  NewNotifi,
-  Modal,
-  TracingNumber,
-  Clear,
-  Filter,
-  Timer
-}
+enum APPColors { Login, Main, Secondary, Accent, Graident, NewNotifi, Modal, TracingNumber, Clear, Filter, Timer }
 
 extension APPColorsExtension on APPColors {
   Color get orange {
     switch (this) {
       case APPColors.Main:
-        return Color.fromARGB(255, 23, 157, 224);
+        return const Color.fromARGB(255, 23, 157, 224);
       case APPColors.Secondary:
         return const Color(0xffF9BA59);
       case APPColors.Accent:
@@ -71,9 +61,9 @@ extension APPColorsExtension on APPColors {
   Color get blue {
     switch (this) {
       case APPColors.Login:
-        return Color.fromARGB(1000, 33, 173, 228); //0xff1c5794
+        return const Color.fromARGB(1000, 33, 173, 228); //0xff1c5794
       case APPColors.Main:
-        return Color.fromARGB(255, 48, 105, 211); //0xff1c5794
+        return const Color.fromARGB(255, 48, 105, 211); //0xff1c5794
       case APPColors.Secondary:
         return const Color(0xffA5E5FF);
       case APPColors.Accent:
@@ -98,9 +88,9 @@ extension APPColorsExtension on APPColors {
       case APPColors.Main:
         return const Color(0xffABABAB);
       case APPColors.Secondary:
-        return Color(0xFF776E6E);
+        return const Color(0xFF776E6E);
       case APPColors.Accent:
-        return Color.fromARGB(140, 255, 255, 255);
+        return const Color.fromARGB(140, 255, 255, 255);
       case APPColors.NewNotifi:
         return const Color.fromARGB(1000, 243, 244, 255);
       default:
@@ -137,7 +127,7 @@ extension APPColorsExtension on APPColors {
       case APPColors.Secondary:
         return const Color(0xfff55138);
       case APPColors.NewNotifi:
-        return Color.fromARGB(1000, 237, 181, 181);
+        return const Color.fromARGB(1000, 237, 181, 181);
       case APPColors.Timer:
         return const Color(0xffe71d36);
       default:

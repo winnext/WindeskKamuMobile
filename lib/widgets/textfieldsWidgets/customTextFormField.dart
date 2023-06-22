@@ -1,19 +1,17 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
+// ignore_for_file: prefer_const_constructors, unused_local_variable, depend_on_referenced_packages
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
+
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:intl/intl.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final List<Widget> children;
   final String sectionName;
-  const CustomTextFormField(
-      {Key? key, required this.children, required this.sectionName})
-      : super(key: key);
+  const CustomTextFormField({Key? key, required this.children, required this.sectionName}) : super(key: key);
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -37,7 +35,7 @@ class CustomTextFormFieldContent extends StatefulWidget {
   final bool readOnly;
   final IconData icon;
   final List<TextInputFormatter>? inputFormatters;
-  final AutovalidateMode;
+  final dynamic autovalidateMode;
   final bool isBorder;
   final bool isIcon;
   final String? hintText;
@@ -81,7 +79,7 @@ class CustomTextFormFieldContent extends StatefulWidget {
       this.onChanged,
       this.isBorder = false,
       this.errorText,
-      this.AutovalidateMode,
+      this.autovalidateMode,
       this.icon = Icons.mail,
       this.isIcon = true,
       this.inputFormatters,
@@ -91,12 +89,10 @@ class CustomTextFormFieldContent extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CustomTextFormFieldContent> createState() =>
-      _CustomTextFormFieldContentState();
+  State<CustomTextFormFieldContent> createState() => _CustomTextFormFieldContentState();
 }
 
-class _CustomTextFormFieldContentState
-    extends State<CustomTextFormFieldContent> {
+class _CustomTextFormFieldContentState extends State<CustomTextFormFieldContent> {
   String displayDateFormat = "";
   @override
   Widget build(BuildContext context) {
@@ -107,7 +103,7 @@ class _CustomTextFormFieldContentState
           bottom: MediaQuery.of(context).size.height / 70),
       child: !widget.isDate
           ? TextFormField(
-              autovalidateMode: widget.AutovalidateMode,
+              autovalidateMode: widget.autovalidateMode,
               inputFormatters: widget.preventSpecialCharacters
                   ? <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
@@ -139,14 +135,11 @@ class _CustomTextFormFieldContentState
                       )
                     : null,
                 prefixIcon: widget.isIcon
-                    ? Icon(widget.icon,
-                        color: widget.iconColor ?? APPColors.Main.blue,
-                        size: MediaQuery.of(context).size.height / 30)
+                    ? Icon(widget.icon, color: widget.iconColor ?? APPColors.Main.blue, size: MediaQuery.of(context).size.height / 30)
                     : null,
                 prefixIconColor: APPColors.Main.blue,
                 prefixStyle: TextStyle(fontSize: font_size_14),
-                errorStyle: TextStyle(
-                    fontWeight: FontWeight.bold, color: APPColors.Main.red),
+                errorStyle: TextStyle(fontWeight: FontWeight.bold, color: APPColors.Main.red),
               ),
             )
           : !widget.disableFormatDate
@@ -158,44 +151,28 @@ class _CustomTextFormFieldContentState
                             showTitleActions: true,
                             minTime: DateTime(1950, 3, 5),
                             maxTime: DateTime(2100, 6, 7), onConfirm: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy - hh:mm').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd - hh:mm').format(date);
+                            String formattedDate = DateFormat('dd/MM/yyyy - hh:mm').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd - hh:mm').format(date);
 
-                            widget.controller.text = widget.formatDate
-                                ? formattedDate.toString()
-                                : unformattedDate.toString();
+                            widget.controller.text = widget.formatDate ? formattedDate.toString() : unformattedDate.toString();
                           }, onChanged: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
-                            widget.controller.text = widget.formatDate
-                                ? formattedDate.toString()
-                                : unformattedDate.toString();
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
+                            widget.controller.text = widget.formatDate ? formattedDate.toString() : unformattedDate.toString();
                           })
                         : DatePicker.showDatePicker(context,
                             locale: LocaleType.tr,
                             showTitleActions: true,
                             minTime: DateTime(1950, 3, 5),
                             maxTime: DateTime(2100, 6, 7), onConfirm: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
 
-                            widget.controller.text = widget.formatDate
-                                ? formattedDate.toString()
-                                : unformattedDate.toString();
+                            widget.controller.text = widget.formatDate ? formattedDate.toString() : unformattedDate.toString();
                           }, onChanged: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
-                            widget.controller.text = widget.formatDate
-                                ? formattedDate.toString()
-                                : unformattedDate.toString();
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
+                            widget.controller.text = widget.formatDate ? formattedDate.toString() : unformattedDate.toString();
                           });
                   },
                   child: AbsorbPointer(
@@ -211,15 +188,11 @@ class _CustomTextFormFieldContentState
                             ? Icon(
                                 widget.icon,
                                 size: MediaQuery.of(context).size.height / 30,
-                                color: widget.controller.text != ""
-                                    ? APPColors.Main.blue
-                                    : APPColors.Main.grey,
+                                color: widget.controller.text != "" ? APPColors.Main.blue : APPColors.Main.grey,
                               )
                             : null,
                         prefixIconColor: APPColors.Main.blue,
-                        errorStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: APPColors.Main.red),
+                        errorStyle: TextStyle(fontWeight: FontWeight.bold, color: APPColors.Main.red),
                       ),
                     ),
                   ),
@@ -232,23 +205,17 @@ class _CustomTextFormFieldContentState
                             showTitleActions: true,
                             minTime: DateTime(1950, 3, 5),
                             maxTime: DateTime(2100, 6, 7), onConfirm: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy - hh:mm').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd - hh:mm').format(date);
+                            String formattedDate = DateFormat('dd/MM/yyyy - hh:mm').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd - hh:mm').format(date);
 
-                            widget.controller.text =
-                                date.toIso8601String().toString();
+                            widget.controller.text = date.toIso8601String().toString();
                             setState(() {
                               displayDateFormat = formattedDate;
                             });
                           }, onChanged: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
-                            widget.controller.text =
-                                date.toIso8601String().toString();
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
+                            widget.controller.text = date.toIso8601String().toString();
                             setState(() {
                               displayDateFormat = formattedDate;
                             });
@@ -258,23 +225,17 @@ class _CustomTextFormFieldContentState
                             showTitleActions: true,
                             minTime: DateTime(1950, 3, 5),
                             maxTime: DateTime(2100, 6, 7), onConfirm: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
                             setState(() {
                               displayDateFormat = formattedDate;
                             });
 
-                            widget.controller.text =
-                                date.toIso8601String().toString();
+                            widget.controller.text = date.toIso8601String().toString();
                           }, onChanged: (date) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(date);
-                            String unformattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
-                            widget.controller.text =
-                                date.toIso8601String().toString();
+                            String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                            String unformattedDate = DateFormat('yyyy-MM-dd').format(date);
+                            widget.controller.text = date.toIso8601String().toString();
                             setState(() {
                               displayDateFormat = formattedDate;
                             });
@@ -288,9 +249,7 @@ class _CustomTextFormFieldContentState
                           style: TextStyle(fontSize: font_size_12),
                         ),
                         Text(
-                          widget.controller.text == ''
-                              ? widget.placeholder!
-                              : displayDateFormat,
+                          widget.controller.text == '' ? widget.placeholder! : displayDateFormat,
                           style: TextStyle(color: APPColors.Main.red),
                         ),
                       ],

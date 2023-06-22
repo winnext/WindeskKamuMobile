@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 isEmpty(String text) {
   if (text == 'null' || text == '' || text == null) {
     return '';

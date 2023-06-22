@@ -4,7 +4,6 @@ import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/widgets/modalWidgets/woFilterBox.dart';
 
 import '../../models/issue_filter.modal.dart';
-import '../../providers/list_view_provider.dart';
 import '../../utils/themes.dart';
 
 class WorkOrderFilter extends StatefulWidget {
@@ -19,8 +18,7 @@ class WorkOrderFilter extends StatefulWidget {
 class _WorkOrderFilterState extends State<WorkOrderFilter> {
   final textInput = TextEditingController();
 
-  List<DropdownMenuItem<IssueFilterModel>> dropdownItems =
-      []; //* you can make nullable if you want, I'm doing it to force having String.
+  List<DropdownMenuItem<IssueFilterModel>> dropdownItems = []; //* you can make nullable if you want, I'm doing it to force having String.
 
   @override
   void initState() {
@@ -35,7 +33,6 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -48,8 +45,7 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
 
     return Container(
       height: size.height / 2,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: APPColors.Modal.blue),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: APPColors.Modal.blue),
       child: Column(
         children: [
           Row(
@@ -65,17 +61,12 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                               alignment: Alignment.centerLeft,
                               shadowColor: APPColors.Main.grey,
                               elevation: 5,
-                              backgroundColor: woList.assigne != ''
-                                  ? APPColors.Secondary.white
-                                  : APPColors.Modal.blue),
+                              backgroundColor: woList.assigne != '' ? APPColors.Secondary.white : APPColors.Modal.blue),
                           child: Row(
                             children: [
                               Text(
                                 'Üzerime Atanan Vakalar',
-                                style: TextStyle(
-                                    color: woList.assigne != ''
-                                        ? APPColors.Main.black
-                                        : APPColors.Modal.white),
+                                style: TextStyle(color: woList.assigne != '' ? APPColors.Main.black : APPColors.Modal.white),
                               ),
                             ],
                           ),
@@ -84,13 +75,11 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                                 woList.assigne == ''
                                     ? {
                                         woList.setassigne = 'sgnm1040',
-                                        woList.getListWorkOrders(
-                                            1, widget.moduleCode),
+                                        woList.getListWorkOrders(1, widget.moduleCode),
                                       }
                                     : {
                                         woList.setassigne = '',
-                                        woList.getListWorkOrders(
-                                            1, widget.moduleCode),
+                                        woList.getListWorkOrders(1, widget.moduleCode),
                                       }
                               })
                           // Navigator.pop(
@@ -102,8 +91,7 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         isExpanded: true,
                         icon: Padding(
                           padding: const EdgeInsets.only(right: 25.0),
-                          child: Icon(Icons.arrow_drop_down,
-                              color: APPColors.Main.white),
+                          child: Icon(Icons.arrow_drop_down, color: APPColors.Main.white),
                         ),
                         iconSize: 25,
                         underline: SizedBox(),
@@ -118,25 +106,19 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         hint: Padding(
                           padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                           child: Text(
-                            woList.statusName.toString() == ''
-                                ? 'Durum'
-                                : woList.statusName.toString(),
-                            style: TextStyle(
-                                color: APPColors.Main.white, fontSize: 15),
+                            woList.statusName.toString() == '' ? 'Durum' : woList.statusName.toString(),
+                            style: TextStyle(color: APPColors.Main.white, fontSize: 15),
                           ),
                         ),
                         items: woList.woFilterStatusCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () => {
-                              woList.setstatusName =
-                                  data.STATUSNAME.toString()
-                            },
+                            onTap: () => {woList.setstatusName = data.STATUSNAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 data.STATUSNAME.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
@@ -149,11 +131,10 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         isExpanded: true,
                         icon: Padding(
                           padding: const EdgeInsets.only(right: 25.0),
-                          child: Icon(Icons.arrow_drop_down,
-                              color: APPColors.Main.white),
+                          child: Icon(Icons.arrow_drop_down, color: APPColors.Main.white),
                         ),
                         iconSize: 25,
-                        underline: SizedBox(),
+                        underline: const SizedBox(),
                         onChanged: (newValue) {
                           setState(() => {
                                 woList.woListView.clear(),
@@ -165,24 +146,19 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         hint: Padding(
                           padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                           child: Text(
-                            woList.buildName.toString() == ''
-                                ? 'Bina'
-                                : woList.buildName.toString(),
-                            style: TextStyle(
-                                color: APPColors.Main.white, fontSize: 15),
+                            woList.buildName.toString() == '' ? 'Bina' : woList.buildName.toString(),
+                            style: TextStyle(color: APPColors.Main.white, fontSize: 15),
                           ),
                         ),
                         items: woList.woFilterBuildCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () => {
-                              woList.setbuildName = data.NAME.toString()
-                            },
+                            onTap: () => {woList.setbuildName = data.NAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 data.NAME.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
@@ -195,11 +171,10 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         isExpanded: true,
                         icon: Padding(
                           padding: const EdgeInsets.only(right: 25.0),
-                          child: Icon(Icons.arrow_drop_down,
-                              color: APPColors.Main.white),
+                          child: Icon(Icons.arrow_drop_down, color: APPColors.Main.white),
                         ),
                         iconSize: 25,
-                        underline: SizedBox(),
+                        underline: const SizedBox(),
                         onChanged: (newValue) {
                           setState(() => {
                                 woList.woListView.clear(),
@@ -211,23 +186,19 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         hint: Padding(
                           padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                           child: Text(
-                            woList.floor.toString() == ''
-                                ? 'Kat'
-                                : woList.floor.toString(),
-                            style: TextStyle(
-                                color: APPColors.Main.white, fontSize: 15),
+                            woList.floor.toString() == '' ? 'Kat' : woList.floor.toString(),
+                            style: TextStyle(color: APPColors.Main.white, fontSize: 15),
                           ),
                         ),
                         items: woList.woFilterFloorCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () =>
-                                {woList.setfloor = data.NAME.toString()},
+                            onTap: () => {woList.setfloor = data.NAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 data.NAME.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
@@ -240,11 +211,10 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         isExpanded: true,
                         icon: Padding(
                           padding: const EdgeInsets.only(right: 25.0),
-                          child: Icon(Icons.arrow_drop_down,
-                              color: APPColors.Main.white),
+                          child: Icon(Icons.arrow_drop_down, color: APPColors.Main.white),
                         ),
                         iconSize: 25,
-                        underline: SizedBox(),
+                        underline: const SizedBox(),
                         onChanged: (newValue) {
                           setState(() => {
                                 woList.woListView.clear(),
@@ -256,23 +226,19 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                         hint: Padding(
                           padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                           child: Text(
-                            woList.wing.toString() == ''
-                                ? 'Kanat'
-                                : woList.wing.toString(),
-                            style: TextStyle(
-                                color: APPColors.Main.white, fontSize: 15),
+                            woList.wing.toString() == '' ? 'Kanat' : woList.wing.toString(),
+                            style: TextStyle(color: APPColors.Main.white, fontSize: 15),
                           ),
                         ),
                         items: woList.woFilterWingCodes.map((data) {
                           return DropdownMenuItem(
-                            onTap: () =>
-                                {woList.setwing = data.NAME.toString()},
+                            onTap: () => {woList.setwing = data.NAME.toString()},
                             value: data.CODE.toString(),
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
                                 data.NAME.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
@@ -286,9 +252,7 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  APPColors.Clear.blue)),
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(APPColors.Clear.blue)),
                           child: const Text('Temizle'),
                           onPressed: () {
                             woList.woListView.clear();
@@ -303,12 +267,8 @@ class _WorkOrderFilterState extends State<WorkOrderFilter> {
                           },
                         ),
                         ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  APPColors.Filter.blue)),
-                          child: const Text('Filtrele',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 26, 20, 20))),
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(APPColors.Filter.blue)),
+                          child: const Text('Filtrele', style: TextStyle(color: Color.fromARGB(255, 26, 20, 20))),
                           onPressed: () {
                             Navigator.pop(context);
                           },

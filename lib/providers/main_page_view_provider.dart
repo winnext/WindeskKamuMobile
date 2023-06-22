@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, dead_code, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win_kamu/models/announcement.model.dart';
@@ -90,14 +92,11 @@ class MainPageViewProvider extends ChangeNotifier {
     final urlIssueTypes =
         '${base_url_v1}${TOKEN_V1}${deviceToken}&action=getAnnouncements&username=${xusercode}';
 
-    final result =
-        await apirepository.getAnnouncements(controller: urlIssueTypes);
+    final result = await apirepository.getAnnouncements(controller: urlIssueTypes);
     setresultDeviceId = result.records['result'];
 
     if (true) {
-      tempannouncementView = (result.records['records'] as List)
-          .map((e) => AnnouncementViewModel.fromJson(e))
-          .toList();
+      tempannouncementView = (result.records['records'] as List).map((e) => AnnouncementViewModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         announcementView.addAll(tempannouncementView);
         settoplamKayitSayisi = announcementView.length;

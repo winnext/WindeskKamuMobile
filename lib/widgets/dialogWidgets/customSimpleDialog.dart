@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +30,7 @@ SimpleShowDialog(
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color.fromRGBO(89, 89, 89, 1), fontSize: 20),
+                  style: const TextStyle(color: Color.fromRGBO(89, 89, 89, 1), fontSize: 20),
                 ),
               ),
               Padding(
@@ -37,8 +38,7 @@ SimpleShowDialog(
                 child: Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color.fromRGBO(89, 89, 89, 1), fontSize: 15),
+                  style: const TextStyle(color: Color.fromRGBO(89, 89, 89, 1), fontSize: 15),
                 ),
               ),
             ],
@@ -48,7 +48,7 @@ SimpleShowDialog(
               onPressed: onConfirm,
               child: Text(
                 confirmButtonText,
-                style: TextStyle(color: Colors.white, fontSize: 15),
+                style: const TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
           ],

@@ -2,14 +2,12 @@
 
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:win_kamu/pages/login/login.dart';
 import 'package:win_kamu/utils/utils.dart';
 import '../l10n/locale_keys.g.dart';
-import '../widgets/dialogWidgets/customAlertDialog.dart';
 import '../widgets/customDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/customLoadingScreenDialog.dart';
@@ -28,10 +26,7 @@ Future logout(BuildContext context) async {
             description: LocaleKeys.cikisYapilacaktir.tr(),
             okFunction: () async {
               prefs.clear();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                  (route) => false);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login()), (route) => false);
             },
             onlyConfirmation: false,
             cancelButtonText: LocaleKeys.vazgec.tr(),
@@ -41,8 +36,7 @@ Future logout(BuildContext context) async {
 void baglantiHatasi(BuildContext context, String? message) async {
   CustomAlertDialogOnlyConfirm(context, () {
     Navigator.pop(context);
-  }, LocaleKeys.birHataMeydanaGeldi.tr(), message!, ArtSweetAlertType.danger,
-      LocaleKeys.tamam.tr());
+  }, LocaleKeys.birHataMeydanaGeldi.tr(), message!, ArtSweetAlertType.danger, LocaleKeys.tamam.tr());
 }
 
 void snackBar(BuildContext context, String message, String type) async {
@@ -81,24 +75,21 @@ void snackBar(BuildContext context, String message, String type) async {
           message: message,
         ),
         displayDuration: Duration(hours: 2));
-  }
-  else if (type == 'true') {
+  } else if (type == 'true') {
     showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.success(
           message: message,
         ),
         displayDuration: Duration(seconds: 3));
-  }
-  else if (type == 'false') {
+  } else if (type == 'false') {
     showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.error(
           message: message,
         ),
         displayDuration: Duration(seconds: 3));
-  }
-  else{
+  } else {
     showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.error(
@@ -108,10 +99,8 @@ void snackBar(BuildContext context, String message, String type) async {
   }
 }
 
-Widget loadingBar(
-    BuildContext context, Color? backgroundcolor, Color? textColor) {
-  return CustomLoadingScreen(
-      backgroundColor: backgroundcolor, textColor: textColor);
+Widget loadingBar(BuildContext context, Color? backgroundcolor, Color? textColor) {
+  return CustomLoadingScreen(backgroundColor: backgroundcolor, textColor: textColor);
 }
 
 Color generateColor(int l) {
@@ -130,10 +119,7 @@ Widget pageCard(BuildContext context, String cardName, Widget cardIcon) {
               color: Color(0xffB4B4B4),
             ),
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
+                topLeft: Radius.circular(10), topRight: Radius.circular(10), bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -151,12 +137,10 @@ Widget pageCard(BuildContext context, String cardName, Widget cardIcon) {
                 children: [
                   cardIcon,
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 20),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 20),
                     child: Text(
                       cardName,
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.height / 45),
+                      style: TextStyle(fontSize: MediaQuery.of(context).size.height / 45),
                     ),
                   )
                 ],

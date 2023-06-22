@@ -1,9 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'buttonWidgets/customButtonWithGradient.dart';
 
 class CustomCalendar extends StatefulWidget {
   const CustomCalendar({Key? key}) : super(key: key);
@@ -36,16 +34,13 @@ class _CustomCalendarState extends State<CustomCalendar> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
-          _selectedDate != null
-              ? DateFormat('dd/MM/yyyy').format(_selectedDate!)
-              : 'Randevu Tarihi',
-          style: TextStyle(fontSize: 16),
+          _selectedDate != null ? DateFormat('dd/MM/yyyy').format(_selectedDate!) : 'Randevu Tarihi',
+          style: const TextStyle(fontSize: 16),
         ),
-        
         IconButton(
-            onPressed: _showDatePicker, 
-            icon: Icon(Icons.calendar_month),
-          )
+          onPressed: _showDatePicker,
+          icon: const Icon(Icons.calendar_month),
+        )
       ],
     );
   }

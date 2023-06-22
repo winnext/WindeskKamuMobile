@@ -1,18 +1,13 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
-import 'package:win_kamu/components/crud_view/crud_view.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
-import 'package:win_kamu/models/detail_response.model.dart';
 import 'package:win_kamu/models/detail_view.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
-import 'package:provider/provider.dart';
-
-import '../models/http_response.model.dart';
-import '../utils/global_utils.dart';
-import 'main_page_view_provider.dart';
 
 class DetailViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -98,9 +93,8 @@ class DetailViewProvider extends ChangeNotifier {
   loadData(String issuecode, String xusercode) async {
     _isDataLoading = true;
 
-    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+    final responseUrl = '$BASE_URL_V2/issue/${issueCode}';
+    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
@@ -120,10 +114,9 @@ class DetailViewProvider extends ChangeNotifier {
 
   loadIssueSummary(String issuecode, String xusercode) async {
     _isDataLoading = true;
-    final responseUrl = BASE_URL_V2 + '/issue/${issueCode}/summary';
+    final responseUrl = '$BASE_URL_V2/issue/${issueCode}/summary';
 
-    final data = await apirepository.getIssueSummary(
-        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+    final data = await apirepository.getIssueSummary(controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
@@ -139,25 +132,20 @@ class DetailViewProvider extends ChangeNotifier {
     }
   }
 
-  sendIssueActivity(String issueCode, String userName, String activityCode,
-      String description) async {
-    if (description.toString().length < 20 &&
-        activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String issueCode, String userName, String activityCode, String description) async {
+    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult = await apirepository.addIssueActivity(
-          userName: userName,
-          issueCode: issueCode,
-          activityCode: activityCode,
-          description: description);
+      final apiresult =
+          await apirepository.addIssueActivity(userName: userName, issueCode: issueCode, activityCode: activityCode, description: description);
 
       final results = jsonDecode(apiresult.toString());
 
-      print('activity inside 2 ' + results['resultcode'].toString());
+      print('activity inside 2 ${results['resultcode']}');
 
       if (results['success'].toString() == 'false') {
         //_responses = results['resultcode'];
-        print('activityresponse' + results['success'].toString());
+        print('activityresponse${results['success']}');
         //notifyListeners();
         return 'Aktivite girişi başarısız';
       } else {

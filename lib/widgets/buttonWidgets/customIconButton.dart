@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
@@ -19,8 +19,8 @@ class CustomIconButton extends StatelessWidget {
   final num textOutSpace_right;
   final Color? textColor;
   final num textSize;
-  CustomIconButton({
-    Key? key,
+  const CustomIconButton({
+    super.key,
     this.onTap,
     this.name = "İsim",
     this.outSpace = 40,
@@ -47,14 +47,11 @@ class CustomIconButton extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height / textOutSpace_top,
                     left: MediaQuery.of(context).size.width / textOutSpace_left,
-                    bottom: MediaQuery.of(context).size.height /
-                        textOutSpace_bottom,
-                    right:
-                        MediaQuery.of(context).size.width / textOutSpace_right),
+                    bottom: MediaQuery.of(context).size.height / textOutSpace_bottom,
+                    right: MediaQuery.of(context).size.width / textOutSpace_right),
                 child: Container(
                   decoration: BoxDecoration(
-                      color:
-                          disable ? Colors.grey : colors ?? APPColors.Main.blue,
+                      color: disable ? Colors.grey : colors ?? APPColors.Main.blue,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomLeft: Radius.circular(10),
@@ -66,26 +63,18 @@ class CustomIconButton extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: icons ??
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width /
-                                        20)),
+                        child: icons ?? Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 20)),
                       ),
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width /
-                                textInlinePadding,
+                            left: MediaQuery.of(context).size.width / textInlinePadding,
                           ),
                           child: Text(
                             name,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: textColor ?? Colors.white,
-                                fontSize: MediaQuery.of(context).size.height /
-                                    textSize),
+                            style: TextStyle(color: textColor ?? Colors.white, fontSize: MediaQuery.of(context).size.height / textSize),
                           ),
                         ),
                       ),

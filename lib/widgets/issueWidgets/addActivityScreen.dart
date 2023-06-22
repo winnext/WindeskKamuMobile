@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -25,14 +24,7 @@ class AddActivityScreen extends StatefulWidget {
   String? confirmButtonText;
   String? issueCode;
 
-  AddActivityScreen(
-      {this.onConfirm,
-      this.title,
-      this.text,
-      this.success,
-      this.confirmButtonText,
-      this.issueCode,
-      super.key});
+  AddActivityScreen({this.onConfirm, this.title, this.text, this.success, this.confirmButtonText, this.issueCode, super.key});
 
   @override
   State<AddActivityScreen> createState() => _AddActivityScreenState();
@@ -48,10 +40,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
   @override
   void initState() {
-    final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: false);
-    final newNotifProvider =
-        Provider.of<NewNotifProvider>(context, listen: false);
+    final issueActionProvider = Provider.of<IssueActionProvider>(context, listen: false);
+    final newNotifProvider = Provider.of<NewNotifProvider>(context, listen: false);
     issueActionProvider.setliveSelectGroupCode = '';
     issueActionProvider.setliveSelectGroupName = '';
     issueActionProvider.setliveSelectUserCode = '';
@@ -65,6 +55,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     dynamic _showModal(BuildContext context) async {
       // show the modal dialog and pass some data to it
@@ -75,8 +66,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
-      final results = await Navigator.of(context)
-          .push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      final results = await Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return TakePictureScreen(
           camera: firstCamera,
           sayfa: 'addPhoto',
@@ -86,19 +76,13 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
     Size size = MediaQuery.of(context).size;
 
-    final issueActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: true);
-    final newNotifProvider =
-        Provider.of<NewNotifProvider>(context, listen: true);
+    final issueActionProvider = Provider.of<IssueActionProvider>(context, listen: true);
+    final newNotifProvider = Provider.of<NewNotifProvider>(context, listen: true);
     final nProvider = Provider.of<NewNotifProvider>(context, listen: true);
-    final mainPageProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
-    final listViewProvider =
-        Provider.of<ListViewProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: true);
-    final RoundedLoadingButtonController _btnController =
-        RoundedLoadingButtonController();
+    final mainPageProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+    final listViewProvider = Provider.of<ListViewProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: true);
+    final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
     return Container(
       width: size.width / 1.09,
@@ -114,8 +98,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                   isExpanded: true,
                   icon: Padding(
                     padding: const EdgeInsets.only(right: 25.0),
-                    child: Icon(Icons.arrow_drop_down,
-                        color: APPColors.Main.black),
+                    child: Icon(Icons.arrow_drop_down, color: APPColors.Main.black),
                   ),
                   iconSize: 25,
                   underline: SizedBox(),
@@ -123,11 +106,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                   hint: Padding(
                     padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text(
-                      issueActionProvider.activityName.toString() == ''
-                          ? 'Durum'
-                          : issueActionProvider.activityName.toString(),
-                      style:
-                          TextStyle(color: APPColors.Main.black, fontSize: 15),
+                      issueActionProvider.activityName.toString() == '' ? 'Durum' : issueActionProvider.activityName.toString(),
+                      style: TextStyle(color: APPColors.Main.black, fontSize: 15),
                     ),
                   ),
                   items: issueActionProvider.activityListView.map((data) {
@@ -140,27 +120,20 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                         issueActionProvider.setadditionalTimeInput = '',
                         issueActionProvider.setminDescLength = '',
                         issueActionProvider.setmobilePhoto = '',
-                        issueActionProvider.setassigneeccType =
-                            data.ASSIGNEECC_TYPE.toString(),
-                        issueActionProvider.setactivityName =
-                            data.NAME.toString(),
-                        issueActionProvider.setactivityCode =
-                            data.CODE.toString(),
-                        issueActionProvider.setbarcodeSpace =
-                            data.BARCODE_SPACE.toString(),
-                        issueActionProvider.setadditionalTimeInput =
-                            data.ADDITIONALTIME_INPUT.toString(),
-                        issueActionProvider.setminDescLength =
-                            data.MIN_DESC_LENGTH.toString(),
-                        issueActionProvider.setmobilePhoto =
-                            data.MOBILE_PHOTO.toString(),
+                        issueActionProvider.setassigneeccType = data.ASSIGNEECC_TYPE.toString(),
+                        issueActionProvider.setactivityName = data.NAME.toString(),
+                        issueActionProvider.setactivityCode = data.CODE.toString(),
+                        issueActionProvider.setbarcodeSpace = data.BARCODE_SPACE.toString(),
+                        issueActionProvider.setadditionalTimeInput = data.ADDITIONALTIME_INPUT.toString(),
+                        issueActionProvider.setminDescLength = data.MIN_DESC_LENGTH.toString(),
+                        issueActionProvider.setmobilePhoto = data.MOBILE_PHOTO.toString(),
                       },
                       value: data.CODE.toString(),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
                           data.NAME.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                           ),
@@ -168,11 +141,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                       ),
                     );
                   }).toList()),
-              Divider(
-                thickness: height_3,
-              ),
-              Text(
-                  'Bu aktivitenin girilmesi, talebin durumunu ${issueActionProvider.activityName} olarak değiştirecektir.'),
+              const Divider(thickness: height_3),
+              Text('Bu aktivitenin girilmesi, talebin durumunu ${issueActionProvider.activityName} olarak değiştirecektir.'),
               issueActionProvider.barcodeSpace == 'Y'
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -185,26 +155,22 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               });
                             },
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: newNotifProvider.qrCode != ''
-                                  ? newNotifProvider.qrCode
-                                  : 'Mahal Kodu',
+                              border: const OutlineInputBorder(),
+                              hintText: newNotifProvider.qrCode != '' ? newNotifProvider.qrCode : 'Mahal Kodu',
                             ),
                           ),
                         ),
-                        Container(
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.qr_code_2,
-                                size: 40,
-                              ),
-                              onPressed: () {
-                                newNotifProvider.scanQR('spaceCode');
-                                setState(() {});
-                              },
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.qr_code_2,
+                              size: 40,
                             ),
+                            onPressed: () {
+                              newNotifProvider.scanQR('spaceCode');
+                              setState(() {});
+                            },
                           ),
                         ),
                       ],
@@ -219,10 +185,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                           });
                         },
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: _addTimeTextInput != ''
-                              ? _addTimeTextInput
-                              : 'Ek Süre (Gün)',
+                          border: const OutlineInputBorder(),
+                          hintText: _addTimeTextInput != '' ? _addTimeTextInput : 'Ek Süre (Gün)',
                         ),
                       ),
                     )
@@ -235,47 +199,36 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             isExpanded: true,
                             icon: Padding(
                               padding: const EdgeInsets.only(right: 25.0),
-                              child: Icon(Icons.arrow_drop_down,
-                                  color: APPColors.Main.black),
+                              child: Icon(Icons.arrow_drop_down, color: APPColors.Main.black),
                             ),
                             iconSize: 25,
                             underline: SizedBox(),
                             onChanged: (newValue) {
                               setState(() => {
-                                    issueActionProvider.setliveSelectGroupCode =
-                                        newValue.toString(),
+                                    issueActionProvider.setliveSelectGroupCode = newValue.toString(),
                                   });
                             },
                             hint: Padding(
                               padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                               child: Text(
-                                issueActionProvider.liveSelectGroupName
-                                            .toString() ==
-                                        ''
+                                issueActionProvider.liveSelectGroupName.toString() == ''
                                     ? 'Atama grubu seçiniz...'
-                                    : issueActionProvider.liveSelectGroupName
-                                        .toString(),
-                                style: TextStyle(
-                                    color: APPColors.Main.black, fontSize: 15),
+                                    : issueActionProvider.liveSelectGroupName.toString(),
+                                style: TextStyle(color: APPColors.Main.black, fontSize: 15),
                               ),
                             ),
-                            items: issueActionProvider.liveSelectAsgGroups
-                                .map((data) {
+                            items: issueActionProvider.liveSelectAsgGroups.map((data) {
                               return DropdownMenuItem(
                                 onTap: () => {
-                                  issueActionProvider.setliveSelectGroupName =
-                                      data.NAME.toString(),
-                                  issueActionProvider.getLiveSelectAsgUser(
-                                      data.CODE.toString()),
+                                  issueActionProvider.setliveSelectGroupName = data.NAME.toString(),
+                                  issueActionProvider.getLiveSelectAsgUser(data.CODE.toString()),
                                 },
-                                value: data.CODE.toString() != null
-                                    ? data.CODE.toString()
-                                    : null,
+                                value: data.CODE.toString(),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Text(
                                     data.NAME.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
                                     ),
@@ -288,43 +241,35 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             isExpanded: true,
                             icon: Padding(
                               padding: const EdgeInsets.only(right: 25.0),
-                              child: Icon(Icons.arrow_drop_down,
-                                  color: APPColors.Main.black),
+                              child: Icon(Icons.arrow_drop_down, color: APPColors.Main.black),
                             ),
                             iconSize: 25,
-                            underline: SizedBox(),
+                            underline: const SizedBox(),
                             onChanged: (newValue) {
                               setState(() => {
-                                    issueActionProvider.setliveSelectUserCode =
-                                        newValue.toString(),
+                                    issueActionProvider.setliveSelectUserCode = newValue.toString(),
                                   });
                             },
                             hint: Padding(
                               padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                               child: Text(
-                                issueActionProvider.liveSelectUserName
-                                            .toString() ==
-                                        ''
+                                issueActionProvider.liveSelectUserName.toString() == ''
                                     ? 'Atanan kişi seçimi yapınız...'
-                                    : issueActionProvider.liveSelectUserName
-                                        .toString(),
-                                style: TextStyle(
-                                    color: APPColors.Main.black, fontSize: 15),
+                                    : issueActionProvider.liveSelectUserName.toString(),
+                                style: TextStyle(color: APPColors.Main.black, fontSize: 15),
                               ),
                             ),
-                            items: issueActionProvider.liveSelectAsgUsers
-                                .map((data) {
+                            items: issueActionProvider.liveSelectAsgUsers.map((data) {
                               return DropdownMenuItem(
                                 onTap: () => {
-                                  issueActionProvider.setliveSelectUserName =
-                                      data.FULLNAME.toString(),
+                                  issueActionProvider.setliveSelectUserName = data.FULLNAME.toString(),
                                 },
                                 value: data.CODE.toString(),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Text(
                                     data.FULLNAME.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
                                     ),
@@ -343,9 +288,8 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                         });
                       },
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText:
-                            _textInput != '' ? _textInput : 'Açıklama Giriniz',
+                        border: const OutlineInputBorder(),
+                        hintText: _textInput != '' ? _textInput : 'Açıklama Giriniz',
                       ),
                     )
                   : Container(),
@@ -353,7 +297,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                   ? Column(
                       children: [
                         nProvider.imagePath.toString() != ''
-                            ? Container(
+                            ? SizedBox(
                                 height: size.width / 4,
                                 width: size.width / 4,
                                 child: Image.file(
@@ -368,14 +312,13 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(size.width / 10),
+                                  borderRadius: BorderRadius.circular(size.width / 10),
                                   color: APPColors.Clear.blue,
                                 ),
                                 width: size.width / 5,
                                 height: size.width / 5,
                                 padding: const EdgeInsets.all(8),
-                                child: Icon(Icons.camera_alt_outlined)),
+                                child: const Icon(Icons.camera_alt_outlined)),
                           ),
                         ),
                       ],
@@ -435,14 +378,11 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               '',
                               '',
                               '');
-                          Future.delayed(const Duration(milliseconds: 1000),
-                              () {
+                          Future.delayed(const Duration(milliseconds: 1000), () {
                             _btnController.success();
                             _btnController.reset();
-                            final activityResult = issueActionProvider
-                                .isActivityAddSuccess
-                                .toString();
-                            print('photoo' + activityResult);
+                            final activityResult = issueActionProvider.isActivityAddSuccess.toString();
+                            print('photoo$activityResult');
                             Navigator.pop(context);
                             listViewProvider.getIssueOperations(
                                 widget.issueCode, mainPageProvider.kadi);
@@ -461,8 +401,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                           });
                         },
                         valueColor: Colors.white,
-                        child: Text('Gönder',
-                            style: TextStyle(color: Colors.white)),
+                        child: const Text('Gönder', style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ],

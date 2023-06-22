@@ -1,6 +1,5 @@
 // ignore_for_file:file_names, prefer_const_constructors_in_immutables,prefer_const_constructors,prefer_const_literals_to_create_immutables,use_key_in_widget_constructors
 
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 import '../../utils/time_utils.dart';
@@ -117,156 +116,111 @@ class _DetailListWidgetState extends State<DetailListWidget> {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: size.width,
           height: size.height / 1.8,
           child: SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 10),
+              padding: const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            widget.statusCode == 'OPlanned'
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                        color: APPColors.NewNotifi.blue,
-                                        borderRadius: BorderRadius.circular(3)),
-                                    padding: EdgeInsets.all(3),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text('Randevulu Vakadır'),
-                                        Text(widget.planedDate.toString()),
-                                      ],
-                                    ),
-                                  )
-                                : widget.respondedTimer == '1'
-                                    ? Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(3)),
-                                        padding: EdgeInsets.all(3),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text('Hedef Yanıtlama Tarihi'),
-                                            widget.targetRDate == ''
-                                                ? Text('')
-                                                : Text(
-                                                    timeRecover(
-                                                            widget.targetRDate)
-                                                        .toString(),
-                                                    style: fixStyle(
-                                                        widget.respondedTimer
-                                                            .toString(),
-                                                        widget.fixTimer
-                                                            .toString(),
-                                                        widget.targetFDate
-                                                            .toString(),
-                                                        widget.fixedDate
-                                                            .toString()),
-                                                  )
-                                          ],
-                                        ),
-                                      )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(3)),
-                                        margin:
-                                            EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                        padding: EdgeInsets.all(3),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text('Yanıtlama Tarihi'),
-                                            widget.respondedDate == ''
-                                                ? Text('')
-                                                : Text(
-                                                    timeRecover(widget
-                                                            .respondedDate)
-                                                        .toString(),
-                                                    style: fixStyle(
-                                                        widget.respondedTimer
-                                                            .toString(),
-                                                        widget.fixTimer
-                                                            .toString(),
-                                                        widget.targetFDate
-                                                            .toString(),
-                                                        widget.fixedDate
-                                                            .toString()),
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                          ],
-                        ),
-                        Column(children: [
-                          widget.fixTimer == '1'
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          widget.statusCode == 'OPlanned'
                               ? Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(3)),
+                                  decoration: BoxDecoration(color: APPColors.NewNotifi.blue, borderRadius: BorderRadius.circular(3)),
                                   padding: EdgeInsets.all(3),
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      Text('Hedef Düzeltme Tarihi'),
-                                      widget.targetFDate == ''
-                                          ? Text('')
-                                          : Text(
-                                              timeRecover(widget.targetFDate)
-                                                  .toString(),
-                                              style: fixStyle(
-                                                  widget.respondedTimer
-                                                      .toString(),
-                                                  widget.fixTimer.toString(),
-                                                  widget.targetFDate.toString(),
-                                                  widget.fixedDate.toString()),
-                                            ),
+                                      Text('Randevulu Vakadır'),
+                                      Text(widget.planedDate.toString()),
                                     ],
                                   ),
                                 )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(3)),
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                  padding: EdgeInsets.all(3),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text('Düzeltme Tarihi'),
-                                      widget.fixedDate == ''
-                                          ? Text('')
-                                          : Text(
-                                              timeRecover(widget.fixedDate)
-                                                  .toString(),
-                                              style: fixStyle(
-                                                  widget.respondedTimer
-                                                      .toString(),
-                                                  widget.fixTimer.toString(),
-                                                  widget.targetFDate.toString(),
-                                                  widget.fixedDate.toString()),
-                                            ),
-                                    ],
-                                  ),
+                              : widget.respondedTimer == '1'
+                                  ? Container(
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text('Hedef Yanıtlama Tarihi'),
+                                          widget.targetRDate == ''
+                                              ? Text('')
+                                              : Text(
+                                                  timeRecover(widget.targetRDate).toString(),
+                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                                )
+                                        ],
+                                      ),
+                                    )
+                                  : Container(
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text('Yanıtlama Tarihi'),
+                                          widget.respondedDate == ''
+                                              ? Text('')
+                                              : Text(
+                                                  timeRecover(widget.respondedDate).toString(),
+                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                                ),
+                                        ],
+                                      ),
+                                    ),
+                        ],
+                      ),
+                      Column(children: [
+                        widget.fixTimer == '1'
+                            ? Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                padding: EdgeInsets.all(3),
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text('Hedef Düzeltme Tarihi'),
+                                    widget.targetFDate == ''
+                                        ? Text('')
+                                        : Text(
+                                            timeRecover(widget.targetFDate).toString(),
+                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                          ),
+                                  ],
                                 ),
-                        ])
-                      ],
-                    ),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                padding: EdgeInsets.all(3),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text('Düzeltme Tarihi'),
+                                    widget.fixedDate == ''
+                                        ? Text('')
+                                        : Text(
+                                            timeRecover(widget.fixedDate).toString(),
+                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                          ),
+                                  ],
+                                ),
+                              ),
+                      ])
+                    ],
                   ),
                   Divider(height: 15, color: APPColors.Main.black),
                   widget.code != ''
@@ -287,9 +241,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                widget.idate != ''
-                                    ? widget.idate.toString()
-                                    : '',
+                                widget.idate != '' ? widget.idate.toString() : '',
                                 style: TextStyle(
                                   color: APPColors.Secondary.black,
                                   fontSize: 14,
@@ -305,9 +257,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                widget.statusName != ''
-                                    ? widget.statusName.toString()
-                                    : '',
+                                widget.statusName != '' ? widget.statusName.toString() : '',
                                 style: TextStyle(
                                   color: APPColors.Secondary.black,
                                   fontSize: 14,
@@ -339,10 +289,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.description.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -368,10 +315,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.contactName.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -398,10 +342,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.locName.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       )
                     ],
@@ -428,10 +369,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.locTree.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -458,10 +396,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.title.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -488,10 +423,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.cmdb.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -518,10 +450,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.idate.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -548,10 +477,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.ani.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -578,10 +504,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           timeRecover(widget.targetRDate).toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -608,10 +531,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           timeRecover(widget.targetFDate).toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -626,25 +546,15 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'HYS-48 saat ${widget.hys.toString() != '' ? {
-                              widget.hys.toString()
-                            } : ''}',
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          'HYS-48 saat ${widget.hys.toString() != '' ? {widget.hys.toString()} : ''}',
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                       Expanded(
                         flex: 3,
                         child: Text(
-                          'HDS-48 saat ${widget.hds.toString() != '' ? {
-                              widget.hds.toString()
-                            } : ''}',
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          'HDS-48 saat ${widget.hds.toString() != '' ? {widget.hds.toString()} : ''}',
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -671,10 +581,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.assignmentGroupName.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -701,10 +608,7 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         flex: 3,
                         child: Text(
                           widget.assigneName.toString(),
-                          style: TextStyle(
-                              color: APPColors.Secondary.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
