@@ -30,8 +30,10 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueFilesState extends State<IssueFiles> {
+class _IssueFilesState extends State<IssueFiles> with AutomaticKeepAliveClientMixin<IssueFiles> {
   @override
+  bool get wantKeepAlive => true;
+
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);

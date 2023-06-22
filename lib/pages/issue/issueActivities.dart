@@ -27,7 +27,7 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueActivitiesState extends State<IssueActivities> {
+class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAliveClientMixin <IssueActivities>{
   @override
   void initState() {
     super.initState();
@@ -38,6 +38,7 @@ class _IssueActivitiesState extends State<IssueActivities> {
   }
 
   @override
+  bool get wantKeepAlive => true;
   void dispose() {
     // TODO: implement dispose
     listViewProvider?.pageController?.dispose();

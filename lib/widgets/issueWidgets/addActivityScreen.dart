@@ -384,10 +384,20 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             final activityResult = issueActionProvider.isActivityAddSuccess.toString();
                             print('photoo$activityResult');
                             Navigator.pop(context);
-                            listViewProvider.getIssueOperations(widget.issueCode, mainPageProvider.kadi);
-                            detailViewProvider.loadData(widget.issueCode.toString(), mainPageProvider.kadi.toString());
+                            listViewProvider.getIssueOperations(
+                                widget.issueCode, mainPageProvider.kadi);
 
-                            snackBar(context, activityResult == 'true' ? 'Aktivite girişi başarılı' : 'Aktivite girişi başarısız', activityResult);
+                            detailViewProvider.loadData(
+                                widget.issueCode.toString(),
+                                mainPageProvider.kadi.toString());
+                            detailViewProvider.loadIssueSummary(
+                                widget.issueCode.toString(), mainPageProvider.kadi);
+                            snackBar(
+                                context,
+                                activityResult == 'true'
+                                    ? 'Aktivite girişi başarılı'
+                                    : 'Aktivite girişi başarısız',
+                                activityResult);
                           });
                         },
                         valueColor: Colors.white,

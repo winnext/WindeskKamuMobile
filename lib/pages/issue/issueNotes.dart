@@ -28,8 +28,9 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueNotesState extends State<IssueNotes> {
+class _IssueNotesState extends State<IssueNotes> with AutomaticKeepAliveClientMixin<IssueNotes> {
   @override
+  bool get wantKeepAlive => true;
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);

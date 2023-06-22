@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/notiService.dart';
 import 'package:win_kamu/utils/global_utils.dart';
 import '../api/api_repository.dart';
+import '../l10n/locale_keys.g.dart';
 import '../providers/main_page_view_provider.dart';
 import '../widgets/buttonWidgets/homeButtons.dart';
 import 'package:badges/badges.dart' as badges;
@@ -147,7 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final apirepository = APIRepository();
 
-    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -166,7 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               tooltip: 'Exit',
               onPressed: () async {
-                var cikis_result = await apirepository.cikis(mainViewProvider.kadi);
+                var cikis_result =
+                    await apirepository.cikis(mainViewProvider.kadi);
                 try {
                   if (cikis_result) {
                     snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
@@ -207,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             backgroundColor: Colors.transparent,
                             elevation: 10,
                             context: context,
-                            builder: (context) => const AnnouncementList())
+                            builder: (context) => AnnouncementList())
                         : null;
                   },
                 ),
@@ -216,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         backgroundColor: APPColors.Main.white,
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -252,10 +256,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'Vaka-(SLA) Listesi', iconName: Icons.calendar_month, navigator: Issue()),
+                            child: HomeButton(
+                                text: 'Vaka-(SLA) Listesi',
+                                iconName: Icons.calendar_month,
+                                navigator: Issue()),
                           ),
                           Expanded(
-                            child: HomeButton(text: 'Vaka-(SLA) Arama', iconName: Icons.attachment, navigator: NewNotif()),
+                            child: HomeButton(
+                                text: 'Vaka-(SLA) Arama',
+                                iconName: Icons.attachment,
+                                navigator: NewNotif()),
                           )
                         ],
                       ),
@@ -264,10 +274,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'İş Emri Listesi', iconName: Icons.content_paste_search, navigator: WoTracingList()),
+                            child: HomeButton(
+                                text: 'İş Emri Listesi',
+                                iconName: Icons.content_paste_search,
+                                navigator: WoTracingList()),
                           ),
                           Expanded(
-                            child: HomeButton(text: 'İş Emri Arama ', iconName: Icons.content_paste_off, navigator: CloseRequestAwaitApproval()),
+                            child: HomeButton(
+                                text: 'İş Emri Arama ',
+                                iconName: Icons.content_paste_off,
+                                navigator: CloseRequestAwaitApproval()),
                           )
                         ],
                       ),
@@ -276,7 +292,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'Yeni İş Emri', iconName: Icons.calendar_month, navigator: ComplaintRequests()),
+                            child: HomeButton(
+                                text: 'Yeni İş Emri',
+                                iconName: Icons.calendar_month,
+                                navigator: ComplaintRequests()),
                           ),
                           // Expanded(
                           //   child: HomeButton(

@@ -14,8 +14,8 @@ class ListViewModel {
   String? DESCRIPTION;
   String? FIXED_IDATE;
   String? PLANNEDDATE;
-  String? response_timer;
-  String? fixed_timer;
+  Object? response_timer;
+  Object? fixed_timer;
   String? SPACE;
 
   ListViewModel(

@@ -16,7 +16,8 @@ class FilterBox extends StatefulWidget {
 class _FilterBoxState extends State<FilterBox> {
   final textInput = TextEditingController();
 
-  List<DropdownMenuItem<IssueFilterModel>> dropdownItems = []; //* you can make nullable if you want, I'm doing it to force having String.
+  List<DropdownMenuItem<IssueFilterModel>> dropdownItems =
+      []; //* you can make nullable if you want, I'm doing it to force having String.
   String selectedCurrency = 'USD';
 
   @override
@@ -92,7 +93,7 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.buildCode != ''
+            exampleList.buildName != ''
                 ? Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
@@ -119,21 +120,22 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.floor != ''
+            exampleList.floorCode != ''
                 ? Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
-                          exampleList.setfloor = '';
+                          exampleList.setfloorCode = '';
+                          exampleList.setfloorName = '';
                           exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              exampleList.floor.toString(),
+                              exampleList.floorName.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(color: APPColors.Modal.blue),
                             ),
@@ -145,21 +147,22 @@ class _FilterBoxState extends State<FilterBox> {
                         )),
                   )
                 : Container(),
-            exampleList.wing != ''
+            exampleList.wingCode != ''
                 ? Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: APPColors.Main.white),
                     child: GestureDetector(
                         onTap: () {
                           exampleList.exampleListView.clear();
-                          exampleList.setwing = '';
+                          exampleList.setwingCode = '';
+                          exampleList.setwingName = '';
                           exampleList.loadData(1, widget.moduleCode);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              exampleList.wing.toString(),
+                              exampleList.wingName.toString(),
                               textAlign: TextAlign.center,
                               style: TextStyle(color: APPColors.Modal.blue),
                             ),

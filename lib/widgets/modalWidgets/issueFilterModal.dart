@@ -100,7 +100,8 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           onChanged: (newValue) {
                             setState(() => {
                                   exampleList.exampleListView.clear(),
-                                  exampleList.setstatusCode = newValue.toString(),
+                                  exampleList.setstatusCode =
+                                      newValue.toString(),
                                   exampleList.loadData(1, widget.moduleCode),
                                   selectedFruit = newValue.toString()
                                 });
@@ -140,7 +141,8 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           onChanged: (newValue) {
                             setState(() => {
                                   exampleList.exampleListView.clear(),
-                                  exampleList.setbuildCode = newValue.toString(),
+                                  exampleList.setbuildCode =
+                                      newValue.toString(),
                                   exampleList.loadData(1, widget.moduleCode),
                                   selectedFruit = newValue.toString()
                                 });
@@ -180,7 +182,8 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           onChanged: (newValue) {
                             setState(() => {
                                   exampleList.exampleListView.clear(),
-                                  exampleList.setfloor = newValue.toString(),
+                                  exampleList.setfloorCode =
+                                      newValue.toString(),
                                   exampleList.loadData(1, widget.moduleCode),
                                   selectedFruit = newValue.toString()
                                 });
@@ -188,13 +191,23 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           hint: Padding(
                             padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                             child: Text(
-                              exampleList.floor.toString() == '' ? 'Kat' : exampleList.floor.toString(),
-                              style: TextStyle(color: APPColors.Main.white, fontSize: 15),
+                              exampleList.floorName.toString() == ''
+                                  ? 'Kat'
+                                  : exampleList.floorName.toString(),
+                              style: TextStyle(
+                                  color: APPColors.Main.white, fontSize: 15),
                             ),
                           ),
                           items: exampleList.issueFilterFloorCodes.map((data) {
                             return DropdownMenuItem(
-                              onTap: () => {exampleList.setfloor = data.NAME.toString()},
+                              onTap: () => {
+                                print('dataBFloor' +
+                                    data.NAME.toString() +
+                                    data.CODE.toString() +
+                                    data.FULLNAME.toString() +
+                                    data.STATUSNAME.toString()),
+                                exampleList.setfloorName = data.NAME.toString()
+                              },
                               value: data.CODE.toString(),
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
@@ -220,7 +233,7 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           onChanged: (newValue) {
                             setState(() => {
                                   exampleList.exampleListView.clear(),
-                                  exampleList.setwing = newValue.toString(),
+                                  exampleList.setwingCode = newValue.toString(),
                                   exampleList.loadData(1, widget.moduleCode),
                                   selectedFruit = newValue.toString()
                                 });
@@ -228,13 +241,17 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           hint: Padding(
                             padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                             child: Text(
-                              exampleList.wing.toString() == '' ? 'Kanat' : exampleList.wing.toString(),
-                              style: TextStyle(color: APPColors.Main.white, fontSize: 15),
+                              exampleList.wingName.toString() == ''
+                                  ? 'Kanat'
+                                  : exampleList.wingName.toString(),
+                              style: TextStyle(
+                                  color: APPColors.Main.white, fontSize: 15),
                             ),
                           ),
                           items: exampleList.issueFilterWingCodes.map((data) {
                             return DropdownMenuItem(
-                              onTap: () => {exampleList.setwing = data.NAME.toString()},
+                              onTap: () =>
+                                  {exampleList.setwingName = data.NAME.toString()},
                               value: data.CODE.toString(),
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10.0),
@@ -256,23 +273,33 @@ class _IssueFilterModalState extends State<IssueFilterModal> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
-                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(APPColors.Clear.blue)),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          APPColors.Clear.blue)),
                               child: const Text('Temizle'),
                               onPressed: () {
                                 exampleList.exampleListView.clear();
-                                exampleList.setwing = '';
+                                exampleList.setwingCode = '';
+                                exampleList.setwingName = '';
                                 exampleList.setassigne = '';
                                 exampleList.setbuildCode = '';
                                 exampleList.setbuildName = '';
-                                exampleList.setfloor = '';
+                                exampleList.setfloorName = '';
+                                exampleList.setfloorCode = '';
                                 exampleList.setstatusCode = '';
                                 exampleList.setstatusName = '';
                                 exampleList.loadData(1, widget.moduleCode);
                               },
                             ),
                             ElevatedButton(
-                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(APPColors.Filter.blue)),
-                              child: const Text('Filtrele', style: TextStyle(color: Color.fromARGB(255, 26, 20, 20))),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          APPColors.Filter.blue)),
+                              child: const Text('Filtrele',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 26, 20, 20))),
                               onPressed: () {
                                 Navigator.pop(context);
                               },

@@ -41,7 +41,7 @@ final apirepository = APIRepository();
 DetailViewProvider? detailViewProvider;
 MainPageViewProvider? mainPageViewProvider;
 
-class _IssueDetailState extends State<IssueDetail> {
+class _IssueDetailState extends State<IssueDetail> with AutomaticKeepAliveClientMixin<IssueDetail> {
   String dateNow = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
 
   changeTime() {
@@ -51,6 +51,7 @@ class _IssueDetailState extends State<IssueDetail> {
   }
 
   @override
+  bool get wantKeepAlive => true;
   void initState() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       if (!mounted) {
