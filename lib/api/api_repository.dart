@@ -383,7 +383,7 @@ class APIRepository {
         base_url_v1 + TOKEN_V1 + deviceToken + '&action=deleteWorkorderWorklog&code=' + woLogCode.toString() + '&username=' + kadi.toString();
     print(url);
     try {
-      BaseOptions options = new BaseOptions(
+      BaseOptions options = BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
@@ -410,7 +410,6 @@ class APIRepository {
 
   Future getWorkOrderWorklogsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String deviceToken = prefs.getString('deviceId').toString();
 
     String? kadi = prefs.getString('prefsUserName');
 
@@ -443,6 +442,71 @@ class APIRepository {
     }
   }
 
+  // get work order personels
+  Future getWorkOrderPersonelsApi(woCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = '$BASE_URL_V2/workorder/$woCode/resources';
+
+    print('Eforlar listesi url : $url');
+
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        print('girdi');
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
+  // get shiftings
+  // Future getShiftings(woLogCode) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String deviceToken = prefs.getString('deviceId').toString();
+
+  //   String? kadi = prefs.getString('prefsUserName');
+
+  //   String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getVardiyas';
+  //   try {
+  //     BaseOptions options = BaseOptions(
+  //         baseUrl: url,
+  //         receiveDataWhenStatusError: true,
+  //         connectTimeout: 3 * 2000, // 60 seconds
+  //         receiveTimeout: 3 * 2000 // 60 seconds
+  //         );
+
+  //     Dio dio = Dio(options);
+  //     final response = await dio.get(url);
+  //     if (response.data['result'] == 'success') {
+  //       return response.data['records'];
+  //     } else {
+  //       return false;
+  //     }
+  //   } on DioError catch (e) {
+  //     print('girdi');
+
+  //     return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+  //   }
+  // }
+
   //Depolar
 
   Future getStoreApi() async {
@@ -452,10 +516,10 @@ class APIRepository {
     String? kadi = prefs.getString('prefsUserName');
 
     String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getStore&user=' + kadi.toString();
-    ;
+
     print(url);
     try {
-      BaseOptions options = new BaseOptions(
+      BaseOptions options = BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
