@@ -106,16 +106,13 @@ class _isEmriAramaState extends State<isEmriArama> {
                                 builder: (context) => WoDetail(moduleCode: '', woCode: searchProvider.isEmriNo.text),
                               ),
                             );
-                          } else if (int.parse(sonuc) == 0) {
-                            snackBar(context, 'İş emrini görmeye yetkiniz yoktur', 'info');
-                          } else {
-                            snackBar(context, 'Lütfen İş Emri Numarasını Kontrol Ediniz', 'info');
                           }
                         },
-                        child: const Text('Ara'),
-                      ),
-                    ),
-                  ),
+                            child: const Text('Ara'),
+                          ),
+                        ),
+            ),
+            
                 ],
               ),
             ))),

@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:selectable_list/selectable_list.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/WorkOrder/woEforts.dart';
-import 'package:win_kamu/utils/global_utils.dart';
-import 'package:win_kamu/utils/themes.dart';
-import 'package:win_kamu/utils/utils.dart';
+import 'woEforts.dart';
+import 'woSpareParts.dart';
+import '../../utils/global_utils.dart';
+import '../../utils/themes.dart';
+import '../../utils/utils.dart';
 
 import '../../providers/workorder_detail_provider.dart';
 
@@ -138,7 +139,8 @@ class _WoOperationState extends State<WoOperation> {
                   sortAscending: true,
                   sortColumnIndex: 1,
                   dataRowHeight: 40,
-                  showBottomBorder: false,
+                  
+                  showBottomBorder: true,
                   columns: [
                     DataColumn(
                         label: Text('Kullanıcı', style: _contentStyleHeader),
@@ -147,7 +149,7 @@ class _WoOperationState extends State<WoOperation> {
                         label: Text('Süre', style: _contentStyleHeader)),
                     DataColumn(
                         label: Text('Sil', style: _contentStyleHeader),
-                        numeric: true),
+                        ),
                   ],
                   rows: [
                     for(var i = 0; i< woDetailViewProvider.eforlarArray[1].length; i++)
@@ -160,72 +162,128 @@ class _WoOperationState extends State<WoOperation> {
                           DataCell(Text(woDetailViewProvider.eforlarArray[1][i],
                               style: _contentStyle, textAlign: TextAlign.right)),
                           DataCell(Text( woDetailViewProvider.eforlarArray[2][i], style: _contentStyle)),
-                          DataCell(TextButton(onPressed: (){}, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),))))
+                          DataCell(
+                            GestureDetector(
+  onTap: () {
+    woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );
+  },
+  child: Icon(Icons.delete,color: Colors.red,),
+)
+                          )
                         ],
                       ),
-                   
+                  //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
                   ],
                 ),
                     ),
                   ],
                 ),
               ),
-              AccordionSection(
+               AccordionSection(
                 isOpen: false,
-                leftIcon: const Icon(Icons.food_bank, color: Colors.white),
-                header: Text('Company Info', style: _headerStyle),
-                content: DataTable(
+                headerBackgroundColor: APPColors.Login.blue,
+
+                leftIcon: const Icon(Icons.warehouse, color: Colors.white),
+                header: Text('Malzemeler', style: _headerStyle),
+                contentBorderColor: const Color(0xffffffff),
+                headerBackgroundColorOpened: Colors.black,
+                content: Accordion(
+                  maxOpenSections: 1,
+                  headerBackgroundColorOpened: Colors.black54,
+                  headerPadding:
+                      const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                  children: [
+                    AccordionSection(
+                      isOpen: false,
+                      
+                      leftIcon:
+                          const Icon(Icons.add, color: Colors.white),
+                      headerBackgroundColor: Colors.green,
+                      headerBackgroundColorOpened: Colors.black,
+                      header: Text('Malzeme Ekle', style: _headerStyle),
+                      content:    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))
+                      
+                          ),
+                        ),
+                        onPressed: () async{
+                          print('getStore tıklandı');
+                         await woDetailViewProvider.getStore();
+                         print('depolar array');
+                         print(woDetailViewProvider.depolarArray);
+                   
+
+                         showModalBottomSheet<void>(
+            // context and builder are
+            // required properties in this widget
+            context: context,
+            builder: (BuildContext context) {
+              // we set up a container inside which
+              // we create center column and display text
+ 
+              // Returning SizedBox instead of a Container
+              return WoSpareParts(woCode: widget.woCode,);
+            },
+          );
+          
+                        },
+                        child: Text('Yeni Malzeme Ekle'),
+                                          ),
+                      contentHorizontalPadding: 20,
+                      contentBorderColor: Colors.black54,
+                    ),
+                    AccordionSection(
+                      isOpen: false,
+                      leftIcon:
+                          const Icon(Icons.warehouse, color: Colors.white),
+                      header: Text('Malzemeler', style: _headerStyle),
+                      headerBackgroundColor: APPColors.Login.blue,
+                      headerBackgroundColorOpened: Colors.black,
+                      contentBorderColor: Colors.black54,
+                      content:  DataTable(
                   sortAscending: true,
                   sortColumnIndex: 1,
                   dataRowHeight: 40,
-                  showBottomBorder: false,
+                  
+                  showBottomBorder: true,
                   columns: [
                     DataColumn(
-                        label: Text('ID', style: _contentStyleHeader),
-                        numeric: true),
+                        label: Text('Kullanıcı', style: _contentStyleHeader),
+                        numeric: false),
                     DataColumn(
-                        label: Text('Description', style: _contentStyleHeader)),
+                        label: Text('Süre', style: _contentStyleHeader)),
                     DataColumn(
-                        label: Text('Price', style: _contentStyleHeader),
-                        numeric: true),
+                        label: Text('Sil', style: _contentStyleHeader),
+                        ),
                   ],
                   rows: [
-                    DataRow(
-                      cells: [
-                        DataCell(Text('1',
-                            style: _contentStyle, textAlign: TextAlign.right)),
-                        DataCell(Text('Fancy Product', style: _contentStyle)),
-                        DataCell(Text(r'$ 199.99',
-                            style: _contentStyle, textAlign: TextAlign.right))
-                      ],
-                    ),
-                    DataRow(
-                      cells: [
-                        DataCell(Text('2',
-                            style: _contentStyle, textAlign: TextAlign.right)),
-                        DataCell(Text('Another Product', style: _contentStyle)),
-                        DataCell(Text(r'$ 79.00',
-                            style: _contentStyle, textAlign: TextAlign.right))
-                      ],
-                    ),
-                    DataRow(
-                      cells: [
-                        DataCell(Text('3',
-                            style: _contentStyle, textAlign: TextAlign.right)),
-                        DataCell(Text('Really Cool Stuff', style: _contentStyle)),
-                        DataCell(Text(r'$ 9.99',
-                            style: _contentStyle, textAlign: TextAlign.right))
-                      ],
-                    ),
-                    DataRow(
-                      cells: [
-                        DataCell(Text('4',
-                            style: _contentStyle, textAlign: TextAlign.right)),
-                        DataCell(
-                            Text('Last Product goes here', style: _contentStyle)),
-                        DataCell(Text(r'$ 19.99',
-                            style: _contentStyle, textAlign: TextAlign.right))
-                      ],
+                    for(var i = 0; i< woDetailViewProvider.eforlarArray[1].length; i++)
+                      
+
+
+                        
+                      DataRow(
+                        cells: [
+                          DataCell(Text(woDetailViewProvider.eforlarArray[1][i],
+                              style: _contentStyle, textAlign: TextAlign.right)),
+                          DataCell(Text( woDetailViewProvider.eforlarArray[2][i], style: _contentStyle)),
+                          DataCell(
+                            GestureDetector(
+  onTap: () {
+    woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );
+  },
+  child: Icon(Icons.delete,color: Colors.red,),
+)
+                          )
+                        ],
+                      ),
+                  //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
+                  ],
+                ),
                     ),
                   ],
                 ),

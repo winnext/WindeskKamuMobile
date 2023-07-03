@@ -3,7 +3,7 @@ import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+import '../../widgets/appbar/custom_main_appbar.dart';
 
 import '../../l10n/locale_keys.g.dart';
 import '../../providers/detail_view_provider.dart';

@@ -3,10 +3,10 @@ import 'package:never_behind_keyboard/never_behind_keyboard.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
-import 'package:win_kamu/pages/searchPage/mahalAramaListe.dart';
-import 'package:win_kamu/providers/search_view_provider.dart';
-import 'package:win_kamu/utils/global_utils.dart';
+import '../closedRequests/closedRequests.dart';
+import 'mahalAramaListe.dart';
+import '../../providers/search_view_provider.dart';
+import '../../utils/global_utils.dart';
 
 import '../../l10n/locale_keys.g.dart';
 import '../../providers/login_provider.dart';

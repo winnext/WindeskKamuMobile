@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:win_kamu/providers/login_provider.dart';
+import '../../providers/login_provider.dart';
 
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';

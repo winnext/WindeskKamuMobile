@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/searchPage/varlikAramaListe.dart';
-import 'package:win_kamu/providers/search_view_provider.dart';
-import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+import 'varlikAramaListe.dart';
+import '../../providers/search_view_provider.dart';
+import '../../widgets/appbar/custom_main_appbar.dart';
 
 import '../../l10n/locale_keys.g.dart';
 import '../../utils/global_utils.dart';

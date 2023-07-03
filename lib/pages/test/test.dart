@@ -12,8 +12,8 @@ import '../../utils/themes.dart';
 import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
 import '../issue/issueDetail.dart';
 import '../new_notif/new_notif_base.dart';
-import 'package:win_kamu/utils/global_utils.dart';
-import 'package:win_kamu/api/api_repository.dart';
+import '../../utils/global_utils.dart';
+import '../../api/api_repository.dart';
 
 class Test extends StatefulWidget {
   const Test({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:win_kamu/utils/themes.dart';
+import '../utils/themes.dart';
 import '../utils/utils.dart';
 
 //Boşluk bırakmak için kullanılacak olan widget

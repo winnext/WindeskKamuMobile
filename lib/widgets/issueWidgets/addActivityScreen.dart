@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:win_kamu/providers/main_page_view_provider.dart';
-import 'package:win_kamu/utils/utils.dart';
+import '../../providers/main_page_view_provider.dart';
+import '../../utils/utils.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/detail_view_provider.dart';

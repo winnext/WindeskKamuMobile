@@ -334,10 +334,17 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=addWorkorderEffort&workorderCode=$code&username=$kadi&module=workorder&workperiod=$workPeriod&startdate=1&type=PREDICTED&description=test';
-    print(code);
-    print(url);
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=addWorkorderEffort&workordercode='+code.toString()+'&username=' +
+        kadi.toString() +
+        '&module=workorder' +
+        '&workperiod=' +
+        workPeriod.toString()+
+        '&startdate=1&type=PREDICTED&description=test';
+        print(code);
+  print(url);
     try {
       BaseOptions options = BaseOptions(
           baseUrl: url,
@@ -349,6 +356,47 @@ class APIRepository {
       Dio dio = Dio(options);
       final response = await dio.get(url);
       print(' Efor Ekleme');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+  }
+
+  ///Delete Effort
+  
+  Future deleteEffortApi(woLogCode) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=deleteWorkorderWorklog&code='+woLogCode.toString()+'&username=' +
+        kadi.toString();
+  print(url);
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Efor silme');
       print(response);
       if (response.data['result'] == 'success') {
         return response.data['records'];
@@ -398,6 +446,133 @@ class APIRepository {
       return 'notsuccess';
     }
   }
+
+  //Depolar
+
+   Future getStoreApi() async {
+
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getStore&user='+kadi.toString();
+        ;
+  print(url);
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Depo Listesi');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+  }
+
+  //Depolar
+
+   Future getProductsApi(storageCode) async {
+
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getProduct&storagecode='+storageCode.toString();
+  print('getProducts url : '+url);
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Depo Listesi');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+  }
+
+  //Birim
+
+  Future getPackageInfoByProduct(productDefCode) async{
+
+
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getPackageInfoByProduct&productDefCode='+productDefCode.toString();
+        ;
+  print(url);
+    try {
+      BaseOptions options = new BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 2000, // 60 seconds
+          receiveTimeout: 3 * 2000 // 60 seconds
+          );
+
+      Dio dio = Dio(options);
+      final response = await dio.get(url);
+      print(' Depo Listesi');
+      print(response);
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      } else {
+        return false;
+      }
+    } on DioError catch (e) {
+      print('girdi');
+
+      return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+    }
+
+
+
+
+
+  }
+
 
   Future mahalAramaVarlikDetaySlaApi(cmdbCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -787,7 +962,11 @@ class APIRepository {
       print('girdi');
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
     }
-  }
+
+
+
+
+    }
 
   Future checkWorkorderByAuthorizedServicesApi(String kadi, String woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -809,18 +988,34 @@ class APIRepository {
 
       Dio dio = Dio(options);
       final response = await dio.get(checkSonucUrl);
+      
+          print(response);
+          if (response.data['result'] == 'success') {
+                        return response.data['count'].toString();
+          }else{
+                        print('else');
+                        if(response.data['result'] == "Invalid Device Id"){
+                            return "Invalid Device Id";
 
-      print(response);
-      if (response.data['result'] == 'success') {
-        return response.data['count'].toString();
-      } else {
-        return response.data['count'].toString();
-      }
+                        }else{
+                            return response.data['count'].toString();
+
+                        }
+
+                  print(response);
+                  if (response.data['result'] == 'success') {
+                    return response.data['count'].toString();
+                  } else {
+                    return response.data['count'].toString();
+                  }
+          }
     } on DioError catch (e) {
       print('girdi');
       return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
     }
   }
+
+
 
   Future login(String kadi, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -899,7 +1094,16 @@ class APIRepository {
       print(getServerTimeResponse);
       if (getServerTimeResponse.statusCode == 200) {
         var tarih = getServerTimeResponse.data['records']; //20230418155418
-        var yil = tarih[0].toString() + tarih[1].toString() + tarih[2].toString() + tarih[3].toString();
+        var donus = getServerTimeResponse.data['result'];
+        print('donus : ');
+        print(donus);
+        print('Tarih : ');
+        print(tarih);
+        if( tarih != null ){
+          var yil = tarih[0].toString() +
+            tarih[1].toString() +
+            tarih[2].toString() +
+            tarih[3].toString();
         var ay = tarih[4].toString() + tarih[5].toString();
         var gun = tarih[6].toString() + tarih[7].toString();
 
@@ -910,6 +1114,11 @@ class APIRepository {
         var duzenlenmis_tarih = '$gun/$ay/$yil $saat:$dakika:$saniye';
 
         return duzenlenmis_tarih;
+        }else{
+          return donus;
+        }
+      }else{
+        return '';
       }
     } on DioError catch (e) {
       print('DIO ERROR CATCH');
@@ -919,7 +1128,9 @@ class APIRepository {
   }
 
   Future accessTest1() async {
-    String url = '$ATTACHPATHLIVE?&timestamp=${DateTime.now().millisecondsSinceEpoch}';
+    String url = ATTACHPATHLIVE +
+        '?&timestamp=' +
+        (DateTime.now().millisecondsSinceEpoch).toString();
 
     try {
       BaseOptions options = BaseOptions(

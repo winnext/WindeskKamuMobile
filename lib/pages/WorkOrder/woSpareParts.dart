@@ -7,48 +7,38 @@ import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 import '../../utils/utils.dart';
 
-class WoEforts extends StatefulWidget {
+class WoSpareParts extends StatefulWidget {
   final woCode;
 
-  const WoEforts({super.key, required this.woCode});
+  const WoSpareParts({super.key, required this.woCode});
 
   @override
-  State<WoEforts> createState() => _WoEfortsState();
+  State<WoSpareParts> createState() => _WoSparePartsState();
 }
 
-class _WoEfortsState extends State<WoEforts> {
+class _WoSparePartsState extends State<WoSpareParts> {
+  @override
+  void initState() {
+    final woDetailViewProvider =
+        Provider.of<WoDetailViewProvider>(context, listen: false);
+    woDetailViewProvider.getStore();
+    woDetailViewProvider.getProducts(woDetailViewProvider.secilenDepo);
+    print('depolar  :  ');
+    print(woDetailViewProvider.depolarArray);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final woDetailViewProvider =
         Provider.of<WoDetailViewProvider>(context, listen: true);
-    print(woDetailViewProvider.secilenSure);
 
-    final dataListSure = [
-      "Lütfen Süre Seçiniz",
-      "15 dk",
-      "30 dk",
-      "45 dk",
-      "1 sa",
-      "2 sa",
-      "6 sa",
-      "Serbest Seçim"
-    ];
+    List<String> dataListDepo = woDetailViewProvider.depolarArray[1];
+    List<String> dataListUrunler = woDetailViewProvider.depoUrunlerArray[1];
 
-    List<String> dataListGun = [];
-    List<String> dataListSaat = [];
-    List<String> dataListDakika = [];
-
-    for (var i = 0; i <= 100; i++) {
-      dataListGun.add(i.toString());
-    }
-    for (var x = 0; x <= 23; x++) {
-      dataListSaat.add(x.toString());
-    }
-    for (var i = 0; i <= 59; i++) {
-      dataListDakika.add(i.toString());
-    }
-
-    String dropdownvalueSureSeciniz = 'Lütfen Süre Seçiniz';
+    print('dataListDepo : ');
+    print(dataListDepo);
 
     return Sizer(builder: (context, Orientation, DeviceType) {
       return Container(
@@ -60,7 +50,7 @@ class _WoEfortsState extends State<WoEforts> {
                 child: SizedBox(
                     height: 10.h,
                     child: Text(
-                      'Lütfen Süre Seçiniz.',
+                      'Depo Seçimi.',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: font_size_16),
                     )),
@@ -74,19 +64,19 @@ class _WoEfortsState extends State<WoEforts> {
                       isExpanded: true,
 
                       // Initial Value
-                      value: woDetailViewProvider.secilenSure,
+                      value: 'Lütfen Depo Seçiniz',
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        labelText: 'Süre',
+                        labelText: 'Depo',
                       ),
 
                       // Down Arrow Icon
                       icon: const Icon(Icons.keyboard_arrow_down),
 
                       // Array list of items
-                      items: dataListSure.map((String items) {
+                      items: dataListDepo.map((String items) {
                         return DropdownMenuItem(
                           value: items,
                           child: Text(items),
@@ -94,142 +84,66 @@ class _WoEfortsState extends State<WoEforts> {
                       }).toList(),
                       // After selecting the desired option,it will
                       // change button value to selected value
+
                       onChanged: (String? newValue) {
-                        print(newValue.toString());
+                        print('SEÇİLEN DEGER : ' + newValue.toString());
                         setState(() {
-                          woDetailViewProvider.setSureDegeri =
+                          woDetailViewProvider.setDepoDegeri =
                               newValue.toString();
+                          String valueDegeri =
+                              woDetailViewProvider.depolarArray[0]
+                                  [dataListDepo.indexOf(newValue.toString())];
+                          print('SECİLEN DEGER VALUE DEGERİ' + valueDegeri);
+                          woDetailViewProvider.setDepoDegeriValue = valueDegeri;
+                          woDetailViewProvider.getProducts(valueDegeri);
                         });
 
-                        print(woDetailViewProvider.secilenSure);
+                        print(woDetailViewProvider.secilenDepo);
                       },
                     ),
                   ),
                 ),
               ),
-              woDetailViewProvider.secilenSure == 'Serbest Seçim'
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: DropdownButtonFormField(
-                                    isExpanded: true,
+              woDetailViewProvider.secilenDepo != ''
+                  ? Expanded(
+                      child: SizedBox(
+                        height: 30.h,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonFormField(
+                            isExpanded: true,
 
-                                    // Initial Value
-                                    value: woDetailViewProvider.secilenGun,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      labelText: 'Gün',
-                                    ),
-
-                                    // Down Arrow Icon
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                                    // Array list of items
-                                    items: dataListGun.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    onChanged: (String? newValue) {
-                                      print(newValue.toString());
-                                      setState(() {
-                                        woDetailViewProvider.setSecilenGun =
-                                            newValue.toString();
-                                      });
-
-                                      print(woDetailViewProvider.secilenSure);
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: DropdownButtonFormField(
-                                    isExpanded: true,
-
-                                    // Initial Value
-                                    value: woDetailViewProvider.secilenSaat,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      labelText: 'Saat',
-                                    ),
-
-                                    // Down Arrow Icon
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                                    // Array list of items
-                                    items: dataListSaat.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    onChanged: (newValue) {
-                                      print(newValue.toString());
-
-                                      setState(() {
-                                        woDetailViewProvider.setSecilenSaat =
-                                            newValue.toString();
-                                      });
-
-                                      print(woDetailViewProvider.secilenSure);
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                  child: DropdownButtonFormField(
-                                    isExpanded: true,
-
-                                    // Initial Value
-                                    value: woDetailViewProvider.secilenDakika,
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      labelText: 'Dakika',
-                                    ),
-
-                                    // Down Arrow Icon
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                                    // Array list of items
-                                    items: dataListDakika.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    onChanged: (String? newValue) {
-                                      print(newValue.toString());
-                                      setState(() {
-                                        woDetailViewProvider.setSecilenDakika =
-                                            newValue.toString();
-                                      });
-
-                                      print(woDetailViewProvider.secilenSure);
-                                    },
-                                  ),
-                                )
-                              ],
+                            // Initial Value
+                            value: woDetailViewProvider.secilenDepoUrunSecimi,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              labelText: 'Ürün Seçimi',
                             ),
-                          ],
+
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
+
+                            // Array list of items
+                            items: dataListUrunler.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              print(newValue.toString());
+                              setState(() {
+                                woDetailViewProvider.setSureDegeri =
+                                    newValue.toString();
+                              });
+
+                              print(woDetailViewProvider.secilenSure);
+                            },
+                          ),
                         ),
                       ),
                     )

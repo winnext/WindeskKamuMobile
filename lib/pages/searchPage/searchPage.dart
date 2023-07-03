@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/searchPage/isEmriArama.dart';
-import 'package:win_kamu/pages/searchPage/mahalArama.dart';
-import 'package:win_kamu/pages/searchPage/vakaSlaArama.dart';
-import 'package:win_kamu/pages/searchPage/varlikArama.dart';
-import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
-import 'package:win_kamu/widgets/buttonWidgets/searchButtons.dart';
+import 'isEmriArama.dart';
+import 'mahalArama.dart';
+import 'vakaSlaArama.dart';
+import 'varlikArama.dart';
+import '../../widgets/appbar/custom_main_appbar.dart';
+import '../../widgets/buttonWidgets/searchButtons.dart';
 
 import '../../l10n/locale_keys.g.dart';
 
@@ -26,7 +26,7 @@ class _searchPageState extends State<searchPage> {
           body: Center(
             child: SizedBox(
               height: 50.h,
-              child: const Column(
+              child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

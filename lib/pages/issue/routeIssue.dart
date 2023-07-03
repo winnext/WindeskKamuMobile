@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/pages/issue/issueTracingList.dart';
+import 'issueTracingList.dart';
 
 import '../../providers/main_page_view_provider.dart';
 

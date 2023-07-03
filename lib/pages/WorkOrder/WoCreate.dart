@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
-import 'package:win_kamu/providers/work_order_view_provider.dart';
+import '../closedRequests/closedRequests.dart';
+import '../../providers/work_order_view_provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/themes.dart';

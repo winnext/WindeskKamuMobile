@@ -8,8 +8,13 @@ import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 
+import '../models/http_response.model.dart';
+import '../models/woListView.model.dart';
 import '../models/worelated_modal.dart';
 import '../models/workoder_detail_modal.dart';
+import '../pages/WorkOrder/woDetail.dart';
+import '../utils/global_utils.dart';
+import 'main_page_view_provider.dart';
 
 class WoDetailViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -110,7 +115,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -131,13 +137,16 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(
+        controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
+        tempwoRelatedView = (data.records['records'] as List)
+            .map((e) => WoRelatedViewModel.fromJson(e))
+            .toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -173,12 +182,17 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
-    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode,
+      String description) async {
+    if (description.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult =
-          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: woCode,
+          activityCode: activityCode,
+          description: description);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -213,7 +227,7 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   //eforlar gun
-  String _secilenGun = '1';
+  String _secilenGun = '0';
 
   String get secilenGun => _secilenGun;
 
@@ -224,7 +238,6 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   //eforlar saat
   String _secilenSaat = '1';
-
   String get secilenSaat => _secilenSaat;
 
   set setSecilenSaat(String secilenSaat) {
@@ -247,8 +260,24 @@ class WoDetailViewProvider extends ChangeNotifier {
   addEffort(context, code, workPeriod) async {
     print('WOCODE : ' + code);
     print('WORKPERIOD : ' + workPeriod);
-    final result = apirepository.addEffortApi(code, workPeriod);
+    final result = await apirepository.addEffortApi(code, workPeriod);
+    if (result == true) {
+      snackBar(context, 'Efor başarıyla oluşturuldu ', 'success');
+    } else {
+      snackBar(context, 'Efor eklenirken hata oluştu ', 'error');
+    }
+    await getWorkOrderWorklogs(woCode);
     print(result);
+  }
+
+  //Delete Efforty
+  deleteEffort(context, woLogCode, woCode) async {
+    print('Silinecek Efor : ' + woLogCode.toString());
+    final deleteEffortResult = await apirepository.deleteEffortApi(woLogCode);
+
+    await getWorkOrderWorklogs(woCode);
+
+    print(deleteEffortResult);
   }
 
   // Eforlar
@@ -261,13 +290,11 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   getWorkOrderWorklogs(woCode) async {
+    setEforlarArray = [];
     List<String> codes = [];
     List<String> users = [];
     List<String> timeworkeds = [];
-
     final result2 = await apirepository.getWorkOrderWorklogsApi(woCode);
-    print(result2);
-
     for (var element in result2) {
       codes.add(element['CODE']);
       users.add(element['USER']);
@@ -294,5 +321,118 @@ class WoDetailViewProvider extends ChangeNotifier {
       //timeworkeds.add('1 gun 1 sa 21 dk ');
     }
     setEforlarArray = [codes] + [users] + [timeworkeds];
+  }
+
+////////////////////Malzeme seçimi  Depolar///////////////////
+  String _secilenDepo = 'Lütfen Depo Seçiniz';
+
+  String get secilenDepo => _secilenDepo;
+
+  set setDepoDegeri(String depoDegeri) {
+    _secilenDepo = depoDegeri;
+    notifyListeners();
+  }
+
+  String _secilenDepoValue = '';
+
+  String get secilenDepoValue => _secilenDepoValue;
+
+  set setDepoDegeriValue(String depoDegeriValue) {
+    _secilenDepoValue = depoDegeriValue;
+    notifyListeners();
+  }
+
+  List _depolarArray = [];
+
+  List get depolarArray => _depolarArray;
+  set setDepolarArray(List depolarArray) {
+    _depolarArray = depolarArray;
+    notifyListeners();
+  }
+
+  getStore() async {
+    setDepolarArray = [];
+    final depolarSonuc = await apirepository.getStoreApi();
+    print('depolar sonuc : ');
+    print(depolarSonuc);
+    List<String> codes = ['Lütfen Depo Seçiniz'];
+    List<String> names = ['Lütfen Depo Seçiniz'];
+    for (var element in depolarSonuc) {
+      codes.add(element['CODE']);
+      names.add(element['NAME']);
+    }
+    setDepolarArray = [codes] + [names];
+    print('depolar array');
+    print(depolarArray);
+  }
+
+//Malzeme seçimi  Ürün Seçimi
+  String _secilenDepoUrunSecimi = 'Lütfen Ürün Seçiniz';
+
+  String get secilenDepoUrunSecimi => _secilenDepoUrunSecimi;
+
+  set setSecilenDepoUrunSecimi(String secilenDepoUrunSecimi) {
+    _secilenDepoUrunSecimi = secilenDepoUrunSecimi;
+    notifyListeners();
+  }
+
+  List _depoUrunlerArray = [];
+
+  List get depoUrunlerArray => _depoUrunlerArray;
+  set setDepoUrunlerArray(List depoUrunlerArray) {
+    _depoUrunlerArray = depoUrunlerArray;
+    notifyListeners();
+  }
+
+  getProducts(depoKodu) async {
+    setDepoUrunlerArray = [];
+    final depoUrunlerSonuc = await apirepository.getProductsApi(depoKodu);
+    print('depo urunler sonuc : ');
+    print(depoUrunlerSonuc);
+    List<String> codes = ['Lütfen Ürün Seçiniz'];
+    List<String> names = ['Lütfen Ürün Seçiniz'];
+    for (var element in depoUrunlerSonuc) {
+      codes.add(element['PRODUCTDEFCODE']);
+      names.add(element['NAME']);
+    }
+    setDepoUrunlerArray = [codes] + [names];
+    print('depo urunler array');
+    print(depoUrunlerArray);
+  }
+
+//Malzeme seçimi Birim
+
+  String _secilenBirim = 'Lütfen Birim Seçiniz';
+
+  String get secilenBirim => _secilenBirim;
+
+  set setSecilenBirim(String _secilenBirim) {
+    _secilenBirim = secilenBirim;
+    notifyListeners();
+  }
+
+  List _depoBirimlerArray = [];
+
+  List get depoBirimlerArray => _depoBirimlerArray;
+  set setDepoBirimlerArray(List depoBirimlerArray) {
+    _depoBirimlerArray = depoBirimlerArray;
+    notifyListeners();
+  }
+
+  getBirimler() async {
+    setDepoBirimlerArray = [];
+    final depoBirimlerSonuc =
+        await apirepository.getPackageInfoByProduct('productDefCode');
+    print('depoBirimlerSonuc : ');
+    print(depoBirimlerSonuc);
+    List<String> codes = ['Lütfen Ürün Seçiniz'];
+    List<String> names = ['Lütfen Ürün Seçiniz'];
+    for (var element in depoBirimlerSonuc) {
+      codes.add(element['CODE']);
+      names.add(element['NAME']);
+    }
+    setDepoBirimlerArray = [codes] + [names];
+    print('depo birimler array');
+    print(depoBirimlerArray);
   }
 }

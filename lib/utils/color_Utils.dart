@@ -1,4 +1,4 @@
-import 'package:win_kamu/utils/themes.dart';
+import 'themes.dart';
 
 colorCalculator(String numberone, String numbertwo) {
   if (int.parse(numberone) - int.parse(numbertwo) < 0) {

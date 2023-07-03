@@ -43,6 +43,8 @@ MainPageViewProvider? mainPageViewProvider;
 
 class _IssueDetailState extends State<IssueDetail> with AutomaticKeepAliveClientMixin<IssueDetail> {
   String dateNow = DateFormat("dd-MM-yyyy hh:mm:ss").format(DateTime.now());
+  
+
 
   changeTime() {
     setState(() {
