@@ -42,6 +42,7 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&token=';
 
 //WINMOBİLE
+
 // const PPP_PROJECT = "winmobile";
 // const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
 // const TOKEN_V1 = "wddemo!_";
@@ -57,6 +58,17 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&wspassword=' +
 //         'wdsgnm1017_' +
 //         '&token=';
+
+const PPP_PROJECT = "winmobile";
+const BASE_URL_V2 = "http://windeskmobile.signumtte.com";
+const TOKEN_V1 = "wddemo!_";
+const TOKEN_V2 = 'demo!';
+const ATTACHPATHLIVE = "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+const base_url_v1 = 'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+    'wdmobile' +
+    '&wspassword=' +
+    'wdsgnm1017_' +
+    '&token=';
 
 //TKD PREPROD
 // const PPP_PROJECT = "tkd"
@@ -93,19 +105,20 @@ const addNotification = "v1/Notification/AddNotification";
 //         '&token=';
 
 //ESH PREPROD
-const PPP_PROJECT = "esh";
-const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
-const TOKEN_V1 = 'wdeshtest!_';
-const TOKEN_V2 = 'eshtest!';
-const ATTACHPATH = "http://10.126.12.21/esh/";
-const ATTACHPATHLIVE =
-    "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
-const base_url_v1 =
-    'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
-        'wdmobile' +
-        '&wspassword=' +
-        'wdsgnm1017_' +
-        '&token=';
+
+// const PPP_PROJECT = "esh";
+// const BASE_URL_V2 = 'http://windeskmobiletest.eskisehir.yerel';
+// const TOKEN_V1 = 'wdeshtest!_';
+// const TOKEN_V2 = 'eshtest!';
+// const ATTACHPATHLIVE =
+//     "http://10.126.12.21/esh/xreadattach.php?token=${TOKEN_V1}&id=";
+// const base_url_v1 =
+//     'http://10.126.12.21/esh/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
+//         'wdmobile' +
+//         '&wspassword=' +
+//         'wdsgnm1017_' +
+//         '&token=';
+
 
 //BESK PREPROD
 // const PPP_PROJECT = "besk"

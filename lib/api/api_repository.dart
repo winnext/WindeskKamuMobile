@@ -390,9 +390,10 @@ class APIRepository {
         woLogCode.toString() +
         '&username=' +
         kadi.toString();
+
     print(url);
     try {
-      BaseOptions options = new BaseOptions(
+      BaseOptions options = BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
@@ -419,7 +420,6 @@ class APIRepository {
 
   Future getWorkOrderWorklogsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String deviceToken = prefs.getString('deviceId').toString();
 
     String? kadi = prefs.getString('prefsUserName');
 
@@ -452,8 +452,74 @@ class APIRepository {
     }
   }
 
-  //Depolar
+  // get work order personels
+  Future getWorkOrderPersonelsApi(woCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = '$BASE_URL_V2/workorder/$woCode/resources';
+
+    print('Eforlar listesi url : $url');
+
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        print('girdi');
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
+  // get shiftings
+  // Future getShiftings(woLogCode) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String deviceToken = prefs.getString('deviceId').toString();
+
+  //   String? kadi = prefs.getString('prefsUserName');
+
+  //   String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getVardiyas';
+  //   try {
+  //     BaseOptions options = BaseOptions(
+  //         baseUrl: url,
+  //         receiveDataWhenStatusError: true,
+  //         connectTimeout: 3 * 2000, // 60 seconds
+  //         receiveTimeout: 3 * 2000 // 60 seconds
+  //         );
+
+  //     Dio dio = Dio(options);
+  //     final response = await dio.get(url);
+  //     if (response.data['result'] == 'success') {
+  //       return response.data['records'];
+  //     } else {
+  //       return false;
+  //     }
+  //   } on DioError catch (e) {
+  //     print('girdi');
+
+  //     return 'Bağlantı Zaman Aşımına Uğradı Lütfen Ağınızı Kontrol Ediniz';
+  //   }
+  // }
+
+  //Depolar
+  
   Future getStoreApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
@@ -466,9 +532,11 @@ class APIRepository {
         '&action=getStore&user=' +
         kadi.toString();
     ;
+
+
     print(url);
     try {
-      BaseOptions options = new BaseOptions(
+      BaseOptions options = BaseOptions(
           baseUrl: url,
           receiveDataWhenStatusError: true,
           connectTimeout: 3 * 2000, // 60 seconds
@@ -504,6 +572,8 @@ class APIRepository {
         deviceToken +
         '&action=getProduct&storagecode=' +
         storageCode.toString();
+
+
     print('getProducts url : ' + url);
     try {
       BaseOptions options = new BaseOptions(
@@ -537,11 +607,13 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
+
     String url = base_url_v1 +
         TOKEN_V1 +
         deviceToken +
         '&action=getPackageInfoByProduct&productDefCode=' +
         productDefCode.toString();
+
     ;
     print(url);
     try {
@@ -972,6 +1044,8 @@ class APIRepository {
 
   Future checkWorkorderByAuthorizedServicesApi(
       String kadi, String woCode) async {
+
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -1103,6 +1177,7 @@ class APIRepository {
         print('Tarih : ');
         print(tarih);
         if (tarih != null) {
+
           var yil = tarih[0].toString() +
               tarih[1].toString() +
               tarih[2].toString() +
@@ -1131,10 +1206,12 @@ class APIRepository {
   }
 
   Future accessTest1() async {
+
     String url = ATTACHPATH +
         '?&timestamp=' +
         (DateTime.now().millisecondsSinceEpoch).toString();
     print('test v1 url  :  ' + url);
+
     try {
       BaseOptions options = BaseOptions(
           baseUrl: url,
@@ -1744,9 +1821,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getListForPaging(
-      {@required String? controller,
-      @required Map<String, dynamic>? queryParameters,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required Map<String, dynamic>? queryParameters, bool redirectLogin = false}) async {
     print('url ' + controller! + ' :  :  ' + queryParameters.toString());
 
     try {
