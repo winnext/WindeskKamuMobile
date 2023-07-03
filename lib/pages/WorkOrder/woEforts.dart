@@ -50,9 +50,13 @@ class _WoEfortsState extends State<WoEforts> {
             children: [
               Expanded(
                 child: SizedBox(
-                  height: 10.h,
-                  child: Text(_pleaseSelectDate, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: font_size_16)),
-                ),
+                    height: 10.h,
+                    child: Text(
+                      'Lütfen Süree Seçiniz.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: font_size_16),
+                    )),
+
               ),
               Expanded(
                 child: SizedBox(

@@ -50,7 +50,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                 child: SizedBox(
                     height: 10.h,
                     child: Text(
-                      'Depo Seçimi.',
+                      'Depo Seçimii.',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: font_size_16),
                     )),
