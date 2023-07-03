@@ -69,7 +69,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back, color: Colors.black)),
+            icon: const Icon(Icons.arrow_back, color: Colors.black))
       ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the

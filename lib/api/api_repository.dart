@@ -399,6 +399,41 @@ class APIRepository {
     }
   }
 
+  Future getWorkOrderResourcesApi(woCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = '$BASE_URL_V2/workorder/$woCode/resources';
+
+    print('Eforlar listesi url : $url');
+
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        print('girdi');
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
   Future mahalAramaVarlikDetaySlaApi(cmdbCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
@@ -1513,9 +1548,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getListForPaging(
-      {@required String? controller,
-      @required Map<String, dynamic>? queryParameters,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required Map<String, dynamic>? queryParameters, bool redirectLogin = false}) async {
     print('url ' + controller! + ' :  :  ' + queryParameters.toString());
 
     try {
