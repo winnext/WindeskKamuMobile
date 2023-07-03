@@ -66,7 +66,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
-      final results = await Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      final results =  Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return TakePictureScreen(
           camera: firstCamera,
           sayfa: 'addPhoto',

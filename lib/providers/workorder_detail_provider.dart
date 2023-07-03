@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings, prefer_final_fields
 
 import 'dart:convert';
 
@@ -8,13 +8,11 @@ import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 
-import '../models/http_response.model.dart';
-import '../models/woListView.model.dart';
+import '../models/shiftings_model.dart';
 import '../models/worelated_modal.dart';
+import '../models/work_order_personals.dart';
 import '../models/workoder_detail_modal.dart';
-import '../pages/WorkOrder/woDetail.dart';
 import '../utils/global_utils.dart';
-import 'main_page_view_provider.dart';
 
 class WoDetailViewProvider extends ChangeNotifier {
   final apirepository = APIRepository();
@@ -108,6 +106,46 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<ShiftingsModel> _shiftings = [];
+  List<ShiftingsModel> get shiftings => _shiftings;
+
+  List<WorkOrderPersonals> _workOrderPersonals = [];
+  List<WorkOrderPersonals> get workOrderPersonals => _workOrderPersonals;
+
+  String _pickedPersonalName = 'Personal ismi seçiniz';
+  String get pickedPersonalName => _pickedPersonalName;
+
+  String _pickShifting = 'Lütfen vardiya seçiniz';
+  String get pickShifting => _pickShifting;
+
+  set setPickShifting(String pickShifting) {
+    _pickShifting = pickShifting;
+  }
+
+  set setPickedPersonalName(String pickedPersonalName) {
+    _pickedPersonalName = pickedPersonalName;
+  }
+
+  loadAllPersonals() async {
+    final data = await apirepository.getWorkOrderPersonelsApi(woCode);
+    for (var item in data) {
+      _workOrderPersonals.add(WorkOrderPersonals.fromJson(item));
+    }
+
+    print(_workOrderPersonals);
+
+    notifyListeners();
+  }
+
+  loadShiftings() async {
+    // SIMDILIK 12 VERILECEK
+    final data = await apirepository.getShiftings(12);
+    for (var item in data) {
+      _shiftings.add(ShiftingsModel.fromJson(item));
+    }
+    notifyListeners();
+  }
+
   loadWoDetail(String woCode, String xusercode) async {
     print('LoadWoDetail ');
     woDetailView.clear();
@@ -115,8 +153,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -137,16 +174,13 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(
-        controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List)
-            .map((e) => WoRelatedViewModel.fromJson(e))
-            .toList();
+        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -182,17 +216,12 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode,
-      String description) async {
-    if (description.toString().length < 20 &&
-        activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
+    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult = await apirepository.addIssueActivity(
-          userName: userName,
-          issueCode: woCode,
-          activityCode: activityCode,
-          description: description);
+      final apiresult =
+          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -223,7 +252,6 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   set setSureDegeri(String sureDegeri) {
     _secilenSure = sureDegeri;
-    notifyListeners();
   }
 
   //eforlar gun
@@ -421,8 +449,7 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   getBirimler() async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc =
-        await apirepository.getPackageInfoByProduct('productDefCode');
+    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct('productDefCode');
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
     List<String> codes = ['Lütfen Ürün Seçiniz'];

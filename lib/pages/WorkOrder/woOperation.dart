@@ -1,19 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:accordion/accordion.dart';
-import 'package:accordion/accordion_section.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:selectable_list/selectable_list.dart';
 import 'package:sizer/sizer.dart';
-import 'woEforts.dart';
-import 'woSpareParts.dart';
-import '../../utils/global_utils.dart';
-import '../../utils/themes.dart';
-import '../../utils/utils.dart';
+import 'package:win_kamu/pages/WorkOrder/wo_personals.dart';
 
 import '../../providers/workorder_detail_provider.dart';
+import '../../utils/themes.dart';
+import 'woEforts.dart';
+import 'woSpareParts.dart';
 
 class WoOperation extends StatefulWidget {
   final woCode;
@@ -27,6 +24,9 @@ class WoOperation extends StatefulWidget {
 }
 
 class _WoOperationState extends State<WoOperation> {
+  final String _personals = 'Personeller';
+  final String _addNewPersonals = 'Yeni Personel Ekle';
+
   @override
   void initState() {
     final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: false);
@@ -206,7 +206,7 @@ class _WoOperationState extends State<WoOperation> {
                             },
                           );
                         },
-                        child: Text('Yeni Malzeme Ekle'),
+                        child: const Text('Yeni Malzeme Ekle'),
                       ),
                       contentHorizontalPadding: 20,
                       contentBorderColor: Colors.black54,
@@ -240,10 +240,7 @@ class _WoOperationState extends State<WoOperation> {
                                   onTap: () {
                                     woDetailViewProvider.deleteEffort(context, woDetailViewProvider.eforlarArray[0][i], widget.woCode);
                                   },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
+                                  child: const Icon(Icons.delete, color: Colors.red),
                                 ))
                               ],
                             ),
@@ -254,6 +251,7 @@ class _WoOperationState extends State<WoOperation> {
                   ],
                 ),
               ),
+              _personalsAccordionSection(woDetailViewProvider, context),
               AccordionSection(
                 isOpen: false,
                 leftIcon: const Icon(Icons.contact_page, color: Colors.white),
@@ -291,6 +289,90 @@ class _WoOperationState extends State<WoOperation> {
         ),
       );
     });
+  }
+
+  AccordionSection _personalsAccordionSection(WoDetailViewProvider woDetailViewProvider, BuildContext context) {
+    return AccordionSection(
+      isOpen: false,
+      leftIcon: const Icon(Icons.person, color: Colors.white),
+      header: Text(_personals, style: _headerStyle),
+      headerBackgroundColorOpened: Colors.black,
+      content: Accordion(
+        headerBackgroundColorOpened: Colors.black54,
+        headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+        children: [
+          AccordionSection(
+            isOpen: false,
+            leftIcon: const Icon(Icons.add, color: Colors.white),
+            headerBackgroundColor: Colors.green,
+            headerBackgroundColorOpened: Colors.black,
+            header: Text(_addNewPersonals, style: _headerStyle),
+            content: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+              ),
+              onPressed: () async {
+                await woDetailViewProvider.loadShiftings();
+                await woDetailViewProvider.loadAllPersonals();
+
+                showModalBottomSheet<void>(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return WoPersonals(woCode: widget.woCode);
+                  },
+                );
+              },
+              child: Text(_addNewPersonals),
+            ),
+            contentHorizontalPadding: 20,
+            contentBorderColor: Colors.black54,
+          ),
+          AccordionSection(
+            isOpen: false,
+            leftIcon: const Icon(Icons.people, color: Colors.white),
+            header: Text(_personals, style: _headerStyle),
+            headerBackgroundColor: APPColors.Login.blue,
+            headerBackgroundColorOpened: Colors.black,
+            contentBorderColor: Colors.black54,
+            content: DataTable(
+              sortAscending: true,
+              sortColumnIndex: 1,
+              dataRowHeight: 40,
+              showBottomBorder: true,
+              columns: [
+                DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
+                DataColumn(label: Text('Süre', style: _contentStyleHeader)),
+                DataColumn(label: Text('Sil', style: _contentStyleHeader)),
+              ],
+              rows: [
+                for (var i = 0; i < woDetailViewProvider.eforlarArray[1].length; i++)
+                  DataRow(
+                    cells: [
+                      DataCell(Text(woDetailViewProvider.eforlarArray[1][i], style: _contentStyle, textAlign: TextAlign.right)),
+                      DataCell(Text(woDetailViewProvider.eforlarArray[2][i], style: _contentStyle)),
+                      DataCell(GestureDetector(
+                        onTap: () {
+                          woDetailViewProvider.deleteEffort(context, woDetailViewProvider.eforlarArray[0][i], widget.woCode);
+                        },
+                        child: const Icon(Icons.delete, color: Colors.red),
+                      ))
+                    ],
+                  ),
+                //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
