@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/providers/workorder_provider.dart';
+import '../../providers/workorder_provider.dart';
 import '../../models/issue_filter.modal.dart';
 import '../../providers/list_view_provider.dart';
 import '../../utils/themes.dart';

@@ -6,9 +6,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/WorkOrder/woOperation.dart';
-import 'package:win_kamu/pages/WorkOrder/woSummary.dart';
-import 'package:win_kamu/providers/detail_view_provider.dart';
+import 'woOperation.dart';
+import 'woSummary.dart';
+import '../../providers/detail_view_provider.dart';
 
 import '../../models/detail_view.model.dart';
 import '../../models/issue_summary.modal.dart';
@@ -44,6 +44,7 @@ class _WoDetailState extends State<WoDetail> {
     detailViewProvider.issueSummary.clear();
 
     woDetailViewProvider.loadWoDetail(widget.woCode, mainPageViewProvider.kadi);
+    woDetailViewProvider.getWorkOrderWorklogs(widget.woCode);
     woDetailViewProvider.woGetRelatedSpace(
         widget.woCode, mainPageViewProvider.kadi);
 
@@ -357,6 +358,8 @@ class _WoDetailState extends State<WoDetail> {
                         child: Icon(Icons.add_a_photo),
                                           ),
                                ),
+                      
+
                                woDetailList.STATUS == 'WIP' ||   woDetailList.STATUS == 'Pending' ? 
                                WoOperation(woCode: widget.woCode,) : Text('')
                         

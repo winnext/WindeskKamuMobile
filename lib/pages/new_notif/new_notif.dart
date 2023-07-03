@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
-import 'package:win_kamu/pages/new_notif/new_notif_base.dart';
-import 'package:win_kamu/providers/main_page_view_provider.dart';
-import 'package:win_kamu/providers/new_notif_provider.dart';
-import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+import 'new_notif_base.dart';
+import '../../providers/main_page_view_provider.dart';
+import '../../providers/new_notif_provider.dart';
+import '../../widgets/appbar/custom_main_appbar.dart';
 
 import '../../l10n/locale_keys.g.dart';
 import '../../utils/themes.dart';

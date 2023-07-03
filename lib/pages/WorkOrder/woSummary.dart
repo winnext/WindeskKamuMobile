@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/pages/WorkOrder/woList.dart';
-import 'package:win_kamu/providers/workorder_detail_provider.dart';
-import 'package:win_kamu/utils/utils.dart';
+import 'woList.dart';
+import '../../providers/workorder_detail_provider.dart';
+import '../../utils/utils.dart';
 
 import '../../utils/themes.dart';
 import '../../utils/time_Utils.dart';

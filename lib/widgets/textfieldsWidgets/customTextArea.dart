@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:win_kamu/utils/themes.dart';
+import '../../utils/themes.dart';
 
 class CustomTextArea extends StatefulWidget {
   final String hintText;

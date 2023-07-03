@@ -236,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(child: Divider()),
               Expanded(
                   child: Column(
-                children: [
+                children: const [
                   Text(
                     'Ankara Etlik Şehir Hastanesi',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Expanded(
                       child: Row(
-                        children: [
+                        children: const [
                           Expanded(
                             child: HomeButton(
                                 text: 'Vaka-(SLA) Listesi',
@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Expanded(
                       child: Row(
-                        children: [
+                        children: const [
                           Expanded(
                             child: HomeButton(
                                 text: 'İş Emri Listesi',
@@ -290,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Expanded(
                       child: Row(
-                        children: [
+                        children: const [
                           Expanded(
                             child: HomeButton(
                                 text: 'Yeni İş Emri',

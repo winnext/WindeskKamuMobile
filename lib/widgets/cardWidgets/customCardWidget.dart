@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:win_kamu/utils/utils.dart';
+import '../../utils/utils.dart';
 
 class CustomBox extends StatefulWidget {
   final double? height;

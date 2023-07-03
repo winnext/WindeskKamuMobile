@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/providers/workorder_provider.dart';
-import 'package:win_kamu/widgets/modalWidgets/woFilterBox.dart';
+import '../../providers/workorder_provider.dart';
+import 'woFilterBox.dart';
 
 import '../../models/issue_filter.modal.dart';
 import '../../utils/themes.dart';
