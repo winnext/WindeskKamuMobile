@@ -53,10 +53,8 @@ class _WoEfortsState extends State<WoEforts> {
                     height: 10.h,
                     child: Text(
                       'Lütfen Süree Seçiniz.',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: font_size_16),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: font_size_16),
                     )),
-
               ),
               Expanded(
                 child: SizedBox(

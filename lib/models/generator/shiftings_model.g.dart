@@ -7,8 +7,8 @@ part of '../shiftings_model.dart';
 // **************************************************************************
 
 ShiftingsModel _$ShiftingsModelFromJson(Map<String, dynamic> json) => ShiftingsModel(
-      code: json['code'] as String?,
-      name: json['name'] as String?,
+      code: json['CODE'] as String,
+      name: json['NAME'] as String,
     );
 
 Map<String, dynamic> _$ShiftingsModelToJson(ShiftingsModel instance) => <String, dynamic>{

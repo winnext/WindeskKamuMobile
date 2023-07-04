@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:win_kamu/models/shiftings_model.dart';
 
+import '../../models/work_order_personals.dart';
 import '../../providers/workorder_detail_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 
 class WoPersonals extends StatefulWidget {
-  const WoPersonals({super.key, required this.woCode});
+  const WoPersonals({super.key, required this.woCode, required this.shiftings, required this.personals});
+  final List<ShiftingsModel> shiftings;
+  final List<WorkOrderPersonals> personals;
   final woCode;
 
   @override
@@ -15,13 +19,22 @@ class WoPersonals extends StatefulWidget {
 }
 
 class _WoPersonalsState extends State<WoPersonals> {
-  final dataListSure = ["Lütfen vardiya seçiniz", "15 dk", "30 dk", "45 dk", "1 sa", "2 sa", "6 sa", "Serbest Seçim"];
-  final names = ["Personal ismi seçiniz", "mert", "akif", "murat"];
+  final dataListSure = ["Lütfen vardiya seçiniz"];
+  final names = ["Personal ismi seçiniz"];
   final String _clear = "Temi̇zle";
+
+  void _initLists() {
+    for (var element in widget.shiftings) {
+      dataListSure.add(element.name ?? '');
+    }
+    for (var element in widget.personals) {
+      names.add(element.fullname ?? '');
+    }
+  }
 
   @override
   void initState() {
-    print("hello world");
+    _initLists();
     super.initState();
   }
 
@@ -79,6 +92,7 @@ class _WoPersonalsState extends State<WoPersonals> {
             woDetailViewProvider.setPickedPersonalName = 'Personal ismi seçiniz';
             woDetailViewProvider.setSureDegeri = 'Lütfen vardiya seçiniz';
           }
+          woDetailViewProvider.setisNewPersonalAdded = false;
           setState(() {});
         },
         style: ElevatedButton.styleFrom(
@@ -103,55 +117,14 @@ class _WoPersonalsState extends State<WoPersonals> {
           ),
         ),
         onPressed: () {
-          String workPeriod = '';
-          if (woDetailViewProvider.secilenSure == 'Lütfen Süre Seçiniz') {
-            snackBar(context, 'Süre seçmeden efor oluşturamazsınız', 'info');
+          if (woDetailViewProvider.pickedPersonalName == 'Personal ismi seçiniz' && woDetailViewProvider.pickShifting == 'Lütfen vardiya seçiniz') {
+            return;
           } else {
-            if (woDetailViewProvider.secilenSure == 'Serbest Seçim') {
-              String dayValue = '';
-              String saatValue = '';
-              String dakikaValue = '';
-              //Gun degeri
-              if (woDetailViewProvider.secilenGun.length == 1) {
-                dayValue = '00${woDetailViewProvider.secilenGun}';
-              } else if (woDetailViewProvider.secilenGun.length == 2) {
-                dayValue = '0${woDetailViewProvider.secilenGun}';
-              } else if (woDetailViewProvider.secilenGun.length == 3) {
-                dayValue = woDetailViewProvider.secilenGun;
-              }
-
-              //Saat degeri
-              if (woDetailViewProvider.secilenSaat.length == 1) {
-                saatValue = '0${woDetailViewProvider.secilenSaat}';
-              } else if (woDetailViewProvider.secilenSaat.length == 2) {
-                saatValue = woDetailViewProvider.secilenSaat;
-              }
-
-              //Dakika degeri
-              if (woDetailViewProvider.secilenDakika.length == 1) {
-                dakikaValue = '0${woDetailViewProvider.secilenDakika}';
-              } else if (woDetailViewProvider.secilenDakika.length == 2) {
-                dakikaValue = woDetailViewProvider.secilenDakika;
-              }
-
-              workPeriod = '$dayValue$saatValue${dakikaValue}00';
-            } else {
-              if (woDetailViewProvider.secilenSure == '15 dk') {
-                workPeriod = '000001500';
-              } else if (woDetailViewProvider.secilenSure == '30 dk') {
-                workPeriod = '000003000';
-              } else if (woDetailViewProvider.secilenSure == '45 dk') {
-                workPeriod = '000004500';
-              } else if (woDetailViewProvider.secilenSure == '1 sa') {
-                workPeriod = '000010000';
-              } else if (woDetailViewProvider.secilenSure == '2 sa') {
-                workPeriod = '000020000';
-              } else if (woDetailViewProvider.secilenSure == '6 sa') {
-                workPeriod = '000060000';
-              }
-            }
-            woDetailViewProvider.addEffort(context, widget.woCode, workPeriod);
+            woDetailViewProvider.addWorkOrderPersonal();
+            woDetailViewProvider.setPickedPersonalName = 'Personal ismi seçiniz';
+            woDetailViewProvider.setSureDegeri = 'Lütfen vardiya seçiniz';
           }
+          setState(() {});
         },
         child: const Text('Oluştur'),
       ),
@@ -169,10 +142,8 @@ class _WoPersonalsState extends State<WoPersonals> {
           ),
         ),
         onPressed: () {
-          woDetailViewProvider.setSureDegeri = 'Lütfen Süre Seçiniz';
-          woDetailViewProvider.setSecilenGun = '1';
-          woDetailViewProvider.setSecilenSaat = '1';
-          woDetailViewProvider.setSecilenDakika = '1';
+          woDetailViewProvider.setisNewPersonalAdded = false;
+          Navigator.pop(context);
         },
         child: (const Text('Vazgeç')),
       ),

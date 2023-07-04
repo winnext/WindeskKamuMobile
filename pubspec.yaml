@@ -78,6 +78,7 @@ dependencies:
   # json annotation
   json_serializable: ^6.7.0
   json_annotation: ^4.8.1
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

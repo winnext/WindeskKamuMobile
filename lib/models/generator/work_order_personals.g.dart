@@ -7,15 +7,11 @@ part of '../work_order_personals.dart';
 // **************************************************************************
 
 WorkOrderPersonals _$WorkOrderPersonalsFromJson(Map<String, dynamic> json) => WorkOrderPersonals(
-      module: json['module'] as String?,
-      modulecode: json['modulecode'] as String?,
-      name: json['name'] as String?,
-      vardiya: json['vardiya'] as String?,
+      fullname: json['FULLNAME'] as String,
+      code: json['CODE'] as String,
     );
 
 Map<String, dynamic> _$WorkOrderPersonalsToJson(WorkOrderPersonals instance) => <String, dynamic>{
-      'module': instance.module,
-      'modulecode': instance.modulecode,
-      'name': instance.name,
-      'vardiya': instance.vardiya,
+      'FULLNAME': instance.fullname,
+      'CODE': instance.code,
     };
