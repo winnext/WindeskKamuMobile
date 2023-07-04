@@ -21,26 +21,32 @@ class _SplashState extends State<Splash> {
     Future.delayed(const Duration(seconds: 3), () async {
       //Uygulama açıldığı zaman, cihaz üzerinde local olarak kayıtlı olan tokenın kontrol edilmesi sağlanmaktadır.
       //Eğer ki herhangi bir token bulunmuyor ise kullanıcıyı login sayfasına yönlendirir.
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final deviceInfoPlugin = DeviceInfoPlugin();
-
-      final result = await deviceInfoPlugin.deviceInfo;
-      var model = result.data['name'];
-      var os = result.data['systemVersion'];
-
       try {
-        prefs.setString('deviceId', result.data['identifierForVendor']);
-        prefs.setString('deviceType', result.data['systemName']);
-      } catch (e) {}
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        final deviceInfoPlugin = DeviceInfoPlugin();
 
-      FirebaseMessaging messaging = FirebaseMessaging.instance;
-      String? fbtoken = await messaging.getToken();
-      prefs.setString('fbtoken', fbtoken.toString());
+        final result = await deviceInfoPlugin.deviceInfo;
+        var model = result.data['name'];
+        var os = result.data['systemVersion'];
 
-      if (prefs.getString("prefsUserName") != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const BottomNavBar())));
-      } else {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Login())));
+        try {
+          prefs.setString('deviceId', result.data['identifierForVendor']);
+          prefs.setString('deviceType', result.data['systemName']);
+        } catch (e) {}
+
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        String? fbtoken = await messaging.getToken();
+        prefs.setString('fbtoken', fbtoken.toString());
+
+        if (prefs.getString("prefsUserName") != null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: ((context) => const BottomNavBar())));
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: ((context) => Login())));
+        }
+      } catch (e) {
+        print(e);
       }
     });
     super.initState();

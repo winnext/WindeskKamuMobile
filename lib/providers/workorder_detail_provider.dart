@@ -85,6 +85,14 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _woDetailService = '';
+  get woDetailService => _woDetailService;
+
+  set setWoDetailService(String service) {
+    _woDetailService = service;
+    notifyListeners();
+  }
+
   get responses => _responses;
 
   set setresponses(String responses) {
@@ -139,11 +147,13 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   loadShiftings() async {
     // SIMDILIK 12 VERILECEK
-    final data = await apirepository.getShiftings(12);
-    for (var item in data) {
-      _shiftings.add(ShiftingsModel.fromJson(item));
+    if (woDetailService != '') {
+      final data = await apirepository.getShiftings(woDetailService);
+      for (var item in data) {
+        _shiftings.add(ShiftingsModel.fromJson(item));
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   loadWoDetail(String woCode, String xusercode) async {
@@ -153,7 +163,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -165,6 +176,7 @@ class WoDetailViewProvider extends ChangeNotifier {
       });
       print('STATUS : : :');
       print(woDetailView[0].STATUS);
+      setWoDetailService = data.detail['SERVICE'];
     } else {
       // baglantiHatasi(context, result.message);
     }
@@ -174,13 +186,16 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(
+        controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
+        tempwoRelatedView = (data.records['records'] as List)
+            .map((e) => WoRelatedViewModel.fromJson(e))
+            .toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -216,12 +231,17 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
-    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode,
+      String description) async {
+    if (description.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult =
-          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: woCode,
+          activityCode: activityCode,
+          description: description);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -449,11 +469,12 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   getBirimler() async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct('productDefCode');
+    final depoBirimlerSonuc =
+        await apirepository.getPackageInfoByProduct('productDefCode');
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
-    List<String> codes = ['Lütfen Ürün Seçiniz'];
-    List<String> names = ['Lütfen Ürün Seçiniz'];
+    List<String> codes = ['Lütfen Birim Seçiniz'];
+    List<String> names = ['Lütfen Birim Seçiniz'];
     for (var element in depoBirimlerSonuc) {
       codes.add(element['CODE']);
       names.add(element['NAME']);

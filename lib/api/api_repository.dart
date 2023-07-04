@@ -456,7 +456,6 @@ class APIRepository {
   Future getWorkOrderPersonelsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
     String? kadi = prefs.getString('prefsUserName');
 
     String url = '$BASE_URL_V2/workorder/$woCode/resources';
@@ -523,7 +522,11 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getResponsible&service=' + serviceCode;
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=getResponsible&service=' +
+        serviceCode;
 
     print('Eforlar listesi url : $url');
 
@@ -553,7 +556,7 @@ class APIRepository {
   }
 
   //Depolar
-  
+
   Future getStoreApi() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
@@ -566,7 +569,6 @@ class APIRepository {
         '&action=getStore&user=' +
         kadi.toString();
     ;
-
 
     print(url);
     try {
@@ -607,7 +609,6 @@ class APIRepository {
         '&action=getProduct&storagecode=' +
         storageCode.toString();
 
-
     print('getProducts url : ' + url);
     try {
       BaseOptions options = new BaseOptions(
@@ -619,7 +620,7 @@ class APIRepository {
 
       Dio dio = Dio(options);
       final response = await dio.get(url);
-      print(' Depo Listesi');
+      print(' Ürünler Listesi');
       print(response);
       if (response.data['result'] == 'success') {
         return response.data['records'];
@@ -641,7 +642,6 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-
     String url = base_url_v1 +
         TOKEN_V1 +
         deviceToken +
@@ -660,7 +660,7 @@ class APIRepository {
 
       Dio dio = Dio(options);
       final response = await dio.get(url);
-      print(' Depo Listesi');
+      print(' Birimler Listesi');
       print(response);
       if (response.data['result'] == 'success') {
         return response.data['records'];
@@ -1078,8 +1078,6 @@ class APIRepository {
 
   Future checkWorkorderByAuthorizedServicesApi(
       String kadi, String woCode) async {
-
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -1211,7 +1209,6 @@ class APIRepository {
         print('Tarih : ');
         print(tarih);
         if (tarih != null) {
-
           var yil = tarih[0].toString() +
               tarih[1].toString() +
               tarih[2].toString() +
@@ -1240,7 +1237,6 @@ class APIRepository {
   }
 
   Future accessTest1() async {
-
     String url = ATTACHPATH +
         '?&timestamp=' +
         (DateTime.now().millisecondsSinceEpoch).toString();
@@ -1855,7 +1851,9 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getListForPaging(
-      {@required String? controller, @required Map<String, dynamic>? queryParameters, bool redirectLogin = false}) async {
+      {@required String? controller,
+      @required Map<String, dynamic>? queryParameters,
+      bool redirectLogin = false}) async {
     print('url ' + controller! + ' :  :  ' + queryParameters.toString());
 
     try {

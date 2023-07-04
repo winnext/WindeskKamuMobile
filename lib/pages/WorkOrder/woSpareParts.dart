@@ -36,9 +36,12 @@ class _WoSparePartsState extends State<WoSpareParts> {
 
     List<String> dataListDepo = woDetailViewProvider.depolarArray[1];
     List<String> dataListUrunler = woDetailViewProvider.depoUrunlerArray[1];
-
+    //List<String> dataListBirimler = woDetailViewProvider.depoBirimlerArray[1];
     print('dataListDepo : ');
     print(dataListDepo);
+
+    print('dataListUrunler : ');
+    print(dataListUrunler);
 
     return Sizer(builder: (context, Orientation, DeviceType) {
       return Container(
@@ -50,7 +53,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                 child: SizedBox(
                     height: 10.h,
                     child: Text(
-                      'Depo Seçimii.',
+                      'Depo Seçimi.',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: font_size_16),
                     )),
@@ -64,7 +67,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                       isExpanded: true,
 
                       // Initial Value
-                      value: 'Lütfen Depo Seçiniz',
+                      value: woDetailViewProvider.secilenDepo,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -104,7 +107,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                   ),
                 ),
               ),
-              woDetailViewProvider.secilenDepo != ''
+              woDetailViewProvider.secilenDepo != 'Lütfen Depo Seçiniz'
                   ? Expanded(
                       child: SizedBox(
                         height: 30.h,
@@ -114,7 +117,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                             isExpanded: true,
 
                             // Initial Value
-                            value: woDetailViewProvider.secilenDepoUrunSecimi,
+                            value: 'Lütfen Ürün Seçiniz',
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
@@ -126,7 +129,8 @@ class _WoSparePartsState extends State<WoSpareParts> {
                             icon: const Icon(Icons.keyboard_arrow_down),
 
                             // Array list of items
-                            items: dataListUrunler.map((String items) {
+                            items: woDetailViewProvider.depoUrunlerArray[1]
+                                .map((String items) {
                               return DropdownMenuItem(
                                 value: items,
                                 child: Text(items),
