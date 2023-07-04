@@ -248,7 +248,6 @@ class _WoDetailState extends State<WoDetail> {
                         child: InkWell(
                           child: const Icon(Icons.add_a_photo),
                           onTap: () async {
-                            print("calisiyorum");
                             showModalBottomSheet<void>(
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
