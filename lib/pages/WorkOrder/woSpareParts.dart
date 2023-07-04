@@ -36,7 +36,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
 
     List<String> dataListDepo = woDetailViewProvider.depolarArray[1];
     List<String> dataListUrunler = woDetailViewProvider.depoUrunlerArray[1];
-    //List<String> dataListBirimler = woDetailViewProvider.depoBirimlerArray[1];
+    List<String> dataListBirimler = woDetailViewProvider.depoBirimlerArray[1];
     print('dataListDepo : ');
     print(dataListDepo);
 
@@ -98,6 +98,8 @@ class _WoSparePartsState extends State<WoSpareParts> {
                                   [dataListDepo.indexOf(newValue.toString())];
                           print('SECİLEN DEGER VALUE DEGERİ' + valueDegeri);
                           woDetailViewProvider.setDepoDegeriValue = valueDegeri;
+                          woDetailViewProvider.setSecilenDepoUrunSecimi =
+                              'Lütfen Ürün Seçiniz';
                           woDetailViewProvider.getProducts(valueDegeri);
                         });
 
@@ -117,7 +119,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                             isExpanded: true,
 
                             // Initial Value
-                            value: 'Lütfen Ürün Seçiniz',
+                            value: woDetailViewProvider.secilenDepoUrunSecimi,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
@@ -129,8 +131,7 @@ class _WoSparePartsState extends State<WoSpareParts> {
                             icon: const Icon(Icons.keyboard_arrow_down),
 
                             // Array list of items
-                            items: woDetailViewProvider.depoUrunlerArray[1]
-                                .map((String items) {
+                            items: dataListUrunler.map((String items) {
                               return DropdownMenuItem(
                                 value: items,
                                 child: Text(items),
@@ -139,13 +140,68 @@ class _WoSparePartsState extends State<WoSpareParts> {
                             // After selecting the desired option,it will
                             // change button value to selected value
                             onChanged: (String? newValue) {
-                              print(newValue.toString());
+                              print('SEÇİLEN DEGER URUN : ' +
+                                  newValue.toString());
                               setState(() {
-                                woDetailViewProvider.setSureDegeri =
+                                woDetailViewProvider.setSecilenDepoUrunSecimi =
                                     newValue.toString();
+
+                                String valueDegeriUrun =
+                                    woDetailViewProvider.depoUrunlerArray[0][
+                                        dataListUrunler
+                                            .indexOf(newValue.toString())];
+
+                                print('SECİLEN DEGER URUN VALUE DEGERİ' +
+                                    valueDegeriUrun);
+
+                                woDetailViewProvider.setSecilenDepoUrunValue =
+                                    valueDegeriUrun;
+
+                                woDetailViewProvider
+                                    .getBirimler(valueDegeriUrun);
                               });
 
-                              print(woDetailViewProvider.secilenSure);
+                              print(woDetailViewProvider.secilenDepo);
+                            },
+                          ),
+                        ),
+                      ),
+                    )
+                  : Text(''),
+              woDetailViewProvider.secilenDepoUrunSecimi !=
+                      'Lütfen Ürün Seçiniz'
+                  ? Expanded(
+                      child: SizedBox(
+                        height: 30.h,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonFormField(
+                            isExpanded: true,
+
+                            // Initial Value
+                            value: "Lütfen Birim Seçiniz",
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              labelText: 'Birim Seçimi',
+                            ),
+
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
+
+                            // Array list of items
+                            items: dataListBirimler.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              print('SEÇİLEN DEGER BİRİM : ' +
+                                  newValue.toString());
                             },
                           ),
                         ),
