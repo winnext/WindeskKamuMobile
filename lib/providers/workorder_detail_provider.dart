@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings, prefer_final_fields
 
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/api/api_repository.dart';
@@ -11,6 +12,7 @@ import 'package:win_kamu/utils/api_urls.dart';
 import '../models/shiftings_model.dart';
 import '../models/worelated_modal.dart';
 import '../models/work_order_personals.dart';
+import '../models/work_order_personals_detailed.dart';
 import '../models/workoder_detail_modal.dart';
 import '../utils/global_utils.dart';
 
@@ -112,11 +114,22 @@ class WoDetailViewProvider extends ChangeNotifier {
   List<WorkOrderPersonals> _workOrderPersonals = [];
   List<WorkOrderPersonals> get workOrderPersonals => _workOrderPersonals;
 
+  List<WorkOrderPersonalsDetailed> _workOrderPersonalsDetailed = [];
+  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed => _workOrderPersonalsDetailed;
+
   String _pickedPersonalName = 'Personal ismi seçiniz';
   String get pickedPersonalName => _pickedPersonalName;
 
   String _pickShifting = 'Lütfen vardiya seçiniz';
   String get pickShifting => _pickShifting;
+
+  bool _isNewPersonalAdded = false;
+  bool get isNewPersonalAdded => _isNewPersonalAdded;
+
+  set setisNewPersonalAdded(bool isNewPersonalAdded) {
+    _isNewPersonalAdded = isNewPersonalAdded;
+    notifyListeners();
+  }
 
   set setPickShifting(String pickShifting) {
     _pickShifting = pickShifting;
@@ -126,23 +139,42 @@ class WoDetailViewProvider extends ChangeNotifier {
     _pickedPersonalName = pickedPersonalName;
   }
 
-  loadAllPersonals() async {
+  loadAllPersonalsDetailed() async {
+    _workOrderPersonalsDetailed = [];
+
     final data = await apirepository.getWorkOrderPersonelsApi(woCode);
+
+    for (var item in data) {
+      _workOrderPersonalsDetailed.add(WorkOrderPersonalsDetailed.fromJson(item));
+    }
+
+    notifyListeners();
+  }
+
+  loadAllPersonals() async {
+    _workOrderPersonals = [];
+
+    final data = await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
+
     for (var item in data) {
       _workOrderPersonals.add(WorkOrderPersonals.fromJson(item));
     }
-
-    print(_workOrderPersonals);
 
     notifyListeners();
   }
 
   loadShiftings() async {
     // SIMDILIK 12 VERILECEK
-    final data = await apirepository.getShiftings(12);
+    _shiftings = [];
+    final data = await apirepository.getShiftings(woCode);
+    print(data);
+
     for (var item in data) {
       _shiftings.add(ShiftingsModel.fromJson(item));
     }
+
+    print(_shiftings.first.name);
+
     notifyListeners();
   }
 
@@ -167,6 +199,27 @@ class WoDetailViewProvider extends ChangeNotifier {
       print(woDetailView[0].STATUS);
     } else {
       // baglantiHatasi(context, result.message);
+    }
+  }
+
+  addWorkOrderPersonal() async {
+    String personalCode = _workOrderPersonals.firstWhere((element) => element.fullname == _pickedPersonalName).code ?? '';
+    String shiftingCode = _shiftings.firstWhere((element) => element.name == _pickShifting).code ?? '';
+    final data = await apirepository.addWorkOrderPersonal(woCode, personalCode, shiftingCode);
+
+    if (data != null) {
+      _isNewPersonalAdded = true;
+      notifyListeners();
+    }
+  }
+
+  deleteWorkOrderPersonal(String moduleCode) async {
+    final data = await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
+
+    if (data != null) {
+      _isNewPersonalAdded = false;
+      _workOrderPersonalsDetailed.removeWhere((element) => element.modulecode == moduleCode);
+      notifyListeners();
     }
   }
 

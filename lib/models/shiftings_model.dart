@@ -1,13 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'generator/shiftings_model.g.dart';
 
 @JsonSerializable()
-class ShiftingsModel {
+class ShiftingsModel extends Equatable {
   final String? code;
   final String? name;
 
-  ShiftingsModel({
+  const ShiftingsModel({
     this.code,
     this.name,
   });
@@ -19,4 +20,10 @@ class ShiftingsModel {
   Map<String, dynamic> toJson() {
     return _$ShiftingsModelToJson(this);
   }
+
+  @override
+  List<Object?> get props => [
+        code,
+        name,
+      ];
 }

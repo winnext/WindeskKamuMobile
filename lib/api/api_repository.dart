@@ -37,8 +37,7 @@ class APIRepository {
         String token = tokenValue;
         if (token != "") {
           print("Token:$token");
-          options.headers["Authorization"] =
-              "Bearer $token"; //Sending token with every request accept login
+          options.headers["Authorization"] = "Bearer $token"; //Sending token with every request accept login
           options.followRedirects = false;
           return requestInterceptorHandler.next(options);
         } else {
@@ -71,8 +70,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String cikis_url =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=logout&username=$kadi';
+    String cikis_url = '$base_url_v1$TOKEN_V1$deviceToken&action=logout&username=$kadi';
 
     try {
       BaseOptions options = BaseOptions(
@@ -199,9 +197,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaceDetail&username=$kadi&spaceCode=' +
-            spaceCode;
+    String url = '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaceDetail&username=$kadi&spaceCode=' + spaceCode;
     try {
       BaseOptions options = BaseOptions(
           baseUrl: url,
@@ -383,14 +379,8 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url = base_url_v1 +
-        TOKEN_V1 +
-        deviceToken +
-        '&action=deleteWorkorderWorklog&code=' +
-        woLogCode.toString() +
-        '&username=' +
-        kadi.toString();
-
+    String url =
+        base_url_v1 + TOKEN_V1 + deviceToken + '&action=deleteWorkorderWorklog&code=' + woLogCode.toString() + '&username=' + kadi.toString();
     print(url);
     try {
       BaseOptions options = BaseOptions(
@@ -417,7 +407,6 @@ class APIRepository {
   }
 
   //Eforlar
-
   Future getWorkOrderWorklogsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -456,7 +445,6 @@ class APIRepository {
   Future getWorkOrderPersonelsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
     String? kadi = prefs.getString('prefsUserName');
 
     String url = '$BASE_URL_V2/workorder/$woCode/resources';
@@ -476,6 +464,8 @@ class APIRepository {
             headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
             responseType: ResponseType.json,
           ));
+
+      print("getWorkOrderPersonelsApi response : $response");
       //print('Eforlar listesi response  : ' + (response.data).toString());
       if (response.data['result'] == 'success') {
         print('girdi');
@@ -552,9 +542,7 @@ class APIRepository {
     }
   }
 
-  //Depolar
-  
-  Future getStoreApi() async {
+  Future addWorkOrderPersonal(String woCode, String moduleCode, String tuwnofWork) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -563,10 +551,90 @@ class APIRepository {
     String url = base_url_v1 +
         TOKEN_V1 +
         deviceToken +
-        '&action=getStore&user=' +
-        kadi.toString();
-    ;
+        '&action=addResourceStaff&module=xusr&modulecode=' +
+        moduleCode +
+        '&workordercode=' +
+        woCode +
+        '&turnofwork=' +
+        tuwnofWork;
 
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+      print("addWorkOrderPersonal response : $response");
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        print('girdi');
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
+  Future deleteWorkOrderPersonal(String moduleCode, String workOrderCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 +
+        TOKEN_V1 +
+        deviceToken +
+        '&action=deleteWorkorderResource&username=' +
+        kadi.toString() +
+        '&module=xusr&moduleCode=' +
+        moduleCode +
+        '&workorderCode=' +
+        workOrderCode;
+
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+      print("addWorkOrderPersonal response : $response");
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        print('girdi');
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
+  //Depolar
+
+  Future getStoreApi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceToken = prefs.getString('deviceId').toString();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getStore&user=' + kadi.toString();
 
     print(url);
     try {
@@ -601,13 +669,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url = base_url_v1 +
-        TOKEN_V1 +
-        deviceToken +
-        '&action=getProduct&storagecode=' +
-        storageCode.toString();
-
-
+    String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getProduct&storagecode=' + storageCode.toString();
     print('getProducts url : ' + url);
     try {
       BaseOptions options = new BaseOptions(
@@ -641,13 +703,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-
-    String url = base_url_v1 +
-        TOKEN_V1 +
-        deviceToken +
-        '&action=getPackageInfoByProduct&productDefCode=' +
-        productDefCode.toString();
-
+    String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getPackageInfoByProduct&productDefCode=' + productDefCode.toString();
     ;
     print(url);
     try {
@@ -711,9 +767,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getEntityDetail&username=$kadi&case_no=' +
-            case_no;
+    String url = '$base_url_v1$TOKEN_V1$deviceToken&action=getEntityDetail&username=$kadi&case_no=' + case_no;
     try {
       BaseOptions options = BaseOptions(
           baseUrl: url,
@@ -737,8 +791,7 @@ class APIRepository {
     }
   }
 
-  Future varlikAramaListesiApi(entity_code, locCode, seriNo, rfid, typeCode,
-      brandCode, modelCode, data_sayisi, sayfa) async {
+  Future varlikAramaListesiApi(entity_code, locCode, seriNo, rfid, typeCode, brandCode, modelCode, data_sayisi, sayfa) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -825,8 +878,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String mahalAramaKampusUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getBuildings';
+    String mahalAramaKampusUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getBuildings';
 
     try {
       BaseOptions options = BaseOptions(
@@ -853,8 +905,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String mahalAramaBinaUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getFloors&buildingCode=$buildingCode';
+    String mahalAramaBinaUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getFloors&buildingCode=$buildingCode';
 
     try {
       BaseOptions options = BaseOptions(
@@ -881,8 +932,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String mahalAramaBinaUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getBlocks&floorCode=$floorCode';
+    String mahalAramaBinaUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getBlocks&floorCode=$floorCode';
 
     try {
       BaseOptions options = BaseOptions(
@@ -909,8 +959,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String mahalAramaBinaUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaces&blockCode=$blockCode';
+    String mahalAramaBinaUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getSpaces&blockCode=$blockCode';
 
     try {
       BaseOptions options = BaseOptions(
@@ -936,8 +985,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String mahalAramaGrupUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getGroups';
+    String mahalAramaGrupUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getGroups';
 
     try {
       BaseOptions options = BaseOptions(
@@ -961,8 +1009,7 @@ class APIRepository {
     }
   }
 
-  Future woCreate(woSpace, woService, woName, woNameLabel, priority_type,
-      workorder_cfg, woDesc, image) async {
+  Future woCreate(woSpace, woService, woName, woNameLabel, priority_type, workorder_cfg, woDesc, image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -1015,9 +1062,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=addAttachment&username=$kadi&moduleName=workorder&issueCode=' +
-            woCode;
+    String url = '$base_url_v1$TOKEN_V1$deviceToken&action=addAttachment&username=$kadi&moduleName=workorder&issueCode=' + woCode;
     print('Foto ekle url : $url');
     FormData formData = FormData.fromMap({"base64string": image});
     try {
@@ -1048,8 +1093,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String woCreateHizmetListesiUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getServices&username=$kadi';
+    String woCreateHizmetListesiUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=getServices&username=$kadi';
 
     print(woCreateHizmetListesiUrl);
 
@@ -1076,17 +1120,13 @@ class APIRepository {
     }
   }
 
-  Future checkWorkorderByAuthorizedServicesApi(
-      String kadi, String woCode) async {
-
-
+  Future checkWorkorderByAuthorizedServicesApi(String kadi, String woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String checkSonucUrl =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=checkWorkorderByAuthorizedServices&workorderCode=$woCode&username=$kadi';
+    String checkSonucUrl = '$base_url_v1$TOKEN_V1$deviceToken&action=checkWorkorderByAuthorizedServices&workorderCode=$woCode&username=$kadi';
 
     print(checkSonucUrl);
 
@@ -1161,8 +1201,7 @@ class APIRepository {
         var action = platform == 'ios' ? 'addIOSToken' : 'addFireBaseToken';
         String token = prefs.getString('fbtoken').toString();
 
-        String sendTokenUrl =
-            '$base_url_v1$TOKEN_V1$deviceToken&username=$kadi&platform=$platform&action=$action&firebasetoken=$token';
+        String sendTokenUrl = '$base_url_v1$TOKEN_V1$deviceToken&username=$kadi&platform=$platform&action=$action&firebasetoken=$token';
         print('Send Token Url : $sendTokenUrl');
         final responseTokenUrl = await dio.get(sendTokenUrl,
             options: Options(
@@ -1187,8 +1226,7 @@ class APIRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String getServerTimeURL =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=getDateTime';
+    String getServerTimeURL = '$base_url_v1$TOKEN_V1$deviceToken&action=getDateTime';
     print(getServerTimeURL);
     try {
       BaseOptions options = BaseOptions(
@@ -1199,8 +1237,7 @@ class APIRepository {
           );
 
       Dio dio = Dio(options);
-      final getServerTimeResponse =
-          await dio.get(getServerTimeURL, options: Options());
+      final getServerTimeResponse = await dio.get(getServerTimeURL, options: Options());
 
       print(getServerTimeResponse);
       if (getServerTimeResponse.statusCode == 200) {
@@ -1211,11 +1248,7 @@ class APIRepository {
         print('Tarih : ');
         print(tarih);
         if (tarih != null) {
-
-          var yil = tarih[0].toString() +
-              tarih[1].toString() +
-              tarih[2].toString() +
-              tarih[3].toString();
+          var yil = tarih[0].toString() + tarih[1].toString() + tarih[2].toString() + tarih[3].toString();
           var ay = tarih[4].toString() + tarih[5].toString();
           var gun = tarih[6].toString() + tarih[7].toString();
 
@@ -1240,11 +1273,7 @@ class APIRepository {
   }
 
   Future accessTest1() async {
-
-    String url = ATTACHPATH +
-        '?&timestamp=' +
-        (DateTime.now().millisecondsSinceEpoch).toString();
-    print('test v1 url  :  ' + url);
+    String url = ATTACHPATHLIVE + '?&timestamp=' + (DateTime.now().millisecondsSinceEpoch).toString();
 
     try {
       BaseOptions options = BaseOptions(
@@ -1257,15 +1286,13 @@ class APIRepository {
       Dio dio = Dio(options);
       final response = await dio.get(url, options: Options());
       print('Access Test v1  : ${response.statusCode}');
-
       if (response.statusCode == 200) {
         return 'success';
       } else {
         return 'notsuccess';
       }
     } on DioError catch (e) {
-      print(e);
-      print('Access test1 catch : notsuccess');
+      print('notsuccess');
       return 'notsuccess';
     }
   }
@@ -1301,10 +1328,7 @@ class APIRepository {
 //Verilen Sayfalama şeklinde çekilmesini sağlayan servis bağlantısı
 
   Future<tracingListModal> getTracingListWithCount(
-      {@required String? controller,
-      @required String? xusercode,
-      @required String? module,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? xusercode, @required String? module, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -1386,10 +1410,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getIssueActivities(
-      {@required String? controller,
-      @required String? xusercode,
-      @required String? issuecode,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? xusercode, @required String? issuecode, bool redirectLogin = false}) async {
     print('dataActivitiesUrl ${controller!} ::: $issuecode');
 
     try {
@@ -1469,8 +1490,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getIssueNotes(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getIssueNotes({@required String? controller, bool redirectLogin = false}) async {
     print(controller.toString());
 
     try {
@@ -1543,10 +1563,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getIssueOperations(
-      {@required String? controller,
-      @required String? xusercode,
-      bool redirectLogin = false}) async {
+  Future<httpSonucModel> getIssueOperations({@required String? controller, @required String? xusercode, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString(),
           options: Options(
@@ -1624,8 +1641,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getIssueOpenStatusCodes(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getIssueOpenStatusCodes({@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 
@@ -1698,8 +1714,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getSpaceBfwByType(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getSpaceBfwByType({@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 
@@ -1771,10 +1786,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getIssueAttachments(
-      {@required String? controller,
-      @required String? xusercode,
-      @required String? issuecode,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? xusercode, @required String? issuecode, bool redirectLogin = false}) async {
     print('dataActivitiesUrl ${controller!} ::: $issuecode');
 
     try {
@@ -1936,10 +1948,7 @@ class APIRepository {
   }
 
   Future<detailSonucModel> getRequestDetail(
-      {@required String? controller,
-      @required String? issueCode,
-      @required String? xuserCode,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? issueCode, @required String? xuserCode, bool redirectLogin = false}) async {
     print('url DDDDE${controller!}');
 
     try {
@@ -2017,10 +2026,7 @@ class APIRepository {
   }
 
   Future<detailSonucModel> getIssueSummary(
-      {@required String? controller,
-      @required String? issueCode,
-      @required String? xuserCode,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? issueCode, @required String? xuserCode, bool redirectLogin = false}) async {
     print('url DDDDE${controller!}');
 
     try {
@@ -2099,8 +2105,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getAvailableActivities(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getAvailableActivities({@required String? controller, bool redirectLogin = false}) async {
     try {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller.toString());
@@ -2175,10 +2180,7 @@ class APIRepository {
   }
 
   Future<dynamic> addIssueActivity(
-      {@required String? issueCode,
-      @required String? userName,
-      @required String? activityCode,
-      @required String? description}) async {
+      {@required String? issueCode, @required String? userName, @required String? activityCode, @required String? description}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
@@ -2190,8 +2192,7 @@ class APIRepository {
     return response;
   }
 
-  Future<httpSonucModel> takeOverIssue(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> takeOverIssue({@required String? controller, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -2265,8 +2266,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> createSparepartIssue(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> createSparepartIssue({@required String? controller, bool redirectLogin = false}) async {
     print('resultSpareparturl ${controller!}');
 
     try {
@@ -2342,8 +2342,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> cancelIssuePlanned(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> cancelIssuePlanned({@required String? controller, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -2417,8 +2416,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getLiveSelectAsgGroups(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getLiveSelectAsgGroups({@required String? controller, bool redirectLogin = false}) async {
     print('dataASGurl ${controller!}');
 
     try {
@@ -2495,8 +2493,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getLiveSelectAsgUser(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getLiveSelectAsgUser({@required String? controller, bool redirectLogin = false}) async {
     print('dataASGurlUSERs ${controller!}');
 
     try {
@@ -2573,8 +2570,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> changeCfg(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> changeCfg({@required String? controller, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -2650,10 +2646,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> addActivity(
-      {@required String? controller,
-      @required String? description,
-      @required String? image,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? description, @required String? image, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -2734,10 +2727,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> addAttachment(
-      {@required String? controller,
-      @required String? description,
-      @required String? image,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required String? description, @required String? image, bool redirectLogin = false}) async {
     print('url ${controller!}');
 
     try {
@@ -2817,9 +2807,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getListWorkOrders(
-      {@required String? controller,
-      @required Map<String, dynamic>? queryParameters,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required Map<String, dynamic>? queryParameters, bool redirectLogin = false}) async {
     try {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller!,
@@ -2897,10 +2885,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> woGetRelatedSpace(
-      {@required String? controller,
-      @required String? xuserCode,
-      bool redirectLogin = false}) async {
+  Future<httpSonucModel> woGetRelatedSpace({@required String? controller, @required String? xuserCode, bool redirectLogin = false}) async {
     try {
       //ReloadApiBase(StaticVariables.token);
       final response = await dio.get(controller!,
@@ -2977,8 +2962,7 @@ class APIRepository {
     }
   }
 
-  Future<httpSonucModel> getAnnouncements(
-      {@required String? controller, bool redirectLogin = false}) async {
+  Future<httpSonucModel> getAnnouncements({@required String? controller, bool redirectLogin = false}) async {
     try {
       final response = await dio.get(controller.toString());
 

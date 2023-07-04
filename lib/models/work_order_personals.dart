@@ -1,18 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'generator/work_order_personals.g.dart';
 
 @JsonSerializable()
-class WorkOrderPersonals {
-  final String? module;
-  final String? modulecode;
-  final String? name;
-  final String? vardiya;
+class WorkOrderPersonals extends Equatable {
+  final String? fullname;
+  final String? code;
 
-  WorkOrderPersonals({
-    this.module,
-    this.modulecode,
-    this.name,
-    this.vardiya,
+  const WorkOrderPersonals({
+    this.fullname,
+    this.code,
   });
 
   factory WorkOrderPersonals.fromJson(Map<String, dynamic> json) {
@@ -22,4 +19,10 @@ class WorkOrderPersonals {
   Map<String, dynamic> toJson() {
     return _$WorkOrderPersonalsToJson(this);
   }
+
+  @override
+  List<Object?> get props => [
+        fullname,
+        code,
+      ];
 }
