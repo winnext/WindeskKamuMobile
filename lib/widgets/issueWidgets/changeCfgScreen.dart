@@ -1,18 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import '../../pages/closedRequests/closedRequests.dart';
-import '../../providers/issueaction_provider.dart';
-import '../../utils/utils.dart';
+
 import '../../providers/detail_view_provider.dart';
+import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ChangeCfgScreen extends StatefulWidget {
   final String? issueCode;
@@ -27,16 +22,11 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final newNotifProvider =
-        Provider.of<NewNotifProvider>(context, listen: true);
-    final issuActionProvider =
-        Provider.of<IssueActionProvider>(context, listen: true);
-    final mainPageProvider =
-        Provider.of<MainPageViewProvider>(context, listen: false);
-    final listViewProvider =
-        Provider.of<ListViewProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: true);
+    final newNotifProvider = Provider.of<NewNotifProvider>(context, listen: true);
+    final issuActionProvider = Provider.of<IssueActionProvider>(context, listen: true);
+    final mainPageProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+    final listViewProvider = Provider.of<ListViewProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: true);
 
     return SingleChildScrollView(
       child: Container(
@@ -60,9 +50,7 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: newNotifProvider.entityCode != ''
-                              ? newNotifProvider.entityCode
-                              : 'Varlık Kodu',
+                          hintText: newNotifProvider.entityCode != '' ? newNotifProvider.entityCode : 'Varlık Kodu',
                         ),
                       ),
                     ),
@@ -97,9 +85,7 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: newNotifProvider.serialNumber != ''
-                              ? newNotifProvider.serialNumber
-                              : 'Seri No',
+                          hintText: newNotifProvider.serialNumber != '' ? newNotifProvider.serialNumber : 'Seri No',
                         ),
                       ),
                     ),
@@ -135,9 +121,7 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: newNotifProvider.rfid != ''
-                              ? newNotifProvider.rfid
-                              : 'RFID',
+                          hintText: newNotifProvider.rfid != '' ? newNotifProvider.rfid : 'RFID',
                         ),
                       ),
                     ),
@@ -173,9 +157,7 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                         },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: newNotifProvider.locCode != ''
-                              ? newNotifProvider.locCode
-                              : 'Mahal',
+                          hintText: newNotifProvider.locCode != '' ? newNotifProvider.locCode : 'Mahal',
                         ),
                       ),
                     ),
@@ -246,23 +228,13 @@ class _ChangeCfgScreenState extends State<ChangeCfgScreen> {
                             widget.issueCode);
 
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          String snackBarText =
-                              issuActionProvider.cfgResult.toString();
-                          String cfgSuccess =
-                              issuActionProvider.cfgSuccess.toString();
+                          String snackBarText = issuActionProvider.cfgResult.toString();
+                          String cfgSuccess = issuActionProvider.cfgSuccess.toString();
 
-                          listViewProvider.getIssueOperations(
-                              widget.issueCode, mainPageProvider.kadi);
-                          detailViewProvider.loadData(
-                              widget.issueCode.toString(),
-                              mainPageProvider.kadi.toString());
+                          listViewProvider.getIssueOperations(widget.issueCode, mainPageProvider.kadi);
+                          detailViewProvider.loadData(widget.issueCode.toString(), mainPageProvider.kadi.toString());
                           Navigator.pop(context);
-                          snackBar(
-                              context,
-                              cfgSuccess == true
-                                  ? '$snackBarText'
-                                  : '$snackBarText',
-                              cfgSuccess);
+                          snackBar(context, cfgSuccess == true ? '$snackBarText' : '$snackBarText', cfgSuccess);
                         });
                       },
                       child: Container(

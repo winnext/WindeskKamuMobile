@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings, prefer_final_fields
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
@@ -116,6 +119,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // wo_person functions and attributes
   List<ShiftingsModel> _shiftings = [];
   List<ShiftingsModel> get shiftings => _shiftings;
 
@@ -186,6 +190,31 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // camera functions and attributes for wo_detail
+  final ImagePicker _imagePicker = ImagePicker();
+  File? _image;
+  File? get image => _image != null ? _image! : null;
+
+  set setImage(File? image) {
+    _image = image;
+    notifyListeners();
+  }
+
+  saveImage() async {
+    if (_image != null) {
+      Uint8List imagebytes = await _image!.readAsBytes(); //convert to bytes
+      String base64string = base64.encode(imagebytes); //convert bytes to base64 string
+
+      final response = await apirepository.woCreateFotoEkle(woCode, base64string);
+
+      if (response != null) {
+        print("image eklendi");
+      }
+    } else {
+      return;
+    }
+  }
+
   loadWoDetail(String woCode, String xusercode) async {
     print('LoadWoDetail ');
     woDetailView.clear();
@@ -193,8 +222,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -237,16 +265,13 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(
-        controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List)
-            .map((e) => WoRelatedViewModel.fromJson(e))
-            .toList();
+        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -282,17 +307,12 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode,
-      String description) async {
-    if (description.toString().length < 20 &&
-        activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
+    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult = await apirepository.addIssueActivity(
-          userName: userName,
-          issueCode: woCode,
-          activityCode: activityCode,
-          description: description);
+      final apiresult =
+          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -520,8 +540,7 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   getBirimler() async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc =
-        await apirepository.getPackageInfoByProduct('productDefCode');
+    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct('productDefCode');
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
     List<String> codes = ['Lütfen Birim Seçiniz'];

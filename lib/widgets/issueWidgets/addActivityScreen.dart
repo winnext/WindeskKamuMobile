@@ -2,19 +2,18 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import '../../providers/main_page_view_provider.dart';
-import '../../utils/utils.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
+import '../../providers/main_page_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
+import '../../utils/utils.dart';
 
 class AddActivityScreen extends StatefulWidget {
   VoidCallback? onConfirm;
@@ -66,7 +65,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
-      final results =  Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      final results = Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return TakePictureScreen(
           camera: firstCamera,
           sayfa: 'addPhoto',

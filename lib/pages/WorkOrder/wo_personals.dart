@@ -5,14 +5,13 @@ import 'package:win_kamu/models/shiftings_model.dart';
 
 import '../../models/work_order_personals.dart';
 import '../../providers/workorder_detail_provider.dart';
-import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 
 class WoPersonals extends StatefulWidget {
   const WoPersonals({super.key, required this.woCode, required this.shiftings, required this.personals});
   final List<ShiftingsModel> shiftings;
   final List<WorkOrderPersonals> personals;
-  final woCode;
+  final String woCode;
 
   @override
   State<WoPersonals> createState() => _WoPersonalsState();
@@ -162,10 +161,10 @@ class _WoPersonalsState extends State<WoPersonals> {
         icon: const Icon(Icons.keyboard_arrow_down),
 
         // Array list of items
-        items: names.map((String items) {
+        items: names.map((String? items) {
           return DropdownMenuItem(
-            value: items,
-            child: Text(items),
+            value: items ?? '',
+            child: Text(items ?? ''),
           );
         }).toList(),
         // After selecting the desired option,it will

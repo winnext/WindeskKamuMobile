@@ -43,7 +43,6 @@ import 'package:win_kamu/providers/workorder_provider.dart';
 import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 void main() async {
   // ErrorWidget.builder = (FlutterErrorDetails details) {
   //   return CustomLoadingScreen(
@@ -53,15 +52,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   final onNotifications = BehaviorSubject<String?>();
 
-  FirebaseMessaging.onBackgroundMessage((message) =>
-      NotificationApi.showNotification(
-          title: "message.notification?.title",
-          body: "message.notification?.body",
-          payload: 'asd'));
+  FirebaseMessaging.onBackgroundMessage(
+      (message) => NotificationApi.showNotification(title: "message.notification?.title", body: "message.notification?.body", payload: 'asd'));
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseMessaging.instance.getInitialMessage().then((message) {
     if (message != null) {
@@ -81,18 +76,15 @@ void main() async {
     sound: true,
   );
 
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  const IOSInitializationSettings initializationSettingsIOS =
-      IOSInitializationSettings(
+  const IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
   );
 
-  const MacOSInitializationSettings initializationSettingsMacOS =
-      MacOSInitializationSettings();
+  const MacOSInitializationSettings initializationSettingsMacOS = MacOSInitializationSettings();
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
@@ -100,8 +92,7 @@ void main() async {
     macOS: initializationSettingsMacOS,
   );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: ((data) async {
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async {
     onNotifications.add(data);
   }));
 
@@ -122,28 +113,19 @@ void main() async {
 List<SingleChildWidget> providers = [
   ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
   ChangeNotifierProvider<ListViewProvider>(create: (_) => ListViewProvider()),
-  ChangeNotifierProvider<DetailViewProvider>(
-      create: (_) => DetailViewProvider()),
+  ChangeNotifierProvider<DetailViewProvider>(create: (_) => DetailViewProvider()),
   ChangeNotifierProvider<CrudViewProvider>(create: (_) => CrudViewProvider()),
-  ChangeNotifierProvider<MainPageViewProvider>(
-      create: (_) => MainPageViewProvider()),
+  ChangeNotifierProvider<MainPageViewProvider>(create: (_) => MainPageViewProvider()),
   ChangeNotifierProvider<NewNotifProvider>(create: (_) => NewNotifProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
   ChangeNotifierProvider<WorkOrderProvider>(create: (_) => WorkOrderProvider()),
-  ChangeNotifierProvider<IssueActionProvider>(
-      create: (_) => IssueActionProvider()),
-  ChangeNotifierProvider<SearchViewProvider>(
-      create: (_) => SearchViewProvider()),
-  ChangeNotifierProvider<WoDetailViewProvider>(
-      create: (_) => WoDetailViewProvider()),
-  ChangeNotifierProvider<WorkOrderViewProvider>(
-      create: (_) => WorkOrderViewProvider()),
-  ChangeNotifierProvider<IssueActionProvider>(
-      create: (_) => IssueActionProvider()),
-  ChangeNotifierProvider<SearchViewProvider>(
-      create: (_) => SearchViewProvider()),
-  ChangeNotifierProvider<EnvironmentProvider>(
-      create: (_) => EnvironmentProvider()),
+  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
+  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
+  ChangeNotifierProvider<WoDetailViewProvider>(create: (_) => WoDetailViewProvider()),
+  ChangeNotifierProvider<WorkOrderViewProvider>(create: (_) => WorkOrderViewProvider()),
+  ChangeNotifierProvider<IssueActionProvider>(create: (_) => IssueActionProvider()),
+  ChangeNotifierProvider<SearchViewProvider>(create: (_) => SearchViewProvider()),
+  ChangeNotifierProvider<EnvironmentProvider>(create: (_) => EnvironmentProvider()),
 ];
 
 class MyApp extends StatelessWidget {
@@ -173,20 +155,14 @@ class MyApp extends StatelessWidget {
         NewNotif.newNotif: (context) => const NewNotif(),
         OpenRequests.openRequest: (context) => const OpenRequests(),
         OpenRequestDetail.pageName: (context) => const OpenRequestDetail(),
-        CloseRequestAwaitApproval.closeRequest: (context) =>
-            const CloseRequestAwaitApproval(),
-        CloseRequestDetail.closeRequestDetail: (context) =>
-            const CloseRequestDetail(),
+        CloseRequestAwaitApproval.closeRequest: (context) => const CloseRequestAwaitApproval(),
+        CloseRequestDetail.closeRequestDetail: (context) => const CloseRequestDetail(),
         PlannedRequest.plannedRequest: (context) => const PlannedRequest(),
-        PlannedRequestDetail.plannedRequestDetail: (context) =>
-            const PlannedRequestDetail(),
-        ComplaintRequests.complaintRequests: (context) =>
-            const ComplaintRequests(),
-        ComplaintdRequestDetail.complaintdRequestDetail: (context) =>
-            const ComplaintdRequestDetail(),
+        PlannedRequestDetail.plannedRequestDetail: (context) => const PlannedRequestDetail(),
+        ComplaintRequests.complaintRequests: (context) => const ComplaintRequests(),
+        ComplaintdRequestDetail.complaintdRequestDetail: (context) => const ComplaintdRequestDetail(),
         ClosedRequests.closedRequests: (context) => const ClosedRequests(),
-        ClosedRequestDetail.closedRequestDetail: (context) =>
-            const ClosedRequestDetail(),
+        ClosedRequestDetail.closedRequestDetail: (context) => const ClosedRequestDetail(),
         WoTracingList.tracingList: (context) => const WoTracingList(),
       },
     );

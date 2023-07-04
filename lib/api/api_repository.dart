@@ -513,11 +513,7 @@ class APIRepository {
 
     String? kadi = prefs.getString('prefsUserName');
 
-    String url = base_url_v1 +
-        TOKEN_V1 +
-        deviceToken +
-        '&action=getResponsible&service=' +
-        serviceCode;
+    String url = base_url_v1 + TOKEN_V1 + deviceToken + '&action=getResponsible&service=' + serviceCode;
 
     print('Eforlar listesi url : $url');
 
@@ -564,9 +560,9 @@ class APIRepository {
 
     try {
       BaseOptions options = BaseOptions(
-          baseUrl: url,
-          receiveDataWhenStatusError: true,
-          );
+        baseUrl: url,
+        receiveDataWhenStatusError: true,
+      );
       Dio dio = Dio(options);
       final response = await dio.get(url,
           options: Options(
@@ -640,10 +636,7 @@ class APIRepository {
 
     print(url);
     try {
-      BaseOptions options = BaseOptions(
-          baseUrl: url,
-          receiveDataWhenStatusError: true,
-          receiveTimeout: 3 * 2000 // 60 seconds
+      BaseOptions options = BaseOptions(baseUrl: url, receiveDataWhenStatusError: true, receiveTimeout: 3 * 2000 // 60 seconds
           );
 
       Dio dio = Dio(options);
@@ -1868,9 +1861,7 @@ class APIRepository {
   }
 
   Future<httpSonucModel> getListForPaging(
-      {@required String? controller,
-      @required Map<String, dynamic>? queryParameters,
-      bool redirectLogin = false}) async {
+      {@required String? controller, @required Map<String, dynamic>? queryParameters, bool redirectLogin = false}) async {
     print('url ' + controller! + ' :  :  ' + queryParameters.toString());
 
     try {

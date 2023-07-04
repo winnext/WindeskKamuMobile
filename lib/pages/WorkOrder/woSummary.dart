@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'woList.dart';
-import '../../providers/workorder_detail_provider.dart';
-import '../../utils/utils.dart';
 
+import '../../providers/workorder_detail_provider.dart';
 import '../../utils/themes.dart';
 import '../../utils/time_Utils.dart';
 
@@ -52,8 +48,7 @@ class _WoSummaryState extends State<WoSummary> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final woDetailViewProvider =
-        Provider.of<WoDetailViewProvider>(context, listen: true);
+    final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: true);
     final woDetailList = woDetailViewProvider.woDetailView[0];
     final woRelatedList = woDetailViewProvider.woRelatedView[0];
     return Column(
@@ -68,13 +63,10 @@ class _WoSummaryState extends State<WoSummary> {
                         children: [
                           widget.statusCode == 'OPlanned'
                               ? Container(
-                                  decoration: BoxDecoration(
-                                      color: APPColors.NewNotifi.blue,
-                                      borderRadius: BorderRadius.circular(3)),
+                                  decoration: BoxDecoration(color: APPColors.NewNotifi.blue, borderRadius: BorderRadius.circular(3)),
                                   padding: EdgeInsets.all(3),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       Text('Randevulu Vakadır'),
                                       Text(widget.planedDate.toString()),
@@ -83,60 +75,36 @@ class _WoSummaryState extends State<WoSummary> {
                                 )
                               : widget.respondedTimer == '1'
                                   ? Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(3)),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
                                       padding: EdgeInsets.all(3),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Text('Hedef Yanıtlama Tarihi'),
                                           widget.targetRDate == ''
                                               ? Text('')
                                               : Text(
-                                                  timeRecover(
-                                                          widget.targetRDate)
-                                                      .toString(),
-                                                  style: fixStyle(
-                                                      widget.respondedTimer
-                                                          .toString(),
-                                                      widget.fixTimer
-                                                          .toString(),
-                                                      widget.targetFDate
-                                                          .toString(),
-                                                      widget.fixedDate
-                                                          .toString()),
+                                                  timeRecover(widget.targetRDate).toString(),
+                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
                                                 )
                                         ],
                                       ),
                                     )
                                   : Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(3)),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
                                       margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                       padding: EdgeInsets.all(3),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Text('Yanıtlama Tarihi'),
                                           widget.respondedDate == ''
                                               ? Text('')
                                               : Text(
-                                                  timeRecover(
-                                                          widget.respondedDate)
-                                                      .toString(),
-                                                  style: fixStyle(
-                                                      widget.respondedTimer
-                                                          .toString(),
-                                                      widget.fixTimer
-                                                          .toString(),
-                                                      widget.targetFDate
-                                                          .toString(),
-                                                      widget.fixedDate
-                                                          .toString()),
+                                                  timeRecover(widget.respondedDate).toString(),
+                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
                                                 ),
                                         ],
                                       ),
@@ -146,51 +114,37 @@ class _WoSummaryState extends State<WoSummary> {
                       Column(children: [
                         widget.fixTimer == '1'
                             ? Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
                                 padding: EdgeInsets.all(3),
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Text('Hedef Düzeltme Tarihi'),
                                     widget.targetFDate == ''
                                         ? Text('')
                                         : Text(
-                                            timeRecover(widget.targetFDate)
-                                                .toString(),
-                                            style: fixStyle(
-                                                widget.respondedTimer
-                                                    .toString(),
-                                                widget.fixTimer.toString(),
-                                                widget.targetFDate.toString(),
-                                                widget.fixedDate.toString()),
+                                            timeRecover(widget.targetFDate).toString(),
+                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
                                           ),
                                   ],
                                 ),
                               )
                             : Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 padding: EdgeInsets.all(3),
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Text('Düzeltme Tarihi'),
                                     widget.fixedDate == ''
                                         ? Text('')
                                         : Text(
-                                            timeRecover(widget.fixedDate)
-                                                .toString(),
-                                            style: fixStyle(
-                                                widget.respondedTimer
-                                                    .toString(),
-                                                widget.fixTimer.toString(),
-                                                widget.targetFDate.toString(),
-                                                widget.fixedDate.toString()),
+                                            timeRecover(widget.fixedDate).toString(),
+                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
                                           ),
                                   ],
                                 ),
@@ -222,9 +176,7 @@ class _WoSummaryState extends State<WoSummary> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           woDetailList.NAME.toString(),
-                          style: TextStyle(
-                              color: APPColors.Main.black,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(color: APPColors.Main.black, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -249,8 +201,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.navigation_rounded),
                                   Text(
                                     woDetailList.PRIORITY.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -267,8 +218,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.navigation_outlined),
                                   Text(
                                     woRelatedList.BUSINESS_CODE.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -286,11 +236,10 @@ class _WoSummaryState extends State<WoSummary> {
                                   Flexible(
                                     child: Text(
                                       woRelatedList.BUSINESS_NAME.toString(),
-                                      style:
-                                          TextStyle(color: APPColors.Main.black),
-                                          softWrap: false,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis, // new
+                                      style: TextStyle(color: APPColors.Main.black),
+                                      softWrap: false,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis, // new
                                     ),
                                   ),
                                 ],
@@ -308,8 +257,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.apartment_outlined),
                                   Text(
                                     woDetailList.MODULECODE.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -326,8 +274,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.apartment_outlined),
                                   Text(
                                     woDetailList.MODULENAME.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -346,8 +293,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.apartment_outlined),
                                   Text(
                                     woDetailList.RESPONSIBLE.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -364,8 +310,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.person_outline),
                                   Text(
                                     woDetailList.IUSER.toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -381,12 +326,8 @@ class _WoSummaryState extends State<WoSummary> {
                                 children: [
                                   Icon(Icons.watch_later_outlined),
                                   Text(
-                                    convertSecToStringFormat(woDetailList
-                                            .PLANNED_TIME
-                                            .toString())
-                                        .toString(),
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    convertSecToStringFormat(woDetailList.PLANNED_TIME.toString()).toString(),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
@@ -403,8 +344,7 @@ class _WoSummaryState extends State<WoSummary> {
                                   Icon(Icons.watch_later_outlined),
                                   Text(
                                     '${woDetailList.PLANNED_STARTDATE.toString()} --> ${woDetailList.PLANNED_ENDDATE.toString()} ',
-                                    style:
-                                        TextStyle(color: APPColors.Main.black),
+                                    style: TextStyle(color: APPColors.Main.black),
                                   ),
                                 ],
                               ),
