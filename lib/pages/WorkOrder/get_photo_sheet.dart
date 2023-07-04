@@ -22,7 +22,8 @@ class _GetPhotoSheetState extends State<GetPhotoSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final WoDetailViewProvider woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: false);
+    final WoDetailViewProvider woDetailViewProvider =
+        Provider.of<WoDetailViewProvider>(context, listen: false);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.9,
@@ -31,7 +32,8 @@ class _GetPhotoSheetState extends State<GetPhotoSheet> {
         child: Column(
           children: [
             _PhotoStack(woDetailProvider: woDetailViewProvider),
-            Expanded(flex: 20, child: _descriptionTextField()),
+            Expanded(
+                flex: 20, child: _descriptionTextField(woDetailViewProvider)),
             _buttons(woDetailViewProvider),
             const Spacer(flex: 10),
           ],
@@ -54,13 +56,13 @@ class _GetPhotoSheetState extends State<GetPhotoSheet> {
     );
   }
 
-  TextField _descriptionTextField() {
+  TextField _descriptionTextField(WoDetailViewProvider woDetailViewProvider) {
     return TextField(
       maxLines: 3,
       minLines: 1,
       decoration: InputDecoration(hintText: _hintDescription),
       onChanged: (value) {
-        print(value);
+        woDetailViewProvider.setImageDesc = value.toString();
       },
     );
   }
@@ -80,7 +82,8 @@ class _CancelImage extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: APPColors.Login.blue,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
           woDetailViewProvider.setisNewPersonalAdded = false;
@@ -106,7 +109,8 @@ class _SaveImage extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: APPColors.Login.red,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
           woDetailViewProvider.saveImage();
@@ -145,6 +149,13 @@ class _PhotoStackState extends State<_PhotoStack> {
       child: Stack(
         children: [
           Container(color: Colors.grey),
+          widget.woDetailProvider.image == null
+              ? const SizedBox()
+              : SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.file(widget.woDetailProvider.image!,
+                      fit: BoxFit.fitWidth),
+                ),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
@@ -165,7 +176,6 @@ class _PhotoStackState extends State<_PhotoStack> {
               ),
             ),
           ),
-          widget.woDetailProvider.image == null ? const SizedBox() : Image.file(widget.woDetailProvider.image!, fit: BoxFit.contain),
         ],
       ),
     );

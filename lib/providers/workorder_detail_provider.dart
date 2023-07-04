@@ -127,7 +127,8 @@ class WoDetailViewProvider extends ChangeNotifier {
   List<WorkOrderPersonals> get workOrderPersonals => _workOrderPersonals;
 
   List<WorkOrderPersonalsDetailed> _workOrderPersonalsDetailed = [];
-  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed => _workOrderPersonalsDetailed;
+  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed =>
+      _workOrderPersonalsDetailed;
 
   String _pickedPersonalName = 'Personal ismi seçiniz';
   String get pickedPersonalName => _pickedPersonalName;
@@ -157,7 +158,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getWorkOrderPersonelsApi(woCode);
 
     for (var item in data) {
-      _workOrderPersonalsDetailed.add(WorkOrderPersonalsDetailed.fromJson(item));
+      _workOrderPersonalsDetailed
+          .add(WorkOrderPersonalsDetailed.fromJson(item));
     }
 
     notifyListeners();
@@ -166,7 +168,8 @@ class WoDetailViewProvider extends ChangeNotifier {
   loadAllPersonals() async {
     _workOrderPersonals = [];
 
-    final data = await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
+    final data =
+        await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
 
     for (var item in data) {
       _workOrderPersonals.add(WorkOrderPersonals.fromJson(item));
@@ -200,12 +203,21 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _imageDesc = '';
+  String get imageDesc => _imageDesc;
+  set setImageDesc(String imageDesc) {
+    _imageDesc = imageDesc;
+    notifyListeners();
+  }
+
   saveImage() async {
     if (_image != null) {
       Uint8List imagebytes = await _image!.readAsBytes(); //convert to bytes
-      String base64string = base64.encode(imagebytes); //convert bytes to base64 string
+      String base64string =
+          base64.encode(imagebytes); //convert bytes to base64 string
 
-      final response = await apirepository.woCreateFotoEkle(woCode, base64string);
+      final response = await apirepository.woCreateFotoEkle(
+          woCode, base64string, _imageDesc);
 
       if (response != null) {
         print("image eklendi");
@@ -222,7 +234,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -241,9 +254,16 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   addWorkOrderPersonal() async {
-    String personalCode = _workOrderPersonals.firstWhere((element) => element.fullname == _pickedPersonalName).code ?? '';
-    String shiftingCode = _shiftings.firstWhere((element) => element.name == _pickShifting).code ?? '';
-    final data = await apirepository.addWorkOrderPersonal(woCode, personalCode, shiftingCode);
+    String personalCode = _workOrderPersonals
+            .firstWhere((element) => element.fullname == _pickedPersonalName)
+            .code ??
+        '';
+    String shiftingCode = _shiftings
+            .firstWhere((element) => element.name == _pickShifting)
+            .code ??
+        '';
+    final data = await apirepository.addWorkOrderPersonal(
+        woCode, personalCode, shiftingCode);
 
     if (data != null) {
       _isNewPersonalAdded = true;
@@ -252,11 +272,13 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   deleteWorkOrderPersonal(String moduleCode) async {
-    final data = await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
+    final data =
+        await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
 
     if (data != null) {
       _isNewPersonalAdded = false;
-      _workOrderPersonalsDetailed.removeWhere((element) => element.modulecode == moduleCode);
+      _workOrderPersonalsDetailed
+          .removeWhere((element) => element.modulecode == moduleCode);
       notifyListeners();
     }
   }
@@ -265,13 +287,16 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(
+        controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
+        tempwoRelatedView = (data.records['records'] as List)
+            .map((e) => WoRelatedViewModel.fromJson(e))
+            .toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -307,12 +332,17 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode, String description) async {
-    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode,
+      String imageDescription) async {
+    if (imageDescription.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult =
-          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: description);
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: woCode,
+          activityCode: activityCode,
+          description: imageDescription);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -477,8 +507,10 @@ class WoDetailViewProvider extends ChangeNotifier {
     List<String> codes = ['Lütfen Depo Seçiniz'];
     List<String> names = ['Lütfen Depo Seçiniz'];
     for (var element in depolarSonuc) {
-      codes.add(element['CODE']);
-      names.add(element['NAME']);
+      if (!names.contains(element['NAME']) && element['NAME'] != null) {
+        codes.add(element['CODE']);
+        names.add(element['NAME']);
+      }
     }
     setDepolarArray = [codes] + [names];
     print('depolar array');
@@ -492,6 +524,15 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   set setSecilenDepoUrunSecimi(String secilenDepoUrunSecimi) {
     _secilenDepoUrunSecimi = secilenDepoUrunSecimi;
+    notifyListeners();
+  }
+
+  String _secilenDepoUrunValue = '';
+
+  String get secilenDepoUrunValue => _secilenDepoUrunValue;
+
+  set setSecilenDepoUrunValue(String secilenDepoUrunValue) {
+    _secilenDepoUrunValue = secilenDepoUrunValue;
     notifyListeners();
   }
 
@@ -511,8 +552,10 @@ class WoDetailViewProvider extends ChangeNotifier {
     List<String> codes = ['Lütfen Ürün Seçiniz'];
     List<String> names = ['Lütfen Ürün Seçiniz'];
     for (var element in depoUrunlerSonuc) {
-      codes.add(element['PRODUCTDEFCODE']);
-      names.add(element['NAME']);
+      if (!names.contains(element['NAME']) && element['NAME'] != null) {
+        codes.add(element['PRODUCTDEFCODE']);
+        names.add(element['NAME']);
+      }
     }
     setDepoUrunlerArray = [codes] + [names];
     print('depo urunler array');
@@ -538,9 +581,10 @@ class WoDetailViewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getBirimler() async {
+  getBirimler(productDefCode) async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct('productDefCode');
+    final depoBirimlerSonuc =
+        await apirepository.getPackageInfoByProduct(productDefCode);
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
     List<String> codes = ['Lütfen Birim Seçiniz'];
