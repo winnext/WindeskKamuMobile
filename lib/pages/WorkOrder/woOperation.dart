@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use, file_names
 
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
@@ -45,7 +45,6 @@ class _WoOperationState extends State<WoOperation> {
   final _headerStyle = const TextStyle(color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
   final _contentStyleHeader = const TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
   final _contentStyle = const TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-  String _dropdownvalueSureSeciniz = 'Lütfen Süre Seçiniz';
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +85,7 @@ class _WoOperationState extends State<WoOperation> {
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       ),
                       onPressed: () {
-                        setState(() {
-                          _dropdownvalueSureSeciniz = 'Lütfen Süre Seçiniz';
-                        });
+                        setState(() {});
 
                         showModalBottomSheet<void>(
                           shape: const RoundedRectangleBorder(

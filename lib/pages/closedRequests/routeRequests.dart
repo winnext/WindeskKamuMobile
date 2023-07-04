@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
@@ -14,7 +13,7 @@ class ClosedRequests extends StatefulWidget {
 }
 
 class _ClosedRequestsState extends State<ClosedRequests> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
   PageController? _pageController;
 
   @override
