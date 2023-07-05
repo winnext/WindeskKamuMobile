@@ -440,6 +440,44 @@ class APIRepository {
     }
   }
 
+  String getFilePath() {
+    return 'https://demo.signumtte.com/windesk/xreadattach.php?token=$TOKEN_V1&id=';
+  }
+
+  // fetch files api
+  Future fetchFiles(woCode) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? kadi = prefs.getString('prefsUserName');
+
+    String url = '$BASE_URL_V2/workorder/$woCode/attachments';
+
+    try {
+      BaseOptions options = BaseOptions(
+          baseUrl: url,
+          receiveDataWhenStatusError: true,
+          connectTimeout: 3 * 1000, // 60 seconds
+          receiveTimeout: 3 * 1000 // 60 seconds
+          );
+      Dio dio = Dio(options);
+      final response = await dio.get(url,
+          options: Options(
+            headers: {'xusercode': kadi, 'xtoken': TOKEN_V2},
+            responseType: ResponseType.json,
+          ));
+
+      print("getWorkOrderPersonelsApi response : $response");
+      //print('Eforlar listesi response  : ' + (response.data).toString());
+      if (response.data['result'] == 'success') {
+        return response.data['records'];
+      }
+    } on DioError catch (e) {
+      print('notsuccess');
+      print(e);
+      return 'notsuccess';
+    }
+  }
+
   // get work order personels
   Future getWorkOrderPersonelsApi(woCode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

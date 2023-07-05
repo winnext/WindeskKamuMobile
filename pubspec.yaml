@@ -73,15 +73,19 @@ dependencies:
   vertical_picker: ^0.0.1
   selectable_list: ^0.1.1
 
-  # image picker, pdf picker --camera etc
+  # image picker, pdf picker, pdf reader --camera etc
   image_picker: ^0.8.6+4
   path_provider: ^2.0.14
   file_picker: ^5.3.2
+  syncfusion_flutter_pdfviewer: ^22.1.37
 
   # json annotation
   json_serializable: ^6.7.0
   json_annotation: ^4.8.1
   equatable: ^2.0.5
+
+  # cached network iamge
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

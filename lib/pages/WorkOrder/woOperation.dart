@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:win_kamu/pages/WorkOrder/get_photo_sheet.dart';
 import 'package:win_kamu/pages/WorkOrder/wo_personals.dart';
+import 'package:win_kamu/widgets/dialogWidgets/image_dialog.dart';
+import 'package:win_kamu/widgets/dialogWidgets/pdf_dialog.dart';
 
 import '../../providers/workorder_detail_provider.dart';
 import '../../utils/themes.dart';
@@ -29,13 +31,16 @@ class _WoOperationState extends State<WoOperation> {
   final String _addDocuments = 'Döküman Ekle';
   final String _addNewPersonals = 'Yeni Personel Ekle';
   final String _instructions = 'Talimatlar';
+  final String _fileName = 'Dosya Adı';
+  final String _delete = 'Sil';
+  final String _files = 'Dosyalar';
 
   @override
   void initState() {
     final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: false);
     woDetailViewProvider.setEforlarArray = [];
     woDetailViewProvider.getWorkOrderWorklogs(widget.woCode);
-
+    woDetailViewProvider.fetchFiles();
     woDetailViewProvider.loadAllPersonalsDetailed();
 
     super.initState();
@@ -272,18 +277,15 @@ class _WoOperationState extends State<WoOperation> {
               onPressed: () async {
                 showModalBottomSheet<void>(
                   // give radius to the created modal
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
                     return const GetPhotoSheet();
                   },
-                );
+                ).then((value) {
+                  woDetailViewProvider.fetchFiles();
+                });
               },
               child: Text(_addPictures),
             ),
@@ -305,22 +307,73 @@ class _WoOperationState extends State<WoOperation> {
               onPressed: () async {
                 showModalBottomSheet<void>(
                   // give radius to the created modal
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
                     return const AddDocumantSheet();
                   },
                 ).then((value) {
-                  woDetailViewProvider.setisDocumantPicked = false;
+                  woDetailViewProvider.fetchFiles();
+                  woDetailViewProvider.setIsDocumantPicked = false;
                 });
               },
               child: Text(_addDocuments),
+            ),
+          ),
+          AccordionSection(
+            isOpen: false,
+            leftIcon: const Icon(Icons.document_scanner, color: Colors.white),
+            header: Text(_files, style: _headerStyle),
+            headerBackgroundColor: APPColors.Login.blue,
+            headerBackgroundColorOpened: Colors.black,
+            contentBorderColor: Colors.black54,
+            headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+            content: DataTable(
+              sortAscending: true,
+              sortColumnIndex: 1,
+              dataRowHeight: 60,
+              showBottomBorder: true,
+              horizontalMargin: 0,
+              columns: [
+                DataColumn(label: Text(_fileName, style: _contentStyleHeader, textAlign: TextAlign.left), numeric: false),
+                DataColumn(label: Text(_delete, style: _contentStyleHeader, textAlign: TextAlign.left), numeric: false),
+              ],
+              rows: [
+                for (var i = 0; i < woDetailViewProvider.documants.length; i++)
+                  DataRow(
+                    cells: [
+                      DataCell(
+                        InkWell(
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) => ImageDialog(
+                                imageUrl: woDetailViewProvider.getFilePath(woDetailViewProvider.documants[i].id.toString()),
+                              ),
+                            );
+                          },
+                          child: Text(woDetailViewProvider.documants[i].filename ?? 'not found', style: _contentStyle, textAlign: TextAlign.left),
+                        ),
+                      ),
+                      DataCell(
+                        InkWell(
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return PdfDialog(
+                                  pdfSource: woDetailViewProvider.getFilePath(woDetailViewProvider.documants[i].id.toString()),
+                                );
+                              },
+                            );
+                          },
+                          child: const Icon(Icons.delete, color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
             ),
           ),
         ],
@@ -402,18 +455,19 @@ class _WoOperationState extends State<WoOperation> {
                           style: _contentStyle,
                         ),
                       ),
-                      DataCell(Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            woDetailViewProvider.deleteWorkOrderPersonal(woDetailViewProvider.workOrderPersonalsDetailed[i].modulecode.toString());
-                          },
-                          child: const Icon(Icons.delete, color: Colors.red),
+                      DataCell(
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              woDetailViewProvider.deleteWorkOrderPersonal(woDetailViewProvider.workOrderPersonalsDetailed[i].modulecode.toString());
+                            },
+                            child: const Icon(Icons.delete, color: Colors.red),
+                          ),
                         ),
-                      ))
+                      )
                     ],
                   ),
-                //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
               ],
             ),
           ),

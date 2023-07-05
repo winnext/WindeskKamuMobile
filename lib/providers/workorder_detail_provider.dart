@@ -11,6 +11,7 @@ import 'package:win_kamu/models/detail_activities.model.dart';
 import 'package:win_kamu/models/issue_summary.modal.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 
+import '../models/documants_model.dart';
 import '../models/shiftings_model.dart';
 import '../models/worelated_modal.dart';
 import '../models/work_order_personals.dart';
@@ -235,7 +236,7 @@ class WoDetailViewProvider extends ChangeNotifier {
   bool _isDocumantPicked = false;
   bool get isDocumantPicked => _isDocumantPicked;
 
-  set setisDocumantPicked(bool isDocumantPicked) {
+  set setIsDocumantPicked(bool isDocumantPicked) {
     _isDocumantPicked = isDocumantPicked;
     notifyListeners();
   }
@@ -248,7 +249,7 @@ class WoDetailViewProvider extends ChangeNotifier {
 
     if (filePickerResult != null) {
       _pdfPath = filePickerResult!.files.first.path ?? '';
-      setisDocumantPicked = true;
+      setIsDocumantPicked = true;
       print("pdf path : " + _pdfPath);
     }
   }
@@ -266,6 +267,30 @@ class WoDetailViewProvider extends ChangeNotifier {
     } else {
       return;
     }
+  }
+
+  // fetch all files for wo_detail
+  List<DocumantsModel> _documants = [];
+  List<DocumantsModel> get documants => _documants;
+
+  fetchFiles() async {
+    _documants = [];
+    final data = await apirepository.fetchFiles(woCode);
+
+    print('response: ' + data.toString());
+
+    for (var item in data) {
+      print('item : ' + item.toString());
+      _documants.add(DocumantsModel.fromJson(item));
+    }
+
+    print('First doc: ${_documants.first}');
+
+    notifyListeners();
+  }
+
+  String getFilePath(String documantId) {
+    return apirepository.getFilePath() + documantId;
   }
 
   loadWoDetail(String woCode, String xusercode) async {

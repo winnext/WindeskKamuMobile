@@ -100,7 +100,7 @@ class _CancelDoc extends StatelessWidget {
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
-          woDetailViewProvider.setisDocumantPicked = false;
+          woDetailViewProvider.setIsDocumantPicked = false;
           Navigator.pop(context);
         },
         child: (Text(_cancel)),
@@ -127,7 +127,7 @@ class _SaveDoc extends StatelessWidget {
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
-          woDetailViewProvider.setisDocumantPicked = false;
+          woDetailViewProvider.setIsDocumantPicked = false;
           woDetailViewProvider.saveDocumant();
           Navigator.pop(context);
         },
