@@ -1,9 +1,6 @@
 //aeh preprod
 // ignore_for_file: constant_identifier_names, prefer_interpolation_to_compose_strings
 
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 const BASE_URL = "https://digipay-test.ardsistem.com.tr/api/";
 //----
 const updateNotication = "v1/Notification/UpdateNotification";
@@ -65,7 +62,7 @@ const TOKEN_V1 = "wddemo!_";
 const TOKEN_V2 = 'demo!';
 const ATTACHPATH = "https://demo.signumtte.com/windesk";
 
-const ATTACHPATHLIVE = "http://10.32.12.42/windesktest/xreadattach.php?token=${TOKEN_V1}&id=";
+const ATTACHPATHLIVE = "http://10.32.12.42/windesktest/xreadattach.php?token=$TOKEN_V1&id=";
 const base_url_v1 = 'https://demo.signumtte.com/windesk/app/webroot/integration/WindeskMobile.php?use_rest=1&wsusername=' +
     'wdmobile' +
     '&wspassword=' +

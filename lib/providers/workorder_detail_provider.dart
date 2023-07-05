@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings, prefer_final_fields
+// ignore_for_file: prefer_typing_uninitialized_variables, dead_code, avoid_print, prefer_interpolation_to_compose_strings, prefer_final_fields, unused_field
 
 import 'dart:convert';
 import 'dart:io';
@@ -274,7 +274,7 @@ class WoDetailViewProvider extends ChangeNotifier {
 
     _isDataLoading = true;
 
-    final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
+    final responseUrl = '$BASE_URL_V2/workorder/detail/$woCode';
     final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
@@ -317,7 +317,7 @@ class WoDetailViewProvider extends ChangeNotifier {
   woGetRelatedSpace(String woCode, String xusercode) async {
     _isDataLoading = true;
 
-    final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
+    final responseUrl = '$BASE_URL_V2/workorder/$woCode/space';
     final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
@@ -591,8 +591,8 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   String get secilenBirim => _secilenBirim;
 
-  set setSecilenBirim(String _secilenBirim) {
-    _secilenBirim = secilenBirim;
+  set setSecilenBirim(String secilenBirim) {
+    secilenBirim = secilenBirim;
     notifyListeners();
   }
 
