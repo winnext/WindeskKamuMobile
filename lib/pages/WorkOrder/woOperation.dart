@@ -115,14 +115,8 @@ class _WoOperationState extends State<WoOperation> {
                 await woDetailViewProvider.getStore();
 
                 showModalBottomSheet<void>(
-                  // context and builder are
-                  // required properties in this widget
                   context: context,
                   builder: (BuildContext context) {
-                    // we set up a container inside which
-                    // we create center column and display text
-
-                    // Returning SizedBox instead of a Container
                     return WoSpareParts(
                       woCode: widget.woCode,
                     );
@@ -149,9 +143,7 @@ class _WoOperationState extends State<WoOperation> {
               columns: [
                 DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
                 DataColumn(label: Text('Süre', style: _contentStyleHeader)),
-                DataColumn(
-                  label: Text('Sil', style: _contentStyleHeader),
-                ),
+                DataColumn(label: Text(_delete, style: _contentStyleHeader)),
               ],
               rows: [
                 for (var i = 0; i < woDetailViewProvider.eforlarArray[1].length; i++)
@@ -237,9 +229,7 @@ class _WoOperationState extends State<WoOperation> {
               columns: [
                 DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
                 DataColumn(label: Text('Süre', style: _contentStyleHeader)),
-                DataColumn(
-                  label: Text('Sil', style: _contentStyleHeader),
-                ),
+                DataColumn(label: Text(_delete, style: _contentStyleHeader)),
               ],
               rows: [
                 for (var i = 0; i < woDetailViewProvider.eforlarArray[1].length; i++)
