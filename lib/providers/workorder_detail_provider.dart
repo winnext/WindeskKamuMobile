@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
@@ -127,7 +128,8 @@ class WoDetailViewProvider extends ChangeNotifier {
   List<WorkOrderPersonals> get workOrderPersonals => _workOrderPersonals;
 
   List<WorkOrderPersonalsDetailed> _workOrderPersonalsDetailed = [];
-  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed => _workOrderPersonalsDetailed;
+  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed =>
+      _workOrderPersonalsDetailed;
 
   String _pickedPersonalName = 'Personal ismi seçiniz';
   String get pickedPersonalName => _pickedPersonalName;
@@ -157,7 +159,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getWorkOrderPersonelsApi(woCode);
 
     for (var item in data) {
-      _workOrderPersonalsDetailed.add(WorkOrderPersonalsDetailed.fromJson(item));
+      _workOrderPersonalsDetailed
+          .add(WorkOrderPersonalsDetailed.fromJson(item));
     }
 
     notifyListeners();
@@ -166,7 +169,8 @@ class WoDetailViewProvider extends ChangeNotifier {
   loadAllPersonals() async {
     _workOrderPersonals = [];
 
-    final data = await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
+    final data =
+        await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
 
     for (var item in data) {
       _workOrderPersonals.add(WorkOrderPersonals.fromJson(item));
@@ -209,9 +213,11 @@ class WoDetailViewProvider extends ChangeNotifier {
   saveImage() async {
     if (_image != null) {
       Uint8List imagebytes = await _image!.readAsBytes(); //convert to bytes
-      String base64string = base64.encode(imagebytes); //convert bytes to base64 string
+      String base64string =
+          base64.encode(imagebytes); //convert bytes to base64 string
 
-      final response = await apirepository.woCreateFotoEkle(woCode, base64string, _imageDesc);
+      final response = await apirepository.woCreateFotoEkle(
+          woCode, base64string, _imageDesc);
 
       if (response != null) {
         print("image eklendi");
@@ -259,7 +265,8 @@ class WoDetailViewProvider extends ChangeNotifier {
       final bytes = File(_pdfPath).readAsBytesSync();
       String file64 = base64Encode(bytes);
 
-      final response = await apirepository.woCreateFotoEkle(woCode, file64, _pdfDesc);
+      final response =
+          await apirepository.woCreateFotoEkle(woCode, file64, _pdfDesc);
 
       if (response != null) {
         print("pdf eklendi");
@@ -300,7 +307,8 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/$woCode';
-    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -319,9 +327,16 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   addWorkOrderPersonal() async {
-    String personalCode = _workOrderPersonals.firstWhere((element) => element.fullname == _pickedPersonalName).code ?? '';
-    String shiftingCode = _shiftings.firstWhere((element) => element.name == _pickShifting).code ?? '';
-    final data = await apirepository.addWorkOrderPersonal(woCode, personalCode, shiftingCode);
+    String personalCode = _workOrderPersonals
+            .firstWhere((element) => element.fullname == _pickedPersonalName)
+            .code ??
+        '';
+    String shiftingCode = _shiftings
+            .firstWhere((element) => element.name == _pickShifting)
+            .code ??
+        '';
+    final data = await apirepository.addWorkOrderPersonal(
+        woCode, personalCode, shiftingCode);
 
     if (data != null) {
       _isNewPersonalAdded = true;
@@ -330,11 +345,13 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   deleteWorkOrderPersonal(String moduleCode) async {
-    final data = await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
+    final data =
+        await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
 
     if (data != null) {
       _isNewPersonalAdded = false;
-      _workOrderPersonalsDetailed.removeWhere((element) => element.modulecode == moduleCode);
+      _workOrderPersonalsDetailed
+          .removeWhere((element) => element.modulecode == moduleCode);
       notifyListeners();
     }
   }
@@ -343,13 +360,16 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/$woCode/space';
-    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(
+        controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
+        tempwoRelatedView = (data.records['records'] as List)
+            .map((e) => WoRelatedViewModel.fromJson(e))
+            .toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -385,12 +405,17 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode, String imageDescription) async {
-    if (imageDescription.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode,
+      String imageDescription) async {
+    if (imageDescription.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult =
-          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: imageDescription);
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: woCode,
+          activityCode: activityCode,
+          description: imageDescription);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -460,6 +485,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     final result = await apirepository.addEffortApi(code, workPeriod);
     if (result == true) {
       snackBar(context, 'Efor başarıyla oluşturuldu ', 'success');
+      Navigator.pop(context);
     } else {
       snackBar(context, 'Efor eklenirken hata oluştu ', 'error');
     }
@@ -518,6 +544,54 @@ class WoDetailViewProvider extends ChangeNotifier {
       //timeworkeds.add('1 gun 1 sa 21 dk ');
     }
     setEforlarArray = [codes] + [users] + [timeworkeds];
+  }
+
+  //////////////////// MALZEMELER ////////////////////////////
+  List _malzemelerArray = [];
+
+  List get malzemelerArray => _malzemelerArray;
+  set setMalzemelerArray(List malzemelerArray) {
+    _malzemelerArray = malzemelerArray;
+    notifyListeners();
+  }
+
+  getWorkorderSpareParts(woCode) async {
+    setMalzemelerArray = [];
+    List<String> codes = [];
+    List<String> product_name = [];
+    List<String> amount = [];
+    List<String> unit = [];
+
+    final result2 = await apirepository.getWorkorderSparepartsApi(woCode);
+    print('Malzemeler datası');
+    print(result2);
+    for (var element in result2) {
+      if (element['CODE'] != null &&
+          element['PRODUCTNAME'] != null &&
+          element['AMOUNT'] != null &&
+          element['UNIT'] != null) {
+        codes.add(element['CODE']);
+        product_name.add(element['PRODUCTNAME']);
+        amount.add(element['AMOUNT']);
+        unit.add(element['UNIT']);
+      }
+    }
+    setMalzemelerArray = [codes] + [product_name] + [amount] + [unit];
+    print(malzemelerArray);
+  }
+
+  deleteSpareParts(context, code) async {
+    print('Silinecek Malzeme : ' + code.toString());
+    final deleteEffortResult = await apirepository.deleteSparepartsApi(code);
+    if (deleteEffortResult == true) {
+      snackBar(context, 'Malzeme başarıyla silindi ', 'success');
+
+      await getWorkorderSpareParts(woCode);
+    } else {
+      snackBar(context, 'Malzeme silinirken bir hata oluştu ', 'error');
+    }
+
+    print(deleteEffortResult);
   }
 
 ////////////////////Malzeme seçimi  Depolar///////////////////
@@ -600,7 +674,9 @@ class WoDetailViewProvider extends ChangeNotifier {
     List<String> codes = ['Lütfen Ürün Seçiniz'];
     List<String> names = ['Lütfen Ürün Seçiniz'];
     for (var element in depoUrunlerSonuc) {
-      if (!names.contains(element['NAME']) && element['NAME'] != null) {
+      if ((!names.contains(element['NAME']) ||
+              !codes.contains(element['PRODUCTDEFCODE'])) &&
+          element['NAME'] != null) {
         codes.add(element['PRODUCTDEFCODE']);
         names.add(element['NAME']);
       }
@@ -617,7 +693,16 @@ class WoDetailViewProvider extends ChangeNotifier {
   String get secilenBirim => _secilenBirim;
 
   set setSecilenBirim(String secilenBirim) {
-    secilenBirim = secilenBirim;
+    _secilenBirim = secilenBirim;
+    notifyListeners();
+  }
+
+  String _secilenBirimValue = '';
+
+  String get secilenBirimValue => _secilenBirimValue;
+
+  set setSecilenBirimValue(String secilenBirimValue) {
+    _secilenBirimValue = secilenBirimValue;
     notifyListeners();
   }
 
@@ -631,17 +716,48 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   getBirimler(productDefCode) async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct(productDefCode);
+    final depoBirimlerSonuc =
+        await apirepository.getPackageInfoByProduct(productDefCode);
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
     List<String> codes = ['Lütfen Birim Seçiniz'];
     List<String> names = ['Lütfen Birim Seçiniz'];
     for (var element in depoBirimlerSonuc) {
       codes.add(element['CODE']);
-      names.add(element['NAME']);
+      names.add(element['UNITCODE']);
     }
     setDepoBirimlerArray = [codes] + [names];
     print('depo birimler array');
     print(depoBirimlerArray);
+  }
+
+  /// Adet
+  ///
+  // String _malzemeMiktari = '';
+
+  // String get malzemeMiktari => _malzemeMiktari;
+
+  // set setMalzemeMiktari(String malzemeMiktari) {
+  //   _malzemeMiktari = malzemeMiktari;
+  //   notifyListeners();
+  // }
+  final _malzemeMiktari = TextEditingController();
+
+  TextEditingController get malzemeMiktari => _malzemeMiktari;
+
+  set setMalzemeMiktari(String malzemeMiktari) {
+    _malzemeMiktari.text = malzemeMiktari;
+    notifyListeners();
+  }
+
+  woAddMaterial(context, product, amount, unit) async {
+    final addMaterialResponse =
+        await apirepository.woAddMaterialApi(woCode, product, amount, unit);
+    if (addMaterialResponse == true) {
+      snackBar(context, 'Malzeme başarıyla eklendi ', 'success');
+      Navigator.pop(context);
+    } else {
+      snackBar(context, 'Malzeme eklenirken hata oluştu ', 'error');
+    }
   }
 }

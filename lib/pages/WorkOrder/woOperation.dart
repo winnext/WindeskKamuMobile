@@ -37,7 +37,8 @@ class _WoOperationState extends State<WoOperation> {
 
   @override
   void initState() {
-    final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: false);
+    final woDetailViewProvider =
+        Provider.of<WoDetailViewProvider>(context, listen: false);
     woDetailViewProvider.setEforlarArray = [];
     woDetailViewProvider.getWorkOrderWorklogs(widget.woCode);
     woDetailViewProvider.fetchFiles();
@@ -46,13 +47,17 @@ class _WoOperationState extends State<WoOperation> {
     super.initState();
   }
 
-  final _headerStyle = const TextStyle(color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
-  final _contentStyleHeader = const TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
-  final _contentStyle = const TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
+  final _headerStyle = const TextStyle(
+      color: Color(0xffffffff), fontSize: 15, fontWeight: FontWeight.bold);
+  final _contentStyleHeader = const TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
+  final _contentStyle = const TextStyle(
+      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
 
   @override
   Widget build(BuildContext context) {
-    final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: true);
+    final woDetailViewProvider =
+        Provider.of<WoDetailViewProvider>(context, listen: true);
     return Sizer(builder: (context, Orientation, deviceType) {
       return Padding(
         padding: const EdgeInsets.all(20.0),
@@ -61,7 +66,8 @@ class _WoOperationState extends State<WoOperation> {
           headerBackgroundColorOpened: Colors.black54,
           scaleWhenAnimating: true,
           openAndCloseAnimation: true,
-          headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+          headerPadding:
+              const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
           sectionClosingHapticFeedback: SectionHapticFeedback.light,
           children: [
@@ -82,12 +88,16 @@ class _WoOperationState extends State<WoOperation> {
       leftIcon: const Icon(Icons.contact_page, color: Colors.white),
       header: Text(_instructions, style: _headerStyle),
       content: Wrap(
-        children: List.generate(30, (index) => const Icon(Icons.contact_page, size: 30, color: Color(0xff999999))),
+        children: List.generate(
+            30,
+            (index) => const Icon(Icons.contact_page,
+                size: 30, color: Color(0xff999999))),
       ),
     );
   }
 
-  AccordionSection _materialsAccordionSection(WoDetailViewProvider woDetailViewProvider, BuildContext context) {
+  AccordionSection _materialsAccordionSection(
+      WoDetailViewProvider woDetailViewProvider, BuildContext context) {
     return AccordionSection(
       isOpen: false,
       headerBackgroundColor: APPColors.Login.blue,
@@ -109,7 +119,8 @@ class _WoOperationState extends State<WoOperation> {
             content: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
               onPressed: () async {
                 await woDetailViewProvider.getStore();
@@ -138,28 +149,37 @@ class _WoOperationState extends State<WoOperation> {
             content: DataTable(
               sortAscending: true,
               sortColumnIndex: 1,
-              dataRowHeight: 40,
+              dataRowHeight: 70,
               showBottomBorder: true,
+              horizontalMargin: 0,
               columns: [
-                DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
-                DataColumn(label: Text('Süre', style: _contentStyleHeader)),
+                DataColumn(
+                    label: Text('Kullanıcı', style: _contentStyleHeader),
+                    numeric: false),
+                DataColumn(label: Text('Adet', style: _contentStyleHeader)),
                 DataColumn(label: Text(_delete, style: _contentStyleHeader)),
               ],
               rows: [
-                for (var i = 0; i < woDetailViewProvider.eforlarArray[1].length; i++)
+                for (var i = 0;
+                    i < woDetailViewProvider.malzemelerArray[1].length;
+                    i++)
                   DataRow(
                     cells: [
-                      DataCell(Text(woDetailViewProvider.eforlarArray[1][i], style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text(woDetailViewProvider.eforlarArray[2][i], style: _contentStyle)),
+                      DataCell(Text(woDetailViewProvider.malzemelerArray[1][i],
+                          style: _contentStyle, textAlign: TextAlign.left)),
+                      DataCell(Text(woDetailViewProvider.malzemelerArray[2][i],
+                          style: _contentStyle)),
                       DataCell(GestureDetector(
                         onTap: () {
-                          woDetailViewProvider.deleteEffort(context, woDetailViewProvider.eforlarArray[0][i], widget.woCode);
+                          woDetailViewProvider.deleteSpareParts(
+                            context,
+                            woDetailViewProvider.malzemelerArray[0][i],
+                          );
                         },
                         child: const Icon(Icons.delete, color: Colors.red),
                       ))
                     ],
                   ),
-                //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
               ],
             ),
           ),
@@ -168,7 +188,8 @@ class _WoOperationState extends State<WoOperation> {
     );
   }
 
-  AccordionSection _efortsAccordionSection(BuildContext context, WoDetailViewProvider woDetailViewProvider) {
+  AccordionSection _efortsAccordionSection(
+      BuildContext context, WoDetailViewProvider woDetailViewProvider) {
     return AccordionSection(
       isOpen: false,
       headerBackgroundColor: APPColors.Login.blue,
@@ -190,7 +211,8 @@ class _WoOperationState extends State<WoOperation> {
             content: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
               onPressed: () {
                 setState(() {});
@@ -222,24 +244,34 @@ class _WoOperationState extends State<WoOperation> {
             headerBackgroundColorOpened: Colors.black,
             contentBorderColor: Colors.black54,
             content: DataTable(
+              horizontalMargin: 0,
               sortAscending: true,
               sortColumnIndex: 1,
               dataRowHeight: 40,
               showBottomBorder: true,
               columns: [
-                DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
+                DataColumn(
+                    label: Text('Kullanıcı', style: _contentStyleHeader),
+                    numeric: false),
                 DataColumn(label: Text('Süre', style: _contentStyleHeader)),
                 DataColumn(label: Text(_delete, style: _contentStyleHeader)),
               ],
               rows: [
-                for (var i = 0; i < woDetailViewProvider.eforlarArray[1].length; i++)
+                for (var i = 0;
+                    i < woDetailViewProvider.eforlarArray[1].length;
+                    i++)
                   DataRow(
                     cells: [
-                      DataCell(Text(woDetailViewProvider.eforlarArray[1][i], style: _contentStyle, textAlign: TextAlign.right)),
-                      DataCell(Text(woDetailViewProvider.eforlarArray[2][i], style: _contentStyle)),
+                      DataCell(Text(woDetailViewProvider.eforlarArray[1][i],
+                          style: _contentStyle, textAlign: TextAlign.left)),
+                      DataCell(Text(woDetailViewProvider.eforlarArray[2][i],
+                          style: _contentStyle)),
                       DataCell(GestureDetector(
                         onTap: () {
-                          woDetailViewProvider.deleteEffort(context, woDetailViewProvider.eforlarArray[0][i], widget.woCode);
+                          woDetailViewProvider.deleteEffort(
+                              context,
+                              woDetailViewProvider.eforlarArray[0][i],
+                              widget.woCode);
                         },
                         child: const Icon(Icons.delete, color: Colors.red),
                       ))
@@ -254,7 +286,8 @@ class _WoOperationState extends State<WoOperation> {
     );
   }
 
-  AccordionSection _documantsPhotosAccordionSection(WoDetailViewProvider woDetailViewProvider, BuildContext context) {
+  AccordionSection _documantsPhotosAccordionSection(
+      WoDetailViewProvider woDetailViewProvider, BuildContext context) {
     return AccordionSection(
       isOpen: false,
       leftIcon: const Icon(Icons.photo_album, color: Colors.white),
@@ -274,12 +307,16 @@ class _WoOperationState extends State<WoOperation> {
             content: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
               onPressed: () async {
                 showModalBottomSheet<void>(
                   // give radius to the created modal
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
@@ -304,12 +341,16 @@ class _WoOperationState extends State<WoOperation> {
             content: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
               onPressed: () async {
                 showModalBottomSheet<void>(
                   // give radius to the created modal
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
@@ -330,7 +371,8 @@ class _WoOperationState extends State<WoOperation> {
             headerBackgroundColor: APPColors.Login.blue,
             headerBackgroundColorOpened: Colors.black,
             contentBorderColor: Colors.black54,
-            headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+            headerPadding:
+                const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
             content: DataTable(
               sortAscending: true,
               sortColumnIndex: 1,
@@ -338,8 +380,14 @@ class _WoOperationState extends State<WoOperation> {
               showBottomBorder: true,
               horizontalMargin: 0,
               columns: [
-                DataColumn(label: Text(_fileName, style: _contentStyleHeader, textAlign: TextAlign.left), numeric: false),
-                DataColumn(label: Text(_delete, style: _contentStyleHeader, textAlign: TextAlign.left), numeric: false),
+                DataColumn(
+                    label: Text(_fileName,
+                        style: _contentStyleHeader, textAlign: TextAlign.left),
+                    numeric: false),
+                DataColumn(
+                    label: Text(_delete,
+                        style: _contentStyleHeader, textAlign: TextAlign.left),
+                    numeric: false),
               ],
               rows: [
                 for (var i = 0; i < woDetailViewProvider.documants.length; i++)
@@ -351,11 +399,17 @@ class _WoOperationState extends State<WoOperation> {
                             await showDialog(
                               context: context,
                               builder: (context) => ImageDialog(
-                                imageUrl: woDetailViewProvider.getFilePath(woDetailViewProvider.documants[i].id.toString()),
+                                imageUrl: woDetailViewProvider.getFilePath(
+                                    woDetailViewProvider.documants[i].id
+                                        .toString()),
                               ),
                             );
                           },
-                          child: Text(woDetailViewProvider.documants[i].filename ?? 'not found', style: _contentStyle, textAlign: TextAlign.left),
+                          child: Text(
+                              woDetailViewProvider.documants[i].filename ??
+                                  'not found',
+                              style: _contentStyle,
+                              textAlign: TextAlign.left),
                         ),
                       ),
                       DataCell(
@@ -365,7 +419,9 @@ class _WoOperationState extends State<WoOperation> {
                               context: context,
                               builder: (context) {
                                 return PdfDialog(
-                                  pdfSource: woDetailViewProvider.getFilePath(woDetailViewProvider.documants[i].id.toString()),
+                                  pdfSource: woDetailViewProvider.getFilePath(
+                                      woDetailViewProvider.documants[i].id
+                                          .toString()),
                                 );
                               },
                             );
@@ -383,7 +439,8 @@ class _WoOperationState extends State<WoOperation> {
     );
   }
 
-  AccordionSection _personalsAccordionSection(WoDetailViewProvider woDetailViewProvider, BuildContext context) {
+  AccordionSection _personalsAccordionSection(
+      WoDetailViewProvider woDetailViewProvider, BuildContext context) {
     return AccordionSection(
       isOpen: false,
       leftIcon: const Icon(Icons.person, color: Colors.white),
@@ -403,14 +460,18 @@ class _WoOperationState extends State<WoOperation> {
             content: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
               onPressed: () async {
                 await woDetailViewProvider.loadShiftings();
                 await woDetailViewProvider.loadAllPersonals();
 
                 showModalBottomSheet<void>(
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   isScrollControlled: true,
                   context: context,
                   builder: (BuildContext context) {
@@ -420,7 +481,10 @@ class _WoOperationState extends State<WoOperation> {
                       personals: woDetailViewProvider.workOrderPersonals,
                     );
                   },
-                ).then((value) => {if (woDetailViewProvider.isNewPersonalAdded) woDetailViewProvider.loadAllPersonalsDetailed()});
+                ).then((value) => {
+                      if (woDetailViewProvider.isNewPersonalAdded)
+                        woDetailViewProvider.loadAllPersonalsDetailed()
+                    });
               },
               child: Text(_addNewPersonals),
             ),
@@ -439,17 +503,27 @@ class _WoOperationState extends State<WoOperation> {
               sortColumnIndex: 1,
               dataRowHeight: 70,
               showBottomBorder: true,
+              horizontalMargin: 0,
               columns: [
-                DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
+                DataColumn(
+                    label: Text('Kullanıcı', style: _contentStyleHeader),
+                    numeric: false),
                 DataColumn(label: Text('Süre', style: _contentStyleHeader)),
                 DataColumn(label: Text('Sil', style: _contentStyleHeader)),
               ],
               rows: [
-                for (var i = 0; i < woDetailViewProvider.workOrderPersonalsDetailed.length; i++)
+                for (var i = 0;
+                    i < woDetailViewProvider.workOrderPersonalsDetailed.length;
+                    i++)
                   DataRow(
                     cells: [
                       DataCell(
-                        Text(woDetailViewProvider.workOrderPersonalsDetailed[i].name.toString(), style: _contentStyle, textAlign: TextAlign.left),
+                        Text(
+                            woDetailViewProvider
+                                .workOrderPersonalsDetailed[i].name
+                                .toString(),
+                            style: _contentStyle,
+                            textAlign: TextAlign.left),
                       ),
                       DataCell(
                         Text(
@@ -462,7 +536,10 @@ class _WoOperationState extends State<WoOperation> {
                           padding: const EdgeInsets.only(right: 5.0),
                           child: GestureDetector(
                             onTap: () {
-                              woDetailViewProvider.deleteWorkOrderPersonal(woDetailViewProvider.workOrderPersonalsDetailed[i].modulecode.toString());
+                              woDetailViewProvider.deleteWorkOrderPersonal(
+                                  woDetailViewProvider
+                                      .workOrderPersonalsDetailed[i].modulecode
+                                      .toString());
                             },
                             child: const Icon(Icons.delete, color: Colors.red),
                           ),
