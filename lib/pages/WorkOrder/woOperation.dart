@@ -5,19 +5,18 @@ import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:win_kamu/pages/WorkOrder/get_photo_sheet.dart';
 import 'package:win_kamu/pages/WorkOrder/wo_personals.dart';
 
 import '../../providers/workorder_detail_provider.dart';
 import '../../utils/themes.dart';
+import 'add_documant_sheet.dart';
 import 'woEforts.dart';
 import 'woSpareParts.dart';
 
 class WoOperation extends StatefulWidget {
-  final woCode;
-  const WoOperation({
-    required this.woCode,
-    super.key,
-  });
+  final String woCode;
+  const WoOperation({required this.woCode, super.key});
 
   @override
   State<WoOperation> createState() => _WoOperationState();
@@ -95,17 +94,9 @@ class _WoOperationState extends State<WoOperation> {
                             ),
                           ),
                           isScrollControlled: true,
-                          // context and builder are
-                          // required properties in this widget
                           context: context,
                           builder: (BuildContext context) {
-                            // we set up a container inside which
-                            // we create center column and display text
-
-                            // Returning SizedBox instead of a Container
-                            return WoEforts(
-                              woCode: widget.woCode,
-                            );
+                            return WoEforts(woCode: widget.woCode);
                           },
                         );
                       },
@@ -278,7 +269,22 @@ class _WoOperationState extends State<WoOperation> {
                 backgroundColor: Colors.green,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
-              onPressed: () async {},
+              onPressed: () async {
+                showModalBottomSheet<void>(
+                  // give radius to the created modal
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const GetPhotoSheet();
+                  },
+                );
+              },
               child: Text(_addPictures),
             ),
             contentHorizontalPadding: 20,
@@ -296,7 +302,24 @@ class _WoOperationState extends State<WoOperation> {
                 backgroundColor: Colors.green,
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
-              onPressed: () async {},
+              onPressed: () async {
+                showModalBottomSheet<void>(
+                  // give radius to the created modal
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AddDocumantSheet();
+                  },
+                ).then((value) {
+                  woDetailViewProvider.setisDocumantPicked = false;
+                });
+              },
               child: Text(_addDocuments),
             ),
           ),

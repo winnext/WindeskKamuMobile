@@ -58,13 +58,8 @@ class _WoDetailState extends State<WoDetail> {
 
     final woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: true);
     final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
-    final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
 
     var woDetailList = woDetailViewProvider.woDetailView[0];
-    var woRelatedList = woDetailViewProvider.woRelatedView[0];
-    print('İş Emri Durumu : ' + woDetailList.STATUS.toString());
-
-    print(woDetailViewProvider.secilenSure);
 
     return Sizer(builder: (context, Orientation, deviceType) {
       return Scaffold(

@@ -1,19 +1,13 @@
 import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../providers/main_page_view_provider.dart';
-import '../../utils/themes.dart';
-import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
 import '../issue/issueDetail.dart';
-import '../new_notif/new_notif_base.dart';
-import '../../utils/global_utils.dart';
-import '../../api/api_repository.dart';
 
 class Test extends StatefulWidget {
   const Test({super.key});
@@ -23,8 +17,7 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  final RoundedLoadingButtonController _btnController2 =
-      RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnController2 = RoundedLoadingButtonController();
 
   void _doSomething(RoundedLoadingButtonController controller) async {
     setState(() {
@@ -59,8 +52,7 @@ class _TestState extends State<Test> {
   erisimTesti() async {
     String accessTest1 = await apirepository.accessTest1();
     String accessTest2 = await apirepository.accessTest2('sgnm1032');
-    String getServerTimeResponse =
-        await apirepository.getServerTime('sgnm1048', '');
+    String getServerTimeResponse = await apirepository.getServerTime('sgnm1048', '');
     //print('Durum $getServerTimeResponse');
     print('access test 1 ' + accessTest1);
     print('access test 2 : ' + accessTest2);
@@ -203,9 +195,7 @@ class _TestState extends State<Test> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                             ),
                             onPressed: () {},
                             child: Text('Hata Bildir'),
@@ -223,8 +213,7 @@ class _TestState extends State<Test> {
                           valueColor: Colors.white,
                           borderRadius: 20,
                           child: Center(
-                            child: Text('Erişim Testi',
-                                style: TextStyle(color: Colors.white)),
+                            child: Text('Erişim Testi', style: TextStyle(color: Colors.white)),
                           ),
                         ),
                       ),
@@ -245,8 +234,7 @@ class _TestState extends State<Test> {
                                         )
                                       : Text(
                                           'Windesk: Erişim Bekleniyor...',
-                                          style:
-                                              TextStyle(color: Colors.orange),
+                                          style: TextStyle(color: Colors.orange),
                                         ),
                             ),
                             Container(
@@ -262,8 +250,7 @@ class _TestState extends State<Test> {
                                         )
                                       : Text(
                                           'Mobil Servis : Erişim Bekleniyor...',
-                                          style:
-                                              TextStyle(color: Colors.orange),
+                                          style: TextStyle(color: Colors.orange),
                                         ),
                             ),
                           ],

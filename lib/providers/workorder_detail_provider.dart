@@ -2,10 +2,9 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:win_kamu/api/api_repository.dart';
 import 'package:win_kamu/models/detail_activities.model.dart';
@@ -127,8 +126,7 @@ class WoDetailViewProvider extends ChangeNotifier {
   List<WorkOrderPersonals> get workOrderPersonals => _workOrderPersonals;
 
   List<WorkOrderPersonalsDetailed> _workOrderPersonalsDetailed = [];
-  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed =>
-      _workOrderPersonalsDetailed;
+  List<WorkOrderPersonalsDetailed> get workOrderPersonalsDetailed => _workOrderPersonalsDetailed;
 
   String _pickedPersonalName = 'Personal ismi seçiniz';
   String get pickedPersonalName => _pickedPersonalName;
@@ -158,8 +156,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     final data = await apirepository.getWorkOrderPersonelsApi(woCode);
 
     for (var item in data) {
-      _workOrderPersonalsDetailed
-          .add(WorkOrderPersonalsDetailed.fromJson(item));
+      _workOrderPersonalsDetailed.add(WorkOrderPersonalsDetailed.fromJson(item));
     }
 
     notifyListeners();
@@ -168,8 +165,7 @@ class WoDetailViewProvider extends ChangeNotifier {
   loadAllPersonals() async {
     _workOrderPersonals = [];
 
-    final data =
-        await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
+    final data = await apirepository.getWorkOrderAddedPersonelsApi(12.toString());
 
     for (var item in data) {
       _workOrderPersonals.add(WorkOrderPersonals.fromJson(item));
@@ -179,7 +175,6 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   loadShiftings() async {
-    // SIMDILIK 12 VERILECEK
     _shiftings = [];
     final data = await apirepository.getShiftings(woCode);
     print(data);
@@ -213,14 +208,60 @@ class WoDetailViewProvider extends ChangeNotifier {
   saveImage() async {
     if (_image != null) {
       Uint8List imagebytes = await _image!.readAsBytes(); //convert to bytes
-      String base64string =
-          base64.encode(imagebytes); //convert bytes to base64 string
+      String base64string = base64.encode(imagebytes); //convert bytes to base64 string
 
-      final response = await apirepository.woCreateFotoEkle(
-          woCode, base64string, _imageDesc);
+      final response = await apirepository.woCreateFotoEkle(woCode, base64string, _imageDesc);
 
       if (response != null) {
         print("image eklendi");
+      }
+    } else {
+      return;
+    }
+  }
+
+  // pick documant functions and attributes for add_documant_sheet
+  FilePickerResult? filePickerResult;
+
+  String _pdfDesc = '';
+  String get pdfDesc => _pdfDesc;
+  set setPdfDesc(String pdfDesc) {
+    _pdfDesc = pdfDesc;
+  }
+
+  String _pdfPath = '';
+  String get pdfPath => _pdfPath;
+
+  bool _isDocumantPicked = false;
+  bool get isDocumantPicked => _isDocumantPicked;
+
+  set setisDocumantPicked(bool isDocumantPicked) {
+    _isDocumantPicked = isDocumantPicked;
+    notifyListeners();
+  }
+
+  Future pickDocumant() async {
+    filePickerResult = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (filePickerResult != null) {
+      _pdfPath = filePickerResult!.files.first.path ?? '';
+      setisDocumantPicked = true;
+      print("pdf path : " + _pdfPath);
+    }
+  }
+
+  saveDocumant() async {
+    if (_pdfPath.isNotEmpty) {
+      final bytes = File(_pdfPath).readAsBytesSync();
+      String file64 = base64Encode(bytes);
+
+      final response = await apirepository.woCreateFotoEkle(woCode, file64, _pdfDesc);
+
+      if (response != null) {
+        print("pdf eklendi");
       }
     } else {
       return;
@@ -234,8 +275,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/detail/${woCode}';
-    final data = await apirepository.getRequestDetail(
-        controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: woCode, xuserCode: xusercode);
     if (true) {
       Future.delayed(const Duration(milliseconds: 10), () {
         var responseData = WoDetailViewModel.fromJson(data.detail['detail']);
@@ -254,16 +294,9 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   addWorkOrderPersonal() async {
-    String personalCode = _workOrderPersonals
-            .firstWhere((element) => element.fullname == _pickedPersonalName)
-            .code ??
-        '';
-    String shiftingCode = _shiftings
-            .firstWhere((element) => element.name == _pickShifting)
-            .code ??
-        '';
-    final data = await apirepository.addWorkOrderPersonal(
-        woCode, personalCode, shiftingCode);
+    String personalCode = _workOrderPersonals.firstWhere((element) => element.fullname == _pickedPersonalName).code ?? '';
+    String shiftingCode = _shiftings.firstWhere((element) => element.name == _pickShifting).code ?? '';
+    final data = await apirepository.addWorkOrderPersonal(woCode, personalCode, shiftingCode);
 
     if (data != null) {
       _isNewPersonalAdded = true;
@@ -272,13 +305,11 @@ class WoDetailViewProvider extends ChangeNotifier {
   }
 
   deleteWorkOrderPersonal(String moduleCode) async {
-    final data =
-        await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
+    final data = await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
 
     if (data != null) {
       _isNewPersonalAdded = false;
-      _workOrderPersonalsDetailed
-          .removeWhere((element) => element.modulecode == moduleCode);
+      _workOrderPersonalsDetailed.removeWhere((element) => element.modulecode == moduleCode);
       notifyListeners();
     }
   }
@@ -287,16 +318,13 @@ class WoDetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/workorder/${woCode}/space';
-    final data = await apirepository.woGetRelatedSpace(
-        controller: responseUrl, xuserCode: xusercode);
+    final data = await apirepository.woGetRelatedSpace(controller: responseUrl, xuserCode: xusercode);
     print('woReleatedd${data.records['records']}');
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         woRelatedView.clear();
-        tempwoRelatedView = (data.records['records'] as List)
-            .map((e) => WoRelatedViewModel.fromJson(e))
-            .toList();
+        tempwoRelatedView = (data.records['records'] as List).map((e) => WoRelatedViewModel.fromJson(e)).toList();
         woRelatedView.addAll(tempwoRelatedView);
         _isDataLoading = false;
         _loading = false;
@@ -332,17 +360,12 @@ class WoDetailViewProvider extends ChangeNotifier {
   //   }
   // }
 
-  sendIssueActivity(String woCode, String userName, String activityCode,
-      String imageDescription) async {
-    if (imageDescription.toString().length < 20 &&
-        activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String woCode, String userName, String activityCode, String imageDescription) async {
+    if (imageDescription.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult = await apirepository.addIssueActivity(
-          userName: userName,
-          issueCode: woCode,
-          activityCode: activityCode,
-          description: imageDescription);
+      final apiresult =
+          await apirepository.addIssueActivity(userName: userName, issueCode: woCode, activityCode: activityCode, description: imageDescription);
 
       final results = jsonDecode(apiresult.toString());
 
@@ -583,8 +606,7 @@ class WoDetailViewProvider extends ChangeNotifier {
 
   getBirimler(productDefCode) async {
     setDepoBirimlerArray = [];
-    final depoBirimlerSonuc =
-        await apirepository.getPackageInfoByProduct(productDefCode);
+    final depoBirimlerSonuc = await apirepository.getPackageInfoByProduct(productDefCode);
     print('depoBirimlerSonuc : ');
     print(depoBirimlerSonuc);
     List<String> codes = ['Lütfen Birim Seçiniz'];

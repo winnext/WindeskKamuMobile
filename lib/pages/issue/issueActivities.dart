@@ -40,7 +40,6 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
   @override
   bool get wantKeepAlive => true;
   void dispose() {
-    // TODO: implement dispose
     listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();

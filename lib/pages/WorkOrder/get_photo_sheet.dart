@@ -22,8 +22,7 @@ class _GetPhotoSheetState extends State<GetPhotoSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final WoDetailViewProvider woDetailViewProvider =
-        Provider.of<WoDetailViewProvider>(context, listen: false);
+    final WoDetailViewProvider woDetailViewProvider = Provider.of<WoDetailViewProvider>(context, listen: false);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.9,
@@ -32,8 +31,7 @@ class _GetPhotoSheetState extends State<GetPhotoSheet> {
         child: Column(
           children: [
             _PhotoStack(woDetailProvider: woDetailViewProvider),
-            Expanded(
-                flex: 20, child: _descriptionTextField(woDetailViewProvider)),
+            Expanded(flex: 20, child: _descriptionTextField(woDetailViewProvider)),
             _buttons(woDetailViewProvider),
             const Spacer(flex: 10),
           ],
@@ -81,12 +79,10 @@ class _CancelImage extends StatelessWidget {
       width: 30.w,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: APPColors.Login.blue,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+          backgroundColor: APPColors.Login.red,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
-          woDetailViewProvider.setisNewPersonalAdded = false;
           Navigator.pop(context);
         },
         child: (const Text('Vazgeç')),
@@ -108,9 +104,8 @@ class _SaveImage extends StatelessWidget {
       width: 30.w,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: APPColors.Login.red,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+          backgroundColor: APPColors.Login.blue,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onPressed: () {
           woDetailViewProvider.saveImage();
@@ -153,8 +148,7 @@ class _PhotoStackState extends State<_PhotoStack> {
               ? const SizedBox()
               : SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Image.file(widget.woDetailProvider.image!,
-                      fit: BoxFit.fitWidth),
+                  child: Image.file(widget.woDetailProvider.image!, fit: BoxFit.fitWidth),
                 ),
           Align(
             alignment: Alignment.bottomRight,
