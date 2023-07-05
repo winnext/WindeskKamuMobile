@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import '../closedRequests/closedRequests.dart';
-import '../../providers/work_order_view_provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
+import '../../providers/work_order_view_provider.dart';
 import '../../utils/themes.dart';
 import '../full_screen_modal/wo_full_screen_modal.dart';
 

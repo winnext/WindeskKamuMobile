@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use, file_names
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use, file_names, non_constant_identifier_names
 
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
@@ -382,7 +382,7 @@ class _WoOperationState extends State<WoOperation> {
             content: DataTable(
               sortAscending: true,
               sortColumnIndex: 1,
-              dataRowHeight: 60,
+              dataRowHeight: 70,
               showBottomBorder: true,
               columns: [
                 DataColumn(label: Text('Kullanıcı', style: _contentStyleHeader), numeric: false),
@@ -396,7 +396,12 @@ class _WoOperationState extends State<WoOperation> {
                       DataCell(
                         Text(woDetailViewProvider.workOrderPersonalsDetailed[i].name.toString(), style: _contentStyle, textAlign: TextAlign.left),
                       ),
-                      DataCell(Text(woDetailViewProvider.workOrderPersonalsDetailed[i].vardiya.toString(), style: _contentStyle)),
+                      DataCell(
+                        Text(
+                          '${woDetailViewProvider.workOrderPersonalsDetailed[i].vardiya!.split('-')[1]} - ${woDetailViewProvider.workOrderPersonalsDetailed[i].vardiya!.split('-')[2]}',
+                          style: _contentStyle,
+                        ),
+                      ),
                       DataCell(Padding(
                         padding: const EdgeInsets.only(right: 5.0),
                         child: GestureDetector(

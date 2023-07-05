@@ -27,7 +27,9 @@ class _WoPersonalsState extends State<WoPersonals> {
       dataListSure.add(element.name ?? '');
     }
     for (var element in widget.personals) {
-      names.add(element.fullname ?? '');
+      if (!names.contains(element.fullname)) {
+        names.add(element.fullname ?? '');
+      }
     }
   }
 
@@ -141,7 +143,6 @@ class _WoPersonalsState extends State<WoPersonals> {
           ),
         ),
         onPressed: () {
-          woDetailViewProvider.setisNewPersonalAdded = false;
           Navigator.pop(context);
         },
         child: (const Text('Vazgeç')),
