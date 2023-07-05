@@ -291,8 +291,6 @@ class WoDetailViewProvider extends ChangeNotifier {
       _documants.add(DocumantsModel.fromJson(item));
     }
 
-    print('First doc: ${_documants.first}');
-
     notifyListeners();
   }
 

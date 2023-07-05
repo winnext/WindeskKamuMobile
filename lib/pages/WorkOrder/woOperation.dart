@@ -40,7 +40,10 @@ class _WoOperationState extends State<WoOperation> {
     final woDetailViewProvider =
         Provider.of<WoDetailViewProvider>(context, listen: false);
     woDetailViewProvider.setEforlarArray = [];
+    woDetailViewProvider.setMalzemelerArray = [];
+
     woDetailViewProvider.getWorkOrderWorklogs(widget.woCode);
+    woDetailViewProvider.getWorkorderSpareParts(widget.woCode);
     woDetailViewProvider.fetchFiles();
     woDetailViewProvider.loadAllPersonalsDetailed();
 
@@ -276,7 +279,8 @@ class _WoOperationState extends State<WoOperation> {
                         child: const Icon(Icons.delete, color: Colors.red),
                       ))
                     ],
-                  ),
+                  )
+
                 //  TextButton(onPressed: (){woDetailViewProvider.deleteEffort(context,woDetailViewProvider.eforlarArray[0][i],widget.woCode );  }, child: Center(child: Text('X',style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),)))
               ],
             ),
