@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ImageDialog extends StatelessWidget {
   const ImageDialog({super.key, required this.imageUrl});
   final String imageUrl;
-  final String _imageNotFound = 'fotoğraf bulunamadı';
+  final String _imageNotFound = 'belge bulunamadı';
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,7 @@ class ImageDialog extends StatelessWidget {
           imageUrl: imageUrl,
           progressIndicatorBuilder: (context, url, downloadProgress) => const Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(_imageNotFound),
               const Icon(Icons.error),
