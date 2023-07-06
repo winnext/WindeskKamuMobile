@@ -324,7 +324,7 @@ class WoDetailViewProvider extends ChangeNotifier {
     }
   }
 
-  addWorkOrderPersonal() async {
+  addWorkOrderPersonal(context) async {
     String personalCode = _workOrderPersonals
             .firstWhere((element) => element.fullname == _pickedPersonalName)
             .code ??
@@ -337,16 +337,24 @@ class WoDetailViewProvider extends ChangeNotifier {
         woCode, personalCode, shiftingCode);
 
     if (data != null) {
+      snackBar(
+          context, 'Personel başarılı bir şekilde eklenmiştir.', 'success');
+
       _isNewPersonalAdded = true;
       notifyListeners();
+      Navigator.pop(context);
+    } else {
+      snackBar(context, 'Personel ekleme sırasında bir hata oluştu.', 'error');
     }
   }
 
-  deleteWorkOrderPersonal(String moduleCode) async {
+  deleteWorkOrderPersonal(context, String moduleCode) async {
     final data =
         await apirepository.deleteWorkOrderPersonal(moduleCode, woCode);
 
     if (data != null) {
+      snackBar(
+          context, 'Personel başarılı bir şekilde silinmiştir.', 'success');
       _isNewPersonalAdded = false;
       _workOrderPersonalsDetailed
           .removeWhere((element) => element.modulecode == moduleCode);

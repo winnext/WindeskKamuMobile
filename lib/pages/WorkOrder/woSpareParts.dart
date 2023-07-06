@@ -60,10 +60,13 @@ class _WoSparePartsState extends State<WoSpareParts> {
             Expanded(
               child: SizedBox(
                   height: 10.h,
-                  child: Text(
-                    'Depo Seçimi.',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: font_size_16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Depo Seçimi.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: font_size_16),
+                    ),
                   )),
             ),
             Expanded(

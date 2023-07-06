@@ -67,22 +67,30 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     final onNotifications = BehaviorSubject<String?>();
 
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
+    const IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
 
-    const MacOSInitializationSettings initializationSettingsMacOS = MacOSInitializationSettings();
+    const MacOSInitializationSettings initializationSettingsMacOS =
+        MacOSInitializationSettings();
 
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS, macOS: initializationSettingsMacOS);
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+            macOS: initializationSettingsMacOS);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async {
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: ((data) async {
       onNotifications.add(data);
     }));
 
@@ -100,7 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
     onNotifications.stream.listen(onClickedNotification);
 
 // Lisitnening to the background messages
-    Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    Future<void> _firebaseMessagingBackgroundHandler(
+        RemoteMessage message) async {
       await Firebase.initializeApp();
     }
 
@@ -113,16 +122,25 @@ class _MyHomePageState extends State<MyHomePage> {
       var payload =
           '${(message.notification?.title).toString() + '/-*-/' + (message.notification?.body).toString() + '/-*-/' + message.data['module']}/-*-/' +
               message.data['code'];
-      NotificationApi.showNotification(title: message.notification?.title, body: message.notification?.body, payload: payload);
+      NotificationApi.showNotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          payload: payload);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      showAlertDialog(context, message.notification?.title, message.notification?.body, message.data['module'], message.data['code']);
+      showAlertDialog(
+          context,
+          message.notification?.title,
+          message.notification?.body,
+          message.data['module'],
+          message.data['code']);
       //FlutterLocalNotificationsPlugin().show(message.notification.messageId, message.notification?.title, message.notification?.body,);
     });
 
     Future.delayed(const Duration(milliseconds: 1000), () {
-      final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+      final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
       mainPageViewProvider.announcementView.clear();
       mainPageViewProvider.getAnnouncements(mainPageViewProvider.kadi);
 
@@ -147,7 +165,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final apirepository = APIRepository();
 
-    final mainViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -166,7 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               tooltip: 'Exit',
               onPressed: () async {
-                var cikisResult = await apirepository.cikis(mainViewProvider.kadi);
+                var cikisResult =
+                    await apirepository.cikis(mainViewProvider.kadi);
                 try {
                   if (cikisResult) {
                     snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
@@ -216,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         backgroundColor: APPColors.Main.white,
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -252,10 +272,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'Vaka-(SLA) Listesi', iconName: Icons.calendar_month, navigator: Issue()),
+                            child: HomeButton(
+                                text: 'Vaka-(SLA) Listesi',
+                                iconName: Icons.calendar_month,
+                                navigator: Issue()),
                           ),
                           Expanded(
-                            child: HomeButton(text: 'Vaka-(SLA) Arama', iconName: Icons.attachment, navigator: NewNotif()),
+                            child: HomeButton(
+                                text: 'Vaka-(SLA) Arama',
+                                iconName: Icons.attachment,
+                                navigator: NewNotif()),
                           )
                         ],
                       ),
@@ -264,10 +290,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'İş Emri Listesi', iconName: Icons.content_paste_search, navigator: WoTracingList()),
+                            child: HomeButton(
+                                text: 'İş Emri Listesi',
+                                iconName: Icons.content_paste_search,
+                                navigator: WoTracingList()),
                           ),
                           Expanded(
-                            child: HomeButton(text: 'İş Emri Arama ', iconName: Icons.content_paste_off, navigator: CloseRequestAwaitApproval()),
+                            child: HomeButton(
+                                text: 'İş Emri Arama ',
+                                iconName: Icons.content_paste_off,
+                                navigator: CloseRequestAwaitApproval()),
                           )
                         ],
                       ),
@@ -276,7 +308,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: HomeButton(text: 'Yeni İş Emri', iconName: Icons.calendar_month, navigator: ComplaintRequests()),
+                            child: HomeButton(
+                                text: 'Yeni İş Emri',
+                                iconName: Icons.calendar_month,
+                                navigator: ComplaintRequests()),
                           ),
                           // Expanded(
                           //   child: HomeButton(

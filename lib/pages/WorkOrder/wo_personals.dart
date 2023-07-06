@@ -121,7 +121,7 @@ class _WoPersonalsState extends State<WoPersonals> {
           if (woDetailViewProvider.pickedPersonalName == 'Personal ismi seçiniz' && woDetailViewProvider.pickShifting == 'Lütfen vardiya seçiniz') {
             return;
           } else {
-            woDetailViewProvider.addWorkOrderPersonal();
+            woDetailViewProvider.addWorkOrderPersonal(context);
             woDetailViewProvider.setPickedPersonalName = 'Personal ismi seçiniz';
             woDetailViewProvider.setSureDegeri = 'Lütfen vardiya seçiniz';
           }
