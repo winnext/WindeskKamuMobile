@@ -1,19 +1,13 @@
 import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../providers/main_page_view_provider.dart';
-import '../../utils/themes.dart';
-import '../../widgets/cardWidgets/customCardWithImageSmall.dart';
 import '../issue/issueDetail.dart';
-import '../new_notif/new_notif_base.dart';
-import 'package:win_kamu/utils/global_utils.dart';
-import 'package:win_kamu/api/api_repository.dart';
 
 class Test extends StatefulWidget {
   const Test({super.key});
@@ -60,8 +54,8 @@ class _TestState extends State<Test> {
     String accessTest2 = await apirepository.accessTest2('sgnm1032');
     String getServerTimeResponse = await apirepository.getServerTime('sgnm1048', '');
     //print('Durum $getServerTimeResponse');
-    // print('access test 1 '+accessTest1);
-    // print('access test 2 : '+accessTest2);
+    print('access test 1 ' + accessTest1);
+    print('access test 2 : ' + accessTest2);
 
     setState(() {
       sunucu_saati = getServerTimeResponse;

@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// ignore_for_file: non_constant_identifier_names
 
 class IssueOperationsModal {
   bool? IS_PHOTO;
@@ -8,16 +8,14 @@ class IssueOperationsModal {
   bool? IS_CHANGE_CFG;
   bool? IS_PLANNED_CANCEL;
 
-
-  IssueOperationsModal(
-      {
-      this.IS_PHOTO,
-      this.IS_TAKE_OVER,
-      this.IS_SPAREPART,
-      this.IS_ACTIVITY,
-      this.IS_CHANGE_CFG,
-      this.IS_PLANNED_CANCEL,
-      });
+  IssueOperationsModal({
+    this.IS_PHOTO,
+    this.IS_TAKE_OVER,
+    this.IS_SPAREPART,
+    this.IS_ACTIVITY,
+    this.IS_CHANGE_CFG,
+    this.IS_PLANNED_CANCEL,
+  });
   IssueOperationsModal.fromJson(Map<String, dynamic> json) {
     IS_PHOTO = json['IS_PHOTO'];
     IS_TAKE_OVER = json['IS_TAKE_OVER'];
@@ -25,6 +23,5 @@ class IssueOperationsModal {
     IS_ACTIVITY = json['IS_ACTIVITY'];
     IS_CHANGE_CFG = json['IS_CHANGE_CFG'];
     IS_PLANNED_CANCEL = json['IS_PLANNED_CANCEL'];
-
   }
 }

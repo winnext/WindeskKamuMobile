@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code
+// ignore_for_file: dead_code, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -180,7 +180,7 @@ class WorkOrderProvider extends ChangeNotifier {
 
   bool notificationController(ScrollNotification scrollInfo) {
     if (!_isDataLoading && scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-      if (_toplamKayitSayisi != null && _woListView.length >= _toplamKayitSayisi) {
+      if (_woListView.length >= _toplamKayitSayisi) {
         return false;
       }
       _currentPage = 1 + _currentPage;
@@ -193,12 +193,12 @@ class WorkOrderProvider extends ChangeNotifier {
 
   void getListWorkOrders(index, listCode) async {
     _isDataLoading = true;
-    int _startWo = index == 1 ? 0 : (index - 1) * 10;
-    int _endWo = index * 10;
+    int startWo = index == 1 ? 0 : (index - 1) * 10;
+    int endWo = index * 10;
 
     Map<String, dynamic> queryParameters = {
-      "start": _startWo,
-      "end": _endWo,
+      "start": startWo,
+      "end": endWo,
       "status": statusCode,
       "build": buildCode,
       "floor": floor,
@@ -212,8 +212,6 @@ class WorkOrderProvider extends ChangeNotifier {
     final result = await apirepository.getListWorkOrders(controller: urlIssueTypes, queryParameters: queryParameters);
 
     final data = result.records['records'];
-
-    print('dataWoList$data');
 
     if (true) {
       tempwoListView = (result.records['records'] as List).map((e) => WoListViewModel.fromJson(e)).toList();
@@ -252,7 +250,6 @@ class WorkOrderProvider extends ChangeNotifier {
       tempwoFilterStatusCodes = (result.records['records'] as List).map((e) => IssueFilterModel.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         woFilterStatusCodes.addAll(tempwoFilterStatusCodes);
-        int noOfTasks = tempwoFilterStatusCodes.length;
 
         print('dataActivities ++++2${woFilterStatusCodes[0].CODE}');
 

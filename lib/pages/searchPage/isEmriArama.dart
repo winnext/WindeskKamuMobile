@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -8,6 +7,8 @@ import 'package:win_kamu/providers/search_view_provider.dart';
 import 'package:win_kamu/providers/work_order_view_provider.dart';
 import 'package:win_kamu/providers/workorder_detail_provider.dart';
 import 'package:win_kamu/utils/global_utils.dart';
+import 'package:win_kamu/widgets/appbar/custom_main_appbar.dart';
+import '../../l10n/locale_keys.g.dart';
 import '../../utils/themes.dart';
 import '../WorkOrder/woDetail.dart';
 
@@ -30,20 +31,7 @@ class _isEmriAramaState extends State<isEmriArama> {
       return Container(
         child: Scaffold(
             resizeToAvoidBottomInset: true,
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: const Text(
-                'İş Emri Arama',
-                style: TextStyle(color: Colors.black),
-              ),
-              centerTitle: true,
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
-              actions: [],
-            ),
+            appBar: const CustomMainAppbar(title: LocaleKeys.workOrderSearchTitle, returnBack: true),
             body: Center(
                 child: SizedBox(
               width: 85.w,
@@ -118,16 +106,13 @@ class _isEmriAramaState extends State<isEmriArama> {
                                 builder: (context) => WoDetail(moduleCode: '', woCode: searchProvider.isEmriNo.text),
                               ),
                             );
-                          } else if (int.parse(sonuc) == 0) {
-                            snackBar(context, 'İş emrini görmeye yetkiniz yoktur', 'info');
-                          } else {
-                            snackBar(context, 'Lütfen İş Emri Numarasını Kontrol Ediniz', 'info');
                           }
                         },
-                        child: const Text('Ara'),
-                      ),
-                    ),
-                  ),
+                            child: const Text('Ara'),
+                          ),
+                        ),
+            ),
+            
                 ],
               ),
             ))),

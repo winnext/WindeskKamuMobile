@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:win_kamu/utils/themes.dart';
+import 'themes.dart';
 
 timeRecover(timeInfo) {
   if (timeInfo == '') {

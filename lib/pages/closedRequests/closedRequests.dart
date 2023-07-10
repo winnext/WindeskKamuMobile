@@ -1,20 +1,20 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_interpolation_to_compose_strings, avoid_print
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_interpolation_to_compose_strings, avoid_print, file_names
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/pages/closedRequests/closedRequestsDetail.dart';
-import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:provider/provider.dart';
+
 import '../../api/api_repository.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/time_Utils.dart';
-import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
+import '../../widgets/customInfoNotFound.dart';
 
 class ClosedRequestListScreen extends StatefulWidget {
   static String pageName = 'listPageComplaintRequests';
@@ -52,8 +52,6 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
-    int index = listViewProvider.currentPage;
 
     return WillPopScope(
       onWillPop: () async {
@@ -89,11 +87,8 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
                                 if (l == 5) {
                                   l = 0;
                                 }
-                                String formattedDate = "";
                                 ListViewModel listElements = listViewProvider.exampleListView[i];
-                                final TARGET_FDATE = timeRecover(listElements.TARGET_FDATE);
-                                final TARGET_RDATE = timeRecover(listElements.TARGET_RDATE);
-                                final PLANNED_DATE = timeRecover(listElements.PLANNEDDATE);
+                                final plannedDate = timeRecover(listElements.PLANNEDDATE);
                                 final time = DateTime.now();
                                 final String timeNow = DateFormat('yMMddhhmmss').format(time).toString();
                                 if (listElements.RESPONDED_IDATE != null && listElements.TARGET_FDATE != null) {
@@ -119,7 +114,7 @@ class _ClosedRequestListScreenState extends State<ClosedRequestListScreen> {
                                           location: listElements.LOCATION.toString(),
                                           idate: listElements.IDATE.toString(),
                                           statusCode: listElements.STATUSCODE.toString(),
-                                          planedDate: PLANNED_DATE.toString(),
+                                          planedDate: plannedDate.toString(),
                                           respondedIDate: listElements.RESPONDED_IDATE.toString(),
                                           responseTimer: listElements.response_timer.toString(),
                                           fixedTimer: listElements.fixed_timer.toString(),

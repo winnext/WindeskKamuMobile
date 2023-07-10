@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:win_kamu/pages/closedRequests/closedRequests.dart';
-import 'package:win_kamu/providers/work_order_view_provider.dart';
 
 import '../../providers/main_page_view_provider.dart';
+import '../../providers/work_order_view_provider.dart';
 import '../../utils/themes.dart';
 import '../full_screen_modal/wo_full_screen_modal.dart';
 
@@ -21,11 +19,9 @@ class WoCreate extends StatefulWidget {
 
 class _WoCreateState extends State<WoCreate> {
   load() async {
-    final mainViewProvide =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context, listen: false);
 
-    final woProvider =
-        Provider.of<WorkOrderViewProvider>(context, listen: false);
+    final woProvider = Provider.of<WorkOrderViewProvider>(context, listen: false);
 
     await woProvider.woCreateHizmetListesi(mainViewProvide.kadi);
     print('data');
@@ -34,18 +30,15 @@ class _WoCreateState extends State<WoCreate> {
 
   @override
   void initState() {
-    // TODO: implement initState
     load();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final mainViewProvide =
-        Provider.of<MainPageViewProvider>(context, listen: false);
+    final mainViewProvide = Provider.of<MainPageViewProvider>(context, listen: false);
 
-    final woProvider =
-        Provider.of<WorkOrderViewProvider>(context, listen: true);
+    final woProvider = Provider.of<WorkOrderViewProvider>(context, listen: true);
     // nProvider.clear = 1;
     var photos = woProvider.photos;
     var bases = woProvider.b64s;
@@ -59,9 +52,14 @@ class _WoCreateState extends State<WoCreate> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
+<<<<<<< HEAD
       final results = await Navigator.of(context)
           .push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return  TakePictureScreen(
+=======
+      final results = await Navigator.of(context).push(new MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+        return new TakePictureScreen(
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
           camera: firstCamera,
           sayfa: 'Yeni İş Emri',
         );
@@ -73,10 +71,7 @@ class _WoCreateState extends State<WoCreate> {
     List<String> hizmet = woProvider.woCreateHizmetListeArray[0];
     List hizmetDatasi = woProvider.woCreateHizmetListeArray;
 
-    String dropdownvalueHizmet =
-        hizmetDatasi[0].indexOf(woProvider.woCreateHizmetValue) != -1
-            ? woProvider.woCreateHizmetValue
-            : hizmet[0];
+    String dropdownvalueHizmet = hizmetDatasi[0].indexOf(woProvider.woCreateHizmetValue) != -1 ? woProvider.woCreateHizmetValue : hizmet[0];
 
     print('dropdown');
     print(dropdownvalueHizmet);
@@ -91,10 +86,7 @@ class _WoCreateState extends State<WoCreate> {
     List is_emri_adi_datasi = woProvider.woCreateIsEmriAdiListeArray;
 
     String dropdownvalueIsEmriAdi =
-        is_emri_adi_datasi[0].indexOf(woProvider.woCreateIsEmriAdiListeValue) !=
-                -1
-            ? woProvider.woCreateIsEmriAdiListeValue
-            : is_emri_adi[0];
+        is_emri_adi_datasi[0].indexOf(woProvider.woCreateIsEmriAdiListeValue) != -1 ? woProvider.woCreateIsEmriAdiListeValue : is_emri_adi[0];
 
     print('dropdown İş Emri');
     print(dropdownvalueIsEmriAdi);
@@ -109,9 +101,7 @@ class _WoCreateState extends State<WoCreate> {
     List oncelik_datasi = woProvider.woCreateOncelikListeArray;
 
     String dropdownvalueOncelik =
-        oncelik_datasi[0].indexOf(woProvider.woCreateOncelikListeValue) != -1
-            ? woProvider.woCreateOncelikListeValue
-            : oncelik[0];
+        oncelik_datasi[0].indexOf(woProvider.woCreateOncelikListeValue) != -1 ? woProvider.woCreateOncelikListeValue : oncelik[0];
 
     print('dropdown İş Emri');
     print(dropdownvalueIsEmriAdi);
@@ -328,11 +318,9 @@ class _WoCreateState extends State<WoCreate> {
                                       children: [
                                         ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            fixedSize: Size(15.w,
-                                                2.h), // specify width, height
+                                            fixedSize: Size(15.w, 2.h), // specify width, height
                                             primary: Colors.red, // background
-                                            onPrimary:
-                                                Colors.white, // foreground
+                                            onPrimary: Colors.white, // foreground
                                           ),
                                           onPressed: () {
                                             woProvider.deletePhotos = 0;
@@ -363,19 +351,13 @@ class _WoCreateState extends State<WoCreate> {
                                   style: ElevatedButton.styleFrom(
                                     primary: APPColors.Login.red,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          bottomLeft: Radius.circular(20)),
+                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
                                     ),
                                   ),
                                   onPressed: () {
-                                    photos.length > 0
-                                        ? woProvider.clear = 1
-                                        : _showModal(context);
+                                    photos.length > 0 ? woProvider.clear = 1 : _showModal(context);
                                   },
-                                  child: photos.length > 0
-                                      ? (Text('Vazgeç'))
-                                      : (Icon(Icons.add_a_photo)),
+                                  child: photos.length > 0 ? (Text('Vazgeç')) : (Icon(Icons.add_a_photo)),
                                 ),
                               ),
                               Container(
@@ -384,9 +366,7 @@ class _WoCreateState extends State<WoCreate> {
                                   style: ElevatedButton.styleFrom(
                                     primary: APPColors.Login.blue,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(20),
-                                          bottomRight: Radius.circular(20)),
+                                      borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
                                     ),
                                   ),
                                   onPressed: () {

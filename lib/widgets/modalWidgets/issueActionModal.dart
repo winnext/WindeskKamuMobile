@@ -14,7 +14,6 @@ import 'package:win_kamu/widgets/issueWidgets/changeCfgScreen.dart';
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../pages/issue/issueSummary.dart';
 import '../../providers/detail_view_provider.dart';
-import '../../providers/issueaction_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
 import '../issueWidgets/addActivityScreen.dart';
@@ -257,10 +256,16 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                             () {
                                           _btnController.success();
                                           _btnController.reset();
+<<<<<<< HEAD
                                           final photoResult =
                                               issueActionProvider
                                                   .isPhotoAddSuccess
                                                   .toString();
+=======
+                                          final photoResult = issueActionProvider.isPhotoAddSuccess.toString();
+
+                                          print('photoo$photoResult');
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
                                           Navigator.pop(context);
                                           snackBar(
                                               context,
@@ -450,14 +455,14 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                           listViewProvider.getIssueOperations(
                               widget.code, widget.xusercode);
 
-                          detailViewProvider.loadData(widget.code.toString(),
-                              widget.xusercode.toString());
+                          detailViewProvider.loadData(widget.code.toString(), widget.xusercode.toString());
 
-                          String snackBarText =
-                              issueActionProvider.takeOverMessage.toString();
-                          String takeOverSuccess =
-                              issueActionProvider.takeOverResult.toString();
+                          String snackBarText = issueActionProvider.takeOverMessage.toString();
+                          String takeOverSuccess = issueActionProvider.takeOverResult.toString();
 
+                          snackBar(context, takeOverSuccess == 'success' ? '$snackBarText' : '$snackBarText', takeOverSuccess);
+
+<<<<<<< HEAD
                           snackBar(
                               context,
                               takeOverSuccess == 'success'
@@ -465,6 +470,8 @@ class _IssueActionButtonState extends State<IssueActionButton> {
                                   : '$snackBarText',
                               takeOverSuccess);
 
+=======
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
                           Navigator.pop(context);
                         });
                       },

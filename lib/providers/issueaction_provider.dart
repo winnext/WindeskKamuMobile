@@ -52,6 +52,9 @@ class IssueActionProvider extends ChangeNotifier {
   String _isPhotoAddSuccess = '';
   String _createSparepartIssueResult = '';
   String _createSparepartIssueMessage = '';
+  bool _isDescriptionLengthSuccess = false;
+
+  bool get isDescriptionLengthSuccess => _isDescriptionLengthSuccess;
 
   PageController? get pageController => _pageController;
   set setpageController(PageController pageController) {
@@ -512,28 +515,29 @@ class IssueActionProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString('deviceId').toString();
 
-    String urlActivities =
-        '$base_url_v1$TOKEN_V1$deviceToken&action=addActivity&issueCode=$code&username=$username&activityCode=$activityCode&locationCode=$locationCode&asgGroupCode=$asgGroupCode&asgUserCode=$asgUserCode&additionalTime=$additionalTime&module=issue&from_mobile=1&cardNo=$cardNo&patientNo=$patientNo&sampleNo=$sampleNo&description=$description';
-
-    final result = await apirepository.addActivity(controller: urlActivities, description: description, image: image);
-
-
-    print('addActivityPro' + result.records['resultcode'].toString());
-
-    if (true) {
-      Future.delayed(const Duration(milliseconds: 0), () {
-        _isActivityAddSuccess =
-            result.records['success'].toString() == 'true'
-                ? true
-                : false;
-        _isDataLoading = false;
-        _loading = false;
-        _isDataExist = false;
-        notifyListeners();
-        _currentPage = 1;
-      });
+    if (description.toString().length < 20) {
+      _isDescriptionLengthSuccess = false;
+      notifyListeners();
     } else {
-      // baglantiHatasi(context, result.message);
+      String urlActivities =
+          '$base_url_v1$TOKEN_V1$deviceToken&action=addActivity&issueCode=$code&username=$username&activityCode=$activityCode&locationCode=$locationCode&asgGroupCode=$asgGroupCode&asgUserCode=$asgUserCode&additionalTime=$additionalTime&module=issue&from_mobile=1&cardNo=$cardNo&patientNo=$patientNo&sampleNo=$sampleNo&description=$description';
+      final result = await apirepository.addActivity(controller: urlActivities, description: description, image: image);
+
+      print('addActivityPro' + result.records['resultcode'].toString());
+
+      if (true) {
+        Future.delayed(const Duration(milliseconds: 0), () {
+          _isDescriptionLengthSuccess = true;
+          _isActivityAddSuccess = result.records['success'].toString() == 'true' ? true : false;
+          _isDataLoading = false;
+          _loading = false;
+          _isDataExist = false;
+          notifyListeners();
+          _currentPage = 1;
+        });
+      } else {
+        // baglantiHatasi(context, result.message);
+      }
     }
   }
 
@@ -563,6 +567,8 @@ class IssueActionProvider extends ChangeNotifier {
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;
+        _isDescriptionLengthSuccess = true;
+
         notifyListeners();
         _currentPage = 1;
       });

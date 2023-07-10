@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, avoid_print, prefer_interpolation_to_compose_strings
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, avoid_print, prefer_interpolation_to_compose_strings, non_constant_identifier_names, avoid_types_as_parameter_names
 
 import 'package:flutter/material.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
@@ -74,17 +74,16 @@ class _CloseRequestDetailState extends State<CloseRequestDetail> {
                       ? Expanded(
                           child: NotificationListener<ScrollNotification>(
                           child: ListView.builder(
-                              itemCount: detailViewProvider?.exampleListView.length,
+                              itemCount: detailViewProvider.exampleListView.length,
                               itemBuilder: (BuildContext context, int i) {
                                 l++;
                                 if (l == 5) {
                                   l = 0;
                                 }
-                                String formattedDate = "";
-                                DetailViewModel? detailElements = detailViewProvider?.exampleListView[0];
+                                DetailViewModel? detailElements = detailViewProvider.exampleListView[0];
 
-                                final TARGET_FDATE = timeRecover(detailElements?.TARGET_FDATE);
-                                final TARGET_RDATE = timeRecover(detailElements?.TARGET_RDATE);
+                                final targetFdate = timeRecover(detailElements.TARGET_FDATE);
+                                final targetRdate = timeRecover(detailElements.TARGET_RDATE);
 
                                 return Column(
                                   children: [
@@ -95,26 +94,26 @@ class _CloseRequestDetailState extends State<CloseRequestDetail> {
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
                                       child: DetailListWidget(
-                                          ani: detailElements?.ANI,
-                                          description: detailElements?.DESCRIPTION,
-                                          targetFDate: TARGET_FDATE,
-                                          targetRDate: TARGET_RDATE,
-                                          statusName: detailElements?.STATUSNAME,
-                                          assigneName: detailElements?.ASSIGNEENAME,
-                                          assignmentGroup: detailElements?.ASSIGNMENTGROUP,
-                                          assignmentGroupName: detailElements?.ASSIGNMENTGROUPNAME,
-                                          cat1: detailElements?.CAT1,
-                                          cmdb: detailElements?.CMDB,
-                                          code: detailElements?.CODE,
-                                          contactCode: detailElements?.CONTACTCODE,
-                                          contactName: detailElements?.CONTACTNAME,
-                                          idate: detailElements?.IDATE,
-                                          locName: detailElements?.LOCNAME,
-                                          locTree: detailElements?.LOCTREE,
-                                          locTree2: detailElements?.LOCTREE2,
-                                          sumdesc1: detailElements?.SUMDESC1,
-                                          taskNo: detailElements?.CODE.toString(),
-                                          title: detailElements?.TITLE,
+                                          ani: detailElements.ANI,
+                                          description: detailElements.DESCRIPTION,
+                                          targetFDate: targetFdate,
+                                          targetRDate: targetRdate,
+                                          statusName: detailElements.STATUSNAME,
+                                          assigneName: detailElements.ASSIGNEENAME,
+                                          assignmentGroup: detailElements.ASSIGNMENTGROUP,
+                                          assignmentGroupName: detailElements.ASSIGNMENTGROUPNAME,
+                                          cat1: detailElements.CAT1,
+                                          cmdb: detailElements.CMDB,
+                                          code: detailElements.CODE,
+                                          contactCode: detailElements.CONTACTCODE,
+                                          contactName: detailElements.CONTACTNAME,
+                                          idate: detailElements.IDATE,
+                                          locName: detailElements.LOCNAME,
+                                          locTree: detailElements.LOCTREE,
+                                          locTree2: detailElements.LOCTREE2,
+                                          sumdesc1: detailElements.SUMDESC1,
+                                          taskNo: detailElements.CODE.toString(),
+                                          title: detailElements.TITLE,
                                           onPressed: (code) {
                                             print('tiklandi' + code);
                                           }

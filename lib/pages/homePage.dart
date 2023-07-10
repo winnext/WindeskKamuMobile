@@ -1,27 +1,26 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_interpolation_to_compose_strings, file_names, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:win_kamu/pages/WorkOrder/woTracingList.dart';
 import 'package:win_kamu/pages/closeRequestsWaitApprove/routeRequests.dart';
 import 'package:win_kamu/pages/complaintRequests/routeRequests.dart';
 import 'package:win_kamu/pages/new_notif/new_notif.dart';
 import 'package:win_kamu/pages/notiService.dart';
 import 'package:win_kamu/utils/global_utils.dart';
+
 import '../api/api_repository.dart';
-import '../l10n/locale_keys.g.dart';
 import '../providers/main_page_view_provider.dart';
-import '../widgets/buttonWidgets/homeButtons.dart';
-import 'package:badges/badges.dart' as badges;
 import '../utils/themes.dart';
+import '../widgets/buttonWidgets/homeButtons.dart';
 import '../widgets/modalWidgets/announcementModal.dart';
 import 'issue/routeIssue.dart';
-import 'package:rxdart/rxdart.dart';
 
 class MyHomePage extends StatefulWidget {
   static String homePage = '/homePage';
@@ -68,32 +67,40 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     final onNotifications = BehaviorSubject<String?>();
 
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
+    const IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
 
-    const MacOSInitializationSettings initializationSettingsMacOS = MacOSInitializationSettings();
+    const MacOSInitializationSettings initializationSettingsMacOS =
+        MacOSInitializationSettings();
 
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS, macOS: initializationSettingsMacOS);
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+            macOS: initializationSettingsMacOS);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: ((data) async {
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: ((data) async {
       onNotifications.add(data);
     }));
 
     void onClickedNotification(String? payload) {
       String data = payload.toString();
-      final splitted_data = data.split('/-*-/');
-      String title = splitted_data[0];
-      String body = splitted_data[1];
-      String module = splitted_data[2];
-      String code = splitted_data[3];
+      final splittedData = data.split('/-*-/');
+      String title = splittedData[0];
+      String body = splittedData[1];
+      String module = splittedData[2];
+      String code = splittedData[3];
 
       showAlertDialog(context, title, body, module, code);
     }
@@ -101,7 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
     onNotifications.stream.listen(onClickedNotification);
 
 // Lisitnening to the background messages
-    Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    Future<void> _firebaseMessagingBackgroundHandler(
+        RemoteMessage message) async {
       await Firebase.initializeApp();
     }
 
@@ -112,19 +120,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // Listneing to the foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       var payload =
-          '${(message.notification?.title).toString() + '/-*-/' + (message.notification?.body).toString() + '/-*-/' + message.data?['module']}/-*-/' +
-              message.data?['code'];
-      NotificationApi.showNotification(title: message.notification?.title, body: message.notification?.body, payload: payload);
+          '${(message.notification?.title).toString() + '/-*-/' + (message.notification?.body).toString() + '/-*-/' + message.data['module']}/-*-/' +
+              message.data['code'];
+      NotificationApi.showNotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          payload: payload);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      showAlertDialog(context, message.notification?.title, message.notification?.body, message.data?['module'], message.data?['code']);
+      showAlertDialog(
+          context,
+          message.notification?.title,
+          message.notification?.body,
+          message.data['module'],
+          message.data['code']);
       //FlutterLocalNotificationsPlugin().show(message.notification.messageId, message.notification?.title, message.notification?.body,);
     });
 
     Future.delayed(const Duration(milliseconds: 1000), () {
-      final apirepository = APIRepository();
-      final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+      final mainPageViewProvider =
+          Provider.of<MainPageViewProvider>(context, listen: false);
       mainPageViewProvider.announcementView.clear();
       mainPageViewProvider.getAnnouncements(mainPageViewProvider.kadi);
 
@@ -151,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final mainViewProvider =
         Provider.of<MainPageViewProvider>(context, listen: false);
+<<<<<<< HEAD
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -181,6 +198,73 @@ class _MyHomePageState extends State<MyHomePage> {
               } catch (e) {
                 snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
               }
+=======
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'lib/assets/images/windesk.jpg',
+            width: MediaQuery.of(context).size.width / 1.2,
+            height: MediaQuery.of(context).size.width / 1.2,
+            fit: BoxFit.cover,
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.power_settings_new,
+                size: 35,
+                color: APPColors.Main.black,
+              ),
+              tooltip: 'Exit',
+              onPressed: () async {
+                var cikisResult =
+                    await apirepository.cikis(mainViewProvider.kadi);
+                try {
+                  if (cikisResult) {
+                    snackBar(context, 'Çıkış İşlemi Başarılı', 'success');
+
+                    Future.delayed(const Duration(seconds: 1)).whenComplete(() {
+                      Phoenix.rebirth(context);
+                    });
+                  } else {}
+                } catch (e) {
+                  snackBar(context, 'Çıkış İşlemi Başarısız', 'error');
+                }
+              },
+            ),
+          ],
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: APPColors.Main.white,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return badges.Badge(
+                position: badges.BadgePosition.topEnd(top: 10, end: 10),
+                badgeContent: Text(
+                  mainViewProvider.toplamKayitSayisi.toString(),
+                  style: TextStyle(color: APPColors.Main.white),
+                ),
+                onTap: () {},
+                child: IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                    size: 35,
+                    color: APPColors.Main.black,
+                  ),
+                  onPressed: () {
+                    // ignore: unrelated_type_equality_checks
+                    mainViewProvider.toplamKayitSayisi != 0
+                        ? showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            elevation: 10,
+                            context: context,
+                            builder: (context) => const AnnouncementList())
+                        : null;
+                  },
+                ),
+              );
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
             },
           ),
         ],

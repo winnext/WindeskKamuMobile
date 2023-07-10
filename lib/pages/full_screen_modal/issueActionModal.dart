@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import '../../utils/themes.dart';
@@ -92,7 +94,7 @@ class _StatefullActionModalState extends State<StatefullActionModal> {
               decoration: InputDecoration(
                 filled: true,
                 hintText: 'Açıklama giriniz.',
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(width: 1, color: APPColors.Main.grey),
                 ),
@@ -104,7 +106,6 @@ class _StatefullActionModalState extends State<StatefullActionModal> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
-                print('value' + value.toString());
                 setState(() {
                   _description = value;
                 });

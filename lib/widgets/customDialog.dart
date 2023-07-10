@@ -23,8 +23,7 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
       child: Container(
         padding: EdgeInsets.only(top: 10, left: 0, right: 0),
         child: Column(
@@ -37,10 +36,7 @@ class CustomDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-                child: Text(description,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: font_size_18, fontWeight: FontWeight.w500)),
+                child: Text(description, textAlign: TextAlign.center, style: TextStyle(fontSize: font_size_18, fontWeight: FontWeight.w500)),
               ),
             ),
             SizedBox(
@@ -54,8 +50,7 @@ class CustomDialog extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: mainColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15)),
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
                             ),
                             minimumSize: Size.fromHeight(
                               48,
@@ -73,8 +68,7 @@ class CustomDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: mainGreyColor,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(15)),
+                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(15)),
                           ),
                           minimumSize: Size.fromHeight(48),
                         ),
@@ -93,9 +87,7 @@ class CustomDialog extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: mainGreyColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15)),
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
                             ),
                             minimumSize: Size.fromHeight(48),
                           ),

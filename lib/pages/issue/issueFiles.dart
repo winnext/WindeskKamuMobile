@@ -9,7 +9,11 @@ import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
+<<<<<<< HEAD
 
+=======
+import 'package:provider/provider.dart';
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
 import '../../api/api_repository.dart';
 import '../../models/issue_attachments.modal.dart';
 import '../../providers/main_page_view_provider.dart';
@@ -31,9 +35,13 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
+<<<<<<< HEAD
 class _IssueFilesState extends State<IssueFiles>
     with AutomaticKeepAliveClientMixin<IssueFiles> {
 
+=======
+class _IssueFilesState extends State<IssueFiles> with AutomaticKeepAliveClientMixin<IssueFiles> {
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
   @override
   bool get wantKeepAlive => true;
 
@@ -41,9 +49,13 @@ class _IssueFilesState extends State<IssueFiles>
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
+<<<<<<< HEAD
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
     final mainpageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
+=======
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
     exampleList.issueAttachmentView.clear();
     exampleList.getIssueAttachments(mainpageViewProvider.kadi, detailViewProvider.issueCode);
   }
@@ -74,70 +86,54 @@ class _IssueFilesState extends State<IssueFiles>
                     ? Expanded(
                         child: NotificationListener<ScrollNotification>(
                         child: ListView.builder(
-                            itemCount:
-                                listViewProvider.issueAttachmentView.length,
+                            itemCount: listViewProvider.issueAttachmentView.length,
                             itemBuilder: (BuildContext context, int i) {
                               l++;
                               if (l == 5) {
                                 l = 0;
                               }
 
-                              IssueAttachmentModal listElements =
-                                  listViewProvider.issueAttachmentView[i];
-                              final fileUrl =
-                                  ATTACHPATHLIVE + listElements.ID.toString();
-                              bool? isPDF =
-                                  listElements.DISPFILENAME?.contains('pdf');
-                              bool? isXLSX =
-                                  listElements.DISPFILENAME?.contains('xlsx');
-                              bool? isDOCX =
-                                  listElements.DISPFILENAME?.contains('docx');
+                              IssueAttachmentModal listElements = listViewProvider.issueAttachmentView[i];
+                              final fileUrl = ATTACHPATHLIVE + listElements.ID.toString();
+                              bool? isPDF = listElements.DISPFILENAME?.contains('pdf');
+                              bool? isXLSX = listElements.DISPFILENAME?.contains('xlsx');
+                              bool? isDOCX = listElements.DISPFILENAME?.contains('docx');
                               return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: Container(
                                   decoration: BoxDecoration(),
                                   child: Column(
                                     children: [
                                       Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
                                                 width: size.width / 2.5,
+<<<<<<< HEAD
                                                 child: Text('${listElements
                                                         .DISPFILENAME} ${listElements.ID}'),
+=======
+                                                child: Text(listElements.DISPFILENAME.toString() + ' ' + listElements.ID.toString()),
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
                                               ),
-                                              Text(
-                                                  listElements.IDATE.toString())
+                                              Text(listElements.IDATE.toString())
                                             ],
                                           ),
                                           Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 0, 0, 10),
-                                              child: (isPDF == true ||
-                                                      isXLSX == true ||
-                                                      isDOCX == true)
+                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                              child: (isPDF == true || isXLSX == true || isDOCX == true)
                                                   ? Link(
                                                       uri: Uri.parse(fileUrl),
                                                       target: LinkTarget.blank,
-                                                      builder:
-                                                          (BuildContext ctx,
-                                                              FollowLink?
-                                                                  openLink) {
+                                                      builder: (BuildContext ctx, FollowLink? openLink) {
                                                         return TextButton.icon(
                                                           onPressed: openLink,
-                                                          label: const Text(
-                                                              'Linke tıklayınız'),
-                                                          icon: const Icon(
-                                                              Icons.read_more),
+                                                          label: const Text('Linke tıklayınız'),
+                                                          icon: const Icon(Icons.read_more),
                                                         );
                                                       },
                                                     )
@@ -158,31 +154,24 @@ class _IssueFilesState extends State<IssueFiles>
                             }),
                       ))
                     : Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height / 2.5),
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                         child: const Center(child: AramaSonucBos()),
                       ),
               ],
             ),
           ),
-          if (listViewProvider.isDataLoading == true) ...[
-            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-          ],
+          if (listViewProvider.isDataLoading == true) ...[loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)],
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final detailViewProvider =
-              Provider.of<DetailViewProvider>(context, listen: false);
-          final mainPageViewProvider =
-              Provider.of<MainPageViewProvider>(context, listen: false);
+          final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
-              builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode,
-                  xusercode: mainPageViewProvider.kadi));
+              builder: (context) => IssueActionButton(code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
         },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
@@ -193,8 +182,7 @@ class _IssueFilesState extends State<IssueFiles>
   }
 
   Widget sayfaYenile() {
-    return Consumer<ListViewProvider>(
-        builder: (context, listViewProvider, child) {
+    return Consumer<ListViewProvider>(builder: (context, listViewProvider, child) {
       return InkWell(
         onTap: () {
           setState(() {

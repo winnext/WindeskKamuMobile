@@ -27,16 +27,14 @@ final apirepository = APIRepository();
 ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
-class _IssueNotesState extends State<IssueNotes>
-    with AutomaticKeepAliveClientMixin<IssueNotes> {
+class _IssueNotesState extends State<IssueNotes> with AutomaticKeepAliveClientMixin<IssueNotes> {
   @override
   bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
-    final detailViewProvider =
-        Provider.of<DetailViewProvider>(context, listen: false);
+    final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
     exampleList.issueNotesView.clear();
     exampleList.getIssueNotes(detailViewProvider.issueCode);
   }
@@ -73,42 +71,38 @@ class _IssueNotesState extends State<IssueNotes>
                               if (l == 5) {
                                 l = 0;
                               }
-                              IssueNotesModal listElements =
-                                  listViewProvider.issueNotesView[i];
+                              IssueNotesModal listElements = listViewProvider.issueNotesView[i];
                               return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: Container(
                                   decoration: BoxDecoration(),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
+<<<<<<< HEAD
                                           SizedBox(
                                               width: size.width / 2,
                                               child: Text(listElements.IUSER
                                                   .toString())),
+=======
+                                          Container(width: size.width / 2, child: Text(listElements.IUSER.toString())),
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 0, 0, 10),
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                                         child: Row(
                                           children: [
                                             Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Text(''),
-                                                Text(listElements.BODY
-                                                    .toString()),
+                                                Text(listElements.BODY.toString()),
                                               ],
                                             ),
                                           ],
@@ -126,31 +120,24 @@ class _IssueNotesState extends State<IssueNotes>
                             }),
                       ))
                     : Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height / 2.5),
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2.5),
                         child: const Center(child: AramaSonucBos()),
                       ),
               ],
             ),
           ),
-          if (listViewProvider.isDataLoading == true) ...[
-            loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)
-          ],
+          if (listViewProvider.isDataLoading == true) ...[loadingBar(context, APPColors.Accent.grey, APPColors.Main.black)],
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final detailViewProvider =
-              Provider.of<DetailViewProvider>(context, listen: false);
-          final mainPageViewProvider =
-              Provider.of<MainPageViewProvider>(context, listen: false);
+          final detailViewProvider = Provider.of<DetailViewProvider>(context, listen: false);
+          final mainPageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               context: context,
-              builder: (context) => IssueActionButton(
-                  code: detailViewProvider.issueCode,
-                  xusercode: mainPageViewProvider.kadi));
+              builder: (context) => IssueActionButton(code: detailViewProvider.issueCode, xusercode: mainPageViewProvider.kadi));
         },
         backgroundColor: APPColors.Modal.red,
         child: const Icon(Icons.add),
@@ -161,8 +148,7 @@ class _IssueNotesState extends State<IssueNotes>
   }
 
   Widget sayfaYenile() {
-    return Consumer<ListViewProvider>(
-        builder: (context, listViewProvider, child) {
+    return Consumer<ListViewProvider>(builder: (context, listViewProvider, child) {
       return InkWell(
         onTap: () {
           setState(() {

@@ -2,19 +2,18 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:win_kamu/providers/main_page_view_provider.dart';
-import 'package:win_kamu/utils/utils.dart';
 
 import '../../pages/full_screen_modal/full_screen_modal.dart';
 import '../../providers/detail_view_provider.dart';
 import '../../providers/issueaction_provider.dart';
 import '../../providers/list_view_provider.dart';
+import '../../providers/main_page_view_provider.dart';
 import '../../providers/new_notif_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/themes.dart';
+import '../../utils/utils.dart';
 
 class AddActivityScreen extends StatefulWidget {
   VoidCallback? onConfirm;
@@ -66,7 +65,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
 
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
-      final results = await Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      final results = Navigator.of(context).push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         return TakePictureScreen(
           camera: firstCamera,
           sayfa: 'addPhoto',
@@ -378,6 +377,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                               '',
                               '',
                               '');
+
                           Future.delayed(const Duration(milliseconds: 1000), () {
                             _btnController.success();
                             _btnController.reset();
@@ -385,6 +385,7 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                             final activityResult = issueActionProvider.isActivityAddSuccess.toString();
 
                             Navigator.pop(context);
+<<<<<<< HEAD
                             
                             listViewProvider.getIssueOperations(
                                 widget.issueCode, mainPageProvider.kadi);
@@ -401,6 +402,17 @@ class _AddActivityScreenState extends State<AddActivityScreen> {
                                     ? 'Aktivite girişi başarılı'
                                     : 'Aktivite girişi başarısız',
                                 activityResult);
+=======
+                            listViewProvider.getIssueOperations(widget.issueCode, mainPageProvider.kadi);
+
+                            detailViewProvider.loadData(widget.issueCode.toString(), mainPageProvider.kadi.toString());
+                            detailViewProvider.loadIssueSummary(widget.issueCode.toString(), mainPageProvider.kadi);
+                            if (!issueActionProvider.isDescriptionLengthSuccess) {
+                              snackBar(context, 'Açıklama 20 harften fazla olmalıdır', 'error');
+                            } else {
+                              snackBar(context, activityResult == 'true' ? 'Aktivite girişi başarılı' : 'Aktivite girişi başarısız', activityResult);
+                            }
+>>>>>>> 7c825ae1c3be870afca98609aae6bca89bc40b8e
                           });
                         },
                         valueColor: APPColors.Main.white,

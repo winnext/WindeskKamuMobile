@@ -60,6 +60,7 @@ void snackBar(BuildContext context, String message, String type) async {
       CustomSnackBar.error(
         message: message,
       ),
+      displayDuration: Duration(seconds: 2),
     );
   } else if (type == 'connect') {
     showTopSnackBar(

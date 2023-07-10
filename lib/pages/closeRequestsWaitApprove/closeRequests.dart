@@ -2,18 +2,18 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:win_kamu/models/list_view.model.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/providers/main_page_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:provider/provider.dart';
+
 import '../../api/api_repository.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/time_Utils.dart';
-import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
+import '../../widgets/customInfoNotFound.dart';
 import 'closeRequestsDetail.dart';
 
 class CloseRequestListScreen extends StatefulWidget {
@@ -31,9 +31,6 @@ ListViewProvider? listViewProvider;
 DetailViewProvider? detailViewProvider;
 
 class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
-  bool _isDone = false;
-  bool _isNotDone = false;
-
   Color primaryColor = APPColors.Modal.blue;
   @override
   void initState() {
@@ -56,10 +53,7 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    int index = listViewProvider.currentPage;
 
-    Size size = MediaQuery.of(context).size;
-    print('listViewLength${listViewProvider.exampleListView.length}');
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -93,11 +87,8 @@ class _CloseRequestListScreenState extends State<CloseRequestListScreen> {
                                   if (l == 5) {
                                     l = 0;
                                   }
-                                  String formattedDate = "";
                                   ListViewModel listElements = listViewProvider.exampleListView[i];
 
-                                  final TARGET_FDATE = timeRecover(listElements.TARGET_FDATE);
-                                  final TARGET_RDATE = timeRecover(listElements.TARGET_RDATE);
                                   final time = DateTime.now();
                                   final String timeNow = DateFormat('yMMddhhmmss').format(time).toString();
                                   if (listElements.RESPONDED_IDATE != null && listElements.TARGET_FDATE != null) {
