@@ -1,30 +1,18 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:win_kamu/models/issue_activities.modal.dart';
-import 'package:win_kamu/models/list_view.model.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
-import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
-import 'package:provider/provider.dart';
+
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
-import '../../models/tracing_view.model.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../../widgets/modalWidgets/issueActionModal.dart';
-import '../homePage.dart';
-import 'issueDetail.dart';
-import 'issueList.dart';
 
 class IssueActivities extends StatefulWidget {
   static String activitiesList = 'ActivitiesList';
@@ -46,14 +34,16 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
+    final mainViewProvider =
+        Provider.of<MainPageViewProvider>(context, listen: false);
+        
     exampleList.issueActivitiesView.clear();
-    exampleList.getIssueActivities('sgnm1040', detailViewProvider.issueCode);
+    exampleList.getIssueActivities(mainViewProvider.kadi, detailViewProvider.issueCode);
   }
 
   @override
   bool get wantKeepAlive => true;
   void dispose() {
-    // TODO: implement dispose
     listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
@@ -64,18 +54,16 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: size.height / 1.7,
             child: Column(
               children: [
-                listViewProvider.issueActivitiesView.length > 0
+                listViewProvider.issueActivitiesView.isNotEmpty
                     ? Expanded(
                         child: NotificationListener<ScrollNotification>(
                         // onNotification: listViewProvider.notificationController,
@@ -102,7 +90,7 @@ class _IssueActivitiesState extends State<IssueActivities> with AutomaticKeepAli
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(width: size.width/ 2, child: Text(listElements.NAME.toString())),
+                                          SizedBox(width: size.width/ 2, child: Text(listElements.NAME.toString())),
                                           Text(listElements.IDATE.toString()),
                                         ],
                                       ),

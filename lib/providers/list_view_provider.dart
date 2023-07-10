@@ -281,7 +281,6 @@ class ListViewProvider extends ChangeNotifier {
           notifyListeners();
         } else {
           _currentPage = 1;
-
           _isDataExist = false;
           _loading = false;
           _isDataLoading = false;

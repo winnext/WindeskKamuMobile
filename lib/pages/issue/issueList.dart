@@ -1,33 +1,27 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, non_constant_identifier_names, unused_local_variable
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:win_kamu/models/list_view.model.dart';
-import 'package:win_kamu/pages/homePage.dart';
 import 'package:win_kamu/pages/issue/issueSummary.dart';
 import 'package:win_kamu/pages/issue/issueTracingList.dart';
-import 'package:win_kamu/pages/issue/routeIssue.dart';
-import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
-import 'package:provider/provider.dart';
 import 'package:win_kamu/widgets/modalWidgets/issueFilterBox.dart';
+
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
 import '../../utils/isEmpty_utils.dart';
 import '../../utils/time_Utils.dart';
-import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/ListWidgets/customIssueListWidget.dart';
-import '../../widgets/modalWidgets/issueFilterModal.dart';
+import '../../widgets/customInfoNotFound.dart';
 import '../../widgets/modalWidgets/issueActionModal.dart';
-import '../homePage.dart';
-import 'issueDetail.dart';
+import '../../widgets/modalWidgets/issueFilterModal.dart';
 
 class IssueList extends StatefulWidget {
   static String issueList = 'IssueList';
@@ -71,11 +65,8 @@ class _IssueListState extends State<IssueList> {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
-    int index = listViewProvider.currentPage;
     final exampleList = Provider.of<ListViewProvider>(context);
     final mainPageViewProvider = Provider.of<MainPageViewProvider>(context);
-    final ISSUECODE = '';
 
     return WillPopScope(
       onWillPop: () async {
@@ -90,6 +81,7 @@ class _IssueListState extends State<IssueList> {
             ),
             centerTitle: true,
             leading: IconButton(
+                key:Key('filterButton'),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -102,6 +94,7 @@ class _IssueListState extends State<IssueList> {
                 icon: Icon(Icons.arrow_back, color: APPColors.Main.black)),
             actions: [
               IconButton(
+                  key:Key('filterButton'),
                   icon: Icon(Icons.tune, color: APPColors.Main.black),
                   onPressed: () {
                     showModalBottomSheet(
@@ -132,7 +125,6 @@ class _IssueListState extends State<IssueList> {
                                 if (l == 5) {
                                   l = 0;
                                 }
-                                String formattedDate = "";
                                 ListViewModel listElements =
                                     listViewProvider.exampleListView[i];
                                 final TARGET_FDATE =
@@ -143,14 +135,7 @@ class _IssueListState extends State<IssueList> {
                                 final time = DateTime.now();
                                 final String timeNow = DateFormat('yMMddhhmmss')
                                     .format(time)
-                                    .toString();
-                                if (listElements.RESPONDED_IDATE != null &&
-                                    listElements.TARGET_FDATE != null) {
-                                  print(int.parse(listElements.RESPONDED_IDATE
-                                          .toString()) -
-                                      int.parse(listElements.TARGET_RDATE
-                                          .toString()));
-                                }
+                                    .toString();                         
 
                                 return Column(
                                   children: [
@@ -194,7 +179,6 @@ class _IssueListState extends State<IssueList> {
                                           onPressed: (code) {
                                             detailViewProvider.setIssueCode =
                                                 '';
-                                            print('tiklandi' + code);
                                             detailViewProvider.setIssueCode =
                                                 code;
                                             Navigator.of(context).push(

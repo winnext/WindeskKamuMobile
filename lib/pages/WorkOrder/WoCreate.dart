@@ -60,8 +60,8 @@ class _WoCreateState extends State<WoCreate> {
       // Get a specific camera from the list of available cameras.
       final firstCamera = cameras.first;
       final results = await Navigator.of(context)
-          .push(new MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        return new TakePictureScreen(
+          .push(MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+        return  TakePictureScreen(
           camera: firstCamera,
           sayfa: 'Yeni İş Emri',
         );

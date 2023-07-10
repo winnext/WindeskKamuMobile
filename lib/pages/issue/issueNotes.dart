@@ -1,13 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:win_kamu/models/issue_activities.modal.dart';
-import 'package:win_kamu/providers/crud_view_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:provider/provider.dart';
+
 import '../../api/api_repository.dart';
 import '../../models/issue_notes.modal.dart';
 import '../../providers/main_page_view_provider.dart';
@@ -32,6 +31,7 @@ class _IssueNotesState extends State<IssueNotes>
     with AutomaticKeepAliveClientMixin<IssueNotes> {
   @override
   bool get wantKeepAlive => true;
+  @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
@@ -43,7 +43,6 @@ class _IssueNotesState extends State<IssueNotes>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
@@ -54,17 +53,16 @@ class _IssueNotesState extends State<IssueNotes>
   Widget build(BuildContext context) {
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
-    final detailViewProvider = Provider.of<DetailViewProvider>(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: size.height / 1.7,
             child: Column(
               children: [
-                listViewProvider.issueNotesView.length > 0
+                listViewProvider.issueNotesView.isNotEmpty
                     ? Expanded(
                         child: NotificationListener<ScrollNotification>(
                         // onNotification: listViewProvider.notificationController,
@@ -90,7 +88,7 @@ class _IssueNotesState extends State<IssueNotes>
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                               width: size.width / 2,
                                               child: Text(listElements.IUSER
                                                   .toString())),

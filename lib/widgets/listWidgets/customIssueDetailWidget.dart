@@ -121,7 +121,8 @@ class _DetailListWidgetState extends State<DetailListWidget> {
           height: size.height / 1.8,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 10),
+              padding:
+                  const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,10 +134,13 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                         children: [
                           widget.statusCode == 'OPlanned'
                               ? Container(
-                                  decoration: BoxDecoration(color: APPColors.NewNotifi.blue, borderRadius: BorderRadius.circular(3)),
+                                  decoration: BoxDecoration(
+                                      color: APPColors.NewNotifi.blue,
+                                      borderRadius: BorderRadius.circular(3)),
                                   padding: EdgeInsets.all(3),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Text('Randevulu Vakadır'),
                                       Text(widget.planedDate.toString()),
@@ -145,36 +149,60 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                                 )
                               : widget.respondedTimer == '1'
                                   ? Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(3)),
                                       padding: EdgeInsets.all(3),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Text('Hedef Yanıtlama Tarihi'),
                                           widget.targetRDate == ''
                                               ? Text('')
                                               : Text(
-                                                  timeRecover(widget.targetRDate).toString(),
-                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
-                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                                  timeRecover(
+                                                          widget.targetRDate)
+                                                      .toString(),
+                                                  style: fixStyle(
+                                                      widget.respondedTimer
+                                                          .toString(),
+                                                      widget.fixTimer
+                                                          .toString(),
+                                                      widget.targetFDate
+                                                          .toString(),
+                                                      widget.fixedDate
+                                                          .toString()),
                                                 )
                                         ],
                                       ),
                                     )
                                   : Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(3)),
                                       margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                       padding: EdgeInsets.all(3),
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Text('Yanıtlama Tarihi'),
                                           widget.respondedDate == ''
                                               ? Text('')
                                               : Text(
-                                                  timeRecover(widget.respondedDate).toString(),
-                                                  style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
-                                                      widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                                  timeRecover(
+                                                          widget.respondedDate)
+                                                      .toString(),
+                                                  style: fixStyle(
+                                                      widget.respondedTimer
+                                                          .toString(),
+                                                      widget.fixTimer
+                                                          .toString(),
+                                                      widget.targetFDate
+                                                          .toString(),
+                                                      widget.fixedDate
+                                                          .toString()),
                                                 ),
                                         ],
                                       ),
@@ -184,37 +212,51 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                       Column(children: [
                         widget.fixTimer == '1'
                             ? Container(
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3)),
                                 padding: EdgeInsets.all(3),
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Text('Hedef Düzeltme Tarihi'),
                                     widget.targetFDate == ''
                                         ? Text('')
                                         : Text(
-                                            timeRecover(widget.targetFDate).toString(),
-                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
-                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                            timeRecover(widget.targetFDate)
+                                                .toString(),
+                                            style: fixStyle(
+                                                widget.respondedTimer
+                                                    .toString(),
+                                                widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(),
+                                                widget.fixedDate.toString()),
                                           ),
                                   ],
                                 ),
                               )
                             : Container(
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3)),
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 padding: EdgeInsets.all(3),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Text('Düzeltme Tarihi'),
                                     widget.fixedDate == ''
                                         ? Text('')
                                         : Text(
-                                            timeRecover(widget.fixedDate).toString(),
-                                            style: fixStyle(widget.respondedTimer.toString(), widget.fixTimer.toString(),
-                                                widget.targetFDate.toString(), widget.fixedDate.toString()),
+                                            timeRecover(widget.fixedDate)
+                                                .toString(),
+                                            style: fixStyle(
+                                                widget.respondedTimer
+                                                    .toString(),
+                                                widget.fixTimer.toString(),
+                                                widget.targetFDate.toString(),
+                                                widget.fixedDate.toString()),
                                           ),
                                   ],
                                 ),
@@ -241,7 +283,9 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                widget.idate != '' ? widget.idate.toString() : '',
+                                widget.idate != ''
+                                    ? widget.idate.toString()
+                                    : '',
                                 style: TextStyle(
                                   color: APPColors.Secondary.black,
                                   fontSize: 14,
@@ -257,7 +301,9 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                             Expanded(
                               flex: 2,
                               child: Text(
-                                widget.statusName != '' ? widget.statusName.toString() : '',
+                                widget.statusName != ''
+                                    ? widget.statusName.toString()
+                                    : '',
                                 style: TextStyle(
                                   color: APPColors.Secondary.black,
                                   fontSize: 14,
@@ -271,351 +317,94 @@ class _DetailListWidgetState extends State<DetailListWidget> {
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Açıklama',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.description.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Açıklama', widget.description.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Vaka Sahibi',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.contactName.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Vaka Sahibi', widget.contactName.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Mahal',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.locName.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
-                  ),
+                  issueSummaryRow('Mahal', widget.locName.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Mahal Yeri',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.locTree.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Mahal Yeri', widget.locTree.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Arama Nedeni',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.title.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Arama Nedeni', widget.title.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Varlık Bilgisi',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.cmdb.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Varlık Bilgisi', widget.cmdb.toString()),
+                  Divider(
+                    height: 15,
+                  ),                  
+                  issueSummaryRow('Açılma Tarihi', widget.idate.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Açılma Tarihi',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.idate.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Arayan Numara', widget.ani.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Arayan Numara',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.ani.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Hedef Yanıtlama', timeRecover(widget.targetRDate).toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Hedef Yanıtlama',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          timeRecover(widget.targetRDate).toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Hedef Düzeltme', timeRecover(widget.targetFDate).toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Hedef Düzeltme',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          timeRecover(widget.targetFDate).toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('HYS-48 saat', widget.hys.toString() ),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'HYS-48 saat ${widget.hys.toString() != '' ? {widget.hys.toString()} : ''}',
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          'HDS-48 saat ${widget.hds.toString() != '' ? {widget.hds.toString()} : ''}',
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('HDS-48 saat', widget.hds.toString() ),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Atama Grubu',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.assignmentGroupName.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
+                  issueSummaryRow('Atama Grubu', widget.assignmentGroupName.toString()),
                   Divider(
                     height: 15,
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Atanan Kişi',
-                          style: TextStyle(
-                            color: APPColors.Secondary.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          widget.assigneName.toString(),
-                          style: TextStyle(color: APPColors.Secondary.black, fontSize: 14, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
+                  issueSummaryRow('Atanan Kişi', widget.assigneName.toString()),
+                  Divider(
+                    height: 15,
                   ),
                 ],
               ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row issueSummaryRow(header, description) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            header,
+            style: TextStyle(
+              color: APPColors.Secondary.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Text(
+            description,
+            style: TextStyle(
+                color: APPColors.Secondary.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w400),
           ),
         ),
       ],

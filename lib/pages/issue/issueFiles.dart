@@ -1,36 +1,22 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 
-import 'dart:io';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/link.dart';
-import 'package:win_kamu/models/issue_activities.modal.dart';
-import 'package:win_kamu/models/list_view.model.dart';
-import 'package:win_kamu/pages/homePage.dart';
-import 'package:win_kamu/pages/mainPage.dart';
 import 'package:win_kamu/providers/crud_view_provider.dart';
 import 'package:win_kamu/providers/detail_view_provider.dart';
 import 'package:win_kamu/providers/list_view_provider.dart';
 import 'package:win_kamu/utils/api_urls.dart';
 import 'package:win_kamu/utils/themes.dart';
 import 'package:win_kamu/utils/utils.dart';
-import 'package:win_kamu/widgets/commons.dart';
-import 'package:provider/provider.dart';
+
 import '../../api/api_repository.dart';
-import '../../l10n/locale_keys.g.dart';
 import '../../models/issue_attachments.modal.dart';
-import '../../models/tracing_view.model.dart';
 import '../../providers/main_page_view_provider.dart';
 import '../../utils/global_utils.dart';
-import '../../utils/time_Utils.dart';
 import '../../widgets/customInfoNotFound.dart';
-import '../../widgets/ListWidgets/customIssueListWidget.dart';
 import '../../widgets/modalWidgets/issueActionModal.dart';
 import '../../widgets/photoDisplayWidgets/customActivitiesPhoto.dart';
-import '../homePage.dart';
-import 'issueDetail.dart';
-import 'issueList.dart';
 
 class IssueFiles extends StatefulWidget {
   static String activitiesList = 'ActivitiesList';
@@ -47,21 +33,23 @@ DetailViewProvider? detailViewProvider;
 
 class _IssueFilesState extends State<IssueFiles>
     with AutomaticKeepAliveClientMixin<IssueFiles> {
+
   @override
   bool get wantKeepAlive => true;
 
+  @override
   void initState() {
     super.initState();
     final exampleList = Provider.of<ListViewProvider>(context, listen: false);
     final detailViewProvider =
         Provider.of<DetailViewProvider>(context, listen: false);
+    final mainpageViewProvider = Provider.of<MainPageViewProvider>(context, listen: false);
     exampleList.issueAttachmentView.clear();
-    exampleList.getIssueAttachments('sgnm1040', detailViewProvider.issueCode);
+    exampleList.getIssueAttachments(mainpageViewProvider.kadi, detailViewProvider.issueCode);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     listViewProvider?.pageController?.dispose();
     detailViewProvider?.dispose();
     listViewProvider?.dispose();
@@ -73,17 +61,16 @@ class _IssueFilesState extends State<IssueFiles>
     int l = -1;
     final listViewProvider = Provider.of<ListViewProvider>(context);
     final detailViewProvider = Provider.of<DetailViewProvider>(context);
-    final crudProvider = Provider.of<CrudViewProvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: size.height / 1.7,
             child: Column(
               children: [
-                listViewProvider.issueAttachmentView.length > 0
+                listViewProvider.issueAttachmentView.isNotEmpty
                     ? Expanded(
                         child: NotificationListener<ScrollNotification>(
                         child: ListView.builder(
@@ -122,13 +109,10 @@ class _IssueFilesState extends State<IssueFiles>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Container(
+                                              SizedBox(
                                                 width: size.width / 2.5,
-                                                child: Text(listElements
-                                                        .DISPFILENAME
-                                                        .toString() +
-                                                    ' ' +
-                                                    listElements.ID.toString()),
+                                                child: Text('${listElements
+                                                        .DISPFILENAME} ${listElements.ID}'),
                                               ),
                                               Text(
                                                   listElements.IDATE.toString())

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:win_kamu/pages/issue/issueTracingList.dart';
 
 import '../../providers/main_page_view_provider.dart';
-import 'issueList.dart';
+import 'issueTracingList.dart';
 
 class Issue extends StatefulWidget {
   static String openRequest = '/openRequest';
@@ -16,9 +13,6 @@ class Issue extends StatefulWidget {
 }
 
 class _IssueState extends State<Issue> {
-  int _currentIndex = 0;
-  PageController? _pageController;
-
   @override
   void initState() {
     super.initState();

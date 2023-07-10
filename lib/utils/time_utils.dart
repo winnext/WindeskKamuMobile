@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:win_kamu/utils/themes.dart';
 
 timeRecover(timeInfo) {
+  if (timeInfo == '') {
+    return 'Bilgi Yok';
+  }
   final String finalTime;
   final timeZone =
       '${timeInfo.toString().substring(0, 4)}-${timeInfo.toString().substring(4, 6)}-${timeInfo.toString().substring(6, 8)}T${timeInfo.toString().substring(8, 10)}:${timeInfo.toString().substring(10, 12)}:${timeInfo.toString().substring(12, 14)}';
   if (timeZone.toString().contains(".")) {
-    DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
     finalTime = DateFormat("dd/MM/yyyy hh:mm:ss").format(dateTime);
   } else {
-    DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
     finalTime = DateFormat("dd/MM/yyyy hh:mm:ss").format(dateTime);
   }
   //print('finalTİme : ' + finalTime.toString());
@@ -26,10 +31,12 @@ timeRecover2(timeInfo) {
       '${timeInfo.toString().substring(0, 4)}-${timeInfo.toString().substring(4, 6)}-${timeInfo.toString().substring(6, 8)}T${timeInfo.toString().substring(8, 10)}:${timeInfo.toString().substring(10, 12)}:${timeInfo.toString().substring(12, 14)}';
 
   if (timeZone.toString().contains(".")) {
-    DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
     finalTime = DateFormat("dd/MM/yyyy hh:mm:ss").format(dateTime);
   } else {
-    DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
+    DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ss").parse(timeZone.toString());
     finalTime = DateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS").format(dateTime);
   }
   return finalTime;
@@ -50,13 +57,27 @@ fixStyle(respondedTimer, fixTimer, targetFDate, fixedDate) {
   String dateNow = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
   final TextStyle conditionOfTextStyle;
   if (respondedTimer == 0 && fixTimer == 0) {
-    conditionOfTextStyle = int.parse(fixedDate.toString()) - int.parse(targetFDate.toString()) < 0
-        ? TextStyle(color: APPColors.Main.white, backgroundColor: APPColors.Main.green, fontSize: 13)
-        : TextStyle(color: APPColors.Main.white, backgroundColor: APPColors.Main.red, fontSize: 13);
+    conditionOfTextStyle =
+        int.parse(fixedDate.toString()) - int.parse(targetFDate.toString()) < 0
+            ? TextStyle(
+                color: APPColors.Main.white,
+                backgroundColor: APPColors.Main.green,
+                fontSize: 13)
+            : TextStyle(
+                color: APPColors.Main.white,
+                backgroundColor: APPColors.Main.red,
+                fontSize: 13);
   } else {
-    conditionOfTextStyle = int.parse(dateNow.toString()) - int.parse(targetFDate.toString()) < 0
-        ? TextStyle(color: APPColors.Main.green, backgroundColor: APPColors.Main.white, fontSize: 13)
-        : TextStyle(color: APPColors.Main.red, backgroundColor: APPColors.Main.white, fontSize: 13);
+    conditionOfTextStyle =
+        int.parse(dateNow.toString()) - int.parse(targetFDate.toString()) < 0
+            ? TextStyle(
+                color: APPColors.Main.green,
+                backgroundColor: APPColors.Main.white,
+                fontSize: 13)
+            : TextStyle(
+                color: APPColors.Main.red,
+                backgroundColor: APPColors.Main.white,
+                fontSize: 13);
   }
 
   return conditionOfTextStyle;

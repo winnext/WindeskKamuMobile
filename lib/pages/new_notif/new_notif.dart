@@ -41,20 +41,9 @@ class _NewNotifState extends State<NewNotif> {
     final nProvider = Provider.of<NewNotifProvider>(context, listen: false);
    
   }
-
-
-
-
     String time = "";
-    
     String date = '';
-
-    
-
- 
   
-
-
   @override
   Widget build(BuildContext context) {
      

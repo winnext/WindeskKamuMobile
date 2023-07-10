@@ -163,58 +163,19 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                 height: 5,
               ),
               widget.location.toString() != ""
-                  ? Flexible(
-                      child: SizedBox(
-                        width: size.width / 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            widget.location.toString(),
-                            style: TextStyle(
-                              color: Color(0xff025273),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                  ? issueListText(size,widget.location.toString())
                   : Container(),
               Divider(
                 height: 5,
               ),
               widget.space.toString() != ""
-                  ? Flexible(
-                      child: SizedBox(
-                        width: size.width / 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            widget.space.toString(),
-                            style: TextStyle(
-                              color: Color(0xff025273),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                  ? issueListText(size,widget.space.toString())
                   : Container(),
+              Divider(
+                height: 5,
+              ),
               widget.description.toString() != ""
-                  ? Flexible(
-                      child: SizedBox(
-                        width: size.width / 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            widget.description.toString(),
-                            style: TextStyle(
-                              color: Color(0xff025273),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                  ? issueListText(size,widget.description.toString())
                   : Container(),
               SizedBox(height: 6),
               Flexible(
@@ -262,7 +223,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     width: size.width,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
-                                        color: colorCalculatorBackground(widget.respondedIDate.toString(), widget.targetRDate.toString())),
+                                        color: CustomColorCalculator().colorCalculatorBackground(widget.respondedIDate.toString(), widget.targetRDate.toString())),
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
@@ -272,7 +233,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                         style: TextStyle(
                                             fontSize: 13,
                                             letterSpacing: 0.5,
-                                            color: colorCalculatorText(widget.respondedIDate.toString(), widget.targetRDate.toString()),
+                                            color: CustomColorCalculator().colorCalculatorText(widget.respondedIDate.toString(), widget.targetRDate.toString()),
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -404,6 +365,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
+                                        key:Key('hedefYanıtlama'),
                                         'Hedef Yanıtlama ${timeRecover(widget.targetRDate.toString())}',
                                         style: TextStyle(
                                           color: colorCalculator(dateNow.toString(), widget.targetRDate.toString()),
@@ -418,6 +380,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
+                                        key:Key('kalanSüreniz'),
                                         'Kalan Süreniz ${timeDifference(widget.targetRDate).toString()}',
                                         style: TextStyle(
                                           color: colorCalculator(dateNow.toString(), widget.targetRDate.toString()),
@@ -431,6 +394,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
+                                        key:Key('hedef düzeltme'),
                                         'Hedef Düzeltme ${timeRecover(widget.targetFDate.toString())}',
                                         style: TextStyle(
                                           color: colorCalculator(dateNow.toString(), widget.targetFDate.toString()),
@@ -445,6 +409,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(bottom: 8.0),
                                       child: Text(
+                                        key:Key('kalanSüreniz'),
                                         'Kalan Süreniz ${timeDifference(widget.targetFDate).toString()}',
                                         style: TextStyle(
                                           letterSpacing: 0.5,
@@ -462,5 +427,24 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         ),
       ),
     );
+  }
+
+  Flexible issueListText(Size size, String text) {
+    return Flexible(
+                    child: SizedBox(
+                      width: size.width / 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          key:Key('issueListText'),
+                          text,
+                          style: TextStyle(
+                            color: Color(0xff025273),
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
   }
 }

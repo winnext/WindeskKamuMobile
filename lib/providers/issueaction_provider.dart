@@ -363,7 +363,7 @@ class IssueActionProvider extends ChangeNotifier {
       tempActivityListView = (result.records['records'] as List).map((e) => DetailActivitiesModal.fromJson(e)).toList();
       Future.delayed(const Duration(milliseconds: 0), () {
         activityListView.addAll(tempActivityListView);
-        _toplamKayitSayisi = int.parse(result.records['totalcount']);
+        _toplamKayitSayisi = tempActivityListView.length;
         int noOfTasks = tempActivityListView.length;
         if (noOfTasks > 0) {
           _isDataLoading = false;

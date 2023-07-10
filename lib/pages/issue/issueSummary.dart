@@ -57,7 +57,6 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
     listViewProvider.getIssueOperations(issueCode, mainPageViewProvider.kadi);
     issueActionProvider.getAvailableActivities(issueCode);
     issueActionProvider.getLiveSelectAsgGroups(issueCode);
-    ;
   }
 
   @override

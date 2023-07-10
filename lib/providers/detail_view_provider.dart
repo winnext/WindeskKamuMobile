@@ -94,13 +94,16 @@ class DetailViewProvider extends ChangeNotifier {
     _isDataLoading = true;
 
     final responseUrl = '$BASE_URL_V2/issue/${issueCode}';
-    final data = await apirepository.getRequestDetail(controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+    final data = await apirepository.getRequestDetail(
+        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 1200), () {
         var responseData = DetailViewModel.fromJson(data.detail['detail']);
         print('objectissueDetailll' +
-            responseData.TARGET_FDATE.toString() + ' : ' + responseData.RELATEDCODE.toString());
+            responseData.TARGET_FDATE.toString() +
+            ' : ' +
+            responseData.RELATEDCODE.toString());
         exampleListView.clear();
         exampleListView.add(responseData);
         _isDataLoading = false;
@@ -108,20 +111,23 @@ class DetailViewProvider extends ChangeNotifier {
         _isDataExist = false;
         notifyListeners();
       });
-    } else {
-    }
+    } else {}
   }
 
-  loadIssueSummary(String issuecode, String xusercode) async {
+    loadIssueSummary(String issuecode, String xusercode) async {
     _isDataLoading = true;
     final responseUrl = '$BASE_URL_V2/issue/${issueCode}/summary';
 
-    final data = await apirepository.getIssueSummary(controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+    final data = await apirepository.getIssueSummary(
+        controller: responseUrl, issueCode: issuecode, xuserCode: xusercode);
+
+    print('dataSummary' + data.detail['detail'].toString());
 
     if (true) {
       Future.delayed(const Duration(milliseconds: 0), () {
         var responseData = IssueSummaryModal.fromJson(data.detail['detail']);
-        _issueSummary.add(responseData);
+        issueSummary.clear();
+        issueSummary.add(responseData);
         _isDataLoading = false;
         _loading = false;
         _isDataExist = false;
@@ -132,12 +138,17 @@ class DetailViewProvider extends ChangeNotifier {
     }
   }
 
-  sendIssueActivity(String issueCode, String userName, String activityCode, String description) async {
-    if (description.toString().length < 20 && activityCode.toString() == 'AR00000001336') {
+  sendIssueActivity(String issueCode, String userName, String activityCode,
+      String description) async {
+    if (description.toString().length < 20 &&
+        activityCode.toString() == 'AR00000001336') {
       return 'Lütfen yeterli uzunlukta açıklama giriniz';
     } else {
-      final apiresult =
-          await apirepository.addIssueActivity(userName: userName, issueCode: issueCode, activityCode: activityCode, description: description);
+      final apiresult = await apirepository.addIssueActivity(
+          userName: userName,
+          issueCode: issueCode,
+          activityCode: activityCode,
+          description: description);
 
       final results = jsonDecode(apiresult.toString());
 

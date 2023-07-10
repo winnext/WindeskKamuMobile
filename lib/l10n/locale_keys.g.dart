@@ -48,5 +48,8 @@ abstract class LocaleKeys {
   static const kayitSirasindaHataOlustu = 'kayitSirasindaHataOlustu';
   static const hataMesaji = 'hataMesaji';
   static const email = 'email';
-  static const vakalist = 'Vaka-(SLA) Listesi';
+  static const vakaList = 'Vaka-(SLA) Listesi';
+  static const vakaArama = 'Vaka-(SLA) Arama';
+  static const isEmriList = 'İş Emri Listesi';
+  static const isEmriArama = 'İş Emri Arama';
 }
